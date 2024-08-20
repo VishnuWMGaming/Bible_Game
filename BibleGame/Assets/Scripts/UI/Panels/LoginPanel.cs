@@ -15,6 +15,7 @@ public class LoginPanel : MonoBehaviour
     [SerializeField] Button loginButton;
     [SerializeField] Button hideButton;
     [SerializeField] Button signButton;
+    [SerializeField] Button forgetButton;
 
     [SerializeField] Sprite closeEye;
     [SerializeField] Sprite openEye;
@@ -39,6 +40,7 @@ public class LoginPanel : MonoBehaviour
         hideButton.onClick.AddListener(HideAction);
         loginButton.onClick.AddListener(LoginAction);
         signButton.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.signup));
+        forgetButton.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.forgetpassword));
     }
 
     /// <summary>
@@ -48,7 +50,8 @@ public class LoginPanel : MonoBehaviour
     {
         loginButton.onClick.RemoveAllListeners();
         hideButton.onClick.RemoveAllListeners();
-        signButton.onClick.RemoveAllListeners();    
+        signButton.onClick.RemoveAllListeners();
+        forgetButton.onClick.RemoveAllListeners();  
     }
 
 
