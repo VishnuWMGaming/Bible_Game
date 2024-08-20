@@ -6,6 +6,8 @@
     "com.unity.timeline": "1.7.5",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.9.0",
+    "com.webmobril.core": "https://github.com/WebmobrilGaming/WebmobrilCore.git",
+    "com.webmobril.restapi": "https://github.com/WebmobrilGaming/RestAPI.git",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",

@@ -60,6 +60,13 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.performance.profile-analyzer": {
       "version": "1.2.2",
       "depth": 1,
@@ -134,6 +141,22 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "com.webmobril.core": {
+      "version": "https://github.com/WebmobrilGaming/WebmobrilCore.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "36525dfecb0945cc6875f9fb01db3b6b802c7fcf"
+    },
+    "com.webmobril.restapi": {
+      "version": "https://github.com/WebmobrilGaming/RestAPI.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "2.0.0"
+      },
+      "hash": "73cd06ce02837c1179264613bd76a0d725f2f6a4"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
