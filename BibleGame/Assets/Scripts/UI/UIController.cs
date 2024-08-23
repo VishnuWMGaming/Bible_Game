@@ -26,6 +26,7 @@ public class UIController : MonoBehaviour
     {
         loginCanvas = FindObjectOfType<LoginPanel>(true).gameObject;
         splashCanvas = FindObjectOfType<SplashPanel>(true).gameObject;
+        forgetPasswordCanvas= FindObjectOfType<ForgetPasswordPanel>(true).gameObject;
     }
 
     /// <summary>
