@@ -16,6 +16,7 @@ public class UIController : MonoBehaviour
     GameObject otpCanvas;
     GameObject homeCanvas;
     GameObject updatePasswordCanavas;
+    GameObject settingsCanvas;
 
     GameObject currentPanel;
 
@@ -29,7 +30,8 @@ public class UIController : MonoBehaviour
         forgetPasswordCanvas= FindObjectOfType<ForgetPasswordPanel>(true).gameObject;
         otpCanvas = FindObjectOfType<VerificationPanel>(true).gameObject;
         updatePasswordCanavas = FindObjectOfType<UpdatePasswordPanel>(true).gameObject;
-        homeCanvas = FindObjectOfType<HomePanel>(true).gameObject;  
+        homeCanvas = FindObjectOfType<HomePanel>(true).gameObject;
+        settingsCanvas = FindObjectOfType<SettingsPanel>(true).gameObject;  
     }
 
     /// <summary>
