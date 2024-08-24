@@ -36,8 +36,10 @@ public class SettingsPanel : MonoBehaviour
 
     private void EnablePanel(SetPanelType type)
     {
-        _setPanel.gameObject.SetActive(false);
+        _setPanel.gameObject.SetActive(true);
         _setPanel.OpenSetPanel(type);
+
+        this.gameObject.SetActive(false);
     }
 
 }

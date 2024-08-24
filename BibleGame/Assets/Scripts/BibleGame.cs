@@ -11,6 +11,8 @@ namespace BibleGame
     {
         public const string baseURL = "http://52.22.241.165:10032/api/user/";
         public const string signupURL = "register";
+        public const string verify = "verify_otp";
+        public const string profileName = "update_profile";
     }
 
     namespace UI
@@ -36,7 +38,7 @@ namespace BibleGame
         public static class AppData
         {
             public static LoginData loginData;
-            public static OtpData otpData;
+            public static OTPData otpData;
         }
 
         public  class LoginData
@@ -57,21 +59,15 @@ namespace BibleGame
             }
         }
 
-        public class OtpData
+        public class OTPData
         {
             string otp;
             public string Otp => otp;
 
-            public OtpData (string otp)
+            public OTPData (string otp)
             {
                 this.otp = otp;    
             }
         }
    }
-
-    namespace API
-    {
-
-       
-    }
 }

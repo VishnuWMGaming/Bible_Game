@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using TMPro;
 
 using BibleGame.Data;
+using BibleGame.API;
+using BibleGame;
 
 public class VerificationPanel : MonoBehaviour
 {
@@ -14,6 +16,9 @@ public class VerificationPanel : MonoBehaviour
 
     [SerializeField] List<TMP_Text> otps = new List<TMP_Text>();
 
+    [SerializeField] Button verifyBtn;
+    [SerializeField] Button backBtn;
+
 
     /// <summary>
     /// Action implemented in enable 
@@ -21,8 +26,10 @@ public class VerificationPanel : MonoBehaviour
     private void OnEnable()
     {
         otpInputField.onValueChanged.AddListener(OnValueChanged_Action);
-
         Debug.Log("OTP >>>" + AppData.otpData.Otp);
+
+        verifyBtn.onClick.AddListener(VerifyAction);
+        backBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.signup));
     }
 
     /// <summary>
@@ -31,7 +38,36 @@ public class VerificationPanel : MonoBehaviour
     private void OnDisable()
     {
         otpInputField.onValueChanged.RemoveAllListeners();
+        verifyBtn.onClick.RemoveAllListeners();
+        backBtn.onClick.RemoveAllListeners();   
+
+        verifyBtn.interactable = false;
     }
+
+    private void VerifyAction()
+    {
+       var otpData = new OtpData(AppData.otpData.Otp);
+        OtpAPI.VerifyOtp(otpData, OTPCallback);
+
+        PopUp.Instance.EnableLoad(true);
+    }
+
+    #region API
+    private void OTPCallback(bool sucess, VerifyOtpResponse response)
+    {
+        PopUp.Instance.EnableLoad(false);
+
+        if(sucess && response.succeeded)
+        {
+            Debug.LogWarning("otp verified !!!");
+            Actions.ChangePanelActions(CanvasType.home);
+        }
+        else
+        {
+            Debug.LogError("Response failed !!!" + response != null ? response.ResponseMessage : "Network issue");
+        }
+    }
+    #endregion
 
     void OnValueChanged_Action(string data)
     {
@@ -46,6 +82,8 @@ public class VerificationPanel : MonoBehaviour
         {
             otps[i].text = otpArray[i].ToString();
         }
+
+        verifyBtn.interactable = otpArray.Length == 4;
     }
 
 }

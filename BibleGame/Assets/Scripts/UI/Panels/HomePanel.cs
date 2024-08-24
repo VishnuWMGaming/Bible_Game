@@ -2,17 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+using TMPro;
+using BibleGame;
+using BibleGame.Data;
 public class HomePanel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("UI Settings:")]
+    [SerializeField] TMP_Text userName;
+    [SerializeField] Button settingBtn;
+
+    /// <summary>
+    /// Action implemented on enable
+    /// </summary>
+    private void OnEnable()
     {
-        
+        settingBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
+
+        userName.text = AppData.loginData.Name;
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Action implemented on disable
+    /// </summary>
+    private void OnDisable()
     {
-        
+        settingBtn.onClick.RemoveAllListeners();
     }
 }
