@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+using BibleGame.Data;
+
 public class VerificationPanel : MonoBehaviour
 {
     [Header("UI Settings:")]
@@ -18,7 +20,9 @@ public class VerificationPanel : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        otpInputField.onValueChanged.AddListener(OnValueChanged_Action);            
+        otpInputField.onValueChanged.AddListener(OnValueChanged_Action);
+
+        Debug.Log("OTP >>>" + AppData.otpData.Otp);
     }
 
     /// <summary>

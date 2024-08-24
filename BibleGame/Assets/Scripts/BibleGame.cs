@@ -1,13 +1,18 @@
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-using UnityEngine.Events;
 
 namespace BibleGame
 {
+    public class ServiceURL
+    {
+        public const string baseURL = "http://52.22.241.165:10032/api/user/";
+        public const string signupURL = "register";
+    }
+
     namespace UI
     {
         public static class BibleUI
@@ -31,17 +36,35 @@ namespace BibleGame
         public static class AppData
         {
             public static LoginData loginData;
+            public static OtpData otpData;
         }
 
         public  class LoginData
         {
-           string email;
-           string password;
+            string email;
+            string password;
+            string name;
 
-            public  LoginData (string email, string password)
+            public string Email => email;
+            public string Password => password; 
+            public string Name => name; 
+
+            public  LoginData (string email, string password, string name)
             {
                 this.email = email;
                 this.password = password;
+                this.name = name;
+            }
+        }
+
+        public class OtpData
+        {
+            string otp;
+            public string Otp => otp;
+
+            public OtpData (string otp)
+            {
+                this.otp = otp;    
             }
         }
    }
@@ -49,12 +72,6 @@ namespace BibleGame
     namespace API
     {
 
-        public class  ServiceURL
-        {
-            public const string baseURL = "http://52.22.241.165:10032/api/user/";
-            public const string loginURL = "";
-            public const string signupURL = "";
-        }
-
+       
     }
 }

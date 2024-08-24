@@ -20,7 +20,7 @@ public class LoginPanel : MonoBehaviour
     [SerializeField] Sprite closeEye;
     [SerializeField] Sprite openEye;
 
-    [SerializeField] TMP_InputField password_Inputfield;
+    [SerializeField] UIPasswordField password_Inputfield;
     [SerializeField] TMP_InputField email_Inputfield;
 
 
@@ -37,7 +37,6 @@ public class LoginPanel : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        hideButton.onClick.AddListener(HideAction);
         loginButton.onClick.AddListener(LoginAction);
         signButton.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.signup));
         forgetButton.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.forgetpassword));
@@ -49,20 +48,9 @@ public class LoginPanel : MonoBehaviour
     private void OnDisable()
     {
         loginButton.onClick.RemoveAllListeners();
-        hideButton.onClick.RemoveAllListeners();
         signButton.onClick.RemoveAllListeners();
         forgetButton.onClick.RemoveAllListeners();  
     }
-
-
-    public void HideAction()
-    {
-        password_Inputfield.contentType = password_Inputfield.contentType == TMP_InputField.ContentType.Standard ? TMP_InputField.ContentType.Password : TMP_InputField.ContentType.Standard;
-        password_Inputfield.ForceLabelUpdate();
-
-        hideButton.image.sprite = password_Inputfield.contentType == TMP_InputField.ContentType.Standard ? openEye : closeEye;
-    }
-
 
     private static bool ValidateEmail(string email)
     {
@@ -96,7 +84,7 @@ public class LoginPanel : MonoBehaviour
     private void LoginAction()
     {
         var validEmail = ValidateEmail(email_Inputfield.text);
-        var validPassword = ValidatePassword(password_Inputfield.text); 
+        var validPassword = ValidatePassword(password_Inputfield.Text); 
         
         if(!validEmail)
         {

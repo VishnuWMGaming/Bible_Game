@@ -27,6 +27,7 @@ public class UIController : MonoBehaviour
     {
         loginCanvas = FindObjectOfType<LoginPanel>(true).gameObject;
         splashCanvas = FindObjectOfType<SplashPanel>(true).gameObject;
+        signCanvas = FindObjectOfType<SignPanel>(true).gameObject;
         forgetPasswordCanvas= FindObjectOfType<ForgetPasswordPanel>(true).gameObject;
         otpCanvas = FindObjectOfType<VerificationPanel>(true).gameObject;
         updatePasswordCanavas = FindObjectOfType<UpdatePasswordPanel>(true).gameObject;
@@ -66,7 +67,7 @@ public class UIController : MonoBehaviour
         currentPanel = canvasType switch { 
                                            CanvasType.login => loginCanvas,
                                            CanvasType.splash => splashCanvas,
-                                           CanvasType.signup => splashCanvas,
+                                           CanvasType.signup => signCanvas,
                                            CanvasType.forgetpassword => forgetPasswordCanvas,
                                            CanvasType.otp => otpCanvas,
                                            CanvasType.updatepassword => updatePasswordCanavas,
