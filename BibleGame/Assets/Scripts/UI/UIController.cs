@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BibleGame.UI;
 using BibleGame;
+using Unity.VisualScripting;
 
 public class UIController : MonoBehaviour
 {
@@ -17,7 +18,6 @@ public class UIController : MonoBehaviour
     GameObject homeCanvas;
     GameObject updatePasswordCanavas;
     GameObject settingsCanvas;
-
     GameObject currentPanel;
 
     /// <summary>
@@ -31,7 +31,7 @@ public class UIController : MonoBehaviour
         otpCanvas = FindObjectOfType<VerificationPanel>(true).gameObject;
         updatePasswordCanavas = FindObjectOfType<UpdatePasswordPanel>(true).gameObject;
         homeCanvas = FindObjectOfType<HomePanel>(true).gameObject;
-        settingsCanvas = FindObjectOfType<SettingsPanel>(true).gameObject;  
+        settingsCanvas = FindObjectOfType<SettingsPanel>(true).gameObject;
     }
 
     /// <summary>
@@ -71,6 +71,7 @@ public class UIController : MonoBehaviour
                                            CanvasType.otp => otpCanvas,
                                            CanvasType.updatepassword => updatePasswordCanavas,
                                            CanvasType.home => homeCanvas,
+                                           CanvasType.setPanel => settingsCanvas,
                                            _=> null
                                          };
 
@@ -87,5 +88,6 @@ public enum CanvasType
     otp,
     splash,
     updatepassword,
-    home
+    home,
+    setPanel
 }

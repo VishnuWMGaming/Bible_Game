@@ -27,7 +27,7 @@ namespace BibleGame
     }
 
    namespace Data
-    {
+   {
         public static class AppData
         {
             public static LoginData loginData;
@@ -43,6 +43,17 @@ namespace BibleGame
                 this.email = email;
                 this.password = password;
             }
+        }
+   }
+
+    namespace API
+    {
+
+        public class  ServiceURL
+        {
+            public const string baseURL = "http://52.22.241.165:10032/api/user/";
+            public const string loginURL = "";
+            public const string signupURL = "";
         }
 
     }
