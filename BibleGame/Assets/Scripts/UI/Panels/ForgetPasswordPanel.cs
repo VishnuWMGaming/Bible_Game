@@ -31,6 +31,8 @@ public class ForgetPasswordPanel : MonoBehaviour
     {
         _nextBtn.onClick.AddListener(ForgetPasswordAction);
         _backBtn.onClick.AddListener(()=> Actions.ChangePanelActions(CanvasType.login));
+
+        inputField.text = "";
     }
 
     /// <summary>
@@ -67,15 +69,17 @@ public class ForgetPasswordPanel : MonoBehaviour
             return;
         }
 
+        PopUp.Instance.EnableLoad(true);
 
         var emailData =  new EmailData(inputField.text);
-
         ForgetAPI.Retrive(emailData, Callback);
     }
 
     private void Callback(bool success, ForgetResponse response)
     {
-        if(success)
+        PopUp.Instance.EnableLoad(false);
+
+        if (success)
         {
             AppData.otpData = new OTPData(response.ResponseData.otp, OTPType.forget);
 

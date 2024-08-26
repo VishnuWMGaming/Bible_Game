@@ -1,6 +1,9 @@
+using BibleGame;
+using BibleGame.Data;
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +13,8 @@ public class SettingsPanel : MonoBehaviour
     [SerializeField] Button myProfileButton;
     [SerializeField] Button termsConditionButton;
     [SerializeField] Button logoutButton;
+    [SerializeField] Button homeButton;
+    [SerializeField] TMP_Text userName;
 
     [SerializeField] SetPanel _setPanel;
 
@@ -22,6 +27,9 @@ public class SettingsPanel : MonoBehaviour
         myProfileButton.onClick.AddListener(() => EnablePanel(SetPanelType.myProfile));
         termsConditionButton.onClick.AddListener(() => EnablePanel(SetPanelType.termsCondition));
         logoutButton.onClick.AddListener(() => EnablePanel(SetPanelType.logout));
+        homeButton.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
+
+        userName.text = AppData.loginData.Name;
     }
 
     /// <summary>
@@ -32,6 +40,7 @@ public class SettingsPanel : MonoBehaviour
         myProfileButton.onClick.RemoveAllListeners();
         termsConditionButton.onClick.RemoveAllListeners();
         logoutButton.onClick.RemoveAllListeners();
+        homeButton.onClick.RemoveAllListeners();
     }
 
     private void EnablePanel(SetPanelType type)

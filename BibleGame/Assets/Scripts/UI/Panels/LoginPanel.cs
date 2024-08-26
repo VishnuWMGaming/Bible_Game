@@ -39,6 +39,8 @@ public class LoginPanel : MonoBehaviour
         loginButton.onClick.AddListener(LoginAction);
         signButton.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.signup));
         forgetButton.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.forgetpassword));
+
+        email_Inputfield.text = "";
     }
 
     /// <summary>
@@ -97,6 +99,7 @@ public class LoginPanel : MonoBehaviour
             return;
         }
 
+        PopUp.Instance.EnableLoad(true);
 
         var loginRequestData = new LoginRequest(email_Inputfield.text, password_Inputfield.Text);
         LoginAPI.Login(loginRequestData, Callback);
@@ -104,7 +107,9 @@ public class LoginPanel : MonoBehaviour
 
     private void Callback(bool success, LoginResponseX response)
     {
-        if(success)
+        PopUp.Instance.EnableLoad(false);
+
+        if (success)
         {
             AppData.loginData = new LoginData(email_Inputfield.text, password_Inputfield.Text, response.ResponseData.name);
             Actions.ChangePanelActions(CanvasType.home);

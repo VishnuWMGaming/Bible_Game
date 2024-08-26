@@ -28,6 +28,8 @@ public class VerificationPanel : MonoBehaviour
         otpInputField.onValueChanged.AddListener(OnValueChanged_Action);
         Debug.Log("OTP >>>" + AppData.otpData.Otp);
 
+        Notifications.Instance.SendNotification("OTP","your otp " + AppData.otpData.Otp); 
+
         verifyBtn.onClick.AddListener(VerifyAction);
         verifyBtn.interactable = false;
 
@@ -44,6 +46,11 @@ public class VerificationPanel : MonoBehaviour
         backBtn.onClick.RemoveAllListeners();   
 
         verifyBtn.interactable = false;
+
+        for (int i = 0; i < otps.Count; i++)
+        {
+            otps[i].text = string.Empty;
+        }
     }
 
     private void VerifyAction()

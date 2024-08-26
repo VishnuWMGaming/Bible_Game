@@ -36,6 +36,9 @@ public class SignPanel : MonoBehaviour
 
     private void OnEnable()
     {
+        email_InputField.text = "";
+        name_InputField.text = "";
+
         loginButton.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.login));
         signUpButton.onClick.AddListener(SignUpAction);
     }

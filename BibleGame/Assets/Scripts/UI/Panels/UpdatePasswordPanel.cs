@@ -72,6 +72,8 @@ public class UpdatePasswordPanel : MonoBehaviour
             return;
         }
 
+        PopUp.Instance.EnableLoad(true);
+
         var passwordData = new PasswordData(inputField_passwordConfirm.Text);
         UpdatePasswordAPI.UpdatePassword(passwordData, Callback);
 
@@ -79,7 +81,9 @@ public class UpdatePasswordPanel : MonoBehaviour
 
     private void Callback(bool success, UpdatePasswordResponse response)
     {
-        if(success)
+        PopUp.Instance.EnableLoad(false);
+
+        if (success)
         {
             PopUp.Instance.ShowMessage("Password is updated !!!");
 

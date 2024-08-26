@@ -22,6 +22,8 @@ public class UIPasswordField : MonoBehaviour
     {
        inputField = GetComponent<TMP_InputField>();
        hideButton.onClick.AddListener(HideAction);
+
+        inputField.text = "";
     }
 
     public void HideAction()

@@ -21,6 +21,10 @@ public class SetPanel : MonoBehaviour
     private void OnEnable()
     {
         backButton.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
+
+        _editPanel.GetComponent<EditPanel>().CloseAction.AddListener(()=> this.gameObject.SetActive(false));
+        _termsPanel.GetComponent<TermsConditionPanel>().CloseAction.AddListener(() => this.gameObject.SetActive(false));
+        _logoutPanel.GetComponent<LogoutPanel>().CloseAction.AddListener(() => this.gameObject.SetActive(false));
     }
 
     /// <summary>

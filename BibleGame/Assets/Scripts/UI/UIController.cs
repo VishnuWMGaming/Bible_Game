@@ -25,14 +25,6 @@ public class UIController : MonoBehaviour
     /// </summary>
     private void OnValidate()
     {
-        loginCanvas = FindObjectOfType<LoginPanel>(true).gameObject;
-        splashCanvas = FindObjectOfType<SplashPanel>(true).gameObject;
-        signCanvas = FindObjectOfType<SignPanel>(true).gameObject;
-        forgetPasswordCanvas= FindObjectOfType<ForgetPasswordPanel>(true).gameObject;
-        otpCanvas = FindObjectOfType<VerificationPanel>(true).gameObject;
-        updatePasswordCanavas = FindObjectOfType<UpdatePasswordPanel>(true).gameObject;
-        homeCanvas = FindObjectOfType<HomePanel>(true).gameObject;
-        settingsCanvas = FindObjectOfType<SettingsPanel>(true).gameObject;
     }
 
     /// <summary>
@@ -40,7 +32,17 @@ public class UIController : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        BibleUI.Init(this);
+        // BibleUI.Init(this);
+
+
+        loginCanvas = FindObjectOfType<LoginPanel>(true).gameObject;
+        splashCanvas = FindObjectOfType<SplashPanel>(true).gameObject;
+        signCanvas = FindObjectOfType<SignPanel>(true).gameObject;
+        forgetPasswordCanvas = FindObjectOfType<ForgetPasswordPanel>(true).gameObject;
+        otpCanvas = FindObjectOfType<VerificationPanel>(true).gameObject;
+        updatePasswordCanavas = FindObjectOfType<UpdatePasswordPanel>(true).gameObject;
+        homeCanvas = FindObjectOfType<HomePanel>(true).gameObject;
+        settingsCanvas = FindObjectOfType<SettingsPanel>(true).gameObject;
 
         _canvasType = CanvasType.splash;
         currentPanel = splashCanvas;
