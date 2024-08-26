@@ -60,7 +60,12 @@ public class VerificationPanel : MonoBehaviour
         if(sucess && response.succeeded)
         {
             Debug.LogWarning("otp verified !!!");
-            Actions.ChangePanelActions(CanvasType.home);
+
+            switch(AppData.otpData.OTPType)
+            {
+                case OTPType.sign: Actions.ChangePanelActions(CanvasType.home); break;
+                case OTPType.forget: Actions.ChangePanelActions(CanvasType.updatepassword); break;
+            }
         }
         else
         {
@@ -78,7 +83,7 @@ public class VerificationPanel : MonoBehaviour
             otps[i].text = string.Empty;
         }
 
-        for (int i = 0; i < otps.Count; i++)
+        for (int i = 0; i < otpArray.Length; i++)
         {
             otps[i].text = otpArray[i].ToString();
         }

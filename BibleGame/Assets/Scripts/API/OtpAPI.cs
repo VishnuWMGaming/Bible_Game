@@ -19,7 +19,7 @@ namespace BibleGame
             public static void VerifyOtp(OtpData verifyOtpData, VerifyOtpCallback verifyOtpCallback)
             {
                 var jsonData = JsonConvert.SerializeObject(verifyOtpData);
-                LogSystem.LogEvent("RequestData: {0}", jsonData);
+                Debug.Log("OTP DATA" + jsonData);
                 WebRequest(VerifyUrl, jsonData, (url, success, data) => HandleResponse(success, data, verifyOtpCallback));
             }
 

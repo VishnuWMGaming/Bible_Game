@@ -17,9 +17,6 @@ public class LoginPanel : MonoBehaviour
     [SerializeField] Button signButton;
     [SerializeField] Button forgetButton;
 
-    [SerializeField] Sprite closeEye;
-    [SerializeField] Sprite openEye;
-
     [SerializeField] UIPasswordField password_Inputfield;
     [SerializeField] TMP_InputField email_Inputfield;
 

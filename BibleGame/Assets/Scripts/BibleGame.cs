@@ -13,6 +13,8 @@ namespace BibleGame
         public const string signupURL = "register";
         public const string verify = "verify_otp";
         public const string profileName = "update_profile";
+        public const string forgetPassword = "forget_password";
+        public const string updatePassword = "update_new_password";
     }
 
     namespace UI
@@ -59,15 +61,22 @@ namespace BibleGame
             }
         }
 
+        public enum OTPType { sign ,forget};
+
         public class OTPData
         {
             string otp;
             public string Otp => otp;
 
-            public OTPData (string otp)
+            OTPType type;
+            public OTPType OTPType => type;
+
+            public OTPData (string otp,OTPType oTPType)
             {
-                this.otp = otp;    
+                this.otp = otp;
+                this.type = oTPType;
             }
         }
    }
+
 }

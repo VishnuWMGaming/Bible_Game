@@ -59,18 +59,21 @@ public class SignPanel : MonoBehaviour
         if(!successMail)
         {
             Debug.LogError("Not the valid mail");
+            PopUp.Instance.SendMessage("Not the valid mail");
             return;
         }
 
         if(!successPassword)
         {
             Debug.LogError(error_message);
+            PopUp.Instance.SendMessage(error_message);
             return;
         }
 
         if(!validate)
         {
             Debug.LogError("Fields cannot be empty");
+            PopUp.Instance.SendMessage("Fields cannot be empty");
             return;
         }
 
@@ -87,7 +90,7 @@ public class SignPanel : MonoBehaviour
         if (success && response.succeeded)
         {
             Debug.Log("Response data >>>" + response.ResponseData);
-            AppData.otpData = new OTPData(response.ResponseData.otp);
+            AppData.otpData = new OTPData(response.ResponseData.otp,OTPType.sign);
             AppData.loginData = new LoginData(email_InputField.text, password_InputFieldConfirm.Text, name_InputField.text);
 
             Actions.ChangePanelActions(CanvasType.otp);
@@ -95,6 +98,7 @@ public class SignPanel : MonoBehaviour
         else
         {
             Debug.LogError("Response failed !!!" + response != null ? response.ResponseMessage : "Network issue");
+            PopUp.Instance.SendMessage(response != null ? response.ResponseMessage : "Network issue");
         }
     }
 
