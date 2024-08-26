@@ -1,37 +1,39 @@
-using Newtonsoft.Json;
-using RestAPI;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using RestAPI;
+using Newtonsoft.Json;
+using System;
 
 namespace BibleGame
 {
     namespace API
     {
-        public class ForgetAPI : ApiBase
+        public class LoginAPI : ApiBase
         {
-            private static string ForgetURL = ServiceURL.baseURL + ServiceURL.forgetPassword;
+            private static string LogintURL = ServiceURL.baseURL + ServiceURL.login;
 
-            public delegate void ForgetCallback(bool success, ForgetResponse response = null);
+            public delegate void loginCallback(bool success, LoginResponseX response = null);
 
-            public static void Retrive(EmailData emailData, ForgetCallback callback)
+            public static void Login(LoginRequest login, loginCallback callback)
             {
-                var jsonData = JsonConvert.SerializeObject(emailData);
+                var jsonData = JsonConvert.SerializeObject(login);
 
-                Debug.Log("Email data :" + jsonData);
-                WebRequest(ForgetURL, jsonData, (url, success, data) => HandleResponse(success, data, callback));
+                Debug.Log("login data :" + jsonData);
+
+                WebRequest(LogintURL, jsonData, (url, success, data) => HandleResponse(success, data, callback));
             }
 
-            private static void HandleResponse(bool aSuccess, object data, ForgetCallback callback)
+            private static void HandleResponse(bool aSuccess, object data, loginCallback callback)
             {
                 Debug.Log(data.ToString());
-                var response = JsonConvert.DeserializeObject<ForgetResponse>(data.ToString());
+                var response = JsonConvert.DeserializeObject<LoginResponseX>(data.ToString());
+
 
                 if (aSuccess)
                 {
-                    Debug.Log(data);
+                    Debug.Log(data.ToString());
                     if (response != null)
                     {
                         if (response.succeeded)
@@ -53,39 +55,43 @@ namespace BibleGame
                 }
                 else
                 {
-                    callback?.Invoke(false, response);
+                    callback?.Invoke(false, response);  
                 }
             }
-
         }
+
 
         #region REQUEST_DATA
 
         [Serializable]
-        public class EmailData
+        public class LoginRequest
         {
-            public string email;
+            public string username;
+            public string password;
 
-            public EmailData(string email)
+            public LoginRequest (string username, string password)
             {
-                this.email = email; 
+                this.username = username;
+                this.password = password;
             }
         }
+
         #endregion
 
         #region RESPONSE_DATA
-        public class ForgetResponse: ResponseBase
+
+        public class LoginResponseX: ResponseBase
         {
-            public ForgetData ResponseData;
+            public LoginDataX ResponseData;
         }
 
-        public class ForgetData
+        public class LoginDataX
         {
             public string token;
-            public string otp;
+            public string name;
         }
-
 
         #endregion
     }
 }
+

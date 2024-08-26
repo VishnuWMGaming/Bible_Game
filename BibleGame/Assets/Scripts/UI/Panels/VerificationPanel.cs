@@ -29,6 +29,8 @@ public class VerificationPanel : MonoBehaviour
         Debug.Log("OTP >>>" + AppData.otpData.Otp);
 
         verifyBtn.onClick.AddListener(VerifyAction);
+        verifyBtn.interactable = false;
+
         backBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.signup));
     }
 

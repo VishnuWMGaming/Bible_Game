@@ -6,8 +6,10 @@ using UnityEngine.UI;
 using BibleGame.Data;
 using TMPro;
 using System.Text.RegularExpressions;
-using BibleGame;
 
+using BibleGame;
+using BibleGame.API;
+using System;
 
 public class LoginPanel : MonoBehaviour
 {
@@ -93,6 +95,23 @@ public class LoginPanel : MonoBehaviour
         {
             Debug.LogError(error_message);
             return;
+        }
+
+
+        var loginRequestData = new LoginRequest(email_Inputfield.text, password_Inputfield.Text);
+        LoginAPI.Login(loginRequestData, Callback);
+    }
+
+    private void Callback(bool success, LoginResponseX response)
+    {
+        if(success)
+        {
+            AppData.loginData = new LoginData(email_Inputfield.text, password_Inputfield.Text, response.ResponseData.name);
+            Actions.ChangePanelActions(CanvasType.home);
+        }
+        else
+        {
+            PopUp.Instance.ShowMessage(response.ResponseMessage);
         }
     }
 }

@@ -1513,6 +1513,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputField: {fileID: 2065667619}
   _nextBtn: {fileID: 2000704452}
+  _backBtn: {fileID: 1084527982}
 --- !u!1 &173949199
 GameObject:
   m_ObjectHideFlags: 0
@@ -9976,12 +9977,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 2
-  m_fontSizeMax: 40
+  m_fontSizeMax: 25
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256

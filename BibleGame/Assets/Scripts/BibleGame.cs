@@ -11,6 +11,7 @@ namespace BibleGame
     {
         public const string baseURL = "http://52.22.241.165:10032/api/user/";
         public const string signupURL = "register";
+        public const string login = "login";
         public const string verify = "verify_otp";
         public const string profileName = "update_profile";
         public const string forgetPassword = "forget_password";
