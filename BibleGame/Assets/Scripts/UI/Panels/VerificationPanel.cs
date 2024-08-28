@@ -8,7 +8,6 @@ using TMPro;
 using BibleGame.Data;
 using BibleGame.API;
 using BibleGame;
-using static BibleGame.API.ResendOtpAPI;
 using System;
 
 public class VerificationPanel : MonoBehaviour

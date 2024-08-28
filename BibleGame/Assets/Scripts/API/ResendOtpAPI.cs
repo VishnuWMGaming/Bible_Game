@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static BibleGame.API.RegisterAPI;
 
 
 namespace BibleGame
@@ -38,25 +37,27 @@ namespace BibleGame
                     Debug.LogError("Network error ");
             }
 
-            #region REQUEST_DATA
-
-            #endregion
-
-            #region RESPONSE_DATA
-
-            public class ResendOtpResponse : ResponseBase
-            {
-                public ResendResponseDataX ResponseData;
-            }
-
-            public class ResendResponseDataX
-            {
-                public string otp;
-            }
-
-            #endregion
         }
+
+        #region REQUEST_DATA
+
+        #endregion
+
+        #region RESPONSE_DATA
+
+        public class ResendOtpResponse : ResponseBase
+        {
+            public ResendResponseDataX ResponseData;
+        }
+
+        public class ResendResponseDataX
+        {
+            public string otp;
+        }
+
+        #endregion
     }
 }
+
 
 

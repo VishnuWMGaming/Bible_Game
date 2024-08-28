@@ -28,7 +28,6 @@ public class UIPasswordField : MonoBehaviour
 
     private void OnDisable()
     {
-
         hideButton.onClick.RemoveAllListeners();
         hideButton.image.sprite = closeEye;
 
