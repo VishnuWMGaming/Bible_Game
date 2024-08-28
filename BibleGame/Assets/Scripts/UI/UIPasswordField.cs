@@ -20,14 +20,25 @@ public class UIPasswordField : MonoBehaviour
 
     private void OnEnable()
     {
-       inputField = GetComponent<TMP_InputField>();
-       hideButton.onClick.AddListener(HideAction);
+        hideButton.onClick.AddListener(HideAction);
 
+        inputField = GetComponent<TMP_InputField>();
         inputField.text = "";
+    }
+
+    private void OnDisable()
+    {
+
+        hideButton.onClick.RemoveAllListeners();
+        hideButton.image.sprite = closeEye;
+
+        inputField.contentType = TMP_InputField.ContentType.Password;
+        inputField.ForceLabelUpdate();
     }
 
     public void HideAction()
     {
+
         inputField.contentType = inputField.contentType == TMP_InputField.ContentType.Standard ? TMP_InputField.ContentType.Password : TMP_InputField.ContentType.Standard;
         inputField.ForceLabelUpdate();
 

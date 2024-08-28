@@ -59,24 +59,24 @@ public class SignPanel : MonoBehaviour
         var successPassword = ValidatePassword(password_InputField.Text, password_InputFieldConfirm.Text);
         var validate = Validate();
 
-        if(!successMail)
+        if (!validate)
+        {
+            Debug.LogError("Fields cannot be empty");
+            PopUp.Instance.ShowMessage("Fields cannot be empty");
+            return;
+        }
+
+        if (!successMail)
         {
             Debug.LogError("Not the valid mail");
-            PopUp.Instance.SendMessage("Not the valid mail");
+            PopUp.Instance.ShowMessage("Not the valid mail");
             return;
         }
 
         if(!successPassword)
         {
             Debug.LogError(error_message);
-            PopUp.Instance.SendMessage(error_message);
-            return;
-        }
-
-        if(!validate)
-        {
-            Debug.LogError("Fields cannot be empty");
-            PopUp.Instance.SendMessage("Fields cannot be empty");
+            PopUp.Instance.ShowMessage(error_message);
             return;
         }
 

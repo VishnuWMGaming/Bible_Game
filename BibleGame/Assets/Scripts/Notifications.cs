@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Notifications.Android;
 using UnityEngine.Android;
+using UnityEngine.Events;
 
 public class Notifications : MonoBehaviour
 {
     static Notifications instance;
 
     public static Notifications Instance { get { return instance; } }
+
+    public UnityEvent Requestcallback;
 
     private void Awake()
     {
@@ -24,6 +27,12 @@ public class Notifications : MonoBehaviour
    
     public void SendNotification(string title, string message)
     {
+        if (!Permission.HasUserAuthorizedPermission("android.permission.POST_NOTIFICATIONS"))
+        {
+            Requestcallback?.Invoke();
+            return;
+        }
+
         var channel = new AndroidNotificationChannel()
         {
             Id = "channel_id",

@@ -43,9 +43,15 @@ public class UpdatePasswordPanel : MonoBehaviour
     {
         bool isValid = true;
 
-        if (password == null || password == string.Empty)
+
+        if (password == string.Empty)
         {
             error_message = "Please enter password";
+            isValid = false;
+        }
+        else if(confirmPassword == string.Empty)
+        {
+            error_message = "Please enter the confirm password";
             isValid = false;
         }
         else if (password.Length < 8)

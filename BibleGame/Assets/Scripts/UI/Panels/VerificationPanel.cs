@@ -8,6 +8,8 @@ using TMPro;
 using BibleGame.Data;
 using BibleGame.API;
 using BibleGame;
+using static BibleGame.API.ResendOtpAPI;
+using System;
 
 public class VerificationPanel : MonoBehaviour
 {
@@ -19,6 +21,10 @@ public class VerificationPanel : MonoBehaviour
     [SerializeField] Button verifyBtn;
     [SerializeField] Button backBtn;
 
+    [SerializeField] TMP_Text timerText;
+
+
+    float timer;
 
     /// <summary>
     /// Action implemented in enable 
@@ -28,12 +34,21 @@ public class VerificationPanel : MonoBehaviour
         otpInputField.onValueChanged.AddListener(OnValueChanged_Action);
         Debug.Log("OTP >>>" + AppData.otpData.Otp);
 
-        Notifications.Instance.SendNotification("OTP","your otp " + AppData.otpData.Otp); 
+        Notifications.Instance.SendNotification("OTP", "your otp " + AppData.otpData.Otp);
 
         verifyBtn.onClick.AddListener(VerifyAction);
         verifyBtn.interactable = false;
 
-        backBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.signup));
+        backBtn.onClick.AddListener(() => Actions.ChangePanelActions( AppData.otpData.OTPType switch
+            { 
+               OTPType.sign => CanvasType.signup,
+               OTPType.forget => CanvasType.forgetpassword
+            }));
+
+        DisplayTimer("00:00");
+
+        StopAllCoroutines();
+        StartCoroutine(TimerCoroutine(120));
     }
 
     /// <summary>
@@ -51,11 +66,13 @@ public class VerificationPanel : MonoBehaviour
         {
             otps[i].text = string.Empty;
         }
+
+        StopAllCoroutines();
     }
 
     private void VerifyAction()
     {
-       var otpData = new OtpData(AppData.otpData.Otp);
+       var otpData = new OtpData(otpInputField.text);
         OtpAPI.VerifyOtp(otpData, OTPCallback);
 
         PopUp.Instance.EnableLoad(true);
@@ -79,6 +96,7 @@ public class VerificationPanel : MonoBehaviour
         else
         {
             Debug.LogError("Response failed !!!" + response != null ? response.ResponseMessage : "Network issue");
+            PopUp.Instance.ShowMessage("Response failed !!!" + response != null ? response.ResponseMessage : "Network issue");
         }
     }
     #endregion
@@ -99,5 +117,54 @@ public class VerificationPanel : MonoBehaviour
 
         verifyBtn.interactable = otpArray.Length == 4;
     }
+
+    #region TIMER
+    IEnumerator TimerCoroutine(float duration)
+    {
+        float timer = duration;
+
+        while (timer > 0)
+        {
+            yield return new WaitForSeconds(1); // Wait for 1 second
+            timer--;
+
+           int minutes = Mathf.FloorToInt(timer / 60);
+           int seconds = Mathf.FloorToInt(timer % 60);
+
+           string timerText = string.Format("{0:00}:{1:00}", minutes, seconds);
+           DisplayTimer(timerText); 
+        }
+
+        ResendOtpAPI.Resend(resendCallback);
+    }
+
+    private void resendCallback(bool success, ResendOtpResponse response)
+    {
+        if (success)
+        {
+            Debug.LogWarning("OTP RESENDED");
+
+            PopUp.Instance.ShowMessage("OTP Resended");
+
+            OTPType oTPType = AppData.otpData.OTPType;
+            AppData.otpData = new OTPData(response.ResponseData.otp, oTPType);
+
+            Notifications.Instance.SendNotification("OTP", "your otp " + AppData.otpData.Otp);
+
+            StartCoroutine(TimerCoroutine(180));
+        }
+        else
+        {
+            Debug.LogError("Otp not send " +  response.ResponseMessage);
+
+            PopUp.Instance.ShowMessage("Otp not send " + response.ResponseMessage);
+        }
+    }
+
+    void DisplayTimer(string text)
+    {
+        timerText.text = text;
+    }
+    #endregion
 
 }

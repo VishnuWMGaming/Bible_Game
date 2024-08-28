@@ -29,7 +29,7 @@ public class EditPanel : MonoBehaviour
         name_InputField.interactable = true;
 
         email_InputField.text = AppData.loginData.Email;
-        name_InputField.text = "";
+        name_InputField.text = AppData.loginData.Name;
 
         name_InputField.onValueChanged.AddListener(SaveChecKAction);
 

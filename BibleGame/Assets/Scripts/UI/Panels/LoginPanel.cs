@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using BibleGame;
 using BibleGame.API;
 using System;
+using Unity.VisualScripting;
 
 public class LoginPanel : MonoBehaviour
 {
@@ -81,21 +82,38 @@ public class LoginPanel : MonoBehaviour
         return isValid; 
     }
 
+    private bool Validate()
+    {
+        return !string.IsNullOrEmpty(email_Inputfield.text)
+               && !string.IsNullOrEmpty(password_Inputfield.Text);
+        //&& !string.IsNullOrEmpty(cityName) && !string.IsNullOrEmpty(mobileNumber) && !string.IsNullOrEmpty(age) && !string.IsNullOrEmpty(lastName);
+    }
+
 
     private void LoginAction()
     {
         var validEmail = ValidateEmail(email_Inputfield.text);
-        var validPassword = ValidatePassword(password_Inputfield.Text); 
-        
-        if(!validEmail)
+        var validPassword = ValidatePassword(password_Inputfield.Text);
+        var valid = Validate();
+
+        if (!valid)
+        {
+            Debug.LogError("Please enter Email & Password");
+            PopUp.Instance.ShowMessage("Please enter Email & Password");
+            return;
+        }
+
+        if (!validEmail)
         {
             Debug.LogError("Enter the valid email");
+            PopUp.Instance.ShowMessage("Enter the valid email");
             return;
         }
 
         if (!validPassword)
         {
             Debug.LogError(error_message);
+            PopUp.Instance.ShowMessage(error_message);
             return;
         }
 
