@@ -12,7 +12,6 @@ public class MCQManager : MonoBehaviour
     [SerializeField] OptionPanel optionPanel;
     [SerializeField] TMP_Text scoreText;
     [SerializeField] Button _homeBtn;
-    [SerializeField] Button _settingBtn;
 
     /// <summary>
     /// Action implemented one enable
@@ -27,7 +26,6 @@ public class MCQManager : MonoBehaviour
     /// </summary>
     private void OnDisable()
     {
-        _homeBtn.onClick.RemoveAllListeners();  
-        _settingBtn.onClick.RemoveAllListeners();
+        _homeBtn.onClick.RemoveAllListeners(); 
     }
 }

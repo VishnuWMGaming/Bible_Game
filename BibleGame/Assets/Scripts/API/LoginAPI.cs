@@ -87,8 +87,10 @@ namespace BibleGame
 
         public class LoginDataX
         {
-            public string token;
-            public string name;
+            public bool verified;
+            public string? token;
+            public string? name;
+            public string? otp;
         }
 
         #endregion
