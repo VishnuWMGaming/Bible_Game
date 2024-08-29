@@ -19,6 +19,7 @@ public class UIController : MonoBehaviour
     GameObject updatePasswordCanavas;
     GameObject settingsCanvas;
     GameObject currentPanel;
+    GameObject chapterPanel;
 
     /// <summary>
     /// Action called on validation
@@ -43,6 +44,7 @@ public class UIController : MonoBehaviour
         updatePasswordCanavas = FindObjectOfType<UpdatePasswordPanel>(true).gameObject;
         homeCanvas = FindObjectOfType<HomePanel>(true).gameObject;
         settingsCanvas = FindObjectOfType<SettingsPanel>(true).gameObject;
+        chapterPanel = FindObjectOfType<ChapterPanel>(true).gameObject;    
 
         _canvasType = CanvasType.splash;
         currentPanel = splashCanvas;
@@ -75,6 +77,7 @@ public class UIController : MonoBehaviour
                                            CanvasType.updatepassword => updatePasswordCanavas,
                                            CanvasType.home => homeCanvas,
                                            CanvasType.setPanel => settingsCanvas,
+                                           CanvasType.chapter => chapterPanel,
                                            _=> null
                                          };
 
@@ -92,5 +95,6 @@ public enum CanvasType
     splash,
     updatepassword,
     home,
-    setPanel
+    setPanel,
+    chapter
 }
