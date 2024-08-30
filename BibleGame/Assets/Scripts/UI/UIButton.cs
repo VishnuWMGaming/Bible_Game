@@ -5,8 +5,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+using DG.Tweening;
+using UnityEngine.EventSystems;
+
+
 [RequireComponent(typeof(Button))]
-public class UIButton : MonoBehaviour
+public class UIButton : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 {
     [SerializeField] TMP_Text buttonText;
     public TMP_Text ButtonText =>  buttonText;
@@ -19,4 +23,23 @@ public class UIButton : MonoBehaviour
         button = GetComponent<Button>();
     }
 
+    #region EVENT_FUNCTIONS
+    /// <summary>
+    /// Action implemented on jhighlight
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+      
+    }
+
+    /// <summary>
+    /// Action implemented on not highlight
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnPointerExit(PointerEventData eventData)
+    {
+       
+    }
+    #endregion
 }
