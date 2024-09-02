@@ -13,6 +13,10 @@ public class Notifications : MonoBehaviour
 
     public UnityEvent Requestcallback;
 
+
+    string currentTitle = string.Empty;
+    string currentMessage = string.Empty;   
+
     private void Awake()
     {
         if (instance == null)
@@ -24,17 +28,50 @@ public class Notifications : MonoBehaviour
         }
     }
 
-   
-    public void SendNotification(string title, string message)
+    void AskNotification()
     {
-
         if (!Permission.HasUserAuthorizedPermission("android.permission.POST_NOTIFICATIONS"))
         {
-            Permission.RequestUserPermission("android.permission.POST_NOTIFICATIONS");
-            Requestcallback?.Invoke();
-            return;
-        }
+            var callbacks = new PermissionCallbacks();
+            callbacks.PermissionDenied += OnPermissionDenied;
+            callbacks.PermissionGranted += OnPermissionGranted;
+            callbacks.PermissionDeniedAndDontAskAgain += OnPermissionDeniedAndDontAskAgain;
 
+            Permission.RequestUserPermission("android.permission.POST_NOTIFICATIONS", callbacks);
+        }
+        else
+        {
+            Debug.Log("Permission was grnated");
+
+            var channel = new AndroidNotificationChannel()
+            {
+                Id = "channel_id",
+                Name = "Default Channel",
+                Importance = Importance.Default,
+                Description = "Generic notyification",
+            };
+
+            AndroidNotificationCenter.RegisterNotificationChannel(channel);
+
+            var notification = new AndroidNotification();
+            notification.Title = currentTitle;
+            notification.Text = currentMessage;
+            notification.SmallIcon = "icon";
+            notification.LargeIcon = "logo";
+
+            notification.FireTime = System.DateTime.Now;
+            AndroidNotificationCenter.SendNotification(notification, "channel_id");
+        }
+    }
+
+    void OnPermissionDenied(string permissionName)
+    {
+        Debug.Log($"{permissionName} permission denied");
+    }
+
+    void OnPermissionGranted(string permissionName)
+    {
+        Debug.Log($"{permissionName} permission granted");
 
         var channel = new AndroidNotificationChannel()
         {
@@ -47,13 +84,26 @@ public class Notifications : MonoBehaviour
         AndroidNotificationCenter.RegisterNotificationChannel(channel);
 
         var notification = new AndroidNotification();
-        notification.Title = title;
-        notification.Text = message;
+        notification.Title = currentTitle;
+        notification.Text = currentMessage;
         notification.SmallIcon = "icon";
         notification.LargeIcon = "logo";
 
         notification.FireTime = System.DateTime.Now;
         AndroidNotificationCenter.SendNotification(notification, "channel_id");
+    }
+
+    void OnPermissionDeniedAndDontAskAgain(string permissionName)
+    {
+        Debug.Log($"{permissionName} permission denied and don't ask again");
+    }
+
+    public void SendNotification(string title, string message)
+    {
+        currentTitle = title;
+        currentMessage = message;
+        
+        AskNotification();
     }
 
     bool IsNotificationsEnabled()

@@ -19,8 +19,10 @@ public class VerificationPanel : MonoBehaviour
 
     [SerializeField] Button verifyBtn;
     [SerializeField] Button backBtn;
+    [SerializeField] Button resendBtn;
 
     [SerializeField] TMP_Text timerText;
+    [SerializeField] GameObject resendCodeText;
 
 
     float timer;
@@ -44,7 +46,10 @@ public class VerificationPanel : MonoBehaviour
                OTPType.forget => CanvasType.forgetpassword
             }));
 
+
         DisplayTimer("00:00");
+
+        resendBtn.gameObject.SetActive(false);
 
         StopAllCoroutines();
         StartCoroutine(TimerCoroutine(120));
@@ -57,7 +62,8 @@ public class VerificationPanel : MonoBehaviour
     {
         otpInputField.onValueChanged.RemoveAllListeners();
         verifyBtn.onClick.RemoveAllListeners();
-        backBtn.onClick.RemoveAllListeners();   
+        backBtn.onClick.RemoveAllListeners();
+        resendBtn.onClick.RemoveAllListeners();
 
         verifyBtn.interactable = false;
 
@@ -134,8 +140,24 @@ public class VerificationPanel : MonoBehaviour
            DisplayTimer(timerText); 
         }
 
-        ResendOtpAPI.Resend(resendCallback);
+        resendBtn.gameObject.SetActive(true);
+        resendBtn.onClick.AddListener(ResendOTPAction);
+        
+        resendCodeText.gameObject.SetActive(false);
+
+        // ResendOtpAPI.Resend(resendCallback);
     }
+
+    void ResendOTPAction()
+    {
+        ResendOtpAPI.Resend(resendCallback);
+
+        resendBtn.onClick.RemoveAllListeners();
+        resendBtn.gameObject.SetActive(false);
+
+        resendCodeText.gameObject.SetActive(true);
+    }
+
 
     private void resendCallback(bool success, ResendOtpResponse response)
     {

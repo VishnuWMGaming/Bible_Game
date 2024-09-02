@@ -101,7 +101,7 @@ public class SignPanel : MonoBehaviour
         else
         {
             Debug.LogError("Response failed !!!" + response != null ? response.ResponseMessage : "Network issue");
-            PopUp.Instance.SendMessage(response != null ? response.ResponseMessage : "Network issue");
+            PopUp.Instance.ShowMessage(response != null ? response.ResponseMessage : "Network issue");
         }
     }
 
@@ -128,6 +128,11 @@ public class SignPanel : MonoBehaviour
             error_message = "Password length must be 8 character";
             isValid = false;
         }
+        else if(!IsStrongPassword(password))
+        {
+            error_message = "Password must be strong";
+            isValid = false;
+        }
         else if(password != confirmPassword)
         {
             error_message = "Password does not match";
@@ -135,6 +140,32 @@ public class SignPanel : MonoBehaviour
         }
 
         return isValid;
+    }
+
+    public bool IsStrongPassword(string password)
+    {
+        // Check length
+        if (password.Length < 8)
+            return false;
+
+        // Check for uppercase letter
+        if (!System.Text.RegularExpressions.Regex.IsMatch(password, "[A-Z]"))
+            return false;
+
+        // Check for lowercase letter
+        if (!System.Text.RegularExpressions.Regex.IsMatch(password, "[a-z]"))
+            return false;
+
+        // Check for digit
+        if (!System.Text.RegularExpressions.Regex.IsMatch(password, @"\d"))
+            return false;
+
+        // Check for special character
+        if (!System.Text.RegularExpressions.Regex.IsMatch(password, "[!@#$%^&*()_+=-{};:'<>,./?]"))
+            return false;
+
+        // Password meets all criteria
+        return true;
     }
 
     private bool Validate()

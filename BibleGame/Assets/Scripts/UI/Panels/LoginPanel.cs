@@ -84,6 +84,7 @@ public class LoginPanel : MonoBehaviour
 
     private bool Validate()
     {
+
         return !string.IsNullOrEmpty(email_Inputfield.text)
                && !string.IsNullOrEmpty(password_Inputfield.Text);
         //&& !string.IsNullOrEmpty(cityName) && !string.IsNullOrEmpty(mobileNumber) && !string.IsNullOrEmpty(age) && !string.IsNullOrEmpty(lastName);
