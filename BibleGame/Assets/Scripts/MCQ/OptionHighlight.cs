@@ -15,15 +15,11 @@ public class OptionHighlight : MonoBehaviour
     {
         image = GetComponent<Image>();
 
-        ChangeSet(Option.OptionType.worng);
+       // ChangeSet(Option.OptionType.worng);
     }
 
     public void ChangeSet(Option.OptionType optionType)
     {
-        image.color = optionType switch
-        {
-            Option.OptionType.correct => new Color32(39, 251, 111, 100),
-            Option.OptionType.worng => new Color32(54, 188, 228, 100)
-        };
+        image.color = optionType == Option.OptionType.correct ? new Color32(39, 251, 111, 100) : new Color32(54, 188, 228, 100);
     }
 }

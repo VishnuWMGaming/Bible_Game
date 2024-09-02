@@ -4,21 +4,31 @@ using UnityEngine;
 
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.PackageManager;
 
-public class MCQManager : MonoBehaviour
+using BibleGame;
+
+public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 {
     [Header("UI Settings:")]
     [SerializeField] OptionPanel optionPanel;
+    [SerializeField] GameObject questionPanel;
+    [SerializeField] CorrectPanel correctPanel;
     [SerializeField] TMP_Text scoreText;
     [SerializeField] Button _homeBtn;
+    [SerializeField] Button _submitBtn;
 
     /// <summary>
     /// Action implemented one enable
     /// </summary>
     private void OnEnable()
     {
-        
+        optionPanel.callback = this;
+        correctPanel.callback = this;
+
+        _homeBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
+        _submitBtn.onClick.AddListener(() => optionPanel.CheckAnswerAction());
+
+        RestartAction();    
     }
 
     /// <summary>
@@ -26,6 +36,19 @@ public class MCQManager : MonoBehaviour
     /// </summary>
     private void OnDisable()
     {
-        _homeBtn.onClick.RemoveAllListeners(); 
+        _homeBtn.onClick.RemoveAllListeners();
+        _submitBtn.onClick.RemoveAllListeners();
+    }
+
+    public void CorrectAnswerAction()
+    {
+        questionPanel.gameObject.SetActive(false);
+        correctPanel.gameObject.SetActive(true);
+    }
+
+    public void RestartAction()
+    {
+        questionPanel.gameObject.SetActive(true);
+        correctPanel.gameObject.SetActive(false);
     }
 }

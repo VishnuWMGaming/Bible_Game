@@ -129,7 +129,9 @@ public class LoginPanel : MonoBehaviour
 
         if (success)
         {
-            if(!response.ResponseData.verified)
+            AppData.loginData = new LoginData(email_Inputfield.text, password_Inputfield.Text, response.ResponseData.name);
+
+            if (!response.ResponseData.verified)
             {
                 PopUp.Instance.ShowMessage("OTP not verified !!");
                 AppData.otpData = new OTPData(response.ResponseData.otp, OTPType.sign);
@@ -137,7 +139,6 @@ public class LoginPanel : MonoBehaviour
                 return;
             }
 
-            AppData.loginData = new LoginData(email_Inputfield.text, password_Inputfield.Text, response.ResponseData.name);
             Actions.ChangePanelActions(CanvasType.home);
         }
         else

@@ -11,6 +11,7 @@ public class HomePanel : MonoBehaviour
     [Header("UI Settings:")]
     [SerializeField] TMP_Text userName;
     [SerializeField] Button settingBtn;
+    [SerializeField] Button playBtn;
 
     /// <summary>
     /// Action implemented on enable
@@ -18,6 +19,7 @@ public class HomePanel : MonoBehaviour
     private void OnEnable()
     {
         settingBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
+        playBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.level));
 
         userName.text = AppData.loginData.Name;
     }
@@ -28,5 +30,6 @@ public class HomePanel : MonoBehaviour
     private void OnDisable()
     {
         settingBtn.onClick.RemoveAllListeners();
+        playBtn.onClick.RemoveAllListeners();
     }
 }

@@ -27,11 +27,14 @@ public class Notifications : MonoBehaviour
    
     public void SendNotification(string title, string message)
     {
+
         if (!Permission.HasUserAuthorizedPermission("android.permission.POST_NOTIFICATIONS"))
         {
+            Permission.RequestUserPermission("android.permission.POST_NOTIFICATIONS");
             Requestcallback?.Invoke();
             return;
         }
+
 
         var channel = new AndroidNotificationChannel()
         {
@@ -51,6 +54,20 @@ public class Notifications : MonoBehaviour
 
         notification.FireTime = System.DateTime.Now;
         AndroidNotificationCenter.SendNotification(notification, "channel_id");
+    }
+
+    bool IsNotificationsEnabled()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        AndroidJavaObject activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+        AndroidJavaObject notificationManagerCompat = new AndroidJavaObject("androidx.core.app.NotificationManagerCompat", activity);
+        
+        bool notificationsEnabled = notificationManagerCompat.Call<bool>("areNotificationsEnabled");
+        return notificationsEnabled;
+#else
+        // For other platforms or editor, return true as a fallback
+        return true;
+#endif
     }
 
 }
