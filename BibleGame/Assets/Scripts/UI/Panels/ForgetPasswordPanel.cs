@@ -57,7 +57,7 @@ public class ForgetPasswordPanel : MonoBehaviour
     {
         if(String.IsNullOrEmpty(inputField.text))
         {
-            PopUp.Instance.ShowMessage("inputfield cannot not be null");
+            PopUp.Instance.ShowMessage("Please enter email");
             return;
         }
 
@@ -65,7 +65,7 @@ public class ForgetPasswordPanel : MonoBehaviour
 
         if(!successmail)
         {
-            PopUp.Instance.ShowMessage("Please the valid mail");
+            PopUp.Instance.ShowMessage("Invalid Email");
             return;
         }
 

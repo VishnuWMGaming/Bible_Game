@@ -31,6 +31,8 @@ public class BookChapter : MonoBehaviour
 
     public IBookChapter callback;
 
+    int _currentPageIndex = 0;
+
     /// <summary>
     /// Action imeplemented on enable
     /// </summary>
@@ -40,11 +42,15 @@ public class BookChapter : MonoBehaviour
         nextBtn.onClick.AddListener(()=>PageNavigateAction(Navigate.next));
         backBtn.onClick.AddListener(() => callback.BackToCover());
 
+        _currentPageIndex = 0;  
+
         for (int i = 0; i < pagePanels.Count; ++i)
             pagePanels[i].gameObject.SetActive(false);
 
         pagePanels[0].gameObject.SetActive(true);
         header.text = "Chapter " + pagePanels.Find(x => x.gameObject.activeInHierarchy).Page.chapterIndex;
+
+        previousBtn.interactable =false;
     }
 
     private void OnDisable()
@@ -67,7 +73,10 @@ public class BookChapter : MonoBehaviour
             case Navigate.next :
 
                 if (index + 1 < pagePanels.Count)
+                {
                     pagePanels[index + 1].gameObject.SetActive(true);
+                    _currentPageIndex = index +1;
+                }
                 else
                 {
                     callback.EndBookAction();
@@ -78,13 +87,17 @@ public class BookChapter : MonoBehaviour
 
              case Navigate.previous :
 
-                if(index-1 >=0)
-                    pagePanels[index-1].gameObject.SetActive(true);
+                if (index - 1 >= 0)
+                {
+                    pagePanels[index - 1].gameObject.SetActive(true);
+                    _currentPageIndex = index - 1;
 
-                   // pagePanels[pagePanels.Count-1].gameObject.SetActive(true);
+                } // pagePanels[pagePanels.Count-1].gameObject.SetActive(true);
 
                 break;
         }
+
+        previousBtn.interactable = _currentPageIndex != 0;
 
         header.text = "Chapter " + pagePanels.Find(x => x.gameObject.activeInHierarchy).Page.chapterIndex;
     }

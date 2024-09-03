@@ -24,6 +24,8 @@ public class VerificationPanel : MonoBehaviour
     [SerializeField] TMP_Text timerText;
     [SerializeField] GameObject resendCodeText;
 
+    [SerializeField] TMP_Text otp;
+
 
     float timer;
 
@@ -34,6 +36,8 @@ public class VerificationPanel : MonoBehaviour
     {
         otpInputField.onValueChanged.AddListener(OnValueChanged_Action);
         Debug.Log("OTP >>>" + AppData.otpData.Otp);
+
+        otp.text = AppData.otpData.Otp;
 
         Notifications.Instance.SendNotification("OTP", "your otp " + AppData.otpData.Otp);
 
@@ -92,7 +96,9 @@ public class VerificationPanel : MonoBehaviour
         {
             Debug.LogWarning("otp verified !!!");
 
-            switch(AppData.otpData.OTPType)
+            AppData.loginData = new LoginData(AppData.loginData.Email, AppData.loginData.Password, response.ResponseData.name);
+
+            switch (AppData.otpData.OTPType)
             {
                 case OTPType.sign: Actions.ChangePanelActions(CanvasType.home); break;
                 case OTPType.forget: Actions.ChangePanelActions(CanvasType.updatepassword); break;
@@ -101,7 +107,7 @@ public class VerificationPanel : MonoBehaviour
         else
         {
             Debug.LogError("Response failed !!!" + response != null ? response.ResponseMessage : "Network issue");
-            PopUp.Instance.ShowMessage("Response failed !!!" + response != null ? response.ResponseMessage : "Network issue");
+            PopUp.Instance.ShowMessage( response != null ? response.ResponseMessage : "Network issue");
         }
     }
     #endregion
@@ -165,10 +171,12 @@ public class VerificationPanel : MonoBehaviour
         {
             Debug.LogWarning("OTP RESENDED");
 
-            PopUp.Instance.ShowMessage("OTP Resended");
+            PopUp.Instance.ShowMessage("OTP resent on your registered email");
 
             OTPType oTPType = AppData.otpData.OTPType;
             AppData.otpData = new OTPData(response.ResponseData.otp, oTPType);
+
+            otp.text = AppData.otpData.Otp;
 
             Notifications.Instance.SendNotification("OTP", "your otp " + AppData.otpData.Otp);
 

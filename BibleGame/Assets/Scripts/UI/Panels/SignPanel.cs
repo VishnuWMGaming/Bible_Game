@@ -62,14 +62,26 @@ public class SignPanel : MonoBehaviour
         if (!validate)
         {
             Debug.LogError("Fields cannot be empty");
-            PopUp.Instance.ShowMessage("Fields cannot be empty");
+
+            error_message = string.IsNullOrEmpty(password_InputFieldConfirm.Text) ? "Please enter Confirm Password" : string.Empty;
+            error_message = string.IsNullOrEmpty(password_InputField.Text) ? "Please enter Password" : error_message;
+            error_message = string.IsNullOrEmpty(email_InputField.text) ? "Please enter Email" : error_message;
+            error_message = string.IsNullOrEmpty(name_InputField.text) ? "Please enter Name" : error_message;
+
+            error_message = string.IsNullOrEmpty(email_InputField.text)
+               && string.IsNullOrEmpty(password_InputField.Text)
+               && string.IsNullOrEmpty(password_InputFieldConfirm.Text)
+               && string.IsNullOrEmpty(name_InputField.text) ? "Please fill all required fields" : error_message;
+
+
+            PopUp.Instance.ShowMessage(error_message);
             return;
         }
 
         if (!successMail)
         {
             Debug.LogError("Not the valid mail");
-            PopUp.Instance.ShowMessage("Not the valid mail");
+            PopUp.Instance.ShowMessage("Please enter Valid Email");
             return;
         }
 
@@ -123,19 +135,14 @@ public class SignPanel : MonoBehaviour
             error_message = "Please enter password";
             isValid = false;
         }
-        else if (password.Length < 8)
-        {
-            error_message = "Password length must be 8 character";
-            isValid = false;
-        }
         else if(!IsStrongPassword(password))
         {
-            error_message = "Password must be strong";
+            error_message = "Password should be between 8 to 16 characters and should include 1 Uppercase, 1 Lowercase, 1 Number and 1 Special Character";
             isValid = false;
         }
         else if(password != confirmPassword)
         {
-            error_message = "Password does not match";
+            error_message = "Password didn't matched";
             isValid = false;
         }
 
@@ -144,7 +151,6 @@ public class SignPanel : MonoBehaviour
 
     public bool IsStrongPassword(string password)
     {
-        // Check length
         if (password.Length < 8)
             return false;
 

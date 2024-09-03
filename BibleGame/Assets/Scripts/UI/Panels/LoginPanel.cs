@@ -84,7 +84,6 @@ public class LoginPanel : MonoBehaviour
 
     private bool Validate()
     {
-
         return !string.IsNullOrEmpty(email_Inputfield.text)
                && !string.IsNullOrEmpty(password_Inputfield.Text);
         //&& !string.IsNullOrEmpty(cityName) && !string.IsNullOrEmpty(mobileNumber) && !string.IsNullOrEmpty(age) && !string.IsNullOrEmpty(lastName);
@@ -99,24 +98,31 @@ public class LoginPanel : MonoBehaviour
 
         if (!valid)
         {
-            Debug.LogError("Please enter Email & Password");
-            PopUp.Instance.ShowMessage("Please enter Email & Password");
+             Debug.LogError("Please enter Email & Password");
+
+             error_message = string.IsNullOrEmpty(password_Inputfield.Text) ? "Please enter Password" : error_message;
+             error_message = string.IsNullOrEmpty(email_Inputfield.text) ? "Please enter email" : error_message;
+
+            error_message = string.IsNullOrEmpty(password_Inputfield.Text) && string.IsNullOrEmpty(email_Inputfield.text) ? "Please enter Email and Password": error_message;
+
+            PopUp.Instance.ShowMessage(error_message);
+
             return;
         }
 
         if (!validEmail)
         {
             Debug.LogError("Enter the valid email");
-            PopUp.Instance.ShowMessage("Enter the valid email");
+            PopUp.Instance.ShowMessage("Invalid Email");
             return;
         }
 
-        if (!validPassword)
-        {
-            Debug.LogError(error_message);
-            PopUp.Instance.ShowMessage(error_message);
-            return;
-        }
+        //if (!validPassword)
+        //{
+        //    Debug.LogError(error_message);
+        //    PopUp.Instance.ShowMessage(error_message);
+        //    return;
+        //}
 
         PopUp.Instance.EnableLoad(true);
 

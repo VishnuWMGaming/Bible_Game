@@ -28,7 +28,14 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         _homeBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
         _submitBtn.onClick.AddListener(() => optionPanel.CheckAnswerAction());
 
+        _submitBtn.interactable = false;
+
         RestartAction();    
+    }
+
+    public void EnableSubmit(bool enabled)
+    {
+        _submitBtn.interactable = enabled;
     }
 
     /// <summary>
@@ -50,5 +57,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     {
         questionPanel.gameObject.SetActive(true);
         correctPanel.gameObject.SetActive(false);
+
+        _submitBtn.interactable = false;
     }
 }

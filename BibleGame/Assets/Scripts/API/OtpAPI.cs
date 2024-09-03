@@ -79,6 +79,7 @@ namespace BibleGame
         public class OtpResponseBody
         {
             public string token;
+            public string name;
         }
         #endregion
     }

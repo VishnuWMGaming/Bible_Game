@@ -73,7 +73,7 @@ public class EditPanel : MonoBehaviour
         if (success)
         {
             Debug.LogWarning("Updated the name");
-            PopUp.Instance.ShowMessage("Updated the name");
+            PopUp.Instance.ShowMessage("Profile details updated successfully");
 
             AppData.loginData = new LoginData( AppData.loginData.Email,AppData.loginData.Password,_name);
         }
