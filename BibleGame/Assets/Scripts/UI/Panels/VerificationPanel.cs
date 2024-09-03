@@ -39,7 +39,7 @@ public class VerificationPanel : MonoBehaviour
 
         otp.text = AppData.otpData.Otp;
 
-        Notifications.Instance.SendNotification("OTP", "your otp " + AppData.otpData.Otp);
+        //Notifications.Instance.SendNotification("OTP", "your otp " + AppData.otpData.Otp);
 
         verifyBtn.onClick.AddListener(VerifyAction);
         verifyBtn.interactable = false;
@@ -178,7 +178,7 @@ public class VerificationPanel : MonoBehaviour
 
             otp.text = AppData.otpData.Otp;
 
-            Notifications.Instance.SendNotification("OTP", "your otp " + AppData.otpData.Otp);
+           // Notifications.Instance.SendNotification("OTP", "your otp " + AppData.otpData.Otp);
 
             StartCoroutine(TimerCoroutine(180));
         }
