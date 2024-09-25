@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Notifications.Android;
-using UnityEngine.Android;
+
+#if UNITY_ANDROID
 using UnityEngine.Events;
 
 public class Notifications : MonoBehaviour
@@ -121,3 +121,4 @@ public class Notifications : MonoBehaviour
     }
 
 }
+#endif

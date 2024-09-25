@@ -47,7 +47,8 @@ public class VerificationPanel : MonoBehaviour
         backBtn.onClick.AddListener(() => Actions.ChangePanelActions( AppData.otpData.OTPType switch
             { 
                OTPType.sign => CanvasType.signup,
-               OTPType.forget => CanvasType.forgetpassword
+               OTPType.forget => CanvasType.forgetpassword,
+                _ => throw new ArgumentOutOfRangeException(nameof(AppData.otpData.OTPType), AppData.otpData.OTPType, null)
             }));
 
 

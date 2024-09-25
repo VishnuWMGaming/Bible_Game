@@ -85,6 +85,7 @@ namespace BibleGame
             public LoginDataX ResponseData;
         }
 
+#nullable enable
         public class LoginDataX
         {
             public bool verified;
