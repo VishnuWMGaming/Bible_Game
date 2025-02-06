@@ -21,5 +21,6 @@ public class OptionHighlight : MonoBehaviour
     public void ChangeSet(Option.OptionType optionType)
     {
         image.color = optionType == Option.OptionType.correct ? new Color32(39, 251, 111, 100) : new Color32(54, 188, 228, 100);
+        this.optionType = optionType;
     }
 }

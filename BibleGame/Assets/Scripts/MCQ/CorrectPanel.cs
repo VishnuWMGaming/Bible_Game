@@ -8,12 +8,14 @@ using UnityEngine.UI;
 public interface ICorrectPanel
 {
     public void RestartAction();
+    public void NextAction();
 }
 
 public class CorrectPanel : MonoBehaviour
 {
     [Header("UI Settings:")]
     [SerializeField] Button restartBtn;
+    [SerializeField] Button nexttBtn;
 
     public ICorrectPanel callback;
 
@@ -22,7 +24,8 @@ public class CorrectPanel : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        restartBtn.onClick.AddListener(() => callback.RestartAction());
+        /*restartBtn.onClick.AddListener(() => callback.RestartAction());*/
+        nexttBtn.onClick.AddListener(callback.NextAction);
     }
 
     /// <summary>
@@ -30,6 +33,7 @@ public class CorrectPanel : MonoBehaviour
     /// </summary>
     private void OnDisable()
     {
-        restartBtn.onClick.RemoveAllListeners();
+        /*restartBtn.onClick.RemoveAllListeners();*/
+        nexttBtn.onClick.RemoveListener(callback.NextAction);
     }
 }

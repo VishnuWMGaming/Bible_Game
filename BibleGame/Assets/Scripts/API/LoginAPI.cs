@@ -39,6 +39,7 @@ namespace BibleGame
                         if (response.succeeded)
                         {
                             var token = response.ResponseData.token;
+                            PlayerPrefs.SetString("AuthorizationToken", token);
                             SetAuthToken(token);
                             callback?.Invoke(true, response);
                         }

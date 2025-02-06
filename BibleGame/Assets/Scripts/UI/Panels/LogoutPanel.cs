@@ -17,6 +17,7 @@ public class LogoutPanel : MonoBehaviour
 
     private void OnEnable()
     {
+        yesBtn.onClick.AddListener(() => PlayerPrefs.DeleteAll());
         yesBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.login));
         yesBtn.onClick.AddListener(() => CloseAction?.Invoke());
         yesBtn.onClick.AddListener(() => gameObject.SetActive(false));  

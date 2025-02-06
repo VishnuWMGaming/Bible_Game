@@ -26,6 +26,11 @@ public class BookChapter : MonoBehaviour
     [Header("Pages:")]
     [SerializeField] List<PagePanel> pagePanels = new List<PagePanel>();
 
+    private Chapter chapter;
+
+    [SerializeField] private PagePanel pagePanel;
+    [SerializeField] private Transform pageParent;
+
     enum Navigate { previous , next };
 
 
@@ -43,14 +48,39 @@ public class BookChapter : MonoBehaviour
         backBtn.onClick.AddListener(() => callback.BackToCover());
 
         _currentPageIndex = 0;  
+        chapter = GameData.GetDataWithChapterID(GameData.GetCurrentChapterID());
+        header.text = chapter.chapterName;
 
-        for (int i = 0; i < pagePanels.Count; ++i)
-            pagePanels[i].gameObject.SetActive(false);
+        if (pageParent.childCount > 4)
+        {
+            pagePanels.RemoveAt(0);
+            Destroy(pageParent.GetChild(4).gameObject);
+        }
+        
+        /*int pageCount = Mathf.CeilToInt(chapter.chapterDescription.Length / 100);
+        pageCount++;
+        for (int i = 0; i < pageCount; i++)
+        {*/
+            PagePanel temp = Instantiate(pagePanel, pageParent);
+            pagePanels.Add(temp);
+        /*}*/
 
-        pagePanels[0].gameObject.SetActive(true);
-        header.text = "Chapter " + pagePanels.Find(x => x.gameObject.activeInHierarchy).Page.chapterIndex;
+        for (int i = 0; i < pagePanels.Count; i++)
+        {
+            pagePanels[i].GetComponent<TMP_Text>().text = chapter.chapterDescription;
+        }
 
-        previousBtn.interactable =false;
+        // for (int i = 0; i < pagePanels.Count; ++i)
+        //     pagePanels[i].gameObject.SetActive(false);
+        //
+        // pagePanels[0].gameObject.SetActive(true);
+        // header.text = "Chapter " + pagePanels.Find(x => x.gameObject.activeInHierarchy).Page.chapterIndex;
+
+        previousBtn.interactable = false;
+
+
+
+
     }
 
     private void OnDisable()
@@ -99,7 +129,7 @@ public class BookChapter : MonoBehaviour
 
         previousBtn.interactable = _currentPageIndex != 0;
 
-        header.text = "Chapter " + pagePanels.Find(x => x.gameObject.activeInHierarchy).Page.chapterIndex;
+        // header.text = "Chapter " + pagePanels.Find(x => x.gameObject.activeInHierarchy).Page.chapterIndex;
     }
 }
 
@@ -109,9 +139,44 @@ public class Chapter
     public int chapterIndex;
     public int pageCount;
 
-    public Chapter (int chapterIndex, int pageCount)
+    public string chapterID;
+    public string chapterName;
+    public string chapterDescription;
+
+    public Chapter (int chapterIndex, string chapterID, string chapterName, string chapterDescription)
     {
         this.chapterIndex = chapterIndex;
-        this.pageCount = pageCount;
+        this.chapterID = chapterID;
+        this.chapterName = chapterName;
+        this.chapterDescription = chapterDescription;
+    }
+}
+
+public class Question
+{
+    public string id;
+    public string title;
+    
+    
+    public List<Answer> answers;
+    
+
+    public Question(string id, string title, List<Answer> answers)
+    {
+        this.id = id;
+        this.title = title;
+        this.answers = answers;
+    }
+}
+
+public class Answer
+{
+    public string title;
+    public bool option_status;
+
+    public Answer(string title, bool optionStatus)
+    {
+        this.title = title;
+        option_status = optionStatus;
     }
 }

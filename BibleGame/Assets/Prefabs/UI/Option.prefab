@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75a847f39ad09e0429f1a10d10e13350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  optionColors: {fileID: 11400000, guid: f5296d580e749fc4cb57aaf806e4b90c, type: 2}
   button: {fileID: 3700359264682395812}
   _optionType: 0
   optionHighlight: {fileID: 4901198679509769670}

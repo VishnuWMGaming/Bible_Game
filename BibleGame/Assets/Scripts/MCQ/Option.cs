@@ -17,7 +17,8 @@ public interface IOption
 [RequireComponent(typeof(Button))]
 public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 {
-   [SerializeField]  Button button;
+    [SerializeField] private OptionColors optionColors;
+    [SerializeField]  Button button;
 
     public enum OptionType {normal,selected,correct, worng};
 
@@ -102,7 +103,7 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
         _optionType = optionType;
     }
 
-    void SelectAction()
+    public void SelectAction()
     {
         SetDisplay(OptionType.selected);
         callback.OptionSelected(_index);

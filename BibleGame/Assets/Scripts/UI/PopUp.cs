@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,13 @@ public class PopUp : MonoBehaviour
    [SerializeField] GameObject panel;
    [SerializeField] GameObject loadingPanel;
 
-    private void Awake()
+   private void OnEnable()
+   {
+       if (instance == null)
+           instance = this;
+   }
+
+   private void Awake()
     {
         if(instance == null)
             instance = this;

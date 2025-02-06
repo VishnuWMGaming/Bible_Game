@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 using BibleGame;
 
-public class LevelPanel : MonoBehaviour,ILevelButton ,ICover
+public class LevelPanel : MonoBehaviour,IChapterButton ,ICover
 {
     [Header("UI Settings:")]
     [SerializeField] Button settingsBtn;
@@ -14,13 +14,19 @@ public class LevelPanel : MonoBehaviour,ILevelButton ,ICover
 
 
     [Header("Level Buttons:")]
-    [SerializeField] List<Level_Button> level_Buttons = new List<Level_Button>();
+    [SerializeField] List<Chapter_Button> level_Buttons = new List<Chapter_Button>();
 
 
     private void OnEnable()
     {
         for (int i = 0; i < level_Buttons.Count; i++)
             level_Buttons[i].callback = this;
+        Debug.Log("GameData.GetChapters().Count: " + GameData.GetChapters().Count);
+        for (int i = 0; i < GameData.GetChapters().Count; i++)
+        {
+            level_Buttons[i].ChapterID = GameData.GetChapters()[i].chapterID;
+            level_Buttons[i].Level = GameData.GetChapters()[i].chapterIndex;
+        }
 
         settingsBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
         backBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
@@ -37,7 +43,7 @@ public class LevelPanel : MonoBehaviour,ILevelButton ,ICover
     /// Action implemented on level selection
     /// </summary>
     /// <param name="level"></param>
-    public void OnLevelSelectAction(int level)
+    public void OnLevelSelectAction()
     {
         Actions.ChangePanelActions(CanvasType.chapter);
     }

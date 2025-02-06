@@ -4,6 +4,8 @@ using UnityEngine;
 
 #if UNITY_ANDROID
 using UnityEngine.Events;
+using Unity.Notifications.Android;
+using UnityEngine.Android;
 
 public class Notifications : MonoBehaviour
 {

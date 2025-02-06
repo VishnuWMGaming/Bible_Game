@@ -17,6 +17,9 @@ namespace BibleGame
         public const string forgetPassword = "forget_password";
         public const string updatePassword = "update_new_password";
         public const string resendOtp = "resend_otp";
+        public const string getProfile = "get_profile";
+        public const string getChapters = "get-chapters";
+        public const string getQuestions = "get-questions";
     }
 
     namespace UI

@@ -132,7 +132,6 @@ public class LoginPanel : MonoBehaviour
 
     private void Callback(bool success, LoginResponseX response)
     {
-        PopUp.Instance.EnableLoad(false);
 
         if (success)
         {
@@ -140,17 +139,58 @@ public class LoginPanel : MonoBehaviour
 
             if (!response.ResponseData.verified)
             {
+                PopUp.Instance.EnableLoad(false);
                 PopUp.Instance.ShowMessage("OTP not verified !!");
                 AppData.otpData = new OTPData(response.ResponseData.otp, OTPType.sign);
                 Actions.ChangePanelActions(CanvasType.otp);
                 return;
             }
 
-            Actions.ChangePanelActions(CanvasType.home);
+            GetProfile();
+            //Actions.ChangePanelActions(CanvasType.home);
         }
         else
         {
             PopUp.Instance.ShowMessage(response.ResponseMessage);
         }
     }
+    
+    private void GetProfile()
+    {
+        GetProfileAPI.GetProfile(GetProfileCallback);
+    }
+
+    private void GetProfileCallback(bool success, GetProfileResponse response)
+    {
+        if (success)
+        {
+            AppData.loginData = new LoginData(response.ResponseData.email, "**********", response.ResponseData.name);
+            GetChapters();
+        }
+        else
+        {
+            PopUp.Instance.EnableLoad(false);
+        }
+    }
+    private void GetChapters()
+    {
+        GetChaptersAPI.GetChapters(GetChaptersCallback);
+    }
+
+    private void GetChaptersCallback(bool success, GetChaptersResponse response)
+    {
+        PopUp.Instance.EnableLoad(false);
+        if (success)
+        {
+            List<Chapter> chapters = new List<Chapter>();
+            foreach (var chapter in response.ResponseData)
+            {
+                Chapter obj = new Chapter(chapters.Count, chapter.id, chapter.name, chapter.description);
+                chapters.Add(obj);
+            }
+            Actions.ChangePanelActions(CanvasType.home);
+            GameData.SetChapters(chapters);
+        }
+    }
+    
 }

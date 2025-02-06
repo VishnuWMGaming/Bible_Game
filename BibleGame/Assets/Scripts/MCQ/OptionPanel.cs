@@ -16,6 +16,8 @@ public class OptionPanel : MonoBehaviour, IOption
     [Header("Options:")]
     [SerializeField] List<Option> options = new List<Option>();
 
+    private List<Answer> answers = new List<Answer>();
+
 
     int correctIndex = -1;
     int _currentIndex = -1;
@@ -32,13 +34,13 @@ public class OptionPanel : MonoBehaviour, IOption
             options[i].SetDisplay(Option.OptionType.normal);
         }
 
-        options[0].SetChoice("1.Bird",0);
+        /*options[0].SetChoice("1.Bird",0);
         options[1].SetChoice("2.Cat",1);
         options[2].SetChoice("3.Dog",2);
-        options[3].SetChoice("4.Fish",3);
+        options[3].SetChoice("4.Fish",3);*/
 
         _currentIndex = -1;
-        correctIndex = 0;    
+        // correctIndex = 0;    
     }
 
     public void OptionSelected(int index)
@@ -88,11 +90,16 @@ public class OptionPanel : MonoBehaviour, IOption
             options[i].EnableButtonInteraction(true);
             options[i].SetDisplay(Option.OptionType.normal);
         }
+        
+        for (int i = 0; i < answers.Count; i++)
+        {
+            options[i].SetChoice(answers[i].title, i);
+        }
 
-        options[0].SetChoice("1.Bird", 0);
+        /*options[0].SetChoice("1.Bird", 0);
         options[1].SetChoice("2.Cat", 1);
         options[2].SetChoice("3.Dog", 2);
-        options[3].SetChoice("4.Fish", 3);
+        options[3].SetChoice("4.Fish", 3);*/
     }
 
 
@@ -108,5 +115,20 @@ public class OptionPanel : MonoBehaviour, IOption
     {
         for (int i = 0; i < options.Count; i++)
             options[i].EnableButtonInteraction(!enable);
+    }
+
+    public void SetOptions(List<Answer> answers)
+    {
+        this.answers = answers;
+        for (int i = 0; i < answers.Count; i++)
+        {
+            options[i].SetChoice(answers[i].title, i);
+            Debug.Log("Option status: " + answers[i].option_status);
+            if (answers[i].option_status)
+            {
+                Debug.Log("Option status: " + answers[i].option_status);
+                correctIndex = i;
+            }
+        }
     }
 }
