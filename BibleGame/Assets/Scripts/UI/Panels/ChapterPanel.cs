@@ -5,16 +5,21 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using BibleGame;
+using UnityEngine.SceneManagement;
 
-public class ChapterPanel : MonoBehaviour,ICover, IBookChapter
+public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectGame
 {
     [Header("UI Settings:")]
     [SerializeField] Button settingsBtn;
 
     [Space]
-    [SerializeField] Cover coverPanel;
-    [SerializeField] GameObject chapterPanel;
-    [SerializeField] MCQManager mCQManager;
+    [SerializeField] private Cover coverPanel;
+    [SerializeField] private Books books;
+    [SerializeField] private SelectGame selectGame;
+    [SerializeField] private GameObject chapterPanel;
+    [SerializeField] private GameObject booksPanel;
+    [SerializeField] private MCQManager mCQManager;
+    [SerializeField] private AnagramManager anagramManager;
 
     /// <summary>
     /// Action implemented on enable
@@ -22,6 +27,8 @@ public class ChapterPanel : MonoBehaviour,ICover, IBookChapter
     private void OnEnable()
     {
         coverPanel.caklback = this;
+        books.bookCallback = this;
+        selectGame.CallbackSelectGame = this;
         chapterPanel.GetComponent<BookChapter>().callback = this;
 
         settingsBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
@@ -29,6 +36,9 @@ public class ChapterPanel : MonoBehaviour,ICover, IBookChapter
         coverPanel.gameObject.SetActive(true);
         chapterPanel.SetActive(false);
         mCQManager.gameObject.SetActive(false);
+        anagramManager.gameObject.SetActive(false);
+        booksPanel.SetActive(false);
+        selectGame.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -44,18 +54,56 @@ public class ChapterPanel : MonoBehaviour,ICover, IBookChapter
         Debug.Log("Chapter !!!");
 
         coverPanel.gameObject.SetActive(false);
-        chapterPanel.SetActive(true);
+        chapterPanel.SetActive(false);
+        selectGame.gameObject.SetActive(false);
+        booksPanel.SetActive(true);
     }
 
     public void EndBookAction()
     {
+        booksPanel.SetActive(false);
         chapterPanel.SetActive(false);
-        mCQManager.gameObject.SetActive(true);
+        mCQManager.gameObject.SetActive(false);
+        anagramManager.gameObject.SetActive(false);
+        selectGame.gameObject.SetActive(true);
     }
 
     public void BackToCover()
     {
         coverPanel.gameObject.SetActive(true);
         chapterPanel.SetActive(false);
+        booksPanel.SetActive(false);
+        selectGame.gameObject.SetActive(false);
+    }
+
+    public void BackToBooks()
+    {
+        coverPanel.gameObject.SetActive(false);
+        chapterPanel.SetActive(false);
+        selectGame.gameObject.SetActive(false);
+        booksPanel.SetActive(true);
+    }
+
+    public void SelectBook(string bookName)
+    {
+        coverPanel.gameObject.SetActive(false);
+        chapterPanel.SetActive(true);
+        booksPanel.SetActive(false);
+        selectGame.gameObject.SetActive(false);
+    }
+
+    public void PlayTriviaGame()
+    {
+        selectGame.gameObject.SetActive(false);
+        mCQManager.gameObject.SetActive(true);
+        anagramManager.gameObject.SetActive(false);
+    }
+
+    public void PlayWordGame()
+    {
+        // SceneManager.LoadScene(1);
+        selectGame.gameObject.SetActive(false);
+        mCQManager.gameObject.SetActive(false);
+        anagramManager.gameObject.SetActive(true);
     }
 }

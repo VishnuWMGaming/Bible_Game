@@ -21,6 +21,7 @@ public class UIController : MonoBehaviour
     GameObject currentPanel;
     GameObject chapterPanel;
     GameObject levelPanel;
+    GameObject RewardCanvas;
 
     /// <summary>
     /// Action called on validation
@@ -47,6 +48,7 @@ public class UIController : MonoBehaviour
         settingsCanvas = FindObjectOfType<SettingsPanel>(true).gameObject;
         chapterPanel = FindObjectOfType<ChapterPanel>(true).gameObject;
         levelPanel = FindObjectOfType<LevelPanel>(true).gameObject;
+        RewardCanvas = FindObjectOfType<RewardPanel>(true).gameObject;
 
         _canvasType = CanvasType.splash;
         currentPanel = splashCanvas;
@@ -81,6 +83,7 @@ public class UIController : MonoBehaviour
                                            CanvasType.setPanel => settingsCanvas,
                                            CanvasType.chapter => chapterPanel,
                                            CanvasType.level => levelPanel,
+                                           CanvasType.reward => RewardCanvas,
                                            _=> null
                                          };
 
@@ -100,5 +103,6 @@ public enum CanvasType
     home,
     setPanel,
     level,
-    chapter
+    chapter,
+    reward
 }

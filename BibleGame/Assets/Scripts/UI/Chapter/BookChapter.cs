@@ -12,6 +12,8 @@ public interface IBookChapter
     public void EndBookAction();
 
     public void BackToCover();
+
+    public void BackToBooks();
 }
 
 public class BookChapter : MonoBehaviour
@@ -45,7 +47,7 @@ public class BookChapter : MonoBehaviour
     {
         previousBtn.onClick.AddListener(() => PageNavigateAction(Navigate.previous));
         nextBtn.onClick.AddListener(()=>PageNavigateAction(Navigate.next));
-        backBtn.onClick.AddListener(() => callback.BackToCover());
+        backBtn.onClick.AddListener(() => callback.BackToBooks());
 
         _currentPageIndex = 0;  
         chapter = GameData.GetDataWithChapterID(GameData.GetCurrentChapterID());

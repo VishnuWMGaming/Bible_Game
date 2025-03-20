@@ -23,6 +23,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     [SerializeField] Button hintBtn;
     [SerializeField] Button hintSubmitBtn;
     [SerializeField] Button hintCloseBtn;
+    [SerializeField] Button rewardBtn;
     private List<Question> questions = new ();
 
     private int currentQuestionIndex = 0;
@@ -37,6 +38,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
         _homeBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
         _submitBtn.onClick.AddListener(() => optionPanel.CheckAnswerAction());
+        rewardBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.reward));
 
         _submitBtn.interactable = false;
         

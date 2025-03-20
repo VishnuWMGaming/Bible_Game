@@ -11,6 +11,7 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover
     [Header("UI Settings:")]
     [SerializeField] Button settingsBtn;
     [SerializeField] Button backBtn;
+    [SerializeField] Button rewardBtn;
 
 
     [Header("Level Buttons:")]
@@ -30,6 +31,7 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover
 
         settingsBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
         backBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
+        rewardBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.reward));
     }
 
     private void OnDisable()
