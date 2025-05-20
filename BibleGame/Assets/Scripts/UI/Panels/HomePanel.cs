@@ -20,7 +20,7 @@ public class HomePanel : MonoBehaviour
     private void OnEnable()
     {
         settingBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
-        playBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.level));
+        playBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.ageSelect));
 
         userName.text = AppData.loginData.Name;
     }

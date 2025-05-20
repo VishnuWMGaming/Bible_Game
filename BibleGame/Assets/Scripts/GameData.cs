@@ -7,6 +7,9 @@ public static class GameData
     private static int CurrentChapterIndex;
     private static List<Question> Questions;
 
+    public static AgeGroup currentAge;
+    public static Testament testament;
+
     public static void SetChapters(List<Chapter> chapters)
     {
         ChaptersList = chapters;

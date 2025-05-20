@@ -22,6 +22,8 @@ public class UIController : MonoBehaviour
     GameObject chapterPanel;
     GameObject levelPanel;
     GameObject RewardCanvas;
+    GameObject agePanel;
+    GameObject testamontPanel;
 
     /// <summary>
     /// Action called on validation
@@ -49,19 +51,31 @@ public class UIController : MonoBehaviour
         chapterPanel = FindObjectOfType<ChapterPanel>(true).gameObject;
         levelPanel = FindObjectOfType<LevelPanel>(true).gameObject;
         RewardCanvas = FindObjectOfType<RewardPanel>(true).gameObject;
+        agePanel = FindObjectOfType<AgeSelectionPanel>(true).gameObject;
+        testamontPanel = FindObjectOfType<TestamentPanel>(true).gameObject;
 
         _canvasType = CanvasType.splash;
         currentPanel = splashCanvas;
         currentPanel.SetActive(true);
 
+        //Actions.ChangePanelActions += ChangePanel;
+    }
+
+    private void OnEnable()
+    {
         Actions.ChangePanelActions += ChangePanel;
+    }
+
+    private void OnDisable()
+    {
+        Actions.ChangePanelActions -= ChangePanel;
     }
 
     /// <summary>
     /// Action implemented on changing the panel
     /// </summary>
     /// <param name="canvasType"></param>
-     private void ChangePanel(CanvasType canvasType)
+    private void ChangePanel(CanvasType canvasType)
      {
         if (currentPanel != null)
             currentPanel.SetActive(false);
@@ -84,6 +98,8 @@ public class UIController : MonoBehaviour
                                            CanvasType.chapter => chapterPanel,
                                            CanvasType.level => levelPanel,
                                            CanvasType.reward => RewardCanvas,
+                                           CanvasType.ageSelect => agePanel,
+                                           CanvasType.testament => testamontPanel,
                                            _=> null
                                          };
 
@@ -96,6 +112,8 @@ public enum CanvasType
 {
     login,
     signup,
+    ageSelect,
+    testament,
     forgetpassword,
     otp,
     splash,
