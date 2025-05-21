@@ -22,6 +22,7 @@ public class Cover : MonoBehaviour
 
     public ICover caklback;
 
+
     private void OnEnable()
     {
         _username.text = AppData.loginData.Name;
@@ -35,5 +36,4 @@ public class Cover : MonoBehaviour
        homeBtn.onClick.RemoveAllListeners();
        chapterBtn.onClick.RemoveAllListeners();    
     }
-
 }

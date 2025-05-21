@@ -15,7 +15,6 @@ public class TestamentPanel : MonoBehaviour
     public void NewTestamentAction()
     {
         GameData.testament = Testament.New;
-
         Actions.ChangePanelActions(CanvasType.level);
     }
 }

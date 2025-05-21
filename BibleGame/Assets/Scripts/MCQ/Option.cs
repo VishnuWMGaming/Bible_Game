@@ -115,7 +115,7 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
         {
             case OptionType.normal:
                 optionHighlight.gameObject.SetActive(false);
-                button.image.color = new Color32(54, 188, 228, 255);
+                //button.image.color = new Color32(54, 188, 228, 255);
                 break;
 
             case OptionType.selected:
@@ -124,15 +124,17 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
                  break;
 
             case OptionType.worng:
-                optionHighlight.gameObject.SetActive(false);
+                optionHighlight.gameObject.SetActive(true);
                 button.image.color = new Color32(254,6,6,255);
+
+                optionHighlight.ChangeSet(OptionType.worng);
                 break;
 
              case OptionType.correct:
                 optionHighlight.ChangeSet(OptionType.correct);
                 optionHighlight.gameObject.SetActive(true);
 
-                button.image.color = new Color32(39,163,38,255);
+              //  button.image.color = new Color32(39,163,38,255);
 
                 break;
             

@@ -40,6 +40,9 @@ public class BookChapter : MonoBehaviour
 
     int _currentPageIndex = 0;
 
+    [Header("SpriteData")]
+    [SerializeField] SpriteData spriteData;
+
     /// <summary>
     /// Action imeplemented on enable
     /// </summary>
@@ -52,6 +55,8 @@ public class BookChapter : MonoBehaviour
         _currentPageIndex = 0;  
         chapter = GameData.GetDataWithChapterID(GameData.GetCurrentChapterID());
         header.text = chapter.chapterName;
+
+        StyleUI styleUI = spriteData.GetStyle(GameData.currentAge);
 
         if (pageParent.childCount > 4)
         {
@@ -70,6 +75,7 @@ public class BookChapter : MonoBehaviour
         for (int i = 0; i < pagePanels.Count; i++)
         {
             pagePanels[i].GetComponent<TMP_Text>().text = chapter.chapterDescription;
+            pagePanels[i].GetComponent<TMP_Text>().color = styleUI.textColor;
         }
 
         // for (int i = 0; i < pagePanels.Count; ++i)
@@ -79,10 +85,6 @@ public class BookChapter : MonoBehaviour
         // header.text = "Chapter " + pagePanels.Find(x => x.gameObject.activeInHierarchy).Page.chapterIndex;
 
         previousBtn.interactable = false;
-
-
-
-
     }
 
     private void OnDisable()

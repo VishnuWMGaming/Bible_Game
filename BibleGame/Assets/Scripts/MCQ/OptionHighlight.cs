@@ -4,6 +4,8 @@ using UnityEngine;
 
 using UnityEngine.UI;
 
+using DG.Tweening;
+
 [RequireComponent(typeof(Image))]
 public class OptionHighlight : MonoBehaviour
 {
@@ -11,16 +13,35 @@ public class OptionHighlight : MonoBehaviour
 
     Image image;
 
-    private void OnEnable()
+    Color32 defaultcolor;
+
+    private void Awake()
     {
         image = GetComponent<Image>();
+        defaultcolor = image.color;
+    }
+
+    private void OnEnable()
+    {
 
        // ChangeSet(Option.OptionType.worng);
     }
 
     public void ChangeSet(Option.OptionType optionType)
     {
-        image.color = optionType == Option.OptionType.correct ? new Color32(39, 251, 111, 100) : new Color32(54, 188, 228, 100);
+        Color value = optionType switch
+        {
+            Option.OptionType.correct => new Color32(39, 251, 111, 100),
+            Option.OptionType.worng => Color.red,
+            _ => defaultcolor
+        };
+
+        image.color = value;
         this.optionType = optionType;
+
+        Color32 color = image.color;
+
+        color.a = 100;
+        image.color = color;
     }
 }

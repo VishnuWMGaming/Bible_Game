@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 using BibleGame;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectGame
 {
@@ -21,6 +22,11 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
     [SerializeField] private MCQManager mCQManager;
     [SerializeField] private AnagramManager anagramManager;
 
+    [Header("SpriteData")]
+    [SerializeField] SpriteData spriteData;
+
+    StyleUI styleUI;
+
     /// <summary>
     /// Action implemented on enable
     /// </summary>
@@ -31,7 +37,7 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
         selectGame.CallbackSelectGame = this;
         chapterPanel.GetComponent<BookChapter>().callback = this;
 
-        settingsBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
+        settingsBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
 
         coverPanel.gameObject.SetActive(true);
         chapterPanel.SetActive(false);
@@ -46,9 +52,10 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
     /// </summary>
     private void OnDisable()
     {
-        settingsBtn.onClick.RemoveAllListeners();
+        settingsBtn?.onClick.RemoveAllListeners();
     }
 
+   
     public void SelectChapter(string chapter)
     {
         Debug.Log("Chapter !!!");

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Books : MonoBehaviour
 {
-    [SerializeField] private Button homeBtn;
+    //[SerializeField] private Button homeBtn;
     [SerializeField] private Button backBtn;
     [SerializeField] private Button book1;
     [SerializeField] private Button book2;
@@ -16,9 +16,13 @@ public class Books : MonoBehaviour
 
     public IBook bookCallback;
 
+    [Header("SpriteData")]
+    [SerializeField] SpriteData spriteData;
+
+    StyleUI styleUI;
+
     private void OnEnable()
     {
-        homeBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
         backBtn.onClick.AddListener((() => bookCallback.BackToCover()));
         book1.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
         book2.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
@@ -26,11 +30,13 @@ public class Books : MonoBehaviour
         book4.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
         book5.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
         book6.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
+
+
+
     }
 
     private void OnDisable()
     {
-        homeBtn.onClick.RemoveAllListeners();
         backBtn.onClick.RemoveAllListeners();
         book1.onClick.RemoveAllListeners();
         book2.onClick.RemoveAllListeners();

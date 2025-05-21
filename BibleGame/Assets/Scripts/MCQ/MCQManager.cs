@@ -117,8 +117,8 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     {
         questions = GameData.GetQuestions();
 
-        questionTxt.text = questions[questionIndex].title;
-        optionPanel.SetOptions(questions[questionIndex].answers);
+        questionTxt.text = questions[questionIndex]?.title;
+        optionPanel.SetOptions(questions[questionIndex]?.answers);
 
         currentQuestionIndex++;
     }
