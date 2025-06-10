@@ -12,15 +12,15 @@ public interface IBox
     public void ResultAction();
 }
 
-public class GramBox : MonoBehaviour,IBeginDragHandler, IEndDragHandler, IDragHandler
+public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     RectTransform boxTransform;
     public RectTransform BoxT => boxTransform;
-   
+
 
     [SerializeField] public RectTransform maskArea;
 
-    [SerializeField]  Canvas canvas;
+    [SerializeField] Canvas canvas;
 
     [SerializeField] Vector2 startPosition;
     public Vector2 BoxV => startPosition;
@@ -28,7 +28,8 @@ public class GramBox : MonoBehaviour,IBeginDragHandler, IEndDragHandler, IDragHa
     [Space]
     [SerializeField] bool isDragging = false;
     [SerializeField] int index;
-    public int Index{
+    public int Index
+    {
         get { return index; }
         set { index = Index; }
     }
@@ -45,7 +46,7 @@ public class GramBox : MonoBehaviour,IBeginDragHandler, IEndDragHandler, IDragHa
 
     [Header("CorrectWord")]
     [SerializeField] GameObject correctW;
-    public bool isCorrect => image.color == Color.green;
+    public bool isCorrect => letterText.color == Color.green;
 
     Image image;
 
@@ -95,17 +96,17 @@ public class GramBox : MonoBehaviour,IBeginDragHandler, IEndDragHandler, IDragHa
             canvas.transform as RectTransform,
             Input.mousePosition,
             null,
-            out  newPosition
+            out newPosition
         );
 
         Vector2 localPosition = AnagramUtils.GetMousePositionInCanvasSpace(canvas);
-        bool isInsideMask = AnagramUtils.IsPositionInside(localPosition,maskArea);
+        bool isInsideMask = AnagramUtils.IsPositionInside(localPosition, maskArea);
 
         if (!isInsideMask)
         {
             Debug.LogError("Outside the area !!!!");
 
-            boxTransform.DOAnchorPos(startPosition,0.5f);
+            boxTransform.DOAnchorPos(startPosition, 0.5f);
             return;
         }
 
@@ -114,10 +115,10 @@ public class GramBox : MonoBehaviour,IBeginDragHandler, IEndDragHandler, IDragHa
         callback.UpdatedPos(index, localPosition);
     }
 
-    public void SetPos(Vector2 pos ,int newIndex, bool isRun = false)
+    public void SetPos(Vector2 pos, int newIndex, bool isRun = false)
     {
-        if(isRun) 
-        boxTransform.DOAnchorPos(pos, 0.2f);
+        if (isRun)
+            boxTransform.DOAnchorPos(pos, 0.2f);
 
         index = newIndex;
 
@@ -128,7 +129,7 @@ public class GramBox : MonoBehaviour,IBeginDragHandler, IEndDragHandler, IDragHa
     {
         letterText.text = value;
     }
-    
+
     public void SetLetter(string value)
     {
         letterText.text = value;
@@ -140,8 +141,17 @@ public class GramBox : MonoBehaviour,IBeginDragHandler, IEndDragHandler, IDragHa
         this.index = index;
     }
 
-    public void SetCorrectWord(bool enable) { image.color = enable ? Color.green : Color.red; }
+    public void SetCorrectWord(bool enable) { letterText.color = enable ? Color.green : Color.red; }
 
+    public void SetImage(Sprite sprite) 
+    { 
+        image.sprite = sprite;
+        image.SetNativeSize();
+
+        Vector2 size = boxTransform.sizeDelta;
+        boxTransform.sizeDelta = new Vector2(size.x / 4, size.y / 4);
+    }
+   
     public void OnEndDrag(PointerEventData eventData)
     {
         isDragging = false;

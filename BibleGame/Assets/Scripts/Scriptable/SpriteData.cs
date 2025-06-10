@@ -34,11 +34,12 @@ public class StyleUI
     public Sprite textButton;
     public Sprite pageSprite;
     public Sprite panelkey;
-    public Sprite panelHint;
+    public Sprite panel;
     public Sprite selectPanel;
     public Sprite unselectPanel;
     public Sprite bookTab;
     public Sprite mcqTabPanel;
+    public Sprite box;
 
     [Space]
     public AgeGroup ageGroup;

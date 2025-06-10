@@ -26,17 +26,25 @@ public class StyleControl : MonoBehaviour
     [SerializeField] List<TMP_Text>  mtitles = new List<TMP_Text>();
 
     [Space]
-    [SerializeField] Image mScore;
-    [SerializeField] Image mcq;
+    [SerializeField] List<Image> mScores = new List<Image>();
 
     [Space]
-    [SerializeField] List<Image> panels = new List<Image>();
+    [SerializeField] List<Image> mcqs = new List<Image>();
+
+    [Space]
+    [SerializeField] List<Image> panelsColor = new List<Image>();
 
     [Space]
     [SerializeField] List<Image> textButtons = new List<Image>();
 
     [Space]
-    [SerializeField] Image hintButton;
+    [SerializeField] List<Image> hintButtons = new List<Image>();
+
+    [Space]
+    [SerializeField] Image key;
+
+    [Space]
+    [SerializeField] List<Image> panels = new List<Image>();
 
 
     [Header("SpriteData")]
@@ -55,6 +63,8 @@ public class StyleControl : MonoBehaviour
         if (styleUI == null)
             return;
         
+
+        //Adding the styles
         foreach (var button in buttons) button.sprite = styleUI.button;
         foreach(var image in profiles) image.sprite = styleUI.profileSprite;
 
@@ -62,16 +72,20 @@ public class StyleControl : MonoBehaviour
 
         if (mPage != null) mPage.sprite = styleUI.pageSprite;
 
-        if(mScore != null) mScore.sprite = styleUI.scoreSprite;
+        foreach(var score in mScores) score.sprite = styleUI.scoreSprite;
 
         foreach(var title in mtitles) title.color = styleUI.textColor;
 
-        if (mcq != null) mcq.sprite = styleUI.mcqTabPanel;
+        foreach (var panel in mcqs) panel.sprite = styleUI.mcqTabPanel;
 
-        foreach(var panel in panels)  panel.color = styleUI.textColor;
+        foreach (var panel in panelsColor)  panel.color = styleUI.textColor;
 
         foreach(var button in textButtons) button.sprite = styleUI.textButton;
 
-        if (hintButton != null) hintButton.sprite = styleUI.hintSprite;
+        foreach (var button in hintButtons) button.sprite = styleUI.hintSprite;
+
+        if(key != null) key.sprite = styleUI.keySprite;
+
+        foreach (var panel in panels) panel.sprite = styleUI.panel;
     }
 }

@@ -31,11 +31,19 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
     public IAnagramManager iAnagramManagerCallback;
 
+
+    [Header("SpriteData")]
+    [SerializeField] SpriteData spriteData;
+
+    StyleUI styleUI;
+
     private void Start()
     {
         iAnagramManagerCallback = this.GetComponent<AnagramManager>();
         lettersParent.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = true;
-        
+
+        styleUI = spriteData.GetStyle(GameData.currentAge);
+
         foreach (var gramBox in gramBoxes)
         {
             Destroy(gramBox);
@@ -52,6 +60,8 @@ public class GameController_Anagram : MonoBehaviour,IBox
             temp.SetIndex(letters.index);
 
             temp.maskArea = lettersParent.GetComponent<RectTransform>();
+
+            temp.SetImage(styleUI.box);
             
             gramBoxes.Add(temp);
         }
@@ -60,6 +70,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
         for (int i = 0; i < gramBoxes.Count; ++i)
             gramBoxes[i].callback = this;
+
     }
     void ShuffleGramboxValues(List<GramBox> objects)
     {
@@ -154,6 +165,8 @@ public class GameController_Anagram : MonoBehaviour,IBox
     void EndGame()
     {
         bool isWon = false;
+
+        Debug.Log("End game");
 
         for (int i = 0; i < gramBoxes.Count; ++i)
         {

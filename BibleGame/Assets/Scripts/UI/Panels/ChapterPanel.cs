@@ -22,9 +22,6 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
     [SerializeField] private MCQManager mCQManager;
     [SerializeField] private AnagramManager anagramManager;
 
-    [Header("SpriteData")]
-    [SerializeField] SpriteData spriteData;
-
     StyleUI styleUI;
 
     /// <summary>
