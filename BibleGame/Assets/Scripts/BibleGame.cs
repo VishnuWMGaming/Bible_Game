@@ -20,6 +20,9 @@ namespace BibleGame
         public const string getProfile = "get_profile";
         public const string getChapters = "get-chapters";
         public const string getQuestions = "get-questions";
+        public const string getBible = "get-bibles";
+        public const string getBibleDetail = "get-bible-details";
+        public const string getBookDetail = "get-book-list";
     }
 
     namespace UI
@@ -81,6 +84,11 @@ namespace BibleGame
                 this.otp = otp;
                 this.type = oTPType;
             }
+        }
+
+        public class UserData
+        {
+            public static string bibleId;
         }
    }
 

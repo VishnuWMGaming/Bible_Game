@@ -3,16 +3,18 @@ using BibleGame;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Books : MonoBehaviour
+
+using BibleGame.Data;
+using BibleGame.API;
+
+public class Books : MonoBehaviour,IMBook
 {
     //[SerializeField] private Button homeBtn;
     [SerializeField] private Button backBtn;
-    [SerializeField] private Button book1;
-    [SerializeField] private Button book2;
-    [SerializeField] private Button book3;
-    [SerializeField] private Button book4;
-    [SerializeField] private Button book5;
-    [SerializeField] private Button book6;
+
+    [Space]
+    [SerializeField] GameObject mBookObj;
+    [SerializeField] Transform mBookTransform;
 
     public IBook bookCallback;
 
@@ -23,27 +25,69 @@ public class Books : MonoBehaviour
 
     private void OnEnable()
     {
-        backBtn.onClick.AddListener((() => bookCallback.BackToCover()));
-        book1.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
-        book2.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
-        book3.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
-        book4.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
-        book5.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
-        book6.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
+        //backBtn.onClick.AddListener((() => bookCallback.BackToCover()));
+        //book1.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
+        //book2.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
+        //book3.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
+        //book4.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
+        //book5.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
+        //book6.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
 
-
-
+        Intialise();
     }
 
     private void OnDisable()
     {
         backBtn.onClick.RemoveAllListeners();
-        book1.onClick.RemoveAllListeners();
-        book2.onClick.RemoveAllListeners();
-        book3.onClick.RemoveAllListeners();
-        book4.onClick.RemoveAllListeners();
-        book5.onClick.RemoveAllListeners();
-        book6.onClick.RemoveAllListeners();
+        //book1.onClick.RemoveAllListeners();
+        //book2.onClick.RemoveAllListeners();
+        //book3.onClick.RemoveAllListeners();
+        //book4.onClick.RemoveAllListeners();
+        //book5.onClick.RemoveAllListeners();
+        //book6.onClick.RemoveAllListeners();
+
+        ClearAll();
+    }
+
+    void Intialise()
+    {
+        if (String.IsNullOrEmpty(UserData.bibleId))
+            return;
+
+        PopUp.Instance.EnableLoad(true);
+        GetBiblesAPI.GetBookList((success, res) =>
+        {
+            PopUp.Instance.EnableLoad(false);
+            if (!success)
+            {
+                Debug.LogError("Error in book list !!");
+                return;
+            }
+
+            foreach(var book in res.ResponseData.data)
+            {
+                GameObject go = Instantiate(mBookObj, mBookTransform);
+                go.transform.localScale = Vector3.one;
+
+                MBook mBook = go.GetComponent<MBook>();
+                mBook.Intialise(book,this);
+            }
+
+        }, UserData.bibleId);
+    }
+
+    public void SelectBooKAction(string id)
+    {
+
+    }
+
+    public void ClearAll()
+    {
+        for(int i = 0;i<mBookTransform.childCount;i++)
+        {
+            GameObject go = mBookTransform.GetChild(i).gameObject;
+            Destroy(go);
+        }
     }
 }
 

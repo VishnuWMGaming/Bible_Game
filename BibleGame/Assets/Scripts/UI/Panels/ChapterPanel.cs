@@ -29,14 +29,14 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
     /// </summary>
     private void OnEnable()
     {
-        coverPanel.caklback = this;
+        //coverPanel.caklback = this;
         books.bookCallback = this;
         selectGame.CallbackSelectGame = this;
         chapterPanel.GetComponent<BookChapter>().callback = this;
 
         settingsBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
 
-        coverPanel.gameObject.SetActive(true);
+      //  coverPanel.gameObject.SetActive(true);
         chapterPanel.SetActive(false);
         mCQManager.gameObject.SetActive(false);
         anagramManager.gameObject.SetActive(false);
@@ -52,11 +52,14 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
         settingsBtn?.onClick.RemoveAllListeners();
     }
 
+
+    void Intialise()
+    {
+
+    }
    
     public void SelectChapter(string chapter)
     {
-        Debug.Log("Chapter !!!");
-
         coverPanel.gameObject.SetActive(false);
         chapterPanel.SetActive(false);
         selectGame.gameObject.SetActive(false);
