@@ -63,6 +63,7 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
         chapterPanel.SetActive(page == StartPage.chapter);
         mCQManager.gameObject.SetActive(page == StartPage.game_MCQ);
         anagramManager.gameObject.SetActive(page == StartPage.game_anagram);
+        selectGame.gameObject.SetActive(page == StartPage.game_menu);
     }
 
    
@@ -76,11 +77,8 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
 
     public void EndBookAction()
     {
-        booksPanel.SetActive(false);
-        chapterPanel.SetActive(false);
-        mCQManager.gameObject.SetActive(false);
-        anagramManager.gameObject.SetActive(false);
-        selectGame.gameObject.SetActive(true);
+        Debug.Log("Chapters finished !!!!!!!!!!!!!!!!!!");
+        SelectPage(StartPage.game_menu);
     }
 
     public void BackToCover()
@@ -123,4 +121,4 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
     }
 }
 
-public enum StartPage { book,chapter,game_MCQ,game_anagram };
+public enum StartPage { book,chapter,game_MCQ,game_anagram ,game_menu};

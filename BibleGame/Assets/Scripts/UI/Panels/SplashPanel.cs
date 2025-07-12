@@ -65,27 +65,24 @@ public class SplashPanel : MonoBehaviour
         if (success)
         {
             AppData.loginData = new LoginData(response.ResponseData.email, "**********", response.ResponseData.name);
-            GetChapters();
+          //  GetChapters();
         }
     }
 
-    private void GetChapters()
-    {
-        GetChaptersAPI.GetChapters(GetChaptersCallback);
-    }
+  
 
     private void GetChaptersCallback(bool success, GetChaptersResponse response)
     {
         if (success)
         {
-            List<Chapter> chapters = new List<Chapter>();
-            foreach (var chapter in response.ResponseData)
-            {
-                Chapter obj = new Chapter(chapters.Count, chapter.id, chapter.name, chapter.description);
-                chapters.Add(obj);
-            }
+            //List<Chapter> chapters = new List<Chapter>();
+            //foreach (var chapter in response.ResponseData)
+            //{
+            //    Chapter obj = new Chapter(chapters.Count, chapter.id, chapter.name, chapter.description);
+            //    chapters.Add(obj);
+            //}
             
-            GameData.SetChapters(chapters);
+           // GameData.SetChapters(chapters);
         }
     }
 }

@@ -1,3 +1,4 @@
+using BibleGame.API;
 using System.Collections.Generic;
 
 public static class GameData
@@ -6,6 +7,7 @@ public static class GameData
     private static string CurrentChapterID;
     private static int CurrentChapterIndex;
     private static List<Question> Questions;
+    public static List<ChapterData> mChapterDatas;
 
     public static void SetChapters(List<Chapter> chapters)
     {

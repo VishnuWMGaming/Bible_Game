@@ -124,31 +124,31 @@ public class VerificationPanel : MonoBehaviour
         if (success)
         {
             AppData.loginData = new LoginData(response.ResponseData.email, "**********", response.ResponseData.name);
-            GetChapters();
+           // GetChapters();
         }
         else
         {
             PopUp.Instance.EnableLoad(false);
         }
     }
-    private void GetChapters()
-    {
-        GetChaptersAPI.GetChapters(GetChaptersCallback);
-    }
+    //private void GetChapters()
+    //{
+    //    GetChaptersAPI.GetChapters(GetChaptersCallback);
+    //}
 
     private void GetChaptersCallback(bool success, GetChaptersResponse response)
     {
         PopUp.Instance.EnableLoad(false);
         if (success)
         {
-            List<Chapter> chapters = new List<Chapter>();
-            foreach (var chapter in response.ResponseData)
-            {
-                Chapter obj = new Chapter(chapters.Count, chapter.id, chapter.name, chapter.description);
-                chapters.Add(obj);
-            }
+            //List<Chapter> chapters = new List<Chapter>();
+            //foreach (var chapter in response.ResponseData)
+            //{
+            //    Chapter obj = new Chapter(chapters.Count, chapter.id, chapter.name, chapter.description);
+            //    chapters.Add(obj);
+            //}
             Actions.ChangePanelActions(CanvasType.home);
-            GameData.SetChapters(chapters);
+           // GameData.SetChapters(chapters);
         }
     }
 

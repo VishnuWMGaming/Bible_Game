@@ -26,7 +26,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2227561095103311331}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -66,16 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\n[5:1] This is the list of the descendants of Adam. When God created
-    humankind, he made them in the likeness of God.\n[5:2] Male and female he created
-    them, and he blessed them and named them \"Humankind\" when they were created.\n[5:3]
-    When Adam had lived one hundred thirty years, he became the father of a son in
-    his likeness, according to his image, and named him Seth.\n[5:4] The days of
-    Adam after he became the father of Seth were eight hundred years; and he had
-    other sons and daughters.\n[5:5] Thus all the days that Adam lived were nine
-    hundred thirty years; and he died. [5:6] When Seth had lived one hundred five
-    years, he became the father of Enosh.\n[5:7] Seth lived after the birth of Enosh
-    eight hundred seven years, and had other sons and daughter\r"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7e17a576c8188f448a7099278f042494, type: 2}
   m_sharedMaterial: {fileID: 8367311370934515146, guid: 7e17a576c8188f448a7099278f042494, type: 2}
@@ -106,8 +97,8 @@ MonoBehaviour:
   m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 2
+  m_fontSizeMax: 18
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256

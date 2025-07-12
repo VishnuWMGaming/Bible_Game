@@ -124,7 +124,20 @@ public class Books : MonoBehaviour,IMBook
 
             Debug.Log("<color=green> Streak has been created </color>");
 
-            Actions.StartPageAction(StartPage.chapter);
+            ChapterAPI.Get((success,res) =>
+            {
+                if(!success)
+                {
+                    Debug.LogError("Error in getting the chapters");
+                    return;
+                }
+
+                GameData.mChapterDatas = res.ResponseData.data;
+
+                Actions.StartPageAction(StartPage.chapter);
+
+            }, UserData.bibleId, UserData.bookId);
+
            // Actions.ChangePanelActions(CanvasType.chapter);
 
         }, request);

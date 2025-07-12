@@ -6,7 +6,10 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using BibleGame.Data;
+using BibleGame.API;
 
+
+using BibleGame.Utility;
 
 public interface IBookChapter
 {
@@ -29,10 +32,11 @@ public class BookChapter : MonoBehaviour
     [Header("Pages:")]
     [SerializeField] List<PagePanel> pagePanels = new List<PagePanel>();
 
-    private Chapter chapter;
+    //private Chapter chapter;
 
-    [SerializeField] private PagePanel pagePanel;
-    [SerializeField] private Transform pageParent;
+    [SerializeField] private TextMeshProUGUI pagePanel;
+    [SerializeField] ScrollRect mScorll;
+
 
     enum Navigate { previous , next };
 
@@ -40,9 +44,12 @@ public class BookChapter : MonoBehaviour
     public IBookChapter callback;
 
     int _currentPageIndex = 0;
+    int pageCount = 0;
 
     [Header("SpriteData")]
     [SerializeField] SpriteData spriteData;
+
+  
 
     /// <summary>
     /// Action imeplemented on enable
@@ -53,31 +60,22 @@ public class BookChapter : MonoBehaviour
         nextBtn.onClick.AddListener(()=>PageNavigateAction(Navigate.next));
         backBtn.onClick.AddListener(() => callback.BackToBooks());
 
-        _currentPageIndex = 0;  
-        chapter = GameData.GetDataWithChapterID(GameData.GetCurrentChapterID());
-        header.text = chapter.chapterName;
+        pageCount = GameData.mChapterDatas.Count;
+       
+        _currentPageIndex = 1;
+        GetChapter(_currentPageIndex);
+
+       // chapter = GameData.GetDataWithChapterID(GameDat);
+       // header.text = chapter.chapterName;
 
         StyleUI styleUI = spriteData.GetStyle(UserData.currentAge);
 
-        if (pageParent.childCount > 4)
-        {
-            pagePanels.RemoveAt(0);
-            Destroy(pageParent.GetChild(4).gameObject);
-        }
-        
-        /*int pageCount = Mathf.CeilToInt(chapter.chapterDescription.Length / 100);
-        pageCount++;
-        for (int i = 0; i < pageCount; i++)
-        {*/
-            PagePanel temp = Instantiate(pagePanel, pageParent);
-            pagePanels.Add(temp);
-        /*}*/
+        pagePanel.color = styleUI.textColor;
 
-        for (int i = 0; i < pagePanels.Count; i++)
-        {
-            pagePanels[i].GetComponent<TMP_Text>().text = chapter.chapterDescription;
-            pagePanels[i].GetComponent<TMP_Text>().color = styleUI.textColor;
-        }
+        //int pageCount = Mathf.CeilToInt(chapter.chapterDescription.Length / 100);
+        //pageCount++;
+
+
 
         // for (int i = 0; i < pagePanels.Count; ++i)
         //     pagePanels[i].gameObject.SetActive(false);
@@ -96,38 +94,57 @@ public class BookChapter : MonoBehaviour
     }
 
 
+    void GetChapter(int index)
+    {
+        if (index > pageCount)
+        {
+            callback.EndBookAction();
+            return;
+        }
+
+        if (index <= 1) index = 1;
+
+        PopUp.Instance.EnableLoad(true);
+        ChapterAPI.GetDetail((success, res) =>
+        {
+            PopUp.Instance.EnableLoad(false);
+            if (!success)
+            {
+                Debug.LogError("Error in getting chapter details");
+                return;
+            }
+
+            mScorll.verticalNormalizedPosition = 1.0f;
+
+            header.text =  $"Chapter {index}";
+            _currentPageIndex = index;
+
+            Debug.Log($"<color=green> Chapter {index} is loaded.</color>");
+
+            string content = res.ResponseData.data.content.ToString();
+            content = Utils.ConvertHtmlToPlainText(content);
+
+            pagePanel.text = content;
+
+        }, UserData.bibleId, UserData.bookId,index);
+    }
+
+
     void PageNavigateAction(Navigate navigate)
     {
-        int index = pagePanels.IndexOf(pagePanels.Find(x => x.gameObject.activeInHierarchy));
-
-        for (int i = 0; i < pagePanels.Count; ++i)
-            pagePanels[i].gameObject.SetActive(false);
-
         switch (navigate)
         {
             case Navigate.next :
 
-                if (index + 1 < pagePanels.Count)
-                {
-                    pagePanels[index + 1].gameObject.SetActive(true);
-                    _currentPageIndex = index +1;
-                }
-                else
-                {
-                    callback.EndBookAction();
-                    return;
-                }
+                _currentPageIndex++;
+                GetChapter(_currentPageIndex);
 
                 break;
 
              case Navigate.previous :
 
-                if (index - 1 >= 0)
-                {
-                    pagePanels[index - 1].gameObject.SetActive(true);
-                    _currentPageIndex = index - 1;
-
-                } // pagePanels[pagePanels.Count-1].gameObject.SetActive(true);
+                _currentPageIndex--;
+                GetChapter(_currentPageIndex);
 
                 break;
         }

@@ -1,7 +1,9 @@
 
+using BibleGame.API;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 
@@ -18,7 +20,8 @@ namespace BibleGame
         public const string updatePassword = "update_new_password";
         public const string resendOtp = "resend_otp";
         public const string getProfile = "get_profile";
-        public const string getChapters = "get-chapters";
+        public const string getChapters = "get-book-chapters";
+        public const string getChapterDetail = "get-chapters-details";
         public const string getQuestions = "get-questions";
         public const string getBible = "get-bibles";
         public const string getBibleDetail = "get-bible-details";
@@ -100,4 +103,41 @@ namespace BibleGame
         }
    }
 
+
+    namespace Utility
+    {
+        public static class Utils
+        {
+            public static string ConvertHtmlToPlainText(string html)
+            {
+                if(string.IsNullOrEmpty(html))
+                     return "";
+
+                // 1. Convert verse numbers to bold <b>#</b>
+                html = Regex.Replace(html,
+                    @"<span[^>]*data-number\s*=\s*""(\d+)""[^>]*>(\d+)</span>",
+                    match => $"\n<b>{match.Groups[1].Value}</b> ");
+
+                // 2. Replace added text (like <span class="add">was</span>) with plain content
+                html = Regex.Replace(html, @"<span class=\""add\"">(.*?)</span>", "$1");
+
+                // 3. Remove all other tags
+                html = Regex.Replace(html, @"<[^>]+>", "");
+
+                // 4. Decode HTML entities
+                html = html.Replace("&nbsp;", " ")
+                           .Replace("&amp;", "&")
+                           .Replace("&quot;", "\"")
+                           .Replace("&lt;", "<")
+                           .Replace("&gt;", ">");
+
+                // 5. Normalize spacing
+                html = Regex.Replace(html, @"[ \t\r]+", " ");
+                html = Regex.Replace(html, @"\n\s+", "\n");
+                html = html.Trim();
+
+                return html;
+            }
+        }
+    }
 }
