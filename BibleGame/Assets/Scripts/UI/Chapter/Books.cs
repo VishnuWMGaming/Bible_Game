@@ -9,7 +9,6 @@ using BibleGame.API;
 
 public class Books : MonoBehaviour,IMBook
 {
-    //[SerializeField] private Button homeBtn;
     [SerializeField] private Button backBtn;
 
     [Space]
@@ -78,7 +77,57 @@ public class Books : MonoBehaviour,IMBook
 
     public void SelectBooKAction(string id)
     {
+        if (String.IsNullOrEmpty(id))
+            return;
 
+        UserData.bookId = id;
+
+        CreateStrick();
+    }
+
+    void CreateStrick()
+    {
+        int ageVal = UserData.currentAge switch
+        {
+            AgeGroup.kindergarden => 1,
+            AgeGroup.elementary => 2,
+            AgeGroup.teenagers => 3,
+            AgeGroup.adult => 4,
+            _ => 1
+        };
+
+        string testamentVal = UserData.testament switch
+        {
+            Testament.New => "New",
+            Testament.Old => "Old",
+            _ => "Old"
+        };
+
+        StreakRequest request = new StreakRequest()
+        {
+            bible_id = UserData.bibleId,
+            book_id = UserData.bookId,
+            age = ageVal.ToString(),
+            testament = testamentVal,
+        };
+
+        PopUp.Instance.EnableLoad(true);
+        StreakAPI.Create((success, res) =>
+        {
+            PopUp.Instance.EnableLoad(false);
+
+            if (!success)
+            {
+                Debug.LogError("Error in creating the streak");
+                return;
+            }
+
+            Debug.Log("<color=green> Streak has been created </color>");
+
+            Actions.StartPageAction(StartPage.chapter);
+           // Actions.ChangePanelActions(CanvasType.chapter);
+
+        }, request);
     }
 
     public void ClearAll()

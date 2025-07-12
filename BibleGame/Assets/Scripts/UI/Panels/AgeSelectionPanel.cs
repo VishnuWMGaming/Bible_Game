@@ -1,5 +1,6 @@
 using BibleGame;
 using BibleGame.API;
+using BibleGame.Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,7 +39,7 @@ public class AgeSelectionPanel : MonoBehaviour,IAge
             }
 
 
-            GameData.currentAge = group;
+            UserData.currentAge = group;
             Actions.ChangePanelActions(CanvasType.bible);
         });
     }

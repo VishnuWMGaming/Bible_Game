@@ -7,14 +7,13 @@ using UnityEngine.UI;
 using BibleGame;
 using UnityEngine.SceneManagement;
 using TMPro;
+using BibleGame.Data;
 
 public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectGame
 {
     [Header("UI Settings:")]
     [SerializeField] Button settingsBtn;
 
-    [Space]
-    [SerializeField] private Cover coverPanel;
     [SerializeField] private Books books;
     [SerializeField] private SelectGame selectGame;
     [SerializeField] private GameObject chapterPanel;
@@ -30,18 +29,17 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
     private void OnEnable()
     {
         //coverPanel.caklback = this;
+
+        if (AppData.mCurrentPage != null)
+            SelectPage(AppData.mCurrentPage);
+
+        Actions.StartPageAction += SelectPage;
+
         books.bookCallback = this;
         selectGame.CallbackSelectGame = this;
         chapterPanel.GetComponent<BookChapter>().callback = this;
 
         settingsBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
-
-      //  coverPanel.gameObject.SetActive(true);
-        chapterPanel.SetActive(false);
-        mCQManager.gameObject.SetActive(false);
-        anagramManager.gameObject.SetActive(false);
-        booksPanel.SetActive(false);
-        selectGame.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -49,6 +47,7 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
     /// </summary>
     private void OnDisable()
     {
+        Actions.StartPageAction -= SelectPage;
         settingsBtn?.onClick.RemoveAllListeners();
     }
 
@@ -57,10 +56,19 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
     {
 
     }
+
+    public void SelectPage(StartPage page)
+    {
+        booksPanel.SetActive(page == StartPage.book);
+        chapterPanel.SetActive(page == StartPage.chapter);
+        mCQManager.gameObject.SetActive(page == StartPage.game_MCQ);
+        anagramManager.gameObject.SetActive(page == StartPage.game_anagram);
+    }
+
    
     public void SelectChapter(string chapter)
     {
-        coverPanel.gameObject.SetActive(false);
+        //coverPanel.gameObject.SetActive(false);
         chapterPanel.SetActive(false);
         selectGame.gameObject.SetActive(false);
         booksPanel.SetActive(true);
@@ -77,7 +85,7 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
 
     public void BackToCover()
     {
-        coverPanel.gameObject.SetActive(true);
+        //coverPanel.gameObject.SetActive(true);
         chapterPanel.SetActive(false);
         booksPanel.SetActive(false);
         selectGame.gameObject.SetActive(false);
@@ -85,7 +93,7 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
 
     public void BackToBooks()
     {
-        coverPanel.gameObject.SetActive(false);
+        //coverPanel.gameObject.SetActive(false);
         chapterPanel.SetActive(false);
         selectGame.gameObject.SetActive(false);
         booksPanel.SetActive(true);
@@ -93,7 +101,7 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
 
     public void SelectBook(string bookName)
     {
-        coverPanel.gameObject.SetActive(false);
+       // coverPanel.gameObject.SetActive(false);
         chapterPanel.SetActive(true);
         booksPanel.SetActive(false);
         selectGame.gameObject.SetActive(false);
@@ -114,3 +122,5 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
         anagramManager.gameObject.SetActive(true);
     }
 }
+
+public enum StartPage { book,chapter,game_MCQ,game_anagram };

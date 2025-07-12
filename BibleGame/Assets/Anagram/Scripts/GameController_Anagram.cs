@@ -8,6 +8,7 @@ using System;
 using System.Reflection;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using BibleGame.Data;
 
 public class GameController_Anagram : MonoBehaviour,IBox
 {
@@ -42,7 +43,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
         iAnagramManagerCallback = this.GetComponent<AnagramManager>();
         lettersParent.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = true;
 
-        styleUI = spriteData.GetStyle(GameData.currentAge);
+        styleUI = spriteData.GetStyle(UserData.currentAge);
 
         foreach (var gramBox in gramBoxes)
         {

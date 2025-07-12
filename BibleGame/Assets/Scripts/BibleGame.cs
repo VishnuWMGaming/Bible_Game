@@ -23,6 +23,7 @@ namespace BibleGame
         public const string getBible = "get-bibles";
         public const string getBibleDetail = "get-bible-details";
         public const string getBookDetail = "get-book-list";
+        public const string createStreak = "create-streak";
     }
 
     namespace UI
@@ -41,6 +42,7 @@ namespace BibleGame
     public static class Actions
     {
         public static Action<CanvasType> ChangePanelActions;
+        public static Action<StartPage> StartPageAction;
     }
 
    namespace Data
@@ -49,6 +51,7 @@ namespace BibleGame
         {
             public static LoginData loginData;
             public static OTPData otpData;
+            public static StartPage mCurrentPage;
         }
 
         public  class LoginData
@@ -89,6 +92,11 @@ namespace BibleGame
         public class UserData
         {
             public static string bibleId;
+            public static string bookName;
+            public static string bookId;
+
+            public static AgeGroup currentAge;
+            public static Testament testament;
         }
    }
 

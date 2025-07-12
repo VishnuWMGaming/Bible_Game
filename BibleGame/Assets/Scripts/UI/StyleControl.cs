@@ -4,6 +4,7 @@ using UnityEngine;
 
 using UnityEngine.UI;
 using TMPro;
+using BibleGame.Data;
 
 public class StyleControl : MonoBehaviour
 {
@@ -54,7 +55,7 @@ public class StyleControl : MonoBehaviour
 
     private void OnEnable()
     {
-        styleUI = spriteData.GetStyle(GameData.currentAge);
+        styleUI = spriteData.GetStyle(UserData.currentAge);
         ApplyStyle();
     }
 

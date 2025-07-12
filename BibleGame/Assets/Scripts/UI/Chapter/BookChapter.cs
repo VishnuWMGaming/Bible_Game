@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using BibleGame.Data;
 
 
 public interface IBookChapter
@@ -56,7 +57,7 @@ public class BookChapter : MonoBehaviour
         chapter = GameData.GetDataWithChapterID(GameData.GetCurrentChapterID());
         header.text = chapter.chapterName;
 
-        StyleUI styleUI = spriteData.GetStyle(GameData.currentAge);
+        StyleUI styleUI = spriteData.GetStyle(UserData.currentAge);
 
         if (pageParent.childCount > 4)
         {
