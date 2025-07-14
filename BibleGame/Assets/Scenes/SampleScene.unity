@@ -8421,6 +8421,7 @@ MonoBehaviour:
   hintCloseBtn: {fileID: 1544418811}
   rewardBtn: {fileID: 911445678}
   questions: []
+  currentQuestionIndex: 0
 --- !u!1 &590891417
 GameObject:
   m_ObjectHideFlags: 0
@@ -31425,6 +31426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsBtn: {fileID: 628417886}
+  homeBtn: {fileID: 1869273203}
   books: {fileID: 1580667866}
   chapters: {fileID: 1198149212}
   selectGame: {fileID: 1795961566}

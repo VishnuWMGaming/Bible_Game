@@ -8,7 +8,6 @@ public static class GameData
     private static int CurrentChapterIndex;
     private static List<Question> Questions;
     public static List<ChapterData> mChapterDatas;
-    public static int coins;
 
     public static string levelID;
 

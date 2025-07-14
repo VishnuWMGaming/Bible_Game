@@ -13,6 +13,7 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
 {
     [Header("UI Settings:")]
     [SerializeField] Button settingsBtn;
+    [SerializeField] Button homeBtn;
 
     [SerializeField] private Books books;
     [SerializeField] private Chapters chapters;
@@ -41,6 +42,7 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
         chapterPanel.GetComponent<BookChapter>().callback = this;
 
         settingsBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
+        homeBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
     }
 
     /// <summary>
@@ -50,6 +52,7 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
     {
         Actions.StartPageAction -= SelectPage;
         settingsBtn?.onClick.RemoveAllListeners();
+        homeBtn?.onClick.RemoveAllListeners();
     }
 
 

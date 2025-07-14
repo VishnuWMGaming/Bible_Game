@@ -44,6 +44,8 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         _submitBtn.onClick.AddListener(() => optionPanel.CheckAnswerAction());
         rewardBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.reward));
 
+        scoreText.text = UserData.coins.ToString();
+
         _submitBtn.interactable = false;
         
         hintBtn.onClick.AddListener(ShowHint);
@@ -154,6 +156,10 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         coins += 4;
         UserData.coins = coins;
 
+        scoreText.text = UserData.coins.ToString();
+
+     //   Actions.UpdateCoins.Invoke(coins);
+
         if (currentQuestionIndex < questions.Count)
         {
             questionPanel.SetActive(true);
@@ -207,6 +213,19 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
         if (index < 0)
             index = 0;
+
+        int coins = UserData.coins;
+        coins -= 7;
+
+        if (coins < 0)
+        {
+            //coins = 0;
+            PopUp.Instance.ShowMessage($"Not enough coins !!");
+            return;
+        }
+        UserData.coins = coins;
+
+        scoreText.text = UserData.coins.ToString();
 
         string correctAnswer = questions[index].answers.Find(x => x.option_status).title;
 
