@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public interface IMBook
+using UnityEngine.UI;
+using TMPro;
+using BibleGame.API;
+using BibleGame.Data;
+
+public interface IMChapter
 {
     public void SelectAction(string id);
 }
 
 [RequireComponent(typeof(Button))]
-public class MBook : MonoBehaviour
+public class MChapter : MonoBehaviour
 {
+
     Button mButton;
 
     [SerializeField] TMP_Text mTitle;
@@ -23,7 +27,7 @@ public class MBook : MonoBehaviour
     string mid;
     public string ID => mid;
 
-    IMBook callback;
+    IMChapter callback;
 
     private void OnEnable()
     {
@@ -39,16 +43,15 @@ public class MBook : MonoBehaviour
 
     private void OnDisable()
     {
-        
+        mButton?.onClick.RemoveAllListeners();
     }
 
-    public void Intialise(BibleGame.API.GetBiblesAPI.BookData data , IMBook callbackIN)
+    public void Intialise(ChapterData data, IMChapter callbackIN)
     {
-        mTitle.text = data.name;
-        mSubTitle.text = data.nameLong;
+        mTitle.text = $"Chapter {data.number}";
+        mSubTitle.text = "";
 
         mid = data.id;
-        mBibleId = data.bibleId;
 
         callback = callbackIN;
     }

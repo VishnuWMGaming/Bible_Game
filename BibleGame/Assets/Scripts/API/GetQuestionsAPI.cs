@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using RestAPI;
 using UnityEngine;
@@ -11,55 +12,145 @@ namespace BibleGame
     {
         public class GetQuestionsAPI : ApiBase
         {
-            private static string GetQuestionsURL = ServiceURL.baseURL + ServiceURL.getQuestions;
+            public delegate void GetQuestionsObjectiveCallback(bool success, GetQuestionsResponseObjective response = null);
+            public delegate void GetQuestionsAnagramCallback(bool success, GetQuestionsResponseAnagram response = null);
 
-            public delegate void GetQuestionsCallback(bool success, GetQuestionsResponse response = null);
-
-            public static void GetQuestions(GetQuestionsRequestData requestData, GetQuestionsCallback callback)
+            public static void GetQuestionsObjective(GetQuestionsRequestData requestData, GetQuestionsObjectiveCallback callback)
             {
+                var url = ServiceURL.baseURL + ServiceURL.getQuestions;
+
                 var jsonData = JsonConvert.SerializeObject(requestData);
-                WebRequest(GetQuestionsURL, jsonData, (url, success, data) => HandleGetQuestions(success, data, callback));
-            }
-
-            private static void HandleGetQuestions(bool aSuccess, object aData, GetQuestionsCallback callback)
-            {
-                Debug.Log("Get Questions Response Data: " + aData);
-                if (aSuccess)
+                WebRequest(url, jsonData, (url, success, adata) =>
                 {
-                    var response = JsonConvert.DeserializeObject<GetQuestionsResponse>(aData.ToString());
-                    callback?.Invoke(aSuccess, response);
-                }
-            }
-        }
-        
+                    if(!success)
+                    {
+                        Debug.LogError($"No success in getting objective questions {adata.ToString()}");
+                        callback?.Invoke(false, null);
+                        return;
+                    }
 
+                    try
+                    {
+                        var data = JsonConvert.DeserializeObject<GetQuestionsResponseObjective>(adata.ToString());
+
+                        callback?.Invoke(success, data);
+                    }
+                    catch(Exception ex)
+                    {
+                        Debug.LogError($"Error in getting objective questions {ex.Message}");
+                        callback?.Invoke(false, null);
+                    }
+                });
+            }
+
+            public static void GetQuestionsAnagram(GetQuestionsRequestData requestData, GetQuestionsAnagramCallback callback)
+            {
+                var url = ServiceURL.baseURL + ServiceURL.getQuestions;
+
+                var jsonData = JsonConvert.SerializeObject(requestData);
+                WebRequest(url, jsonData, (url, success, adata) =>
+                {
+                    if (!success)
+                    {
+                        Debug.LogError($"No success in getting anagram questions {adata.ToString()}");
+                        callback?.Invoke(false, null);
+                        return;
+                    }
+
+                    try
+                    {
+                        var data = JsonConvert.DeserializeObject<GetQuestionsResponseAnagram>(adata.ToString());
+
+                        callback?.Invoke(success, data);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError($"Error in getting anagram questions {ex.Message}");
+                        callback?.Invoke(false, null);
+                    }
+                });
+            }
+
+
+
+        }
+
+        #region REQUEST
         [Serializable]
         public class GetQuestionsRequestData
         {
+            public string game_id;
+            public string ageGroup;
+            public string game_type;
+            public string bible_id;
+            public string book_id;
             public string chapter_id;
-
-            public GetQuestionsRequestData(string chapterID)
-            {
-                chapter_id = chapterID;
-            }
         }
-        
-        public class GetQuestionsResponse : ResponseBase
+        #endregion
+
+        #region RESPONSE
+        public class GetQuestionsResponseObjective : ResponseBase
         {
-            public List<GetQuestionsResponseData> ResponseData;
+            public GetQuestionsResponseObjectiveRData ResponseData;
         }
 
-        public class GetQuestionsResponseData
+        [Serializable]
+        public class GetQuestionsResponseObjectiveRData
         {
-            public string id;
-            public string title;
-            public List<Answer> answers;
+            public List<GetQuestionsObjectiveData> questions;
+            public LevelData levelData;
         }
-        
-        public class Answer
+
+        [Serializable]
+        public class GetQuestionsObjectiveData
         {
+            public string _id;
             public string title;
-            public bool option_status;
+            public string bible_id;
+            public string book_id;
+            public string chapter_id;
+            public string ageGroup;
+            public string opt1;
+            public string opt2;
+            public string opt3;
+            public string opt4;
+            public string hint;
         }
+
+        public class GetQuestionsResponseAnagram : ResponseBase
+        {
+            public GetQuestionsResponseAnagramRData ResponseData;
+        }
+
+        [Serializable]
+        public class GetQuestionsResponseAnagramRData
+        {
+            public List<GetQuestionsAnagramData> questions;
+            public LevelData levelData;
+        }
+
+        [Serializable]
+        public class GetQuestionsAnagramData
+        {
+            public string _id;
+            public string bible_id;
+            public string book_id;
+            public string chapter_id;
+            public string ageGroup;
+            public string title;
+            public string hint;
+        }
+
+        [Serializable]
+        public class LevelData
+        {
+            public string _id;
+            public string game_id;
+            public string chapter_id;
+            public int rating;
+            public int coin_earn;
+        }
+
+        #endregion
     }
 }

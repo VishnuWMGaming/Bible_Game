@@ -56,14 +56,10 @@ public class BookChapter : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        previousBtn.onClick.AddListener(() => PageNavigateAction(Navigate.previous));
-        nextBtn.onClick.AddListener(()=>PageNavigateAction(Navigate.next));
-        backBtn.onClick.AddListener(() => callback.BackToBooks());
+       // previousBtn.onClick.AddListener(() => PageNavigateAction(Navigate.previous));
+        nextBtn.onClick.AddListener(()=> callback.EndBookAction());
 
-        pageCount = GameData.mChapterDatas.Count;
-       
-        _currentPageIndex = 1;
-        GetChapter(_currentPageIndex);
+        GetChapter();
 
        // chapter = GameData.GetDataWithChapterID(GameDat);
        // header.text = chapter.chapterName;
@@ -90,19 +86,18 @@ public class BookChapter : MonoBehaviour
     {
         previousBtn.onClick.RemoveAllListeners();
         nextBtn.onClick.RemoveAllListeners();
-        backBtn.onClick.RemoveAllListeners();   
     }
 
 
-    void GetChapter(int index)
+    void GetChapter()
     {
-        if (index > pageCount)
-        {
-            callback.EndBookAction();
-            return;
-        }
+        //if (index > pageCount)
+        //{
+        //    callback.EndBookAction();
+        //    return;
+        //}
 
-        if (index <= 1) index = 1;
+        //if (index <= 1) index = 1;
 
         PopUp.Instance.EnableLoad(true);
         ChapterAPI.GetDetail((success, res) =>
@@ -116,43 +111,42 @@ public class BookChapter : MonoBehaviour
 
             mScorll.verticalNormalizedPosition = 1.0f;
 
-            header.text =  $"Chapter {index}";
-            _currentPageIndex = index;
+            header.text =  $"Chapter {res.ResponseData.data.number}";
 
-            Debug.Log($"<color=green> Chapter {index} is loaded.</color>");
+            Debug.Log($"<color=green> Chapter {res.ResponseData.data.number} is loaded.</color>");
 
             string content = res.ResponseData.data.content.ToString();
             content = Utils.ConvertHtmlToPlainText(content);
 
             pagePanel.text = content;
 
-        }, UserData.bibleId, UserData.bookId,index);
+        }, UserData.bibleId, UserData.chapterId);
     }
 
 
-    void PageNavigateAction(Navigate navigate)
-    {
-        switch (navigate)
-        {
-            case Navigate.next :
+    //void PageNavigateAction(Navigate navigate)
+    //{
+    //    switch (navigate)
+    //    {
+    //        case Navigate.next :
 
-                _currentPageIndex++;
-                GetChapter(_currentPageIndex);
+    //            _currentPageIndex++;
+    //            GetChapter(_currentPageIndex);
 
-                break;
+    //            break;
 
-             case Navigate.previous :
+    //         case Navigate.previous :
 
-                _currentPageIndex--;
-                GetChapter(_currentPageIndex);
+    //            _currentPageIndex--;
+    //            GetChapter(_currentPageIndex);
 
-                break;
-        }
+    //            break;
+    //    }
 
-        previousBtn.interactable = _currentPageIndex != 0;
+    //    previousBtn.interactable = _currentPageIndex != 0;
 
-        // header.text = "Chapter " + pagePanels.Find(x => x.gameObject.activeInHierarchy).Page.chapterIndex;
-    }
+    //    // header.text = "Chapter " + pagePanels.Find(x => x.gameObject.activeInHierarchy).Page.chapterIndex;
+    //}
 }
 
 [Serializable]

@@ -87,31 +87,31 @@ public class Chapter_Button : MonoBehaviour
 
     private void GetQuestions()
     {
-        GetQuestionsRequestData getQuestionsRequestData = new GetQuestionsRequestData(GameData.GetCurrentChapterID());
-        GetQuestionsAPI.GetQuestions(getQuestionsRequestData, GetQuestionsCallback);
+       // GetQuestionsRequestData getQuestionsRequestData = new GetQuestionsRequestData(GameData.GetCurrentChapterID());
+       // GetQuestionsAPI.GetQuestions(getQuestionsRequestData, GetQuestionsCallback);
     }
 
-    private void GetQuestionsCallback(bool success, GetQuestionsResponse response)
-    {
-        if (success)
-        {
-            List<Question> tempQuestions = new List<Question>();
-            foreach (var question in response.ResponseData)
-            {
-                List<Answer> tempAnswers = new List<Answer>();
-                foreach (var answer in question.answers)
-                {
-                    Answer temAnswer = new Answer(answer.title, answer.option_status);
-                    tempAnswers.Add(temAnswer);
-                }
+    //private void GetQuestionsCallback(bool success, GetQuestionsResponse response)
+    //{
+    //    if (success)
+    //    {
+    //        List<Question> tempQuestions = new List<Question>();
+    //        foreach (var question in response.ResponseData)
+    //        {
+    //            List<Answer> tempAnswers = new List<Answer>();
+    //            foreach (var answer in question.answers)
+    //            {
+    //                Answer temAnswer = new Answer(answer.title, answer.option_status);
+    //                tempAnswers.Add(temAnswer);
+    //            }
 
-                Question tempQues = new Question(question.id, question.title, tempAnswers);
-                tempQuestions.Add(tempQues);
-            }
+    //            Question tempQues = new Question(question.id, question.title, tempAnswers);
+    //            tempQuestions.Add(tempQues);
+    //        }
             
-            GameData.SetQuestions(tempQuestions);
-        }
-    }
+    //        GameData.SetQuestions(tempQuestions);
+    //    }
+    //}
 
     void DisplayStars(int value)
     {

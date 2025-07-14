@@ -15,6 +15,7 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
     [SerializeField] Button settingsBtn;
 
     [SerializeField] private Books books;
+    [SerializeField] private Chapters chapters;
     [SerializeField] private SelectGame selectGame;
     [SerializeField] private GameObject chapterPanel;
     [SerializeField] private GameObject booksPanel;
@@ -64,6 +65,7 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
         mCQManager.gameObject.SetActive(page == StartPage.game_MCQ);
         anagramManager.gameObject.SetActive(page == StartPage.game_anagram);
         selectGame.gameObject.SetActive(page == StartPage.game_menu);
+        chapters.gameObject.SetActive(page == StartPage.selectChapter);
     }
 
    
@@ -78,6 +80,7 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
     public void EndBookAction()
     {
         Debug.Log("Chapters finished !!!!!!!!!!!!!!!!!!");
+
         SelectPage(StartPage.game_menu);
     }
 
@@ -121,4 +124,4 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
     }
 }
 
-public enum StartPage { book,chapter,game_MCQ,game_anagram ,game_menu};
+public enum StartPage { book,selectChapter,chapter,game_MCQ,game_anagram ,game_menu};

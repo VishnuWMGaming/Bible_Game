@@ -50,9 +50,9 @@ namespace BibleGame
                 });
             }
 
-            public static void GetDetail(GetChapterDetailCallback callback , string bibleId,string chapterId,int index)
+            public static void GetDetail(GetChapterDetailCallback callback , string bibleId,string chapterId)
             {
-                var url = $"{ServiceURL.baseURL}{ServiceURL.getChapterDetail}?bible_id={bibleId}&chapter_id={chapterId}.{index.ToString()}";
+                var url = $"{ServiceURL.baseURL}{ServiceURL.getChapterDetail}?bible_id={bibleId}&chapter_id={chapterId}";
 
                 WebRequestGet(url, (url, success, adata) =>
                 {

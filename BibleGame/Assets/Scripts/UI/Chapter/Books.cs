@@ -24,7 +24,7 @@ public class Books : MonoBehaviour,IMBook
 
     private void OnEnable()
     {
-        //backBtn.onClick.AddListener((() => bookCallback.BackToCover()));
+        //backBtn.onClick.AddListener(() => Actions.StartPageAction(StartPage.book));
         //book1.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
         //book2.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
         //book3.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
@@ -75,7 +75,7 @@ public class Books : MonoBehaviour,IMBook
         }, UserData.bibleId);
     }
 
-    public void SelectBooKAction(string id)
+    public void SelectAction(string id)
     {
         if (String.IsNullOrEmpty(id))
             return;
@@ -124,6 +124,8 @@ public class Books : MonoBehaviour,IMBook
 
             Debug.Log("<color=green> Streak has been created </color>");
 
+            UserData.gameid = res.ResponseData._id;
+
             ChapterAPI.Get((success,res) =>
             {
                 if(!success)
@@ -133,8 +135,7 @@ public class Books : MonoBehaviour,IMBook
                 }
 
                 GameData.mChapterDatas = res.ResponseData.data;
-
-                Actions.StartPageAction(StartPage.chapter);
+                Actions.StartPageAction(StartPage.selectChapter);
 
             }, UserData.bibleId, UserData.bookId);
 

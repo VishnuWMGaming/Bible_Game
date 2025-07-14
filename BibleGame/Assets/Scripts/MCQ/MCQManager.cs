@@ -8,6 +8,7 @@ using TMPro;
 using BibleGame;
 using BibleGame.API;
 using UnityEngine.Serialization;
+using BibleGame.Data;
 
 public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 {
@@ -48,12 +49,8 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
         RestartAction();
         currentQuestionIndex = 0;
-        SetData(currentQuestionIndex);
-    }
 
-    public void EnableSubmit(bool enabled)
-    {
-        _submitBtn.interactable = enabled;
+        //SetData(currentQuestionIndex);
     }
 
     /// <summary>
@@ -66,6 +63,35 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         hintBtn.onClick.RemoveListener(ShowHint);
         hintSubmitBtn.onClick.RemoveListener(UseHint);
         hintCloseBtn.onClick.RemoveListener(CloseHint);
+    }
+
+    void Initialise()
+    {
+        int ageVal = UserData.currentAge switch
+        {
+            AgeGroup.kindergarden => 1,
+            AgeGroup.elementary => 2,
+            AgeGroup.teenagers => 3,
+            AgeGroup.adult => 4,
+            _ => 1
+        };
+
+        //GetQuestionsRequestData requestData = new GetQuestionsRequestData()
+        //{
+        //    game_id = UserData.gameid,
+        //    ageGroup = ageVal.ToString(),
+        //    game_type = "objective",
+        //    bible_id = UserData.bibleId,
+        //    chapter_id = GameData.mChapterDatas
+
+        //};
+
+       // GetQuestionsAPI.GetQuestionsObjective()
+    }
+
+    public void EnableSubmit(bool enabled)
+    {
+        _submitBtn.interactable = enabled;
     }
 
     public void CorrectAnswerAction()

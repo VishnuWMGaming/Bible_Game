@@ -40,6 +40,8 @@ namespace BibleGame
                     }
                 });
             }
+
+
         }
 
 
@@ -59,7 +61,14 @@ namespace BibleGame
 
         public class CreateStreakResponse:ResponseBase
         {
+            public StreakData ResponseData;
+        }
 
+        [Serializable]
+        public class StreakData
+        {
+            public string _id;
+            public int coins;
         }
 
         #endregion

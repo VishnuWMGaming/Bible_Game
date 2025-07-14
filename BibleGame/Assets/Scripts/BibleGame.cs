@@ -97,6 +97,8 @@ namespace BibleGame
             public static string bibleId;
             public static string bookName;
             public static string bookId;
+            public static string chapterId;
+            public static string gameid;
 
             public static AgeGroup currentAge;
             public static Testament testament;
