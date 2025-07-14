@@ -168,15 +168,14 @@ public class Chapter
     }
 }
 
+[Serializable]
 public class Question
 {
     public string id;
     public string title;
-    
-    
+   
     public List<Answer> answers;
     
-
     public Question(string id, string title, List<Answer> answers)
     {
         this.id = id;
@@ -185,11 +184,12 @@ public class Question
     }
 }
 
+[Serializable]
 public class Answer
 {
     public string title;
     public bool option_status;
-
+  
     public Answer(string title, bool optionStatus)
     {
         this.title = title;

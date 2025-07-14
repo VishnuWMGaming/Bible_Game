@@ -9,6 +9,7 @@ using BibleGame;
 using BibleGame.API;
 using UnityEngine.Serialization;
 using BibleGame.Data;
+using System;
 
 public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 {
@@ -25,9 +26,11 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     [SerializeField] Button hintSubmitBtn;
     [SerializeField] Button hintCloseBtn;
     [SerializeField] Button rewardBtn;
-    private List<Question> questions = new ();
 
-    private int currentQuestionIndex = 0;
+    [Space]
+    [SerializeField] private List<Question> questions = new List<Question>();
+
+   [SerializeField]  private int currentQuestionIndex = 0;
     
     /// <summary>
     /// Action implemented one enable
@@ -47,8 +50,10 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         hintSubmitBtn.onClick.AddListener(UseHint);
         hintCloseBtn.onClick.AddListener(CloseHint);
 
-        RestartAction();
-        currentQuestionIndex = 0;
+        //RestartAction();
+        //currentQuestionIndex = 0;
+
+        Initialise();
 
         //SetData(currentQuestionIndex);
     }
@@ -76,17 +81,52 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
             _ => 1
         };
 
-        //GetQuestionsRequestData requestData = new GetQuestionsRequestData()
-        //{
-        //    game_id = UserData.gameid,
-        //    ageGroup = ageVal.ToString(),
-        //    game_type = "objective",
-        //    bible_id = UserData.bibleId,
-        //    chapter_id = GameData.mChapterDatas
+        GetQuestionsRequestData requestData = new GetQuestionsRequestData()
+        {
+            game_id = UserData.gameid,
+            ageGroup = ageVal.ToString(),
+            game_type = "objective",
+            bible_id = UserData.bibleId,
+            chapter_id = UserData.chapterId,
+            book_id = UserData.bookId,
+        };
 
-        //};
+        questions.Clear();
 
-       // GetQuestionsAPI.GetQuestionsObjective()
+        PopUp.Instance.EnableLoad(true);
+
+        currentQuestionIndex = 0;
+
+        GetQuestionsAPI.GetQuestionsObjective((success, res) =>
+        {
+            PopUp.Instance.EnableLoad(false);
+
+            if (!success)
+            {
+                Debug.LogError("Error in Get question objective");
+                return;
+            }
+
+            GameData.levelID = res.ResponseData.levelData._id;
+
+            foreach (var data in res.ResponseData.questions)
+            {
+                List<Answer> answers = new List<Answer>();
+
+                answers.Add(new Answer(data.opt1, false));
+                answers.Add(new Answer(data.opt2, false));
+                answers.Add(new Answer(data.opt3, false));
+                answers.Add(new Answer(data.opt4, false));
+
+                answers.Find(x => x.title == data.hint).option_status = true;
+
+                Question question = new Question(data._id, data.title, answers);
+                questions.Add(question);
+            }
+
+            SetData(currentQuestionIndex);
+
+        }, requestData);
     }
 
     public void EnableSubmit(bool enabled)
@@ -110,7 +150,11 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
     public void NextAction()
     {
-        if(currentQuestionIndex < questions.Count)
+        int coins = UserData.coins;
+        coins += 4;
+        UserData.coins = coins;
+
+        if (currentQuestionIndex < questions.Count)
         {
             questionPanel.SetActive(true);
             correctPanel.gameObject.SetActive(false);
@@ -119,13 +163,54 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         }
         else
         {
-            Actions.ChangePanelActions(CanvasType.home);
+            if(String.IsNullOrEmpty(GameData.levelID))
+            {
+                Debug.LogError("level id is not initialised");
+                return;
+            }
+
+            Debug.Log("Submitting....");
+            UserData.coins = 20;
+
+            SubmitRequestData requestData = new SubmitRequestData()
+            {
+                level_id = GameData.levelID,
+                coins = 20,
+                ratings = 3,
+                question_data = null
+            };
+
+            PopUp.Instance.EnableLoad(true);
+            GetQuestionsAPI.SubmitAnswer((success,res) =>
+            {
+                PopUp.Instance.EnableLoad(false);
+                if (!success)
+                {
+                    Debug.LogError("Error in submitting the answer");
+                    return;
+                }
+
+                Debug.Log("<color=green>Submitted </color>");
+                Actions.ChangePanelActions(CanvasType.home);
+
+            }, requestData);
+
         }
     }
 
     private void ShowHint()
     {
-        hintPanel.SetActive(true);
+        if (currentQuestionIndex > questions.Count)
+            return;
+
+        int index = currentQuestionIndex - 1;
+
+        if (index < 0)
+            index = 0;
+
+        string correctAnswer = questions[index].answers.Find(x => x.option_status).title;
+
+        PopUp.Instance.ShowMessage($"Hint : {correctAnswer}");
     }
 
     private void UseHint()
@@ -141,11 +226,9 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
     private void SetData(int questionIndex)
     {
-        questions = GameData.GetQuestions();
-
         questionTxt.text = questions[questionIndex]?.title;
-        optionPanel.SetOptions(questions[questionIndex]?.answers);
 
+        optionPanel.SetOptions(questions[questionIndex]?.answers);
         currentQuestionIndex++;
     }
 

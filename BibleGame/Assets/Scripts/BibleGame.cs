@@ -23,6 +23,7 @@ namespace BibleGame
         public const string getChapters = "get-book-chapters";
         public const string getChapterDetail = "get-chapters-details";
         public const string getQuestions = "get-questions";
+        public const string submitAnswer = "answer-the-questions";
         public const string getBible = "get-bibles";
         public const string getBibleDetail = "get-bible-details";
         public const string getBookDetail = "get-book-list";
@@ -46,6 +47,8 @@ namespace BibleGame
     {
         public static Action<CanvasType> ChangePanelActions;
         public static Action<StartPage> StartPageAction;
+
+        public static Action<int> UpdateCoins;
     }
 
    namespace Data
@@ -99,6 +102,7 @@ namespace BibleGame
             public static string bookId;
             public static string chapterId;
             public static string gameid;
+            public static int coins;
 
             public static AgeGroup currentAge;
             public static Testament testament;

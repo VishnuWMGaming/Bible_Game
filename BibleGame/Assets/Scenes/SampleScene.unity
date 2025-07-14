@@ -8420,6 +8420,7 @@ MonoBehaviour:
   hintSubmitBtn: {fileID: 1432099185}
   hintCloseBtn: {fileID: 1544418811}
   rewardBtn: {fileID: 911445678}
+  questions: []
 --- !u!1 &590891417
 GameObject:
   m_ObjectHideFlags: 0
@@ -31457,9 +31458,6 @@ MonoBehaviour:
   bookTab: {fileID: 637995652}
   mtitles:
   - {fileID: 1360256423}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 751771032}
   - {fileID: 1411467600}
   - {fileID: 1280778428}

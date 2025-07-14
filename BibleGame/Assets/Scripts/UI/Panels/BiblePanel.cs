@@ -68,6 +68,8 @@ public class BiblePanel : MonoBehaviour,IBible
         if (string.IsNullOrEmpty(id))
             return;
 
+        Debug.Log($"<color= green> Bible:{id} is selected </color>");
+
         UserData.bibleId = id;
         Actions.ChangePanelActions(CanvasType.testament);
     }

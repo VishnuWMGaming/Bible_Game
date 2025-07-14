@@ -14,12 +14,17 @@ namespace BibleGame
         {
             public delegate void GetQuestionsObjectiveCallback(bool success, GetQuestionsResponseObjective response = null);
             public delegate void GetQuestionsAnagramCallback(bool success, GetQuestionsResponseAnagram response = null);
+            public delegate void SubmitAnswerCallback(bool success, SubmitAnswerResponse response = null);
 
-            public static void GetQuestionsObjective(GetQuestionsRequestData requestData, GetQuestionsObjectiveCallback callback)
+
+            public static void GetQuestionsObjective(GetQuestionsObjectiveCallback callback, GetQuestionsRequestData requestData)
             {
                 var url = ServiceURL.baseURL + ServiceURL.getQuestions;
 
-                var jsonData = JsonConvert.SerializeObject(requestData);
+                string jsonData = JsonConvert.SerializeObject(requestData);
+
+                Debug.Log($"<color=magenta> Getting questions for objective : {url} =>  {jsonData} </color>");
+
                 WebRequest(url, jsonData, (url, success, adata) =>
                 {
                     if(!success)
@@ -28,6 +33,8 @@ namespace BibleGame
                         callback?.Invoke(false, null);
                         return;
                     }
+
+                    Debug.Log($"<color=#FFA500> Question data : {adata.ToString()}</color>");
 
                     try
                     {
@@ -48,6 +55,9 @@ namespace BibleGame
                 var url = ServiceURL.baseURL + ServiceURL.getQuestions;
 
                 var jsonData = JsonConvert.SerializeObject(requestData);
+
+                Debug.Log($"<color=magenta> Getting questions for anagram : {url} =>  {jsonData} </color>");
+
                 WebRequest(url, jsonData, (url, success, adata) =>
                 {
                     if (!success)
@@ -56,6 +66,8 @@ namespace BibleGame
                         callback?.Invoke(false, null);
                         return;
                     }
+
+                    Debug.Log($"<color=#FFA500> Question data : {adata.ToString()}</color>");
 
                     try
                     {
@@ -71,8 +83,34 @@ namespace BibleGame
                 });
             }
 
+            public static void SubmitAnswer(SubmitAnswerCallback callback, SubmitRequestData requestData)
+            {
+                var url = ServiceURL.baseURL + ServiceURL.submitAnswer;
 
+                var jsonData = JsonConvert.SerializeObject(requestData);
 
+                WebRequest(url, jsonData, (url, success, adata) =>
+                {
+                    if (!success)
+                    {
+                        Debug.LogError($"No success in submitting answer {adata.ToString()}");
+                        callback?.Invoke(false, null);
+                        return;
+                    }
+
+                    try
+                    {
+                        var data = JsonConvert.DeserializeObject<SubmitAnswerResponse>(adata.ToString());
+                        callback?.Invoke(success, data);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError($"Error in submitting answer {ex.Message}");
+                        callback?.Invoke(false, null);
+                    }
+
+                });
+            }
         }
 
         #region REQUEST
@@ -86,6 +124,16 @@ namespace BibleGame
             public string book_id;
             public string chapter_id;
         }
+
+        [Serializable]
+        public class SubmitRequestData
+        {
+            public string level_id;
+            public int coins;
+            public int ratings;
+            public List<string> question_data;
+        }
+
         #endregion
 
         #region RESPONSE
@@ -109,7 +157,7 @@ namespace BibleGame
             public string bible_id;
             public string book_id;
             public string chapter_id;
-            public string ageGroup;
+            public int ageGroup;
             public string opt1;
             public string opt2;
             public string opt3;
@@ -136,13 +184,34 @@ namespace BibleGame
             public string bible_id;
             public string book_id;
             public string chapter_id;
-            public string ageGroup;
+            public int ageGroup;
             public string title;
             public string hint;
         }
 
         [Serializable]
         public class LevelData
+        {
+            public string _id;
+            public string game_id;
+            public string chapter_id;
+            public int rating;
+            public int coin_earn;
+        }
+
+        public class SubmitAnswerResponse: ResponseBase
+        {
+            public SubmitRData streakLevel;
+        }
+
+        [Serializable]
+        public class SubmitRData
+        {
+            public streakSubmitRData streakLevel;
+        }
+
+        [Serializable]
+        public class streakSubmitRData
         {
             public string _id;
             public string game_id;

@@ -122,7 +122,7 @@ public class Books : MonoBehaviour,IMBook
                 return;
             }
 
-            Debug.Log("<color=green> Streak has been created </color>");
+            Debug.Log($"<color=green> Streak has been created: {res.ResponseData._id}</color>");
 
             UserData.gameid = res.ResponseData._id;
 
