@@ -50,7 +50,7 @@ namespace BibleGame
                 });
             }
 
-            public static void GetQuestionsAnagram(GetQuestionsRequestData requestData, GetQuestionsAnagramCallback callback)
+            public static void GetQuestionsAnagram(GetQuestionsAnagramCallback callback, GetQuestionsRequestData requestData)
             {
                 var url = ServiceURL.baseURL + ServiceURL.getQuestions;
 

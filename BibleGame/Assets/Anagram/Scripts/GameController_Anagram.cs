@@ -9,6 +9,17 @@ using System.Reflection;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 using BibleGame.Data;
+using BibleGame.API;
+
+using System.Linq;
+
+
+public interface IAnagramControl
+{
+    public void ActivateSubmitBtn(bool enable);
+    public void SubmitAction();
+    public void UpdateScore();
+}
 
 public class GameController_Anagram : MonoBehaviour,IBox
 {
@@ -18,7 +29,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
     [Header("Boxes:")]
     [SerializeField] List<GramBox> gramBoxes = new List<GramBox>();
 
-    [SerializeField] List<AnagramLetterList> anagramLs = new List<AnagramLetterList>();
+    [SerializeField] public List<AnagramLetter> _anagramLetters = new List<AnagramLetter>();
 
     string result = string.Empty;
 
@@ -30,20 +41,112 @@ public class GameController_Anagram : MonoBehaviour,IBox
     [Header("Current Word Index"), SerializeField]
     private int currentWordIndex = 0;
 
-    public IAnagramManager iAnagramManagerCallback;
-
-
     [Header("SpriteData")]
     [SerializeField] SpriteData spriteData;
 
+    [Space]
+    [SerializeField] List<GetQuestionsAnagramData> questions = new List<GetQuestionsAnagramData>();
+    public List<GetQuestionsAnagramData> Questions => questions;
+
     StyleUI styleUI;
 
-    private void Start()
+    public IAnagramControl callback;
+
+    #region LOCAL_VARIABLES
+    [SerializeField] int currentQIndex = 0;
+    public int CurrentQIndex => currentQIndex;
+
+    #endregion
+
+    private void OnEnable()
     {
-        iAnagramManagerCallback = this.GetComponent<AnagramManager>();
         lettersParent.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = true;
 
         styleUI = spriteData.GetStyle(UserData.currentAge);
+
+        currentQIndex = 0;
+        SetData();
+    }
+
+    private void OnDisable()
+    {
+        
+    }
+
+
+    void SetData()
+    {
+        int ageVal = UserData.currentAge switch
+        {
+            AgeGroup.kindergarden => 1,
+            AgeGroup.elementary => 2,
+            AgeGroup.teenagers => 3,
+            AgeGroup.adult => 4,
+            _ => 1
+        };
+
+        GetQuestionsRequestData requestData = new GetQuestionsRequestData()
+        {
+            game_id = UserData.gameid,
+            ageGroup = ageVal.ToString(),
+            game_type = "anagram",
+            bible_id = UserData.bibleId,
+            chapter_id = UserData.chapterId,
+            book_id = UserData.bookId,
+        };
+
+        PopUp.Instance.EnableLoad(true);
+        GetQuestionsAPI.GetQuestionsAnagram((success,res) =>
+        {
+            PopUp.Instance.EnableLoad(false);
+            if (!success)
+            {
+                Debug.LogError("Error in getting question in anagram");
+                return;
+            }
+
+            GameData.levelID = res.ResponseData.levelData._id;
+
+            questions = res.ResponseData.questions;
+            GameInitilise(questions[currentQIndex]);
+
+            currentQIndex++;
+
+        }, requestData);
+
+    }
+
+    public void NextQAct()
+    {
+        if(currentQIndex > questions.Count)
+        {
+            Debug.Log("Get read to submit !!!");
+            callback.SubmitAction();
+            return;
+        }
+
+        GameInitilise(questions[currentQIndex]);
+
+        currentQIndex++;
+    }
+
+    void GameInitilise(GetQuestionsAnagramData question)
+    {
+        string scrambledword = question.title;
+        string[] letterVals = scrambledword.Select(c => c.ToString()).ToArray();
+
+        for(int i = 0;i< letterVals.Length;++i)
+        {
+            AnagramLetter letter = new AnagramLetter
+            {
+                index = i,
+                val = letterVals[i]
+            };
+
+            _anagramLetters.Add(letter);
+        }
+
+        Debug.Log($"Loading... scrambling");
 
         foreach (var gramBox in gramBoxes)
         {
@@ -51,19 +154,19 @@ public class GameController_Anagram : MonoBehaviour,IBox
         }
         gramBoxes.Clear();
         //var shuffledList = GetShuffledList(anagramLs[1].AnagramLetters);
-        
-        for (var index = 0; index < anagramLs[0].AnagramLetters.Count/*shuffledList.Count*/; index++)
+
+        for (var index = 0; index < _anagramLetters.Count/*shuffledList.Count*/; index++)
         {
-            var letters = anagramLs[0].AnagramLetters[index]/*shuffledList[index]*/;
+            var letters = _anagramLetters[index]/*shuffledList[index]*/;
             var temp = Instantiate(letter, lettersParent);
-            
+
             temp.SetLetter(letters.val);
             temp.SetIndex(letters.index);
 
             temp.maskArea = lettersParent.GetComponent<RectTransform>();
 
             temp.SetImage(styleUI.box);
-            
+
             gramBoxes.Add(temp);
         }
 
@@ -72,7 +175,26 @@ public class GameController_Anagram : MonoBehaviour,IBox
         for (int i = 0; i < gramBoxes.Count; ++i)
             gramBoxes[i].callback = this;
 
+        Debug.Log($"Loading... answer");
+
+        _anagramLetters.Clear();
+
+        string rightword = question.hint;
+        string[] lettervals = rightword.Select(c => c.ToString()).ToArray();
+
+        for (int i = 0; i < lettervals.Length; ++i)
+        {
+            AnagramLetter letter = new AnagramLetter
+            {
+                index = i,
+                val = lettervals[i]
+            };
+
+            _anagramLetters.Add(letter);
+        }
     }
+
+
     void ShuffleGramboxValues(List<GramBox> objects)
     {
         if (objects == null || objects.Count == 0) return;
@@ -158,7 +280,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
         Debug.LogWarning("Result !!!!!!!!!!!!!!!");
 
         result = string.Empty;
-        int index = 1;
+        int index = 0;
         StartCoroutine(CheckingResult(index));
     }
 
@@ -179,15 +301,11 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
         congratsTxt.SetActive(isWon);
 
+        callback.ActivateSubmitBtn(isWon);
+
         if (isWon)
-        {
-            iAnagramManagerCallback.ActivateSubmitBtn();
-            Debug.LogWarning("Got the word");
-        }
-        else
-        {
-            iAnagramManagerCallback.DeactivateSubmitBtn();
-        }
+          Debug.LogWarning("Got the word");
+            
     }
 
     IEnumerator CheckingResult(int index)
@@ -204,10 +322,10 @@ public class GameController_Anagram : MonoBehaviour,IBox
                 if (index == gramBoxes[i].Index)
                 {
                     result = result + gramBoxes[i].Value;
-                    gramBoxes[i].SetCorrectWord(anagramLs[currentWordIndex].AnagramLetters.Find(x => x.index == index).val == gramBoxes[i].Value);
+                    gramBoxes[i].SetCorrectWord(_anagramLetters.Find(x => x.index == index).val == gramBoxes[i].Value);
                     Debug.Log("Checking .... " + index);
                     
-                    Debug.Log($"Checking 2 .... {anagramLs[currentWordIndex].AnagramLetters.Find(x => x.index == index).val}  {gramBoxes[i].Value}" );
+                    Debug.Log($"Checking 2 .... {_anagramLetters.Find(x => x.index == index).val}  {gramBoxes[i].Value}" );
                     
                     index++;
                     StartCoroutine(CheckingResult(index));

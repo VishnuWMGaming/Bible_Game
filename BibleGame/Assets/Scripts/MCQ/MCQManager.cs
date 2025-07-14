@@ -178,6 +178,8 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
             Debug.Log("Submitting....");
             UserData.coins = 20;
 
+            scoreText.text = UserData.coins.ToString();
+
             SubmitRequestData requestData = new SubmitRequestData()
             {
                 level_id = GameData.levelID,
@@ -219,7 +221,9 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
         if (coins < 0)
         {
-            //coins = 0;
+            coins = 0;
+            UserData.coins = coins;
+
             PopUp.Instance.ShowMessage($"Not enough coins !!");
             return;
         }

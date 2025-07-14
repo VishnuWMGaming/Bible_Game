@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BibleGame;
+using BibleGame.API;
+using BibleGame.Data;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramManager
+public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
 {
     [SerializeField] private Button homeBtn;
     [SerializeField] private Button hintBtn;
@@ -16,10 +19,14 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramManager
     [SerializeField] private Button rewardBtn;
     [SerializeField] GameObject hintPanel;
 
+    [SerializeField] TMP_Text coinsText;
+
+    [Header("GameController:")]
+    [SerializeField] GameController_Anagram gameController;
 
     private void OnEnable()
     {
-        hintBtn.onClick.AddListener(OnClickHintBtn);
+        hintBtn.onClick.AddListener(UseHint);
         hintPanel.SetActive(false);
         homeBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
         rewardBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.reward));
@@ -32,6 +39,9 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramManager
         hintSubmitBtn.onClick.AddListener(UseHint);
         hintCloseBtn.onClick.AddListener(CloseHint);
 
+        gameController.callback = this;
+
+        UpdateCoins(UserData.coins);
     }
 
     private void OnDisable()
@@ -40,6 +50,12 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramManager
         hintBtn.onClick.RemoveAllListeners();
         submitBtn.onClick.RemoveListener(NextAction);
     }
+
+    void Intialise()
+    {
+       
+    }
+
 
     private void OnClickHomeBtn()
     {
@@ -57,15 +73,53 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramManager
     }
     private void ShowHint()
     {
-        hintPanel.SetActive(true);
+       
     }
 
     private void UseHint()
     {
-        
+        if (gameController.CurrentQIndex > 5)
+            return;
+
+        int index = gameController.CurrentQIndex - 1;
+
+        if (index < 0)
+            index = 0;
+
+        int coins = UserData.coins;
+        coins -= 7;
+
+
+        if (coins < 0)
+        {
+            coins = 0;
+            UserData.coins = coins;
+
+            PopUp.Instance.ShowMessage($"Not enough coins !!");
+            return;
+        }
+
+        UserData.coins = coins;
+        string correctAnswer = gameController.Questions[index].hint;
+
+        PopUp.Instance.ShowMessage($"Hint : {correctAnswer}");
     }
 
+    public void UpdateScore()
+    {
+        int coins = UserData.coins;
 
+        coins += 4;
+        UserData.coins = coins;
+
+        UpdateCoins(coins);
+    }
+
+    public void UpdateCoins(int coins)
+    {
+        coinsText.text = coins.ToString(); 
+    }
+   
     public void RestartAction()
     {
         
@@ -73,22 +127,41 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramManager
 
     public void NextAction()
     {
-        Actions.ChangePanelActions(CanvasType.home);
+       // Actions.ChangePanelActions(CanvasType.home);
     }
 
-    public void ActivateSubmitBtn()
+    public void ActivateSubmitBtn(bool enable)
     {
-        submitBtn.interactable = true;
+        submitBtn.interactable = enable;
     }
 
-    public void DeactivateSubmitBtn()
+    public void SubmitAction()
     {
-        submitBtn.interactable = false;
-    }
-}
+        Debug.Log("Submitting....");
+        UserData.coins = 20;
+        UpdateCoins(UserData.coins);
 
-public interface IAnagramManager
-{
-    public void ActivateSubmitBtn();
-    public void DeactivateSubmitBtn();
+        SubmitRequestData requestData = new SubmitRequestData()
+        {
+            level_id = GameData.levelID,
+            coins = 20,
+            ratings = 3,
+            question_data = null
+        };
+
+        PopUp.Instance.EnableLoad(true);
+        GetQuestionsAPI.SubmitAnswer((success, res) =>
+        {
+            PopUp.Instance.EnableLoad(false);
+            if (!success)
+            {
+                Debug.LogError("Error in submitting the answer");
+                return;
+            }
+
+            Debug.Log("<color=green>Submitted </color>");
+            Actions.ChangePanelActions(CanvasType.home);
+
+        }, requestData);
+    }
 }

@@ -5921,7 +5921,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '"What contains seven color?"'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f460ea105dfd4ca448394cad4e63d02c, type: 2}
   m_sharedMaterial: {fileID: -6584918567011365986, guid: f460ea105dfd4ca448394cad4e63d02c, type: 2}
@@ -5948,7 +5948,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 31.3
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6295,6 +6295,7 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 517993948}
+  - {fileID: 1613312891}
   - {fileID: 1153183286}
   - {fileID: 1364673703}
   - {fileID: 1599482023}
@@ -6324,6 +6325,8 @@ MonoBehaviour:
   hintCloseBtn: {fileID: 1364673704}
   rewardBtn: {fileID: 1726616133}
   hintPanel: {fileID: 1364673702}
+  coinsText: {fileID: 234030383}
+  gameController: {fileID: 436937164}
 --- !u!114 &436937164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6339,26 +6342,13 @@ MonoBehaviour:
   lettersParent: {fileID: 1386285033}
   letter: {fileID: 6087442340553478030, guid: 8b039d4bede58f84290097463a061069, type: 3}
   gramBoxes: []
-  anagramLs:
-  - AnagramLetters:
-    - index: 1
-      val: R
-    - index: 2
-      val: A
-    - index: 3
-      val: I
-    - index: 4
-      val: N
-    - index: 5
-      val: B
-    - index: 6
-      val: O
-    - index: 7
-      val: W
+  _anagramLetters: []
   congratsTxt: {fileID: 1613312888}
   letterCount: 7
   currentWordIndex: 0
   spriteData: {fileID: 11400000, guid: 05eeaf1103add7242b607da48f6b120b, type: 2}
+  questions: []
+  currentQIndex: 0
 --- !u!1 &438309033
 GameObject:
   m_ObjectHideFlags: 0
@@ -6466,6 +6456,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2074304752}
+  - {fileID: 1079962584}
   m_Father: {fileID: 19320606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -6504,10 +6495,10 @@ MonoBehaviour:
     m_Right: 20
     m_Top: 20
     m_Bottom: 20
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 170, y: 286}
+  m_CellSize: {x: 150, y: 150}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 1
   m_ConstraintCount: 2
@@ -15395,6 +15386,124 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ageGroup: 1
+--- !u!1001 &1079962583
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 440978630}
+    m_Modifications:
+    - target: {fileID: 2849047048084134907, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_text
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2849047048084134907, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_fontSize
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 196.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -95
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5283154129134057687, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_Name
+      value: Chapter
+      objectReference: {fileID: 0}
+    - target: {fileID: 5283154129134057687, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164530713635389247, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -84.2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+--- !u!224 &1079962584 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4720130921570226570, guid: 5cda60ec71402f34cbe2fe2a141c34cf, type: 3}
+  m_PrefabInstance: {fileID: 1079962583}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1081844855
 GameObject:
   m_ObjectHideFlags: 0
@@ -21762,7 +21871,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1386285033}
-  - {fileID: 1613312891}
   - {fileID: 392811500}
   - {fileID: 847355401}
   - {fileID: 1740503448}
@@ -24384,11 +24492,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1515732086}
+  m_Father: {fileID: 436937162}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -249.14334}
+  m_AnchoredPosition: {x: 0, y: -104.30788}
   m_SizeDelta: {x: 382.315, y: 56.713287}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1613933438
@@ -29257,7 +29365,7 @@ MonoBehaviour:
     m_Right: 20
     m_Top: 20
     m_Bottom: 20
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 170, y: 286}
@@ -33306,37 +33414,13 @@ MonoBehaviour:
   lettersParent: {fileID: 1386285033}
   letter: {fileID: 6087442340553478030, guid: 8b039d4bede58f84290097463a061069, type: 3}
   gramBoxes: []
-  anagramLs:
-  - AnagramLetters:
-    - index: 1
-      val: D
-    - index: 2
-      val: A
-    - index: 3
-      val: V
-    - index: 4
-      val: I
-    - index: 5
-      val: D
-  - AnagramLetters:
-    - index: 1
-      val: R
-    - index: 2
-      val: A
-    - index: 3
-      val: I
-    - index: 4
-      val: N
-    - index: 5
-      val: B
-    - index: 6
-      val: O
-    - index: 7
-      val: W
+  _anagramLetters: []
   congratsTxt: {fileID: 1613312888}
   letterCount: 7
   currentWordIndex: 1
   spriteData: {fileID: 0}
+  questions: []
+  currentQIndex: 0
 --- !u!4 &2051616424
 Transform:
   m_ObjectHideFlags: 0
