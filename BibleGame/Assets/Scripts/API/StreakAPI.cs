@@ -61,6 +61,8 @@ namespace BibleGame
                         return;
                     }
 
+                    Debug.Log($"<color=#FFA500> Streak data : {adata.ToString()}</color>");
+
                     try
                     {
                         var data = JsonConvert.DeserializeObject<GetStreakResponse>(adata.ToString());
@@ -78,12 +80,13 @@ namespace BibleGame
                 });
             }
 
-            public static void GetDetail(GetStreakDetailCallback callback,string game_id)
+            public static void GetDetail(GetStreakDetailCallback callback,string id)
             {
-                var url = $"{ServiceURL.baseURL}{ServiceURL.getStreak}";
+                var url = $"{ServiceURL.baseURL}{ServiceURL.getStreakDetail}";
 
-                string jsonData = JsonConvert.SerializeObject(game_id);
+                string jsonData = JsonConvert.SerializeObject(new { game_id = id });
 
+                Debug.Log($"Streak detail :{url} : {jsonData}");
 
                 WebRequest(url, jsonData, (url, success, adata) =>
                 {

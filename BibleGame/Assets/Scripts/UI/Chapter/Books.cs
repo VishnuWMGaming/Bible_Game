@@ -134,6 +134,12 @@ public class Books : MonoBehaviour,IMBook
                     return;
                 }
 
+                if(res.ResponseMessage == "Already streak created.")
+                {
+                    PopUp.Instance.ShowMessage("streak has been already created",()=> Actions.ChangePanelActions(CanvasType.home));
+                    return;
+                }
+
                 GameData.mChapterDatas = res.ResponseData.data;
                 Actions.StartPageAction(StartPage.selectChapter);
 

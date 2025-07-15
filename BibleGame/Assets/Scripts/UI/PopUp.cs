@@ -5,6 +5,7 @@ using UnityEngine;
 
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public class PopUp : MonoBehaviour
 {
@@ -15,11 +16,14 @@ public class PopUp : MonoBehaviour
 
    [SerializeField] GameObject panel;
    [SerializeField] GameObject loadingPanel;
+   [SerializeField] Button closeBtn;
 
    private void OnEnable()
    {
        if (instance == null)
            instance = this;
+
+
    }
 
    private void Awake()
@@ -33,10 +37,16 @@ public class PopUp : MonoBehaviour
         loadingPanel.SetActive(enable);
     }
 
-    public void ShowMessage(string message)
+    public void ShowMessage(string message,UnityAction closeAction = null)
     {
-       panel.SetActive(true);
+        panel.SetActive(true);
 
-       messageText.text = message;   
+        closeBtn?.onClick.RemoveAllListeners();
+        closeBtn?.onClick.AddListener(() => panel.SetActive(false));
+
+        if(closeAction != null)
+        closeBtn?.onClick.AddListener(closeAction);
+
+        messageText.text = message;   
     }
 }

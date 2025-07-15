@@ -30,6 +30,8 @@ namespace BibleGame
                         return;
                     }
 
+                    Debug.Log($"<color=#FFA500> Question data : {adata.ToString()}</color>");
+
                     try
                     {
                         var data = JsonConvert.DeserializeObject<GetChaptersResponse>(adata.ToString());

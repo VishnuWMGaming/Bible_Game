@@ -25,8 +25,11 @@ public class StrickPanel : MonoBehaviour
         newGame?.onClick.AddListener(NewGame);
         homeBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
 
-        streak1Btn?.onClick.AddListener(() => GetStreak(1));
-        streak2Btn?.onClick.AddListener(() => GetStreak(2));
+        streak1Btn?.onClick.AddListener(() => GetStreak(0));
+        streak2Btn?.onClick.AddListener(() => GetStreak(1));
+
+        streak1Btn.gameObject.SetActive(StreakAPI.streakDatas[0] != null);
+        streak2Btn.gameObject.SetActive(StreakAPI.streakDatas[1] != null);
 
         userName.text = AppData.loginData.Name;
     }
@@ -89,9 +92,8 @@ public class StrickPanel : MonoBehaviour
                 return;
             }
 
-
-
-
+            Debug.LogWarning("Got the streak details !!");
+            Actions.ChangePanelActions(CanvasType.level);
 
         }, UserData.gameid);
     }
