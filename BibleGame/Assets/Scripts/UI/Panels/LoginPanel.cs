@@ -132,7 +132,7 @@ public class LoginPanel : MonoBehaviour
 
     private void Callback(bool success, LoginResponseX response)
     {
-
+      
         if (success)
         {
             AppData.loginData = new LoginData(email_Inputfield.text, password_Inputfield.Text, response.ResponseData.name);
@@ -147,7 +147,7 @@ public class LoginPanel : MonoBehaviour
             }
 
             GetProfile();
-            //Actions.ChangePanelActions(CanvasType.home);
+            
         }
         else
         {
@@ -165,7 +165,9 @@ public class LoginPanel : MonoBehaviour
         if (success)
         {
             AppData.loginData = new LoginData(response.ResponseData.email, "**********", response.ResponseData.name);
-           // GetChapters();
+            // GetChapters();
+
+            Actions.ChangePanelActions(CanvasType.home);
         }
         else
         {

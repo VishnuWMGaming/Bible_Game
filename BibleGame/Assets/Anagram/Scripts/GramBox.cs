@@ -28,6 +28,7 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     [Space]
     [SerializeField] bool isDragging = false;
     [SerializeField] int index;
+
     public int Index
     {
         get { return index; }
@@ -100,7 +101,7 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         );
 
         Vector2 localPosition = AnagramUtils.GetMousePositionInCanvasSpace(canvas);
-        bool isInsideMask = AnagramUtils.IsPositionInside(localPosition, maskArea);
+        bool isInsideMask = AnagramUtils.IsPositionInside(newPosition, maskArea);
 
         if (!isInsideMask)
         {

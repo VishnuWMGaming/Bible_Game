@@ -14,14 +14,18 @@ public class BiblePanel : MonoBehaviour,IBible
     [SerializeField] Bible mBibleOne;
     [SerializeField] Bible mBibleTwo;
 
+    [SerializeField] Button mBackButton;
+
+
     private void OnEnable()
     {
+        mBackButton?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.bible));
         Intialise();
     }
 
     private void OnDisable()
     {
-        
+        mBackButton?.onClick.RemoveAllListeners();
     }
     
     void Intialise()

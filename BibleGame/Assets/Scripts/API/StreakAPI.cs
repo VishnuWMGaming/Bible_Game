@@ -97,6 +97,8 @@ namespace BibleGame
                         return;
                     }
 
+                    Debug.Log($"<color=#FFA500> Streak detail : {adata.ToString()}</color>");
+
                     try
                     {
                         var data = JsonConvert.DeserializeObject<GetStreakDetail>(adata.ToString());

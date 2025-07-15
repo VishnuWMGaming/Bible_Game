@@ -1,20 +1,24 @@
+using BibleGame;
+using BibleGame.API;
+using BibleGame.Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-using BibleGame;
-
-public class LevelPanel : MonoBehaviour,IChapterButton ,ICover
+public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 {
     [Header("UI Settings:")]
     [SerializeField] Button settingsBtn;
     [SerializeField] Button backBtn;
 
+    [SerializeField] TMP_Text scoreText;
+
 
     [Header("Level Buttons:")]
-    [SerializeField] List<Chapter_Button> level_Buttons = new List<Chapter_Button>();
+    [SerializeField] List<LevelObj> levelBtns = new List<LevelObj>();
 
     [SerializeField] GameObject splashObj;
 
@@ -32,6 +36,10 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover
         //    level_Buttons[i].Level = GameData.GetChapters()[i].chapterIndex;
         //}
 
+        scoreText.text = UserData.coins.ToString();
+
+        Initialise();
+
         settingsBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
         backBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
 
@@ -48,6 +56,87 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover
         mLevelObj.SetActive(false);
     }
 
+    void Initialise()
+    {
+        if (String.IsNullOrEmpty(UserData.gameid))
+        {
+            Debug.LogError("Streak api id is null");
+            return;
+        }
+
+        PopUp.Instance.EnableLoad(true);
+        StreakAPI.GetDetail((success, res) =>
+        {
+            PopUp.Instance.EnableLoad(false);
+            if (!success)
+            {
+                Debug.LogError("Error in getting details");
+                return;
+            }
+
+            Debug.LogWarning("Got the streak details !!");
+
+            UserData.bookId = res.ResponseData.streak.book_id;
+
+            int coins = 0;
+
+            List<LevelData> levelDatas = res.ResponseData.levels;
+
+            if(String.IsNullOrEmpty(res.ResponseData.streak.book_id) || String.IsNullOrEmpty(res.ResponseData.streak.bible_id))
+            {
+                Debug.LogError("ids are null for the chapter call");
+                return;
+            }
+
+            PopUp.Instance.EnableLoad(true);
+            ChapterAPI.Get((success, res) =>
+            {
+                PopUp.Instance.EnableLoad(false);
+
+                if (!success)
+                {
+                    Debug.LogError("Error in getting the chapters");
+                    return;
+                }
+
+                GameData.mChapterDatas = res.ResponseData.data;
+
+                for(int i = 0; i< levelBtns.Count;++i)
+                {
+                    levelBtns[i].Intialise(GameData.mChapterDatas[i].id, this);
+                }
+
+                int coins = 0;
+
+                if (levelDatas != null || levelDatas.Count != 0)
+                 foreach (var item in levelDatas)
+                 {
+                     coins += item.coin_earn;
+                 }
+
+                scoreText.text = coins.ToString();
+
+               if (levelDatas != null || levelDatas.Count != 0)
+                foreach(var level in levelDatas)
+                {
+                    levelBtns.Find(x => x.ID == level.chapter_id).StarUpdate(level.rating);
+                }
+
+            }, UserData.bibleId, UserData.bookId);
+
+
+        }, UserData.gameid);
+    }
+
+    public void ChapterSelect(string id)
+    {
+        Debug.Log($"<color=green> Chapter selected : {id}</color>");
+
+        UserData.chapterId = id;
+
+        Actions.ChangePanelActions(CanvasType.chapter);
+        Actions.StartPageAction(StartPage.chapter);
+    }
 
     /// <summary>
     /// Action implemented on level selection

@@ -122,21 +122,24 @@ public class Books : MonoBehaviour,IMBook
                 return;
             }
 
+            if (res.ResponseMessage == "Already streak created.")
+            {
+                PopUp.Instance.ShowMessage("streak has been already created", () => Actions.ChangePanelActions(CanvasType.home));
+                return;
+            }
+
             Debug.Log($"<color=green> Streak has been created: {res.ResponseData._id}</color>");
 
             UserData.gameid = res.ResponseData._id;
 
+            PopUp.Instance.EnableLoad(true);
             ChapterAPI.Get((success,res) =>
             {
-                if(!success)
+                PopUp.Instance.EnableLoad(false);
+
+                if (!success)
                 {
                     Debug.LogError("Error in getting the chapters");
-                    return;
-                }
-
-                if(res.ResponseMessage == "Already streak created.")
-                {
-                    PopUp.Instance.ShowMessage("streak has been already created",()=> Actions.ChangePanelActions(CanvasType.home));
                     return;
                 }
 

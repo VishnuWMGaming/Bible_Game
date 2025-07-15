@@ -1,4 +1,6 @@
 using BibleGame;
+using BibleGame.Data;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +10,8 @@ public class SelectGame : MonoBehaviour
     [SerializeField] private Button wordBtn;
     [SerializeField] private Button homeBtn;
 
+    [SerializeField] TMP_Text userName;
+
     public ISelectGame CallbackSelectGame;
     
     private void OnEnable()
@@ -15,6 +19,8 @@ public class SelectGame : MonoBehaviour
         homeBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
         triviaBtn.onClick.AddListener(() => CallbackSelectGame.PlayTriviaGame());
         wordBtn.onClick.AddListener(() => CallbackSelectGame.PlayWordGame());
+
+        userName.text = AppData.loginData.Name;
     }
 
     private void OnDisable()

@@ -53,7 +53,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         hintCloseBtn.onClick.AddListener(CloseHint);
 
         //RestartAction();
-        //currentQuestionIndex = 0;
+        currentQuestionIndex = 0;
 
         Initialise();
 
@@ -106,6 +106,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
             if (!success)
             {
                 Debug.LogError("Error in Get question objective");
+                Actions.StartPageAction(StartPage.game_menu);
                 return;
             }
 

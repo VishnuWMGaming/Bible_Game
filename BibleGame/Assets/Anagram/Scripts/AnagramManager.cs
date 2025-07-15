@@ -30,7 +30,7 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
         hintPanel.SetActive(false);
         homeBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
         rewardBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.reward));
-        // submitBtn.onClick.AddListener(() => optionPanel.CheckAnswerAction());
+       submitBtn.onClick.AddListener(SubmitAction);
 
         submitBtn.interactable = false;
         submitBtn.onClick.AddListener(NextAction);
@@ -48,7 +48,7 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
     {
         homeBtn.onClick.RemoveAllListeners();
         hintBtn.onClick.RemoveAllListeners();
-        submitBtn.onClick.RemoveListener(NextAction);
+        submitBtn.onClick.RemoveAllListeners();
     }
 
     void Intialise()

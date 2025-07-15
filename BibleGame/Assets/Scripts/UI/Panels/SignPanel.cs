@@ -18,6 +18,7 @@ public class SignPanel : MonoBehaviour
     [SerializeField] TMP_InputField email_InputField;
     [SerializeField] UIPasswordField password_InputField;
     [SerializeField] UIPasswordField password_InputFieldConfirm;
+    [SerializeField] TMP_InputField churchName_InputField;
 
     [SerializeField] Button loginButton;
     [SerializeField] Button signUpButton;
@@ -94,6 +95,8 @@ public class SignPanel : MonoBehaviour
 
         PopUp.Instance.EnableLoad(true);
         var registerData  = new RegisterData(name_InputField.text,email_InputField.text,password_InputFieldConfirm.Text);
+
+        PlayerPrefs.SetString("ChurchName", churchName_InputField.text);
 
         RegisterAPI.RegisterUser(registerData, RegisterCallback);
     }

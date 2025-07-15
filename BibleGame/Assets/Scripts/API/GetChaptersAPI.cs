@@ -30,7 +30,7 @@ namespace BibleGame
                         return;
                     }
 
-                    Debug.Log($"<color=#FFA500> Question data : {adata.ToString()}</color>");
+                    Debug.Log($"<color=#FFA500> Chapter data : {adata.ToString()}</color>");
 
                     try
                     {

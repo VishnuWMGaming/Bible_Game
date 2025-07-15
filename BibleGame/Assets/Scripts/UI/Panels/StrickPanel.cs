@@ -28,8 +28,8 @@ public class StrickPanel : MonoBehaviour
         streak1Btn?.onClick.AddListener(() => GetStreak(0));
         streak2Btn?.onClick.AddListener(() => GetStreak(1));
 
-        streak1Btn.gameObject.SetActive(StreakAPI.streakDatas[0] != null);
-        streak2Btn.gameObject.SetActive(StreakAPI.streakDatas[1] != null);
+        streak1Btn.gameObject.SetActive(StreakAPI.streakDatas.Count >=1 );
+        streak2Btn.gameObject.SetActive(StreakAPI.streakDatas.Count >=2);
 
         userName.text = AppData.loginData.Name;
     }
@@ -76,26 +76,6 @@ public class StrickPanel : MonoBehaviour
 
         UserData.coins = streakData.coins;
 
-        if (String.IsNullOrEmpty(UserData.gameid))
-        {
-            Debug.LogError("Streak api id is null");
-            return;
-        }
-
-        PopUp.Instance.EnableLoad(true);
-        StreakAPI.GetDetail((success, res) =>
-        {
-            PopUp.Instance.EnableLoad(false);
-            if (!success)
-            {
-                Debug.LogError("Error in getting details");
-                return;
-            }
-
-            Debug.LogWarning("Got the streak details !!");
-            Actions.ChangePanelActions(CanvasType.level);
-
-        }, UserData.gameid);
+        Actions.ChangePanelActions(CanvasType.level);
     }
 }
-

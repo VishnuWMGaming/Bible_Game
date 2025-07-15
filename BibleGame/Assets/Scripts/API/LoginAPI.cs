@@ -29,7 +29,7 @@ namespace BibleGame
             {
                 Debug.Log(data.ToString());
                 var response = JsonConvert.DeserializeObject<LoginResponseX>(data.ToString());
-
+           
 
                 if (aSuccess)
                 {

@@ -23,7 +23,7 @@ public interface IAnagramControl
 
 public class GameController_Anagram : MonoBehaviour,IBox
 {
-    [SerializeField] private Transform lettersParent;
+    [SerializeField] private RectTransform lettersParent;
     [SerializeField] private GramBox letter;
     
     [Header("Boxes:")]
@@ -163,7 +163,9 @@ public class GameController_Anagram : MonoBehaviour,IBox
             temp.SetLetter(letters.val);
             temp.SetIndex(letters.index);
 
-            temp.maskArea = lettersParent.GetComponent<RectTransform>();
+            temp.BoxT.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+
+            temp.maskArea = lettersParent;
 
             temp.SetImage(styleUI.box);
 
@@ -231,7 +233,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
         yield return new WaitForEndOfFrame();
         foreach (var gramBox in gramBoxes)
         {
-            gramBox.SetStartPos(gramBox.transform.localPosition);
+            gramBox.SetStartPos(gramBox.GetComponent<RectTransform>().localPosition);
         }
         // yield return new WaitForSeconds(10f);
         yield return new WaitForEndOfFrame();
@@ -239,7 +241,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
         {
             gramBox.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
             gramBox.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0.5f);
-            gramBox.transform.localPosition = gramBox.GetStartPos();
+            gramBox.GetComponent<RectTransform>().localPosition = gramBox.GetStartPos();
         }
         yield return new WaitForEndOfFrame();
         // yield return new WaitForSeconds(10f);
@@ -288,8 +290,9 @@ public class GameController_Anagram : MonoBehaviour,IBox
     void EndGame()
     {
         bool isWon = false;
+        StopAllCoroutines();
 
-        Debug.Log("End game");
+        Debug.Log("Checking the result..");
 
         for (int i = 0; i < gramBoxes.Count; ++i)
         {
@@ -299,18 +302,22 @@ public class GameController_Anagram : MonoBehaviour,IBox
                 break;
         }
 
+        if (isWon)
+            Debug.LogWarning("Got the word");
+        else
+        {
+            Debug.LogError("Word Not formed");
+            return;
+        }
+
         congratsTxt.SetActive(isWon);
 
         callback.ActivateSubmitBtn(isWon);
-
-        if (isWon)
-          Debug.LogWarning("Got the word");
-            
     }
 
     IEnumerator CheckingResult(int index)
     {
-        if (index > letterCount)
+        if (index >= letterCount)
         {
             StopAllCoroutines();
             EndGame(); 
@@ -323,14 +330,16 @@ public class GameController_Anagram : MonoBehaviour,IBox
                 {
                     result = result + gramBoxes[i].Value;
                     gramBoxes[i].SetCorrectWord(_anagramLetters.Find(x => x.index == index).val == gramBoxes[i].Value);
-                    Debug.Log("Checking .... " + index);
+                   // Debug.Log("Checking .... " + index);
                     
-                    Debug.Log($"Checking 2 .... {_anagramLetters.Find(x => x.index == index).val}  {gramBoxes[i].Value}" );
+                   // Debug.Log($"Checking 2 .... {_anagramLetters.Find(x => x.index == index).val}  {gramBoxes[i].Value}" );
                     
                     index++;
                     StartCoroutine(CheckingResult(index));
                 }
             }
+
+            EndGame();
         }
 
         yield return null;

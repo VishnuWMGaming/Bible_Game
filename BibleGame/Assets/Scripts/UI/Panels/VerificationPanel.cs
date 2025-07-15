@@ -102,7 +102,7 @@ public class VerificationPanel : MonoBehaviour
             switch (AppData.otpData.OTPType)
             {
                 case OTPType.sign:
-                    GetProfile();/*Actions.ChangePanelActions(CanvasType.home);*/ break;
+                    GetProfile(); Actions.ChangePanelActions(CanvasType.home); break;
                 case OTPType.forget: Actions.ChangePanelActions(CanvasType.updatepassword); break;
             }
         }
