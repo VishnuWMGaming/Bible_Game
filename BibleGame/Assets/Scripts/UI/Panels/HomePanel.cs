@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 using BibleGame;
 using BibleGame.Data;
+using BibleGame.API;
 public class HomePanel : MonoBehaviour
 {
     [Header("UI Settings:")]
@@ -19,10 +20,42 @@ public class HomePanel : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        settingBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
-        playBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.ageSelect));
+        settingBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
+
+        playBtn.interactable = false;
 
         userName.text = AppData.loginData.Name;
+
+        Initialise();
+    }
+
+    void Initialise()
+    {
+
+        PopUp.Instance.EnableLoad(true);
+
+        StreakAPI.Get((success, res) =>
+        {
+            PopUp.Instance.EnableLoad(false);
+            playBtn.interactable = true;
+
+            if (!success)
+            {
+                Debug.LogError("Error in getting the streaks");
+                playBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.ageSelect));
+
+                return;
+            }
+
+            playBtn?.onClick.AddListener(() =>
+            {
+                if (res.ResponseData == null || res.ResponseData.Count <= 0)
+                    Actions.ChangePanelActions(CanvasType.ageSelect);
+                else
+                    Actions.ChangePanelActions(CanvasType.selectStreak);
+            });
+
+        });
     }
 
     /// <summary>
@@ -30,7 +63,7 @@ public class HomePanel : MonoBehaviour
     /// </summary>
     private void OnDisable()
     {
-        settingBtn.onClick.RemoveAllListeners();
-        playBtn.onClick.RemoveAllListeners();
+        settingBtn?.onClick.RemoveAllListeners();
+        playBtn?.onClick.RemoveAllListeners();
     }
 }

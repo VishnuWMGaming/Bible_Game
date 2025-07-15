@@ -12,6 +12,10 @@ namespace BibleGame
         public class StreakAPI: ApiBase
         {
             public delegate void CreatStreakCallback(bool success, CreateStreakResponse response = null);
+            public delegate void GetStreakCallback(bool success, GetStreakResponse response = null);
+            public delegate void GetStreakDetailCallback(bool success, GetStreakDetail response = null);
+
+            public static List<StreakData> streakDatas;
 
             public static void Create(CreatStreakCallback callback, StreakRequest request)
             {
@@ -42,6 +46,67 @@ namespace BibleGame
             }
 
 
+            public static void Get(GetStreakCallback callback)
+            {
+                var url = $"{ServiceURL.baseURL}{ServiceURL.getStreak}";
+
+                WebRequestGet(url, (url, success, adata) =>
+                {
+
+                    if (!success)
+                    {
+                        Debug.LogError("No Success in get streaks");
+                        callback?.Invoke(false, null);
+
+                        return;
+                    }
+
+                    try
+                    {
+                        var data = JsonConvert.DeserializeObject<GetStreakResponse>(adata.ToString());
+
+                        streakDatas = data.ResponseData;
+
+                        callback?.Invoke(success,data);
+                    }
+                    catch(Exception ex)
+                    {
+                        Debug.LogError($"Error in get strick: {ex.Message}");
+                        callback?.Invoke(false, null);
+                    }
+
+                });
+            }
+
+            public static void GetDetail(GetStreakDetailCallback callback,string game_id)
+            {
+                var url = $"{ServiceURL.baseURL}{ServiceURL.getStreak}";
+
+                string jsonData = JsonConvert.SerializeObject(game_id);
+
+
+                WebRequest(url, jsonData, (url, success, adata) =>
+                {
+                    if (!success)
+                    {
+                        Debug.LogError("No success in get streak details");
+                        callback?.Invoke(false, null);
+                        return;
+                    }
+
+                    try
+                    {
+                        var data = JsonConvert.DeserializeObject<GetStreakDetail>(adata.ToString());
+                        callback?.Invoke(success, data);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError($"Error in create strick: {ex.Message}");
+                        callback?.Invoke(false, null);
+                    }
+
+                });
+            }
         }
 
 
@@ -64,10 +129,31 @@ namespace BibleGame
             public StreakData ResponseData;
         }
 
+        public class GetStreakResponse: ResponseBase
+        {
+            public List<StreakData> ResponseData;
+        }
+
+        public class GetStreakDetail:ResponseBase
+        {
+            public StreakDetailData ResponseData;
+        }
+
+        [Serializable]
+        public class StreakDetailData
+        {
+            public StreakData streak;
+            public List<LevelData> levels;
+        }
+
         [Serializable]
         public class StreakData
         {
             public string _id;
+            public string bible_id;
+            public string book_id;
+            public string age;
+            public string testament;
             public int coins;
         }
 

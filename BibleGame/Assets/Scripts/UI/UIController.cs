@@ -25,6 +25,7 @@ public class UIController : MonoBehaviour
     GameObject agePanel;
     GameObject testamontPanel;
     GameObject biblePanel;
+    GameObject streakPanel;
 
     /// <summary>
     /// Action called on validation
@@ -55,7 +56,7 @@ public class UIController : MonoBehaviour
         agePanel = FindObjectOfType<AgeSelectionPanel>(true).gameObject;
         testamontPanel = FindObjectOfType<TestamentPanel>(true).gameObject;
         biblePanel = FindObjectOfType<BiblePanel>(true).gameObject;
-
+        streakPanel = FindObjectOfType<StrickPanel>(true).gameObject;
         _canvasType = CanvasType.splash;
         currentPanel = splashCanvas;
         currentPanel.SetActive(true);
@@ -102,7 +103,8 @@ public class UIController : MonoBehaviour
                                            CanvasType.reward => RewardCanvas,
                                            CanvasType.ageSelect => agePanel,
                                            CanvasType.testament => testamontPanel,
-                                           CanvasType.bible => biblePanel,  
+                                           CanvasType.bible => biblePanel,
+                                           CanvasType.selectStreak => streakPanel,
                                            _=> null
                                          };
 
@@ -126,5 +128,6 @@ public enum CanvasType
     level,
     chapter,
     bible,
-    reward
+    reward,
+    selectStreak
 }
