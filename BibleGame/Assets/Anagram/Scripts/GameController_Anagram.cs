@@ -24,6 +24,8 @@ public interface IAnagramControl
 public class GameController_Anagram : MonoBehaviour,IBox
 {
     [SerializeField] private RectTransform lettersParent;
+    HorizontalLayoutGroup layoutGroup;
+
     [SerializeField] private GramBox letter;
     
     [Header("Boxes:")]
@@ -55,12 +57,13 @@ public class GameController_Anagram : MonoBehaviour,IBox
     #region LOCAL_VARIABLES
     [SerializeField] int currentQIndex = 0;
     public int CurrentQIndex => currentQIndex;
-
+   
     #endregion
 
     private void OnEnable()
     {
-        lettersParent.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = true;
+        layoutGroup = lettersParent.GetComponent<HorizontalLayoutGroup>();
+        layoutGroup.enabled = true;
 
         styleUI = spriteData.GetStyle(UserData.currentAge);
 
@@ -70,7 +73,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
     private void OnDisable()
     {
-        
+      
     }
 
 
@@ -121,9 +124,13 @@ public class GameController_Anagram : MonoBehaviour,IBox
         if(currentQIndex > questions.Count)
         {
             Debug.Log("Get read to submit !!!");
-            callback.SubmitAction();
+            callback.ActivateSubmitBtn(true);
             return;
         }
+
+        PopUp.Instance.EnableLoad(true);
+
+        layoutGroup.enabled = true;
 
         GameInitilise(questions[currentQIndex]);
 
@@ -132,10 +139,18 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
     void GameInitilise(GetQuestionsAnagramData question)
     {
-        string scrambledword = question.title;
-        string[] letterVals = scrambledword.Select(c => c.ToString()).ToArray();
+        string word = question.hint;
+        string[] letterVals = word.Select(c => c.ToString()).ToArray();
 
-        for(int i = 0;i< letterVals.Length;++i)
+        _anagramLetters.Clear();
+
+        if (letterVals.Length > 8)
+        {
+            Debug.LogError($"Exceeded the maximum grambox count: {question.hint}");
+            return;
+        }
+        
+        for (int i = 0;i< letterVals.Length;++i)
         {
             AnagramLetter letter = new AnagramLetter
             {
@@ -146,113 +161,70 @@ public class GameController_Anagram : MonoBehaviour,IBox
             _anagramLetters.Add(letter);
         }
 
-        Debug.Log($"Loading... scrambling");
+        //Scrambing process...
+        Debug.Log($"Scrambled word: {ShuffleWord(word)} ... Scrambling");
 
-        foreach (var gramBox in gramBoxes)
-        {
-            Destroy(gramBox);
-        }
-        gramBoxes.Clear();
-        //var shuffledList = GetShuffledList(anagramLs[1].AnagramLetters);
+        foreach (var box in gramBoxes) box.Restart();
 
-        for (var index = 0; index < _anagramLetters.Count/*shuffledList.Count*/; index++)
-        {
-            var letters = _anagramLetters[index]/*shuffledList[index]*/;
-            var temp = Instantiate(letter, lettersParent);
+        List<AnagramLetter> scrambledLetters = new List<AnagramLetter>();
 
-            temp.SetLetter(letters.val);
-            temp.SetIndex(letters.index);
+        string scrambledWord = ShuffleWord(word);
+        string[] scrambledletterVals = scrambledWord.Select(c => c.ToString()).ToArray();
 
-            temp.BoxT.localScale = new Vector3(1.2f, 1.2f, 1.2f);
-
-            temp.maskArea = lettersParent;
-
-            temp.SetImage(styleUI.box);
-
-            gramBoxes.Add(temp);
-        }
-
-        StartCoroutine(DisableHorizontalLayoutGroup());
-
-        for (int i = 0; i < gramBoxes.Count; ++i)
-            gramBoxes[i].callback = this;
-
-        Debug.Log($"Loading... answer");
-
-        _anagramLetters.Clear();
-
-        string rightword = question.hint;
-        string[] lettervals = rightword.Select(c => c.ToString()).ToArray();
-
-        for (int i = 0; i < lettervals.Length; ++i)
+        for (int i = 0; i < scrambledletterVals.Length; ++i)
         {
             AnagramLetter letter = new AnagramLetter
             {
                 index = i,
-                val = lettervals[i]
+                val = scrambledletterVals[i]
             };
 
-            _anagramLetters.Add(letter);
+            scrambledLetters.Add(letter);
         }
+
+
+        for (int index = 0; index < scrambledLetters.Count; index++)
+        {
+            var letters = scrambledLetters[index];
+
+            GramBox box = gramBoxes[index];
+            box.Enable(true);
+
+            box.SetLetter(letters.val);
+            box.SetIndex(letters.index);
+
+            box.SetImage(styleUI.box);
+            box.callback = this;
+        }
+
+        foreach (var box in gramBoxes) box.Enable(box.Index != -1);
+
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(lettersParent);
+
+        PopUp.Instance.EnableLoad(false);
+
+        foreach (var box in gramBoxes) box.SetStartPos(box.BoxT.anchoredPosition, box.BoxT.position);
+        layoutGroup.enabled = false;
+        foreach (var box in gramBoxes) box.Arrange();
+
+
+        Debug.Log("Anagram  is set ");
+    }
+
+    string ShuffleWord(string word)
+    {
+        System.Random rng = new System.Random();
+        return new string(word.OrderBy(c => rng.Next()).ToArray());
     }
 
 
-    void ShuffleGramboxValues(List<GramBox> objects)
-    {
-        if (objects == null || objects.Count == 0) return;
+    IEnumerator ArrangeLetters(System.Action action)
+    { 
+        yield return null;
+       
 
-        // Create a list of indexes
-        List<string> shuffledValues = new List<string>();
-        for (int i = 0; i < objects.Count; i++)
-        {
-            shuffledValues.Add(objects[i].Value);
-        }
-
-        // Shuffle the indexes
-        for (int i = shuffledValues.Count - 1; i > 0; i--)
-        {
-            int randomIndex = Random.Range(0, i + 1);
-            (shuffledValues[i], shuffledValues[randomIndex]) = (shuffledValues[randomIndex], shuffledValues[i]);
-        }
-
-        // Assign shuffled sibling indexes
-        for (int i = 0; i < objects.Count; i++)
-        {
-            // objects[i].gameObject.transform.SetSiblingIndex(siblingIndexes[i]);
-            objects[i].SetLetter(shuffledValues[i]);
-        }
-    }
-
-    IEnumerator DisableHorizontalLayoutGroup()
-    {
-        yield return new WaitForEndOfFrame();
-        ShuffleGramboxValues(gramBoxes);
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        lettersParent.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = false;
-        yield return new WaitForEndOfFrame();
-        foreach (var gramBox in gramBoxes)
-        {
-            gramBox.SetStartPos(gramBox.GetComponent<RectTransform>().localPosition);
-        }
-        // yield return new WaitForSeconds(10f);
-        yield return new WaitForEndOfFrame();
-        foreach (var gramBox in gramBoxes)
-        {
-            gramBox.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
-            gramBox.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0.5f);
-            gramBox.GetComponent<RectTransform>().localPosition = gramBox.GetStartPos();
-        }
-        yield return new WaitForEndOfFrame();
-        // yield return new WaitForSeconds(10f);
-        foreach (var gramBox in gramBoxes)
-        {
-            gramBox.gameObject.SetActive(false);
-        }
-        foreach (var gramBox in gramBoxes)
-        {
-            gramBox.gameObject.SetActive(true);
-        }
+        action();
     }
 
     public void UpdatedPos(int index, Vector2 position)
@@ -312,15 +284,16 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
         congratsTxt.SetActive(isWon);
 
-        callback.ActivateSubmitBtn(isWon);
+        NextQAct();
     }
 
     IEnumerator CheckingResult(int index)
     {
+        EndGame();
+
         if (index >= letterCount)
         {
             StopAllCoroutines();
-            EndGame(); 
         }
         else
         {
@@ -338,11 +311,14 @@ public class GameController_Anagram : MonoBehaviour,IBox
                     StartCoroutine(CheckingResult(index));
                 }
             }
-
-            EndGame();
         }
 
         yield return null;
+    }
+
+    void ClearAll()
+    {
+       
     }
 }
 

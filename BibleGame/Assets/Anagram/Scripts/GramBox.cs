@@ -14,7 +14,7 @@ public interface IBox
 
 public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    RectTransform boxTransform;
+    [SerializeField] RectTransform boxTransform;
     public RectTransform BoxT => boxTransform;
 
 
@@ -25,15 +25,16 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     [SerializeField] Vector2 startPosition;
     public Vector2 BoxV => startPosition;
 
+    [SerializeField] Vector3 worldPos;
+
+
+    Vector2 initialPosition;
+
     [Space]
     [SerializeField] bool isDragging = false;
     [SerializeField] int index;
 
-    public int Index
-    {
-        get { return index; }
-        set { index = Index; }
-    }
+    public int Index => index;
 
     [SerializeField] string value;
 
@@ -49,9 +50,33 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     [SerializeField] GameObject correctW;
     public bool isCorrect => letterText.color == Color.green;
 
-    Image image;
+    [SerializeField] Image image;
+
+    [Space]
+    [SerializeField] bool isEnable;
+    public bool IsEnable => isEnable;
+
+    [SerializeField] LayoutElement layout;
+
+    public void Enable(bool enable) 
+    { 
+        isEnable = enable; 
+
+        if(!isEnable) index = -1;
+
+       Color32 colorT = letterText.color;
+       letterText.color = enable? new Color32(colorT.r, colorT.g, colorT.b, 225) : new Color32(colorT.r, colorT.g, colorT.b, 0);
+       letterText.raycastTarget = enable;
+
+        Color32 colorI = image.color;
+        image.color = enable? new Color32(colorI.r, colorI.g, colorI.b, 225) : new Color32(colorI.r, colorI.g, colorI.b, 0);
+        image.raycastTarget = enable;
+
+        layout.ignoreLayout = !enable;
+    }
 
     public IBox callback;
+
 
     private void OnEnable()
     {
@@ -60,17 +85,51 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         boxTransform.anchorMax = new Vector2(0.5f, 0.5f);
         boxTransform.anchorMin = new Vector2(0.5f, 0.5f);
 
-        startPosition =/* this.transform.position;*/boxTransform.anchoredPosition;
+        startPosition = boxTransform.anchoredPosition;
+        initialPosition = boxTransform.anchoredPosition;
 
-        image = GetComponent<Image>();
+        isEnable = false;
 
+        index = -1;
+
+        isDragging = false;
         SetLetter();
     }
 
-    public void SetStartPos(Vector2 startPosition)
+    public void SetStartPos(Vector2 startPosition , Vector3 worldPos)
     {
+        if (!isEnable) return;
+
         this.startPosition = startPosition;
+        this.worldPos = worldPos;
+
+        //boxTransform.anchoredPosition = startPosition;
+
+        //boxTransform.anchorMin = new Vector2(0.5f, 0.5f);
+        //boxTransform.anchorMax = new Vector2(0.5f, 0.5f);
+
+       // boxTransform.pivot = new Vector2(0.5f, 0.5f);
     }
+
+    public void Arrange()
+    {
+        boxTransform.anchorMin = new Vector2(0.5f, 0.5f);
+        boxTransform.anchorMax = new Vector2(0.5f, 0.5f);
+
+        boxTransform.pivot = new Vector2(0.5f, 0.5f);
+
+        boxTransform.position = worldPos;
+
+        boxTransform.anchoredPosition = new Vector2(
+                                                     Mathf.Round(boxTransform.anchoredPosition.x),
+                                                     Mathf.Round(boxTransform.anchoredPosition.y)
+                                                   );
+
+        this.startPosition = boxTransform.anchoredPosition;
+
+    }
+
+
 
     public Vector2 GetStartPos()
     {
@@ -79,11 +138,15 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!isEnable) return;
+
         isDragging = true;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!isEnable) return;
+
         if (!isDragging) return;
 
         if (canvas == null)
@@ -101,7 +164,8 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         );
 
         Vector2 localPosition = AnagramUtils.GetMousePositionInCanvasSpace(canvas);
-        bool isInsideMask = AnagramUtils.IsPositionInside(newPosition, maskArea);
+
+        bool isInsideMask = AnagramUtils.IsPositionInside(localPosition, maskArea);
 
         if (!isInsideMask)
         {
@@ -111,13 +175,15 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
             return;
         }
 
-        boxTransform.anchoredPosition = newPosition;
+        boxTransform.anchoredPosition = localPosition;
 
         callback.UpdatedPos(index, localPosition);
     }
 
     public void SetPos(Vector2 pos, int newIndex, bool isRun = false)
     {
+        if (!isEnable) return;
+
         if (isRun)
             boxTransform.DOAnchorPos(pos, 0.2f);
 
@@ -128,24 +194,32 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     public void SetLetter()
     {
+        if (!isEnable) return;
+
         letterText.text = value;
     }
 
     public void SetLetter(string value)
     {
+        if (!isEnable) return;
+
         letterText.text = value;
         this.value = value;
     }
 
     public void SetIndex(int index)
     {
+        if (!isEnable) return;
+
         this.index = index;
     }
 
     public void SetCorrectWord(bool enable) { letterText.color = enable ? Color.green : Color.red; }
 
-    public void SetImage(Sprite sprite) 
-    { 
+    public void SetImage(Sprite sprite)
+    {
+        if (!isEnable) return;
+
         image.sprite = sprite;
         image.SetNativeSize();
 
@@ -155,9 +229,20 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
    
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!isEnable) return;
+
+        if (!isDragging)
+            return;
+
         isDragging = false;
         boxTransform.DOAnchorPos(startPosition, 0.2f);
 
         callback.ResultAction();
+    }
+
+    public void Restart()
+    {
+        callback = null;
+        Enable(false);
     }
 }

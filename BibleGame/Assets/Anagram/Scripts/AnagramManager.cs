@@ -94,12 +94,15 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
         {
             coins = 0;
             UserData.coins = coins;
+            UpdateCoins(coins);
 
             PopUp.Instance.ShowMessage($"Not enough coins !!");
             return;
         }
 
         UserData.coins = coins;
+        UpdateCoins(coins);
+
         string correctAnswer = gameController.Questions[index].hint;
 
         PopUp.Instance.ShowMessage($"Hint : {correctAnswer}");
