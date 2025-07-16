@@ -12,12 +12,22 @@ public class AgeSelectionPanel : MonoBehaviour,IAge
     [Header("Ages:")]
     [SerializeField] List<Age> ages = new List<Age>();
 
+    [Space]
+    [SerializeField] Button backBtn;
+
     private void OnEnable()
     {
         foreach(var age in ages)
         {
             age.callback = this;
         }
+
+        backBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
+    }
+
+    private void OnDisable()
+    {
+        backBtn?.onClick.RemoveAllListeners();
     }
 
     /// <summary>

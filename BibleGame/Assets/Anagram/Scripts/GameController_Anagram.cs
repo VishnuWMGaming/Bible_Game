@@ -130,6 +130,8 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
         isWon = false;
 
+        callback.UpdateScore();
+
         if (currentQIndex > questions.Count-1)
         {
             Debug.Log("Get read to submit !!!");
@@ -240,9 +242,9 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
     public void UpdatedPos(int index, Vector2 position)
     {
-        GramBox currentBox =  gramBoxes.Find(x => x.Index == index && x.IsEnable);
+        GramBox currentBox =  gramBoxes.Find(x => x.Index == index && x.IsEnable && !x.isCorrect);
 
-        List<GramBox> otherBoxes = gramBoxes.Where(p => p != currentBox  && p.IsEnable && !p.IsDrag).ToList();
+        List<GramBox> otherBoxes = gramBoxes.Where(p => p != currentBox  && p.IsEnable && !p.IsDrag && !p.isCorrect).ToList();
 
         foreach (GramBox box in otherBoxes)
         {

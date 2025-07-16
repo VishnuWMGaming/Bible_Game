@@ -141,8 +141,9 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (!isEnable) return;
+        if (isCorrect) return;
 
-       // Debug.Log($"<color=grey>Begin drag:{value}</color>");
+        // Debug.Log($"<color=grey>Begin drag:{value}</color>");
 
         isDragging = true;
     }
@@ -150,6 +151,7 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     public void OnDrag(PointerEventData eventData)
     {
         if (!isEnable) return;
+        if (isCorrect) return;
 
         if (!isDragging) return;
 
@@ -187,6 +189,7 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     public void SetPos(Vector2 pos, int newIndex, bool isRun = false)
     {
         if (!isEnable) return;
+        if (isCorrect) return;
 
         if (isRun)
             boxTransform.DOAnchorPos(pos, 0.2f);
@@ -199,6 +202,7 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     public void SetLetter()
     {
         if (!isEnable) return;
+        if (isCorrect) return;
 
         letterText.text = value;
     }
@@ -206,6 +210,7 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     public void SetLetter(string value)
     {
         if (!isEnable) return;
+        if (isCorrect) return;
 
         letterText.text = value;
         this.value = value;
@@ -214,11 +219,15 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     public void SetIndex(int index)
     {
         if (!isEnable) return;
+        if (isCorrect) return;
 
         this.index = index;
     }
 
-    public void SetCorrectWord(bool enable) { letterText.color = enable ? Color.green : Color.red; }
+    public void SetCorrectWord(bool enable) 
+    { 
+        letterText.color = enable ? Color.green : Color.red;
+    }
 
     public void SetImage(Sprite sprite)
     {
