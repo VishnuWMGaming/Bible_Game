@@ -89,6 +89,8 @@ namespace BibleGame
 
                 var jsonData = JsonConvert.SerializeObject(requestData);
 
+                Debug.Log($"<color=magenta> Submit : {url} =>  {jsonData} </color>");
+
                 WebRequest(url, jsonData, (url, success, adata) =>
                 {
                     if (!success)

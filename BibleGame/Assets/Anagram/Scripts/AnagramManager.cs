@@ -153,6 +153,7 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
         };
 
         PopUp.Instance.EnableLoad(true);
+        
         GetQuestionsAPI.SubmitAnswer((success, res) =>
         {
             PopUp.Instance.EnableLoad(false);

@@ -12,6 +12,7 @@ using BibleGame.Data;
 using BibleGame.API;
 
 using System.Linq;
+using TMPro;
 
 
 public interface IAnagramControl
@@ -52,6 +53,8 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
     StyleUI styleUI;
 
+    [SerializeField] TMP_Text mTitle;
+
     public IAnagramControl callback;
 
     #region LOCAL_VARIABLES
@@ -77,7 +80,6 @@ public class GameController_Anagram : MonoBehaviour,IBox
     {
       
     }
-
 
     void SetData()
     {
@@ -128,7 +130,6 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
         isWon = false;
 
-        currentQIndex++;
         if (currentQIndex > questions.Count-1)
         {
             Debug.Log("Get read to submit !!!");
@@ -139,12 +140,15 @@ public class GameController_Anagram : MonoBehaviour,IBox
         PopUp.Instance.EnableLoad(true);
 
         GameInitilise(questions[currentQIndex]);
+        currentQIndex++;
     }
 
     void GameInitilise(GetQuestionsAnagramData question)
     {
         string word = question.hint;
         string[] letterVals = word.Select(c => c.ToString()).ToArray();
+
+        mTitle.text = question.title;
 
         _anagramLetters.Clear();
 

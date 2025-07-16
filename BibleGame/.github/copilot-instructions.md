@@ -2,7 +2,7 @@
 - Project name: BibleGame
 - Unity version: Unity 2022.3.56f1
 - Active game object:
-  - Name: Hint
+  - Name: SelectABook
   - Tag: Untagged
   - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

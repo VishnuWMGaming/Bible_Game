@@ -124,7 +124,7 @@ public class Books : MonoBehaviour,IMBook
 
             if (res.ResponseMessage == "Already streak created.")
             {
-                PopUp.Instance.ShowMessage("streak has been already created", () => Actions.ChangePanelActions(CanvasType.home));
+                PopUp.Instance.ShowMessage("streak has been already created", () => Actions.ChangePanelActions(CanvasType.selectStreak));
                 return;
             }
 
