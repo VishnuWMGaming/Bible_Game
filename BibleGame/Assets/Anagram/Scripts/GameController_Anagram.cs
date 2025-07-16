@@ -57,7 +57,9 @@ public class GameController_Anagram : MonoBehaviour,IBox
     #region LOCAL_VARIABLES
     [SerializeField] int currentQIndex = 0;
     public int CurrentQIndex => currentQIndex;
-   
+
+    bool isWon = false;
+
     #endregion
 
     private void OnEnable()
@@ -121,7 +123,13 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
     public void NextQAct()
     {
-        if(currentQIndex > questions.Count)
+        if (!isWon)
+            return;
+
+        isWon = false;
+
+        currentQIndex++;
+        if (currentQIndex > questions.Count-1)
         {
             Debug.Log("Get read to submit !!!");
             callback.ActivateSubmitBtn(true);
@@ -130,11 +138,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
         PopUp.Instance.EnableLoad(true);
 
-        layoutGroup.enabled = true;
-
         GameInitilise(questions[currentQIndex]);
-
-        currentQIndex++;
     }
 
     void GameInitilise(GetQuestionsAnagramData question)
@@ -165,6 +169,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
         Debug.Log($"Scrambled word: {ShuffleWord(word)} ... Scrambling");
 
         foreach (var box in gramBoxes) box.Restart();
+        layoutGroup.enabled = true;
 
         List<AnagramLetter> scrambledLetters = new List<AnagramLetter>();
 
@@ -182,6 +187,8 @@ public class GameController_Anagram : MonoBehaviour,IBox
             scrambledLetters.Add(letter);
         }
 
+        //Scrambing process...
+        Debug.Log($"Scrambling 1");
 
         for (int index = 0; index < scrambledLetters.Count; index++)
         {
@@ -199,10 +206,9 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
         foreach (var box in gramBoxes) box.Enable(box.Index != -1);
 
+        Debug.Log($"Scrambling 2");
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(lettersParent);
-
-        PopUp.Instance.EnableLoad(false);
 
         foreach (var box in gramBoxes) box.SetStartPos(box.BoxT.anchoredPosition, box.BoxT.position);
         layoutGroup.enabled = false;
@@ -210,6 +216,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
 
         Debug.Log("Anagram  is set ");
+        PopUp.Instance.EnableLoad(false);
     }
 
     string ShuffleWord(string word)
@@ -229,13 +236,12 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
     public void UpdatedPos(int index, Vector2 position)
     {
-        GramBox currentBox =  gramBoxes.Find(x => x.Index == index);
+        GramBox currentBox =  gramBoxes.Find(x => x.Index == index && x.IsEnable);
 
-        foreach(GramBox box in gramBoxes)
+        List<GramBox> otherBoxes = gramBoxes.Where(p => p != currentBox  && p.IsEnable && !p.IsDrag).ToList();
+
+        foreach (GramBox box in otherBoxes)
         {
-            if (index == box.Index)
-                continue;
-
             if(AnagramUtils.AreImagesOverlapping(currentBox.BoxT, box.BoxT))
             {
                 Vector2 newPos = box.BoxV;
@@ -261,14 +267,16 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
     void EndGame()
     {
-        bool isWon = false;
+        isWon = false;
         StopAllCoroutines();
 
         Debug.Log("Checking the result..");
 
-        for (int i = 0; i < gramBoxes.Count; ++i)
+        List<GramBox> enabledBoxes = gramBoxes.Where(x => x.IsEnable).ToList();
+
+        for (int i = 0; i < enabledBoxes.Count; ++i)
         {
-            isWon = gramBoxes[i].isCorrect;
+            isWon = enabledBoxes[i].isCorrect;
 
             if (!isWon)
                 break;
@@ -284,7 +292,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
         congratsTxt.SetActive(isWon);
 
-        NextQAct();
+       Invoke("NextQAct", 2.0f);
     }
 
     IEnumerator CheckingResult(int index)

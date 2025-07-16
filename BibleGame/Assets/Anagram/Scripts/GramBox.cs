@@ -32,6 +32,8 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     [Space]
     [SerializeField] bool isDragging = false;
+    public bool IsDrag => isDragging;
+
     [SerializeField] int index;
 
     public int Index => index;
@@ -140,6 +142,8 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     {
         if (!isEnable) return;
 
+       // Debug.Log($"<color=grey>Begin drag:{value}</color>");
+
         isDragging = true;
     }
 
@@ -177,7 +181,7 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
         boxTransform.anchoredPosition = localPosition;
 
-        callback.UpdatedPos(index, localPosition);
+        callback.UpdatedPos(index, boxTransform.anchoredPosition);
     }
 
     public void SetPos(Vector2 pos, int newIndex, bool isRun = false)
@@ -243,6 +247,9 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     public void Restart()
     {
         callback = null;
+        boxTransform.anchoredPosition = initialPosition;
+        letterText.color = Color.white;
+
         Enable(false);
     }
 }
