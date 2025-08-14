@@ -31,6 +31,8 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     [SerializeField] private List<Question> questions = new List<Question>();
 
    [SerializeField]  private int currentQuestionIndex = 0;
+
+    int hintIndex = 0;
     
     /// <summary>
     /// Action implemented one enable
@@ -56,6 +58,8 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         currentQuestionIndex = 0;
 
         Initialise();
+
+        hintIndex = 0;
 
         //SetData(currentQuestionIndex);
     }
@@ -231,6 +235,9 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         UserData.coins = coins;
 
         scoreText.text = UserData.coins.ToString();
+
+
+        ++hintIndex;
 
         string correctAnswer = questions[index].answers.Find(x => x.option_status).title;
 

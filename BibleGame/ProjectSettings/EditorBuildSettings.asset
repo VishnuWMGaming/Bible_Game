@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Anagram/Scenes/Anagram.unity
     guid: 9a55e5a0240c78b4d88aa584f073df53
+  - enabled: 0
+    path: Assets/Sergey Okhotnikov/Native Text to Speech/Scenes/Example.unity
+    guid: bc5348f4b83874bd6b12d59ca991b6e6
   m_configObjects: {}

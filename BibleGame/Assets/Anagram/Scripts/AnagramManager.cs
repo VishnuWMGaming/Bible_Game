@@ -24,6 +24,8 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
     [Header("GameController:")]
     [SerializeField] GameController_Anagram gameController;
 
+    int hintIndex = 0;
+
     private void OnEnable()
     {
         hintBtn.onClick.AddListener(UseHint);
@@ -42,6 +44,8 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
         gameController.callback = this;
 
         UpdateCoins(UserData.coins);
+
+        hintBtn.gameObject.SetActive(false);
     }
 
     private void OnDisable()
@@ -105,7 +109,23 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
 
         string correctAnswer = gameController.Questions[index].hint;
 
-        PopUp.Instance.ShowMessage($"Hint : {correctAnswer}");
+        string position = hintIndex switch
+        {
+            0 => "first",
+            1 => "second",
+            2 => "third",
+            3 => "fourth",
+            4 => "fifth",
+            5 => "Sixth",
+            6 => "Seventh",
+            7 => "Eighth",
+            _ => throw new NotImplementedException()
+        };
+
+        string hintData = $"{position} letter is {correctAnswer[hintIndex]}";
+
+        hintIndex++;
+        PopUp.Instance.ShowMessage($"Hint:{hintData}");
     }
 
     public void UpdateScore()
