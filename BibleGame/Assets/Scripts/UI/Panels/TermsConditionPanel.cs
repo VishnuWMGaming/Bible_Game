@@ -14,9 +14,9 @@ public class TermsConditionPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        backBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
-        backBtn.onClick.AddListener(() => CloseAction?.Invoke());   
-        backBtn.onClick.AddListener(() => gameObject.SetActive(false));
+        backBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.setPanel); });
+        backBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); CloseAction?.Invoke(); });   
+        backBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); gameObject.SetActive(false); });
     }
 
     private void OnDisable()

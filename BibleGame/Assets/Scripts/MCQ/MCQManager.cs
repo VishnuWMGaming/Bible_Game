@@ -42,17 +42,22 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         optionPanel.callback = this;
         correctPanel.callback = this;
 
-        _homeBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
-        _submitBtn.onClick.AddListener(() => optionPanel.CheckAnswerAction());
-        rewardBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.reward));
+        _homeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
+        _submitBtn.onClick.AddListener(() => 
+        {
+            AudioManager.Instance.PlayButton();
+            optionPanel.CheckAnswerAction(); 
+        });
+
+        rewardBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.reward); });
 
         scoreText.text = UserData.coins.ToString();
 
         _submitBtn.interactable = false;
         
-        hintBtn.onClick.AddListener(ShowHint);
-        hintSubmitBtn.onClick.AddListener(UseHint);
-        hintCloseBtn.onClick.AddListener(CloseHint);
+        hintBtn.onClick.AddListener(() => { ShowHint(); AudioManager.Instance.PlayButton(); });
+        hintSubmitBtn.onClick.AddListener(() => { UseHint(); AudioManager.Instance.PlayButton(); });
+        hintCloseBtn.onClick.AddListener(() => { CloseHint(); AudioManager.Instance.PlayButton(); });
 
         //RestartAction();
         currentQuestionIndex = 0;

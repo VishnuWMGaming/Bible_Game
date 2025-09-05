@@ -27,8 +27,8 @@ public class Cover : MonoBehaviour
     {
         _username.text = AppData.loginData.Name;
 
-        homeBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
-        chapterBtn.onClick.AddListener(() => caklback.SelectChapter("Jesus"));
+        homeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
+        chapterBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); caklback.SelectChapter("Jesus"); });
     }
 
     private void OnDisable()

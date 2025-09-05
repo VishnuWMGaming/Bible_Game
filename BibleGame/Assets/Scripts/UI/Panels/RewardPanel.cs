@@ -9,8 +9,8 @@ public class RewardPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        homeBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
-        settingsBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
+        homeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
+        settingsBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.setPanel); });
     }
 
     private void OnDisable()

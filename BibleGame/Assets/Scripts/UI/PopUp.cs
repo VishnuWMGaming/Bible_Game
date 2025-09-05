@@ -42,7 +42,7 @@ public class PopUp : MonoBehaviour
         panel.SetActive(true);
 
         closeBtn?.onClick.RemoveAllListeners();
-        closeBtn?.onClick.AddListener(() => panel.SetActive(false));
+        closeBtn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); panel.SetActive(false); });
 
         if(closeAction != null)
         closeBtn?.onClick.AddListener(closeAction);

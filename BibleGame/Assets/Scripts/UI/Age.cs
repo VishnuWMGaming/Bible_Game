@@ -21,7 +21,7 @@ public class Age : MonoBehaviour
     private void OnEnable()
     {
         mButton = GetComponent<Button>();
-        mButton?.onClick.AddListener(() => callback.AgeSelection(ageGroup));
+        mButton?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); callback.AgeSelection(ageGroup); });
     }
 
     private void OnDisable()

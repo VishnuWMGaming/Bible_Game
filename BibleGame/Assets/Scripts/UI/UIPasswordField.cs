@@ -20,7 +20,7 @@ public class UIPasswordField : MonoBehaviour
 
     private void OnEnable()
     {
-        hideButton.onClick.AddListener(HideAction);
+        hideButton.onClick.AddListener(() => { HideAction(); AudioManager.Instance.PlayButton(); });
 
         inputField = GetComponent<TMP_InputField>();
         inputField.text = "";

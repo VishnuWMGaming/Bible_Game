@@ -20,7 +20,7 @@ public class HomePanel : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        settingBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
+        settingBtn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.setPanel); });
 
         playBtn.interactable = false;
 
@@ -49,6 +49,8 @@ public class HomePanel : MonoBehaviour
 
             playBtn?.onClick.AddListener(() =>
             {
+                AudioManager.Instance.PlayButton();
+
                 if (res.ResponseData == null || res.ResponseData.Count <= 0)
                     Actions.ChangePanelActions(CanvasType.ageSelect);
                 else

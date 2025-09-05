@@ -37,9 +37,9 @@ public class LoginPanel : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        loginButton.onClick.AddListener(LoginAction);
-        signButton.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.signup));
-        forgetButton.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.forgetpassword));
+        loginButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); LoginAction(); });
+        signButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.signup); });
+        forgetButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.forgetpassword); });
 
         email_Inputfield.text = "";
     }

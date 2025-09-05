@@ -13,7 +13,7 @@ public class TestamentPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        mBackButton?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.bible));
+        mBackButton?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.bible); });
     }
 
     private void OnDisable()

@@ -58,7 +58,7 @@ public class Chapter_Button : MonoBehaviour
         if (callback == null) 
         button = GetComponent<Button>();
 
-        button.onClick.AddListener(() => LevelSelect(_levelIndex));
+        button.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); LevelSelect(_levelIndex); });
     }
 
     /// <summary>

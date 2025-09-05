@@ -25,7 +25,7 @@ public class CorrectPanel : MonoBehaviour
     private void OnEnable()
     {
         /*restartBtn.onClick.AddListener(() => callback.RestartAction());*/
-        nexttBtn.onClick.AddListener(callback.NextAction);
+        nexttBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); callback.NextAction(); });
     }
 
     /// <summary>

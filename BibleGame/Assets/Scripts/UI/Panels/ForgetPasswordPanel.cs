@@ -29,8 +29,8 @@ public class ForgetPasswordPanel : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        _nextBtn.onClick.AddListener(ForgetPasswordAction);
-        _backBtn.onClick.AddListener(()=> Actions.ChangePanelActions(CanvasType.login));
+        _nextBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); ForgetPasswordAction(); });
+        _backBtn.onClick.AddListener(()=> { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.login); });
 
         inputField.text = "";
     }

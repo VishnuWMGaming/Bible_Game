@@ -18,16 +18,28 @@ public class SettingsPanel : MonoBehaviour
 
     [SerializeField] SetPanel _setPanel;
 
+    [Header("Volume")]
+    [SerializeField] Slider bgSlider;
+    [SerializeField] Slider sfxSlider;
 
     /// <summary>
     /// Action implemented on enable
     /// </summary>
     private void OnEnable()
     {
-        myProfileButton.onClick.AddListener(() => EnablePanel(SetPanelType.myProfile));
-        termsConditionButton.onClick.AddListener(() => EnablePanel(SetPanelType.termsCondition));
-        logoutButton.onClick.AddListener(() => EnablePanel(SetPanelType.logout));
-        homeButton.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
+        myProfileButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); EnablePanel(SetPanelType.myProfile);});
+        termsConditionButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); EnablePanel(SetPanelType.termsCondition); });
+        logoutButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); EnablePanel(SetPanelType.logout); });
+        homeButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
+
+        if (PlayerPrefs.HasKey("SfxVol"))
+        {
+            sfxSlider.value = PlayerPrefs.GetFloat("SfxVol");
+        }
+        else
+            sfxSlider.value = 1.0f;
+        
+        sfxSlider?.onValueChanged.AddListener(AudioManager.Instance.ChangeVolSfx);
 
         userName.text = AppData.loginData.Name;
     }
@@ -41,6 +53,8 @@ public class SettingsPanel : MonoBehaviour
         termsConditionButton.onClick.RemoveAllListeners();
         logoutButton.onClick.RemoveAllListeners();
         homeButton.onClick.RemoveAllListeners();
+
+        sfxSlider?.onValueChanged.RemoveAllListeners();
     }
 
     private void EnablePanel(SetPanelType type)

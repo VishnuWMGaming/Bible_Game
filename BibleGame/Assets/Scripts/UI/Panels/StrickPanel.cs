@@ -23,10 +23,10 @@ public class StrickPanel : MonoBehaviour
     private void OnEnable()
     {
         newGame?.onClick.AddListener(NewGame);
-        homeBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
+        homeBtn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
 
-        streak1Btn?.onClick.AddListener(() => GetStreak(0));
-        streak2Btn?.onClick.AddListener(() => GetStreak(1));
+        streak1Btn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); GetStreak(0); });
+        streak2Btn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); GetStreak(1); });
 
         streak1Btn.gameObject.SetActive(StreakAPI.streakDatas.Count >=1 );
         streak2Btn.gameObject.SetActive(StreakAPI.streakDatas.Count >=2);

@@ -41,8 +41,8 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
         selectGame.CallbackSelectGame = this;
         chapterPanel.GetComponent<BookChapter>().callback = this;
 
-        settingsBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
-        homeBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
+        settingsBtn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.setPanel); });
+        homeBtn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
     }
 
     /// <summary>

@@ -16,9 +16,9 @@ public class SelectGame : MonoBehaviour
     
     private void OnEnable()
     {
-        homeBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
-        triviaBtn.onClick.AddListener(() => CallbackSelectGame.PlayTriviaGame());
-        wordBtn.onClick.AddListener(() => CallbackSelectGame.PlayWordGame());
+        homeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
+        triviaBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); CallbackSelectGame.PlayTriviaGame(); });
+        wordBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); CallbackSelectGame.PlayWordGame(); });
 
         userName.text = AppData.loginData.Name;
     }

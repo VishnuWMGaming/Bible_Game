@@ -17,18 +17,18 @@ public class LogoutPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        yesBtn.onClick.AddListener(() => PlayerPrefs.DeleteAll());
-        yesBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.login));
-        yesBtn.onClick.AddListener(() => CloseAction?.Invoke());
-        yesBtn.onClick.AddListener(() => gameObject.SetActive(false));  
+        yesBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); PlayerPrefs.DeleteAll(); });
+        yesBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.login); });
+        yesBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); CloseAction?.Invoke(); });
+        yesBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); gameObject.SetActive(false); });  
 
-        noBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
-        noBtn?.onClick.AddListener(() => CloseAction?.Invoke());
-        noBtn.onClick.AddListener(() => gameObject.SetActive(false));
+        noBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.setPanel); }        );
+        noBtn?.onClick.AddListener(()    => { AudioManager.Instance.PlayButton(); CloseAction?.Invoke(); });
+        noBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); gameObject.SetActive(false); });
 
-        closeBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
-        closeBtn.onClick.AddListener(() => CloseAction?.Invoke());
-        closeBtn.onClick.AddListener(() => gameObject.SetActive(false));    
+        closeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.setPanel); });
+        closeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); CloseAction?.Invoke(); });
+        closeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); gameObject.SetActive(false); });    
     }
 
     private void OnDisable()

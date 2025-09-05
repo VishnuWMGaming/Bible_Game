@@ -40,8 +40,8 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 
         Initialise();
 
-        settingsBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
-        backBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
+        settingsBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.setPanel); });
+        backBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
 
         splashObj.SetActive(false);
         mLevelObj.SetActive(true);

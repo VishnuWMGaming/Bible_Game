@@ -34,11 +34,11 @@ public class EditPanel : MonoBehaviour
         name_InputField.onValueChanged.AddListener(SaveChecKAction);
 
         saveBtn.interactable = false;
-        saveBtn.onClick.AddListener(SaveAction);
+        saveBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); SaveAction(); });
 
-        backbtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
-        backbtn.onClick.AddListener(() => CloseAction?.Invoke());
-        backbtn.onClick.AddListener(() => gameObject.SetActive(false));
+        backbtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.setPanel); });
+        backbtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); CloseAction?.Invoke(); });
+        backbtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); gameObject.SetActive(false); });
     }
 
     private void OnDisable()

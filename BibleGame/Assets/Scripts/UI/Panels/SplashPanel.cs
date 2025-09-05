@@ -38,6 +38,8 @@ public class SplashPanel : MonoBehaviour
             {
                 Actions.ChangePanelActions(CanvasType.login);
             }
+
+            AudioManager.Instance.PlayButton();
         });
     }
     

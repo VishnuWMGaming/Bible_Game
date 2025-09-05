@@ -27,7 +27,7 @@ public class TextSpeech : MonoBehaviour
     private void OnEnable()
     {
         mButton = this.GetComponent<Button>();
-        mButton?.onClick.AddListener(Speak);
+        mButton?.onClick.AddListener(() => { Speak(); AudioManager.Instance.PlayButton(); });
 
         mtext = null;
         mtext = this.GetComponentInParent<TMP_Text>(); 

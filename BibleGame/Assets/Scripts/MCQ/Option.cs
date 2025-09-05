@@ -50,7 +50,7 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     /// </summary>
     private void OnEnable()
     {
-        button.onClick.AddListener(SelectAction);
+        button.onClick.AddListener(() => { SelectAction(); AudioManager.Instance.PlayButton(); });
 
         optionText = this.GetComponentInChildren<TMP_Text>();
  

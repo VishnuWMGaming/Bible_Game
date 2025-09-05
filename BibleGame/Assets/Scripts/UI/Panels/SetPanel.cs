@@ -20,11 +20,11 @@ public class SetPanel : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        backButton.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.setPanel));
+        backButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.setPanel); });
 
-        _editPanel.GetComponent<EditPanel>().CloseAction.AddListener(()=> this.gameObject.SetActive(false));
-        _termsPanel.GetComponent<TermsConditionPanel>().CloseAction.AddListener(() => this.gameObject.SetActive(false));
-        _logoutPanel.GetComponent<LogoutPanel>().CloseAction.AddListener(() => this.gameObject.SetActive(false));
+        _editPanel.GetComponent<EditPanel>().CloseAction.AddListener(()=> { AudioManager.Instance.PlayButton(); this.gameObject.SetActive(false); });
+        _termsPanel.GetComponent<TermsConditionPanel>().CloseAction.AddListener(() => { AudioManager.Instance.PlayButton(); this.gameObject.SetActive(false); } );
+        _logoutPanel.GetComponent<LogoutPanel>().CloseAction.AddListener(() => { AudioManager.Instance.PlayButton(); this.gameObject.SetActive(false); });
     }
 
     /// <summary>

@@ -26,8 +26,8 @@ public class UpdatePasswordPanel : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-       updateBtn.onClick.AddListener(UpdateAction);
-       backBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.forgetpassword));
+       updateBtn.onClick.AddListener(()=> { UpdateAction(); AudioManager.Instance.PlayButton(); });
+       backBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.forgetpassword); });
     }
 
     /// <summary>

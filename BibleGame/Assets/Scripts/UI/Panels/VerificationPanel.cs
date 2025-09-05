@@ -44,12 +44,16 @@ public class VerificationPanel : MonoBehaviour
         verifyBtn.onClick.AddListener(VerifyAction);
         verifyBtn.interactable = false;
 
-        backBtn.onClick.AddListener(() => Actions.ChangePanelActions( AppData.otpData.OTPType switch
-            { 
-               OTPType.sign => CanvasType.signup,
-               OTPType.forget => CanvasType.forgetpassword,
+        backBtn.onClick.AddListener(() => {
+
+            AudioManager.Instance.PlayButton();
+            Actions.ChangePanelActions(AppData.otpData.OTPType switch
+            {
+                OTPType.sign => CanvasType.signup,
+                OTPType.forget => CanvasType.forgetpassword,
                 _ => throw new ArgumentOutOfRangeException(nameof(AppData.otpData.OTPType), AppData.otpData.OTPType, null)
-            }));
+            });
+        });
 
 
         DisplayTimer("00:00");
@@ -187,7 +191,7 @@ public class VerificationPanel : MonoBehaviour
         }
 
         resendBtn.gameObject.SetActive(true);
-        resendBtn.onClick.AddListener(ResendOTPAction);
+        resendBtn.onClick.AddListener(()=> { AudioManager.Instance.PlayButton(); ResendOTPAction(); });
         
         resendCodeText.gameObject.SetActive(false);
 

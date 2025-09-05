@@ -24,11 +24,11 @@ public class SignPanel : MonoBehaviour
     [SerializeField] Button signUpButton;
 
 
-   private const string matchEmailPattern =
-      @"^(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@"
-      + @"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\."
-      + @"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
-      + @"([a-zA-Z]+[\w-]+\.)+[a-zA-Z]{2,4})$";
+    private const string matchEmailPattern =
+       @"^(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@"
+       + @"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\."
+       + @"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+       + @"([a-zA-Z]+[\w-]+\.)+[a-zA-Z]{2,4})$";
 
 
     string error_message;
@@ -40,8 +40,8 @@ public class SignPanel : MonoBehaviour
         email_InputField.text = "";
         name_InputField.text = "";
 
-        loginButton.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.login));
-        signUpButton.onClick.AddListener(SignUpAction);
+        loginButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.login); });
+        signUpButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); SignUpAction(); });
     }
 
     private void OnDisable()

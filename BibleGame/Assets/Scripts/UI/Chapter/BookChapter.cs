@@ -64,6 +64,7 @@ public class BookChapter : MonoBehaviour
         {
             speech.Stop();
             callback.EndBookAction();
+            AudioManager.Instance.PlayButton();
         });
 
         GetChapter();

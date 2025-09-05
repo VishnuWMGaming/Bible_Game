@@ -30,16 +30,40 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
     {
         hintBtn.onClick.AddListener(UseHint);
         hintPanel.SetActive(false);
-        homeBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
-        rewardBtn.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.reward));
-       submitBtn.onClick.AddListener(SubmitAction);
+        homeBtn.onClick.AddListener(() => 
+        {
+            AudioManager.Instance.PlayButton();
+            Actions.ChangePanelActions(CanvasType.home);
+        });
+        rewardBtn.onClick.AddListener(() => 
+        {
+            AudioManager.Instance.PlayButton();
+            Actions.ChangePanelActions(CanvasType.reward); 
+        });
+
+       submitBtn.onClick.AddListener(() => { SubmitAction(); AudioManager.Instance.PlayButton(); });
 
         submitBtn.interactable = false;
-        submitBtn.onClick.AddListener(NextAction);
+        submitBtn.onClick.AddListener(() => { NextAction(); AudioManager.Instance.PlayButton(); });
         
-        hintBtn.onClick.AddListener(ShowHint);
-        hintSubmitBtn.onClick.AddListener(UseHint);
-        hintCloseBtn.onClick.AddListener(CloseHint);
+        hintBtn.onClick.AddListener(()=> 
+        {
+            ShowHint();
+            AudioManager.Instance.PlayButton();
+        });
+
+        hintSubmitBtn.onClick.AddListener(()=>
+        {
+            UseHint();
+            AudioManager.Instance.PlayButton();
+
+        });
+
+        hintCloseBtn.onClick.AddListener(() =>
+        {
+            CloseHint();
+            AudioManager.Instance.PlayButton();
+        });
 
         gameController.callback = this;
 

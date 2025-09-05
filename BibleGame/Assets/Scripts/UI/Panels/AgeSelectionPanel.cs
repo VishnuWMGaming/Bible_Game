@@ -22,7 +22,7 @@ public class AgeSelectionPanel : MonoBehaviour,IAge
             age.callback = this;
         }
 
-        backBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.home));
+        backBtn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
     }
 
     private void OnDisable()

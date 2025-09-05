@@ -19,7 +19,7 @@ public class BiblePanel : MonoBehaviour,IBible
 
     private void OnEnable()
     {
-        mBackButton?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.ageSelect));
+        mBackButton?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.ageSelect); });
         Intialise();
     }
 

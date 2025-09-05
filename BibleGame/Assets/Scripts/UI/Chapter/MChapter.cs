@@ -34,6 +34,8 @@ public class MChapter : MonoBehaviour
         mButton = GetComponent<Button>();
         mButton?.onClick.AddListener(() =>
         {
+            AudioManager.Instance.PlayButton();
+
             if (callback == null)
                 return;
 

@@ -23,7 +23,7 @@ public class Bible : MonoBehaviour
     private void OnEnable()
     {
         mButton = GetComponent<Button>();
-        mButton?.onClick.AddListener(() => callback.BibleSelect(id));
+        mButton?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); callback.BibleSelect(id); });
     }
 
     private void OnDisable()
