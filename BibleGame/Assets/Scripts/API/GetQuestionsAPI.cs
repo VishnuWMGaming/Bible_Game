@@ -36,17 +36,17 @@ namespace BibleGame
 
                     Debug.Log($"<color=#FFA500> Question data : {adata.ToString()}</color>");
 
-                    try
-                    {
-                        var data = JsonConvert.DeserializeObject<GetQuestionsResponseObjective>(adata.ToString());
+                    var data = JsonConvert.DeserializeObject<GetQuestionsResponseObjective>(adata.ToString());
 
-                        callback?.Invoke(success, data);
-                    }
-                    catch(Exception ex)
+                    if(data == null)
                     {
-                        Debug.LogError($"Error in getting objective questions {ex.Message}");
+                        Debug.LogError("Unable to serialise the questions");
+
                         callback?.Invoke(false, null);
+                        return;
                     }
+
+                    callback?.Invoke(success, data);
                 });
             }
 

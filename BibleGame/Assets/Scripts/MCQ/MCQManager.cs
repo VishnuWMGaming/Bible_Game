@@ -125,10 +125,25 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
                 answers.Add(new Answer(data.opt3, false));
                 answers.Add(new Answer(data.opt4, false));
 
-                answers.Find(x => x.title == data.hint).option_status = true;
+                string answer = data.hint.Replace("Correct answer: ", "");
 
-                Question question = new Question(data._id, data.title, answers);
-                questions.Add(question);
+                int ansindex = -1;
+
+                if (int.TryParse(answer, out ansindex))
+                {
+                    Debug.Log("Answer at: " + ansindex);
+
+                    answers[ansindex - 1].SetStatus(true);
+                   
+                    Question question = new Question(data._id, data.title, answers);
+                    questions.Add(question);
+                }
+                else
+                {
+                    Debug.LogError("Unable to answer string!");
+                }
+
+               
             }
 
             SetData(currentQuestionIndex);

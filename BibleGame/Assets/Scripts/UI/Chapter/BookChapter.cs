@@ -49,6 +49,9 @@ public class BookChapter : MonoBehaviour
     [Header("SpriteData")]
     [SerializeField] SpriteData spriteData;
 
+    [Header("Speaker")]
+    [SerializeField] TextSpeech speech;
+
   
 
     /// <summary>
@@ -57,7 +60,11 @@ public class BookChapter : MonoBehaviour
     private void OnEnable()
     {
        // previousBtn.onClick.AddListener(() => PageNavigateAction(Navigate.previous));
-        nextBtn.onClick.AddListener(()=> callback.EndBookAction());
+        nextBtn.onClick.AddListener(()=> 
+        {
+            speech.Stop();
+            callback.EndBookAction();
+        });
 
         GetChapter();
 
@@ -119,6 +126,8 @@ public class BookChapter : MonoBehaviour
             content = Utils.ConvertHtmlToPlainText(content);
 
             pagePanel.text = content;
+
+            speech.Initialise(pagePanel, true);
 
         }, UserData.bibleId, UserData.chapterId);
     }
@@ -193,6 +202,11 @@ public class Answer
     public Answer(string title, bool optionStatus)
     {
         this.title = title;
+        option_status = optionStatus;
+    }
+
+    public void SetStatus(bool optionStatus)
+    {
         option_status = optionStatus;
     }
 }

@@ -41,6 +41,10 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 
     bool isEnable = true;
 
+
+    [Header("Speaker:")]
+    [SerializeField] TextSpeech speech;
+
     /// <summary>
     /// Action implemented on enable
     /// </summary>
@@ -52,6 +56,8 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
  
         EnableButtonInteraction(true);
         SetDisplay(OptionType.normal);
+
+      
     }
 
     /// <summary>
@@ -73,6 +79,8 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     {
         optionText.text = option;
         _index = index;
+
+        speech.Initialise(optionText);
     }
 
     #region EVENT_FUNCTIONS
@@ -106,6 +114,8 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     public void SelectAction()
     {
         SetDisplay(OptionType.selected);
+        speech.Speak();
+
         callback.OptionSelected(_index);
     }
 
