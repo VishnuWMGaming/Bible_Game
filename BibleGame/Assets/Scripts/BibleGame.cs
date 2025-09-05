@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using static BibleGame.API.GetBiblesAPI;
 
 
 namespace BibleGame
@@ -60,6 +61,8 @@ namespace BibleGame
             public static LoginData loginData;
             public static OTPData otpData;
             public static StartPage mCurrentPage;
+
+            public static List<BookData> bookDatas;
         }
 
         public  class LoginData

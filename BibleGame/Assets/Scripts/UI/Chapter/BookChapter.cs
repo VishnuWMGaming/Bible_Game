@@ -113,7 +113,7 @@ public class BookChapter : MonoBehaviour
 
             header.text =  $"Chapter {res.ResponseData.data.number}";
 
-            Debug.Log($"<color=green> Chapter {res.ResponseData.data.number} is loaded.</color>");
+            Debug.Log($"<color=green> Chapter {res.ResponseData.data.id} is loaded.</color>");
 
             string content = res.ResponseData.data.content.ToString();
             content = Utils.ConvertHtmlToPlainText(content);

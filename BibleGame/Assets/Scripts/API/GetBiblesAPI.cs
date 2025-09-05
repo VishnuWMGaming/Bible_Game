@@ -83,8 +83,12 @@ namespace BibleGame
             {
                 var url = $"{ServiceURL.baseURL}{ServiceURL.getBookDetail}?bible_id={id}";
 
+                Debug.Log($"<color=#FFA500> get book list : url => {url}</color>");
+
                 WebRequestGet(url, (url, success, adata) =>
                 {
+                    Debug.Log($"<color=magenta> book list data: {adata.ToString()}");
+
                     if (!success)
                     {
                         Debug.LogError("No Success in get book detail");

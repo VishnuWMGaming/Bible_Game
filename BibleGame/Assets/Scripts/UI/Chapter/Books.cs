@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using BibleGame.Data;
 using BibleGame.API;
 
+using System.Linq;
+
 public class Books : MonoBehaviour,IMBook
 {
     [SerializeField] private Button backBtn;
@@ -63,7 +65,22 @@ public class Books : MonoBehaviour,IMBook
                 return;
             }
 
-            foreach(var book in res.ResponseData.data)
+            Debug.Log($"<color=grey> book list count : {res.ResponseData.data.Count} </color>");
+
+            AppData.bookDatas = UserData.testament switch
+            {
+                Testament.Old => res.ResponseData.data.GetRange(0, 38),
+                Testament.New => res.ResponseData.data.GetRange(39, 26),
+                _ => throw new NotImplementedException()
+            };
+
+            if(AppData.bookDatas ==  null)
+            {
+                Debug.LogError("Unable to fetch book data");
+                return;
+            }
+
+            foreach (var book in AppData.bookDatas)
             {
                 GameObject go = Instantiate(mBookObj, mBookTransform);
                 go.transform.localScale = Vector3.one;

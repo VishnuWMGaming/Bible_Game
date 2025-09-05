@@ -74,6 +74,8 @@ public class StrickPanel : MonoBehaviour
             _ => throw new System.NotImplementedException(),
         };
 
+        Debug.Log($"<color=cyan> testamant: {UserData.testament} </color>");
+
         UserData.coins = streakData.coins;
 
         Actions.ChangePanelActions(CanvasType.level);

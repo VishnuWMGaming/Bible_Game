@@ -132,7 +132,8 @@ public class LoginPanel : MonoBehaviour
 
     private void Callback(bool success, LoginResponseX response)
     {
-      
+        PopUp.Instance.EnableLoad(false);
+
         if (success)
         {
             AppData.loginData = new LoginData(email_Inputfield.text, password_Inputfield.Text, response.ResponseData.name);
