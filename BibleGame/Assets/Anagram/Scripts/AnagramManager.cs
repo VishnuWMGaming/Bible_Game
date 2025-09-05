@@ -45,7 +45,7 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
 
         UpdateCoins(UserData.coins);
 
-        hintBtn.gameObject.SetActive(false);
+       // hintBtn.gameObject.SetActive(false);
     }
 
     private void OnDisable()
