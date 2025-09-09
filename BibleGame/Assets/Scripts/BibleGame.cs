@@ -63,6 +63,7 @@ namespace BibleGame
             public static StartPage mCurrentPage;
 
             public static List<BookData> bookDatas;
+            public static Language mLanguage;
         }
 
         public  class LoginData
