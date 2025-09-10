@@ -34,7 +34,10 @@ public class TextSpeech : MonoBehaviour
 
         ResetAction();
 
+#if !UNITY_EDITOR
         _textToSpeech = TextToSpeech.Create(OnFinish, OnError);
+#endif
+
     }
 
     public void Initialise(TMP_Text text,bool isButton = false)
@@ -52,6 +55,8 @@ public class TextSpeech : MonoBehaviour
 
     public void Speak()
     {
+
+#if !UNITY_EDITOR
         if(isPlaying)
         {
             Stop();
@@ -74,6 +79,8 @@ public class TextSpeech : MonoBehaviour
         _textToSpeech.Speak(filtered, "en-US", float.Parse("0.8", CultureInfo.InvariantCulture));
 
         isPlaying = true;
+#endif
+
     }
 
     private void OnFinish()
@@ -90,7 +97,11 @@ public class TextSpeech : MonoBehaviour
     public void Stop()
     {
         ResetAction();
+
+#if !UNITY_EDITOR
         _textToSpeech.Stop();
+#endif
+
     }
 
     void ResetAction()
