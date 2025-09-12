@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using BibleGame;
 
 public class LanguageController : MonoBehaviour
 {
@@ -46,6 +46,12 @@ public class LanguageController : MonoBehaviour
         }
     }
 
+    public void SetLanguage(Language lang)
+    {
+        AppData.mLanguage = lang;
+        PlayerPrefs.SetString("Language", lang.ToString());
+        Actions.UpdateText();
+    }
     private void Start()
     {
         Translation("Greeting", translated =>

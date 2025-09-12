@@ -21,17 +21,19 @@ public class SettingsPanel : MonoBehaviour
     [Header("Volume")]
     [SerializeField] Slider bgSlider;
     [SerializeField] Slider sfxSlider;
-
+    public TMP_Dropdown languageDropdown;
     /// <summary>
     /// Action implemented on enable
     /// </summary>
     private void OnEnable()
     {
+        languageDropdown.value = PlayerPrefs.HasKey("lang") ? PlayerPrefs.GetInt("lang") : 0;
         myProfileButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); EnablePanel(SetPanelType.myProfile);});
         termsConditionButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); EnablePanel(SetPanelType.termsCondition); });
         logoutButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); EnablePanel(SetPanelType.logout); });
         homeButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
 
+        languageDropdown.onValueChanged.AddListener(OnLanguageChanged);
         if (PlayerPrefs.HasKey("SfxVol"))
         {
             sfxSlider.value = PlayerPrefs.GetFloat("SfxVol");
@@ -43,7 +45,12 @@ public class SettingsPanel : MonoBehaviour
 
         userName.text = AppData.loginData.Name;
     }
-
+    private void OnLanguageChanged(int languagecode)
+    {
+        // LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[languagecode];
+        PlayerPrefs.SetInt("lang", languagecode);
+        LanguageController.Instance.SetLanguage((Language)languagecode);
+    }
     /// <summary>
     /// Action implemented on disable
     /// </summary>

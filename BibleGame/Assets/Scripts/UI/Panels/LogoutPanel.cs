@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using BibleGame;
+using TMPro;
 using UnityEngine.Events;
 
 public class LogoutPanel : MonoBehaviour
@@ -12,7 +13,6 @@ public class LogoutPanel : MonoBehaviour
     [SerializeField] Button yesBtn;
     [SerializeField] Button noBtn;
     [SerializeField] Button closeBtn;
-
     public UnityEvent CloseAction;
 
     private void OnEnable()
@@ -30,6 +30,8 @@ public class LogoutPanel : MonoBehaviour
         closeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); CloseAction?.Invoke(); });
         closeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); gameObject.SetActive(false); });    
     }
+
+    
 
     private void OnDisable()
     {

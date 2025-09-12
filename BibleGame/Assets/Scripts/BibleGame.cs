@@ -3,6 +3,7 @@ using BibleGame.API;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.SymbolStore;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using static BibleGame.API.GetBiblesAPI;
@@ -50,7 +51,7 @@ namespace BibleGame
     {
         public static Action<CanvasType> ChangePanelActions;
         public static Action<StartPage> StartPageAction;
-
+        public static Action UpdateText= delegate { };
         public static Action<int> UpdateCoins;
     }
 
