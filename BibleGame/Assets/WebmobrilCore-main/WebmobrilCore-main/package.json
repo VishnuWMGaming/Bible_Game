@@ -1,0 +1,10 @@
+{
+  "displayName": "Webmobril Core",
+  "name": "com.webmobril.core",
+  "version": "1.0.25",
+  "unity": "2019.2",
+  "description": "Core packages for Development",
+  "keywords": [],
+  "category": "Libraries",
+  "type": "library"
+}

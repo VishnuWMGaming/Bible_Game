@@ -1,0 +1,13 @@
+{
+  "displayName": "Webmobril RestAPI",
+  "name": "com.webmobril.restapi",
+  "version": "1.0.10",
+  "unity": "2019.2",
+  "description": "custom package for rest api calls ",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "2.0.0"
+  },
+  "keywords": [],
+  "category": "Libraries",
+  "type": "library"
+}
