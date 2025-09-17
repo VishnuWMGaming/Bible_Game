@@ -4,6 +4,7 @@ using UnityEngine;
 using BibleGame.UI;
 using BibleGame;
 using Unity.VisualScripting;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class UIController : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class UIController : MonoBehaviour
     GameObject testamontPanel;
     GameObject biblePanel;
     GameObject streakPanel;
+    GameObject leaderboardPanel;
 
     /// <summary>
     /// Action called on validation
@@ -57,6 +59,7 @@ public class UIController : MonoBehaviour
         testamontPanel = FindObjectOfType<TestamentPanel>(true).gameObject;
         biblePanel = FindObjectOfType<BiblePanel>(true).gameObject;
         streakPanel = FindObjectOfType<StrickPanel>(true).gameObject;
+        leaderboardPanel = FindObjectOfType<LeaderboardPanel>(true).gameObject;
         _canvasType = CanvasType.splash;
         currentPanel = splashCanvas;
         currentPanel.SetActive(true);
@@ -105,7 +108,8 @@ public class UIController : MonoBehaviour
                                            CanvasType.testament => testamontPanel,
                                            CanvasType.bible => biblePanel,
                                            CanvasType.selectStreak => streakPanel,
-                                           _=> null
+                                           CanvasType.leaderboard => leaderboardPanel,
+                                           _ => null
                                          };
 
         currentPanel.SetActive(true);
@@ -129,5 +133,6 @@ public enum CanvasType
     chapter,
     bible,
     reward,
-    selectStreak
+    selectStreak,
+    leaderboard
 }

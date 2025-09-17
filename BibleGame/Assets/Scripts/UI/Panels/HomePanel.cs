@@ -14,6 +14,7 @@ public class HomePanel : MonoBehaviour
     [SerializeField] TMP_Text userName;
     [SerializeField] Button settingBtn;
     [SerializeField] Button playBtn;
+    [SerializeField] Button leaderBoardBtn;
 
     /// <summary>
     /// Action implemented on enable
@@ -25,6 +26,13 @@ public class HomePanel : MonoBehaviour
         playBtn.interactable = false;
 
         userName.text = AppData.loginData.Name;
+
+        //  Leaderboard button listener
+        leaderBoardBtn?.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.PlayButton();
+            Actions.ChangePanelActions(CanvasType.leaderboard); // match enum
+        });
 
         Initialise();
     }
@@ -67,5 +75,6 @@ public class HomePanel : MonoBehaviour
     {
         settingBtn?.onClick.RemoveAllListeners();
         playBtn?.onClick.RemoveAllListeners();
+        leaderBoardBtn.onClick.RemoveAllListeners();
     }
 }
