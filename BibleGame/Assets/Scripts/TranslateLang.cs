@@ -12,43 +12,36 @@ public class TranslateLang : MonoBehaviour
     [SerializeField] TMP_Text translatedText ;
     [SerializeField] string _translated_Text ;
     // Start is called before the first frame update
-    private string textValue;
+    // private string textValue;
 
     private void Awake()
     {
         translatedText = GetComponent<TMP_Text>();
-        textValue = translatedText.text;
+        // textValue = translatedText.text;
+        UpdateText();
     }
 
     private void OnEnable()
     {
         Actions.UpdateText += UpdateText;
     }
-
-    private void UpdateText()
-    {
-        LanguageController.Instance.Translation(textValue, translated =>
-        {
-            // Debug.LogError(translated);
-            this.translatedText.text = translated;
-            this._translated_Text = translated;
-        });
-
-    }
-
     private void OnDisable()
     {
         Actions.UpdateText -= UpdateText;
     }
 
-    void Start()
+    private void UpdateText()
     {
+        string currentValue = translatedText.text;
+        if(string.IsNullOrEmpty(currentValue))
+            return;
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // LanguageController.Instance.Translation(textValue, translated =>
+        LanguageController.Instance.Translation(currentValue, translated=>
+        {
+            // Debug.LogError(translated);
+            this.translatedText.text = translated;
+            this._translated_Text = translated;
+        });
     }
 }

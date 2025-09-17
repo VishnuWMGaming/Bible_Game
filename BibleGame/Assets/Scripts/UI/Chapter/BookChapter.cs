@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using BibleGame;
 using BibleGame.Data;
 using BibleGame.API;
 
@@ -127,7 +128,7 @@ public class BookChapter : MonoBehaviour
             content = Utils.ConvertHtmlToPlainText(content);
 
             pagePanel.text = content;
-
+            Actions.UpdateText?.Invoke();
             speech.Initialise(pagePanel, true);
 
         }, UserData.bibleId, UserData.chapterId);
