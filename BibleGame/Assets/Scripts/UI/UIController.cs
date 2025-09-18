@@ -22,7 +22,7 @@ public class UIController : MonoBehaviour
     GameObject currentPanel;
     GameObject chapterPanel;
     GameObject levelPanel;
-    GameObject RewardCanvas;
+    GameObject RewardCanvas; 
     GameObject agePanel;
     GameObject testamontPanel;
     GameObject biblePanel;
@@ -34,6 +34,7 @@ public class UIController : MonoBehaviour
     /// </summary>
     private void OnValidate()
     {
+        
     }
 
     /// <summary>
