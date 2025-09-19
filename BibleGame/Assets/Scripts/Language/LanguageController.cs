@@ -64,12 +64,17 @@ public class LanguageController : MonoBehaviour
         string translatedText = string.Empty;
 
         string selectedLanguage = GetLangStringVal(AppData.mLanguage);
+        if (selectedLanguage == "English")
+        {
+            onTranslated?.Invoke(text);
+            return;
+        }
    
         if (Languages.TryGetValue(selectedLanguage, out string code))
         {
             StartCoroutine(translator.TranslateAndStore(text, "en", code, (translation) =>
             {
-                 onTranslated?.Invoke(translation);
+                onTranslated?.Invoke(translation);
             }));
         }
     }
