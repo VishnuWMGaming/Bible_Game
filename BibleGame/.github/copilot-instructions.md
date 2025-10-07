@@ -2,12 +2,13 @@
 - Project name: BibleGame
 - Unity version: Unity 2022.3.62f1
 - Active scene:
+  - Name: SampleScene
   - Tags:
     - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI
 - Active game object:
-  - Name: Text (TMP)
+  - Name: [LANGUAGE]
   - Tag: Untagged
-  - Layer: UI
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

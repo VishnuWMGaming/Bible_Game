@@ -27,8 +27,26 @@ public class SettingsPanel : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        // Clear old options
+        languageDropdown.ClearOptions();
+
+        // Add new language options
+        var options = new List<string>
+        {
+            "English",
+            "Spanish",
+            "Portuguese",
+            "Korean",
+            "French",
+            "Chinese",
+            "Hindi",
+            "Swahili",
+            "Kreyol"
+        };
+     languageDropdown.AddOptions(options);
+
         languageDropdown.value = PlayerPrefs.HasKey("lang") ? PlayerPrefs.GetInt("lang") : 0;
-        myProfileButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); EnablePanel(SetPanelType.myProfile);});
+        myProfileButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); EnablePanel(SetPanelType.myProfile); });
         termsConditionButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); EnablePanel(SetPanelType.termsCondition); });
         logoutButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); EnablePanel(SetPanelType.logout); });
         homeButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
@@ -40,7 +58,7 @@ public class SettingsPanel : MonoBehaviour
         }
         else
             sfxSlider.value = 1.0f;
-        
+
         sfxSlider?.onValueChanged.AddListener(AudioManager.Instance.ChangeVolSfx);
 
         userName.text = AppData.loginData.Name;
@@ -74,4 +92,4 @@ public class SettingsPanel : MonoBehaviour
 
 }
 
-public enum  SetPanelType { myProfile, termsCondition , logout}
+public enum SetPanelType { myProfile, termsCondition, logout }

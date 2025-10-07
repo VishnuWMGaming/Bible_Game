@@ -20,7 +20,7 @@ public class LanguageController : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
             instance = this;
 
         Languages = new Dictionary<string, string>()
@@ -30,10 +30,13 @@ public class LanguageController : MonoBehaviour
             { "Portuguese", "pt" },
             { "Korean", "ko" },
             { "French", "fr" },
-            { "Chinese", "zh" }
+            { "Chinese", "zh" },
+            { "Hindi", "hi" },
+            { "Swahili", "sw" },
+            { "Kreyol", "ht" }
         };
 
-        if(PlayerPrefs.HasKey("Language"))
+        if (PlayerPrefs.HasKey("Language"))
         {
             string selectedlanguage = PlayerPrefs.GetString("Language");
 
@@ -59,7 +62,7 @@ public class LanguageController : MonoBehaviour
             Debug.Log($"Translated :{translated}");
         });
     }
-    public void Translation(string text ,Action<string> onTranslated)
+    public void Translation(string text, Action<string> onTranslated)
     {
         string translatedText = string.Empty;
 
@@ -69,7 +72,7 @@ public class LanguageController : MonoBehaviour
             onTranslated?.Invoke(text);
             return;
         }
-   
+
         if (Languages.TryGetValue(selectedLanguage, out string code))
         {
             StartCoroutine(translator.TranslateAndStore(text, "en", code, (translation) =>
@@ -90,6 +93,9 @@ public class LanguageController : MonoBehaviour
             Language.Portuguese => "Portuguese",
             Language.French => "French",
             Language.Chinese => "Chinese",
+            Language.Hindi => "Hindi",
+            Language.Swahili => "Swahili",
+            Language.Kreyol => "Kreyol",
             _ => "English",
         };
 
@@ -98,7 +104,7 @@ public class LanguageController : MonoBehaviour
 
     Language GetLang(string lang)
     {
-        Language  selLang = lang switch
+        Language selLang = lang switch
         {
             "English" => Language.English,
             "Spanish" => Language.Spanish,
@@ -106,6 +112,9 @@ public class LanguageController : MonoBehaviour
             "Korean" => Language.Korean,
             "French" => Language.French,
             "Chinese" => Language.Chinese,
+            "Hindi" => Language.Hindi,
+            "Swahili" => Language.Swahili,
+            "Kreyol" => Language.Kreyol,
             _ => Language.English
         };
 
@@ -122,5 +131,8 @@ public enum Language
     Portuguese,
     Korean,
     French,
-    Chinese
+    Chinese,
+    Hindi,
+    Swahili,
+    Kreyol
 }
