@@ -83,20 +83,20 @@ public class LanguageController : MonoBehaviour
     }
 
 
-    string GetLangStringVal(Language lang)
+    public string GetLangStringVal(Language lang)
     {
         string selectedLanguage = lang switch
         {
-            Language.English => "English",
-            Language.Spanish => "Spanish",
-            Language.Korean => "Korean",
-            Language.Portuguese => "Portuguese",
-            Language.French => "French",
-            Language.Chinese => "Chinese",
-            Language.Hindi => "Hindi",
-            Language.Swahili => "Swahili",
-            Language.Kreyol => "Kreyol",
-            _ => "English",
+            Language.English => "en",
+            Language.Spanish => "es",
+            Language.Korean => "ko",
+            Language.Portuguese => "pt",
+            Language.French => "fr",
+            Language.Chinese => "zh-CN",
+            Language.Hindi => "hi",
+            Language.Swahili => "sw",
+            Language.Kreyol => "ht",
+            _ => "en",
         };
 
         return selectedLanguage;

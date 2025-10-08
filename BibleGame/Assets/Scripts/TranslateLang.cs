@@ -7,6 +7,8 @@ using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.UIElements;
+using BibleGame.API;
+using BibleGame.Data;
 
 [RequireComponent(typeof(TMP_Text))]
 public class TranslateLang : MonoBehaviour
@@ -57,12 +59,38 @@ public class TranslateLang : MonoBehaviour
         foreach (var chunk in chunks)
         {
             bool done = false;
-            LanguageController.Instance.Translation(chunk, translated =>
-        {
-            translatedText.text += translated + " "; // append to final text
-            _translated_Text += translated + " ";
-            done = true;
-        });
+
+            string selectedLanguage = LanguageController.Instance.GetLangStringVal(AppData.mLanguage);
+
+
+            TransInput input = new TransInput
+            {
+                text = chunk,
+                language =selectedLanguage
+            };
+
+            TranslateAPI.Translate((success,res) =>
+            {
+                if (!success)
+                {
+                    Debug.LogError("Transaltion error");
+
+                }
+                done = true;
+
+                string translated = res.ResponseData;
+                translatedText.text += translated + " ";
+                _translated_Text += translated + " ";
+                done = true;
+
+            }, input);
+
+        //     TranslateAPI.Translate.()
+            // {
+            //         translatedText.text += translated + " "; // append to final text
+            //         _translated_Text += translated + " ";
+            //         done = true;
+            //     });
 
             // Wait until translation finished before sending next chunk
             yield return new WaitUntil(() => done);
