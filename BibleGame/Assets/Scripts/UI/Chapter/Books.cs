@@ -9,7 +9,7 @@ using BibleGame.API;
 
 using System.Linq;
 
-public class Books : MonoBehaviour,IMBook
+public class Books : MonoBehaviour, IMBook
 {
     [SerializeField] private Button backBtn;
 
@@ -26,6 +26,7 @@ public class Books : MonoBehaviour,IMBook
 
     private void OnEnable()
     {
+        backBtn.onClick.AddListener(OnBackClicked);
         //backBtn.onClick.AddListener(() => Actions.StartPageAction(StartPage.book));
         //book1.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
         //book2.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
@@ -37,6 +38,7 @@ public class Books : MonoBehaviour,IMBook
         Intialise();
     }
 
+
     private void OnDisable()
     {
         backBtn.onClick.RemoveAllListeners();
@@ -47,6 +49,13 @@ public class Books : MonoBehaviour,IMBook
         //book5.onClick.RemoveAllListeners();
         //book6.onClick.RemoveAllListeners();
 
+        ClearAll();
+    }
+    private void OnBackClicked()
+    {
+        // Open TestamentCanvas
+        Actions.ChangePanelActions(CanvasType.testament);
+        // Optional cleanup
         ClearAll();
     }
 
@@ -74,7 +83,7 @@ public class Books : MonoBehaviour,IMBook
                 _ => throw new NotImplementedException()
             };
 
-            if(AppData.bookDatas ==  null)
+            if (AppData.bookDatas == null)
             {
                 Debug.LogError("Unable to fetch book data");
                 return;
@@ -86,7 +95,7 @@ public class Books : MonoBehaviour,IMBook
                 go.transform.localScale = Vector3.one;
 
                 MBook mBook = go.GetComponent<MBook>();
-                mBook.Intialise(book,this);
+                mBook.Intialise(book, this);
             }
 
         }, UserData.bibleId);
@@ -150,7 +159,7 @@ public class Books : MonoBehaviour,IMBook
             UserData.gameid = res.ResponseData._id;
 
             PopUp.Instance.EnableLoad(true);
-            ChapterAPI.Get((success,res) =>
+            ChapterAPI.Get((success, res) =>
             {
                 PopUp.Instance.EnableLoad(false);
 
@@ -165,14 +174,14 @@ public class Books : MonoBehaviour,IMBook
 
             }, UserData.bibleId, UserData.bookId);
 
-           // Actions.ChangePanelActions(CanvasType.chapter);
+            // Actions.ChangePanelActions(CanvasType.chapter);
 
         }, request);
     }
 
     public void ClearAll()
     {
-        for(int i = 0;i<mBookTransform.childCount;i++)
+        for (int i = 0; i < mBookTransform.childCount; i++)
         {
             GameObject go = mBookTransform.GetChild(i).gameObject;
             Destroy(go);
@@ -183,6 +192,6 @@ public class Books : MonoBehaviour,IMBook
 public interface IBook
 {
     public void SelectBook(string bookName);
-    
+
     public void BackToCover();
 }
