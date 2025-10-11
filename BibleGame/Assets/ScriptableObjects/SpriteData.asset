@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9f4e9f39d44e1a4d85e3cb31cdd9fd7, type: 3}
+  m_Name: SpriteData
+  m_EditorClassIdentifier: 
+  styles:
+  - BgSprite: {fileID: 21300000, guid: abd3c2a6766155e4584f468342491093, type: 3}
+    profileSprite: {fileID: 21300000, guid: 96492deeb8df5234e99814f5e0b41f37, type: 3}
+    keySprite: {fileID: 21300000, guid: b2e0af8082210b24792ba77c5ac50fc1, type: 3}
+    scoreSprite: {fileID: 21300000, guid: 2ca74859dee063443b9f32c5fd80ddfb, type: 3}
+    hintSprite: {fileID: 21300000, guid: 6db5dfef2f639424485c037aa96e89bf, type: 3}
+    button: {fileID: 21300000, guid: 2fa3d26b8bc8a02428ecad52b6d54c6d, type: 3}
+    textColor:
+      serializedVersion: 2
+      rgba: 4280578512
+    textButton: {fileID: 21300000, guid: 98315fd8e8420e243981bed095c8b884, type: 3}
+    pageSprite: {fileID: 21300000, guid: 98f798ab549d7ed4c8496a15172414f1, type: 3}
+    panelkey: {fileID: 0}
+    panel: {fileID: 21300000, guid: 07a123bf9d96ab94895d5f1729e57597, type: 3}
+    selectPanel: {fileID: 0}
+    unselectPanel: {fileID: 0}
+    bookTab: {fileID: 21300000, guid: 60ad687247ce31947a2bb85549802681, type: 3}
+    mcqTabPanel: {fileID: 21300000, guid: 2775c22d32c4be341bf2c59d78395ebf, type: 3}
+    box: {fileID: 21300000, guid: e0fc30c4a739c7742b2e664614a945f7, type: 3}
+    ageGroup: 0
+  - BgSprite: {fileID: 21300000, guid: abd3c2a6766155e4584f468342491093, type: 3}
+    profileSprite: {fileID: 21300000, guid: 96492deeb8df5234e99814f5e0b41f37, type: 3}
+    keySprite: {fileID: 21300000, guid: b2e0af8082210b24792ba77c5ac50fc1, type: 3}
+    scoreSprite: {fileID: 21300000, guid: 2ca74859dee063443b9f32c5fd80ddfb, type: 3}
+    hintSprite: {fileID: 21300000, guid: 6db5dfef2f639424485c037aa96e89bf, type: 3}
+    button: {fileID: 21300000, guid: 2fa3d26b8bc8a02428ecad52b6d54c6d, type: 3}
+    textColor:
+      serializedVersion: 2
+      rgba: 4280578512
+    textButton: {fileID: 21300000, guid: 98315fd8e8420e243981bed095c8b884, type: 3}
+    pageSprite: {fileID: 21300000, guid: 98f798ab549d7ed4c8496a15172414f1, type: 3}
+    panelkey: {fileID: 0}
+    panel: {fileID: 0}
+    selectPanel: {fileID: 0}
+    unselectPanel: {fileID: 0}
+    bookTab: {fileID: 21300000, guid: 60ad687247ce31947a2bb85549802681, type: 3}
+    mcqTabPanel: {fileID: 21300000, guid: 2775c22d32c4be341bf2c59d78395ebf, type: 3}
+    box: {fileID: 0}
+    ageGroup: 1
+  - BgSprite: {fileID: 21300000, guid: abd3c2a6766155e4584f468342491093, type: 3}
+    profileSprite: {fileID: 21300000, guid: 96492deeb8df5234e99814f5e0b41f37, type: 3}
+    keySprite: {fileID: 21300000, guid: b2e0af8082210b24792ba77c5ac50fc1, type: 3}
+    scoreSprite: {fileID: 21300000, guid: 2ca74859dee063443b9f32c5fd80ddfb, type: 3}
+    hintSprite: {fileID: 21300000, guid: 6db5dfef2f639424485c037aa96e89bf, type: 3}
+    button: {fileID: 21300000, guid: 2fa3d26b8bc8a02428ecad52b6d54c6d, type: 3}
+    textColor:
+      serializedVersion: 2
+      rgba: 4280578512
+    textButton: {fileID: 21300000, guid: 98315fd8e8420e243981bed095c8b884, type: 3}
+    pageSprite: {fileID: 21300000, guid: 98f798ab549d7ed4c8496a15172414f1, type: 3}
+    panelkey: {fileID: 0}
+    panel: {fileID: 21300000, guid: 07a123bf9d96ab94895d5f1729e57597, type: 3}
+    selectPanel: {fileID: 0}
+    unselectPanel: {fileID: 0}
+    bookTab: {fileID: 21300000, guid: 60ad687247ce31947a2bb85549802681, type: 3}
+    mcqTabPanel: {fileID: 21300000, guid: 2775c22d32c4be341bf2c59d78395ebf, type: 3}
+    box: {fileID: 21300000, guid: e0fc30c4a739c7742b2e664614a945f7, type: 3}
+    ageGroup: 2
+  - BgSprite: {fileID: 21300000, guid: 8090d3e02f36c294a929a230a1de8371, type: 3}
+    profileSprite: {fileID: 21300000, guid: 69c0a935f07f98340b57312f89d3df14, type: 3}
+    keySprite: {fileID: 21300000, guid: 002f7fc18ab596d48ae5c951779b5645, type: 3}
+    scoreSprite: {fileID: 21300000, guid: 31ee74a6308568c47ab8c4b857837d34, type: 3}
+    hintSprite: {fileID: 21300000, guid: ab402baf73f6b63459d2c64beec2acef, type: 3}
+    button: {fileID: 21300000, guid: e72b440ed9439954ab83409400993077, type: 3}
+    textColor:
+      serializedVersion: 2
+      rgba: 4293374028
+    textButton: {fileID: 21300000, guid: 6ff911a3d0c37354d8bf31b992bf2585, type: 3}
+    pageSprite: {fileID: 21300000, guid: 55c4fbe376de9904a904cf43da96ec3d, type: 3}
+    panelkey: {fileID: 0}
+    panel: {fileID: 21300000, guid: e6e03f34d18e28146ac622f004f4436a, type: 3}
+    selectPanel: {fileID: 0}
+    unselectPanel: {fileID: 0}
+    bookTab: {fileID: 21300000, guid: d9dc2bd8ac4fdfa4389f10737a056ffa, type: 3}
+    mcqTabPanel: {fileID: 21300000, guid: f08207507fc50d24f8a67996f131e29f, type: 3}
+    box: {fileID: 21300000, guid: 02f2229169c9d204fb8d963e525e15d1, type: 3}
+    ageGroup: 3
