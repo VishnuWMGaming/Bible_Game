@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using BibleGame.Data;
 using Newtonsoft.Json;
 using RestAPI;
 using UnityEngine;
@@ -54,7 +55,9 @@ namespace BibleGame
 
             public static void GetDetail(GetChapterDetailCallback callback , string bibleId,string chapterId)
             {
-                var url = $"{ServiceURL.baseURL}{ServiceURL.getChapterDetail}?bible_id={bibleId}&chapter_id={chapterId}";
+                var url = $"{ServiceURL.baseURL}{ServiceURL.getChapterDetail}?bible_id={bibleId}&chapter_id={chapterId}&language={LanguageController.Instance.GetLangStringVal(AppData.mLanguage)}";
+
+                Debug.Log($"URL Details => {url}");
 
                 WebRequestGet(url, (url, success, adata) =>
                 {

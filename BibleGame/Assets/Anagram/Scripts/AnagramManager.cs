@@ -28,6 +28,8 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
 
     private void OnEnable()
     {
+       // Screen.orientation = ScreenOrientation.LandscapeLeft;
+
         hintBtn.onClick.AddListener(UseHint);
         hintPanel.SetActive(false);
         homeBtn.onClick.AddListener(() => 
@@ -74,6 +76,8 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
 
     private void OnDisable()
     {
+       // Screen.orientation = ScreenOrientation.Portrait;
+
         homeBtn.onClick.RemoveAllListeners();
         hintBtn.onClick.RemoveAllListeners();
         submitBtn.onClick.RemoveAllListeners();

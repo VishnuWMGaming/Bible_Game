@@ -7,7 +7,7 @@ namespace RestAPI
     {
 
         private static string AuthKey = "authorization";
-        private static KeyValuePair<string, string> AuthKeyPair = new KeyValuePair<string, string>(AuthKey,"");
+        public static KeyValuePair<string, string> AuthKeyPair = new KeyValuePair<string, string>(AuthKey,"");
         
         public static void SetAuthToken(string token)
         {

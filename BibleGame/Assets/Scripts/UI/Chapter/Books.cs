@@ -74,12 +74,12 @@ public class Books : MonoBehaviour, IMBook
                 return;
             }
 
-            Debug.Log($"<color=grey> book list count : {res.ResponseData.data.Count} </color>");
+            Debug.Log($"<color=grey> book list count : {res.ResponseData.Count} </color>");
 
             AppData.bookDatas = UserData.testament switch
             {
-                Testament.Old => res.ResponseData.data.GetRange(0, 38),
-                Testament.New => res.ResponseData.data.GetRange(39, 26),
+                Testament.Old => res.ResponseData.GetRange(0, 39),
+                Testament.New => res.ResponseData.GetRange(38, 28),
                 _ => throw new NotImplementedException()
             };
 

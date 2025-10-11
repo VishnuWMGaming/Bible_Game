@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 using UnityEngine.UIElements;
 using BibleGame.API;
 using BibleGame.Data;
+using RestAPI;
 
 [RequireComponent(typeof(TMP_Text))]
 public class TranslateLang : MonoBehaviour
@@ -16,17 +17,18 @@ public class TranslateLang : MonoBehaviour
     [SerializeField] TMP_Text translatedText;
     [SerializeField] string _translated_Text;
     // Start is called before the first frame update
-    // private string textValue;
+     private string textValue;
 
     private void Awake()
     {
         translatedText = GetComponent<TMP_Text>();
-        // textValue = translatedText.text;
+        textValue = translatedText.text;
         UpdateText();
     }
 
     private void OnEnable()
     {
+        UpdateText();
         Actions.UpdateText += UpdateText;
     }
     private void OnDisable()
@@ -36,12 +38,30 @@ public class TranslateLang : MonoBehaviour
 
     private void UpdateText()
     {
+        if (String.IsNullOrEmpty(ApiBase.AuthKeyPair.Value))
+            return;
+
         string currentValue = translatedText.text;
+
         if (string.IsNullOrEmpty(currentValue))
             return;
 
+        if (AppData.mLanguage == null)
+        {
+            AppData.mLanguage = Language.English;
+            return;
+        }
+
+        if(AppData.mLanguage == Language.English)
+        {
+            translatedText.text = textValue;
+            return;
+        }
+
         //Split long text into chunks 
-        List<string> chunks = SplitIntoChunks(currentValue, 500);
+        List<string> chunks = SplitIntoChunks(textValue, 500);
+
+       
         StartCoroutine(TranslateChunks(chunks));
 
         // // LanguageController.Instance.Translation(textValue, translated =>
@@ -56,10 +76,13 @@ public class TranslateLang : MonoBehaviour
     private IEnumerator TranslateChunks(List<string> chunks)
     {
         translatedText.text = " ";
+        _translated_Text = "";
+
         foreach (var chunk in chunks)
         {
             bool done = false;
 
+            
             string selectedLanguage = LanguageController.Instance.GetLangStringVal(AppData.mLanguage);
 
 
@@ -79,10 +102,14 @@ public class TranslateLang : MonoBehaviour
                 done = true;
 
                 string translated = res.ResponseData;
-                translatedText.text += translated + " ";
-                _translated_Text += translated + " ";
-                done = true;
 
+                if (_translated_Text != translated)
+                {
+
+                    translatedText.text += translated + " ";
+                    _translated_Text = translated;
+                    done = true;
+                }
             }, input);
 
         //     TranslateAPI.Translate.()

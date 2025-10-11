@@ -1,3 +1,4 @@
+using BibleGame.Data;
 using Newtonsoft.Json;
 using RestAPI;
 using System;
@@ -81,13 +82,13 @@ namespace BibleGame
 
             public static void GetBookList(GetBookListCallback callback, string id)
             {
-                var url = $"{ServiceURL.baseURL}{ServiceURL.getBookDetail}?bible_id={id}";
+                var url = $"{ServiceURL.baseURL}{ServiceURL.getBookDetail}?bible_id={id}&language={LanguageController.Instance.GetLangStringVal(AppData.mLanguage)}";
 
                 Debug.Log($"<color=#FFA500> get book list : url => {url}</color>");
 
                 WebRequestGet(url, (url, success, adata) =>
                 {
-                    Debug.Log($"<color=magenta> book list data: {adata.ToString()}");
+                    Debug.Log($"<color=magenta> book list data: {adata.ToString()}</color>");
 
                     if (!success)
                     {
@@ -96,6 +97,9 @@ namespace BibleGame
 
                         return;
                     }
+
+
+
 
                     try
                     {
@@ -133,7 +137,7 @@ namespace BibleGame
 
             public class GetBookListResponse : ResponseBase
             {
-                public BookList ResponseData;
+                public List<BookData>  ResponseData;
             }
 
             [Serializable]

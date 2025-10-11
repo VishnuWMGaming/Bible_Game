@@ -121,6 +121,7 @@ namespace BibleGame
         {
             public string game_id;
             public string ageGroup;
+            public string language;
             public string game_type;
             public string bible_id;
             public string book_id;
@@ -175,8 +176,7 @@ namespace BibleGame
         [Serializable]
         public class GetQuestionsResponseAnagramRData
         {
-            public List<GetQuestionsAnagramData> questions;
-            public LevelData levelData;
+            public List<GetQuestionsAnagramData> resArr;
         }
 
         [Serializable]
@@ -189,6 +189,7 @@ namespace BibleGame
             public int ageGroup;
             public string title;
             public string hint;
+            public int status;
         }
 
         [Serializable]

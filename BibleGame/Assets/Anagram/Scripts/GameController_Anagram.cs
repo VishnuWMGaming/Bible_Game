@@ -96,6 +96,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
         {
             game_id = UserData.gameid,
             ageGroup = ageVal.ToString(),
+            language = LanguageController.Instance.GetLangStringVal(AppData.mLanguage),
             game_type = "anagram",
             bible_id = UserData.bibleId,
             chapter_id = UserData.chapterId,
@@ -112,9 +113,9 @@ public class GameController_Anagram : MonoBehaviour,IBox
                 return;
             }
 
-            GameData.levelID = res.ResponseData.levelData._id;
+            //GameData.levelID = res.ResponseData.levelData._id;
 
-            questions = res.ResponseData.questions;
+            questions = res.ResponseData.resArr;
             GameInitilise(questions[currentQIndex]);
 
             currentQIndex++;

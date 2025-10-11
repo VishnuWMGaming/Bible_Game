@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.SymbolStore;
+using System.Net;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using static BibleGame.API.GetBiblesAPI;
@@ -125,30 +126,28 @@ namespace BibleGame
         {
             public static string ConvertHtmlToPlainText(string html)
             {
-                if(string.IsNullOrEmpty(html))
-                     return "";
 
-                // 1. Convert verse numbers to bold <b>#</b>
+                if (string.IsNullOrEmpty(html))
+                    return "";
+
+                // 1. Convert verse numbers to bold format (or just keep them with line break)
                 html = Regex.Replace(html,
-                    @"<span[^>]*data-number\s*=\s*""(\d+)""[^>]*>(\d+)</span>",
-                    match => $"\n<b>{match.Groups[1].Value}</b> ");
+                    @"<span[^>]*data-number\s*=\s*""(\d+)""[^>]*>.*?</span>",
+                    match => $"\n{match.Groups[1].Value} ");
 
                 // 2. Replace added text (like <span class="add">was</span>) with plain content
-                html = Regex.Replace(html, @"<span class=\""add\"">(.*?)</span>", "$1");
+                html = Regex.Replace(html, @"<span class=""add"">(.*?)</span>", "$1");
 
-                // 3. Remove all other tags
+                // 3. Remove all remaining HTML tags
                 html = Regex.Replace(html, @"<[^>]+>", "");
 
-                // 4. Decode HTML entities
-                html = html.Replace("&nbsp;", " ")
-                           .Replace("&amp;", "&")
-                           .Replace("&quot;", "\"")
-                           .Replace("&lt;", "<")
-                           .Replace("&gt;", ">");
+                // 4. Decode HTML entities properly
+                html = WebUtility.HtmlDecode(html);
 
-                // 5. Normalize spacing
-                html = Regex.Replace(html, @"[ \t\r]+", " ");
-                html = Regex.Replace(html, @"\n\s+", "\n");
+                // 5. Normalize spacing and line breaks
+                html = Regex.Replace(html, @"[ \t\r]+", " ");       // remove extra spaces/tabs
+                html = Regex.Replace(html, @"\n\s*", "\n");         // trim spaces after line breaks
+                html = Regex.Replace(html, @"\n{2,}", "\n");        // remove multiple blank lines
                 html = html.Trim();
 
                 return html;

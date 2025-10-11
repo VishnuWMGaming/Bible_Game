@@ -125,10 +125,19 @@ public class BookChapter : MonoBehaviour
             Debug.Log($"<color=green> Chapter {res.ResponseData.data.id} is loaded.</color>");
 
             string content = res.ResponseData.data.content.ToString();
+
+
+            Debug.Log($"Content :{content}");
+
+
             content = Utils.ConvertHtmlToPlainText(content);
 
+
+
+            Debug.Log($"Cleaned Content :{content}");
+
             pagePanel.text = content;
-            Actions.UpdateText?.Invoke();
+            //Actions.UpdateText?.Invoke();
             speech.Initialise(pagePanel, true);
 
         }, UserData.bibleId, UserData.chapterId);
