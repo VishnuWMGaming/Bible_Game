@@ -1,9 +1,11 @@
+using BibleGame.Data;
 using NativeTextToSpeech;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,13 +14,15 @@ using UnityEngine.Windows;
 
 public class TextSpeech : MonoBehaviour
 {
-    [SerializeField] TMP_Text mtext;
+    [SerializeField] string mtext;
 
     private TextToSpeech _textToSpeech;
 
     [SerializeField] Animator animator;
 
     Button mButton;
+
+    Sprite mInitialSprite;
 
     UnityEvent FinishEvent;
 
@@ -30,17 +34,19 @@ public class TextSpeech : MonoBehaviour
         mButton?.onClick.AddListener(() => { Speak(); AudioManager.Instance.PlayButton(); });
 
         mtext = null;
-        mtext = this.GetComponentInParent<TMP_Text>(); 
+        //mtext = this.GetComponentInParent<TMP_Text>(); 
+
+        mInitialSprite = mButton.image.sprite;
 
         ResetAction();
 
-#if !UNITY_EDITOR
+#if! UNITY_EDITOR
         _textToSpeech = TextToSpeech.Create(OnFinish, OnError);
 #endif
 
     }
 
-    public void Initialise(TMP_Text text,bool isButton = false)
+    public void Initialise(string text,bool isButton = false)
     {
         mtext = text;
 
@@ -53,40 +59,93 @@ public class TextSpeech : MonoBehaviour
     }
 
 
-    public void Speak()
+    public async void Speak()
     {
 
-#if !UNITY_EDITOR
+#if UNITY_EDITOR
         if(isPlaying)
         {
             Stop();
             return;
         }
 
-        if( mtext == null ||  String.IsNullOrWhiteSpace(mtext.text))
+         if (FinishEvent == null)
+            FinishEvent = new UnityEvent();
+
+        if( mtext == null ||  String.IsNullOrWhiteSpace(mtext))
             return;
 
-        string filtered = Regex.Replace(mtext.text, @"[^a-zA-Z\s]", "");
+        string langCode = LanguageController.Instance.GetLangVoiceCode(AppData.mLanguage);
+        Debug.Log($"<color=magenta> Speaking..... {langCode} </color>");
+
+        if (mtext.Length > 500)
+        {
+            string[] versesArray = mtext.Split(new[] { "\r\n", "\r", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
+            List<string> versesList = new List<string>(versesArray);
+
+           
+            for (int i = 0; i < versesList.Count; ++i)
+            {
+                Debug.Log("Next line speaking....");
+
+                animator.enabled = true;
+                animator.speed = 1.0f;
+
+                isPlaying = true;
+
+                string filteredVal = Regex.Replace(versesList[i], @"[^a-zA-Z\s]", "");
+
+                filteredVal = Regex.Replace(filteredVal, @"\s+", " ");
+                filteredVal = filteredVal.Trim();
+
+                _textToSpeech.Speak(filteredVal, langCode, float.Parse("0.8", CultureInfo.InvariantCulture));
+                await Spoke(FinishEvent);
+
+                Debug.Log("Going to next line....");
+            }
+
+            mButton.image.sprite = mInitialSprite;
+            isPlaying = false;
+            return;
+        }
+
+        string filtered = Regex.Replace(mtext, @"[^a-zA-Z\s]", "");
 
         filtered = Regex.Replace(filtered, @"\s+", " ");
         filtered = filtered.Trim();
 
-        Debug.Log($"<color=magenta> Speaking..... {filtered} </color>");
 
-        animator.enabled = true;
-        animator.speed = 1.0f;
+        _textToSpeech.Speak(filtered, langCode , float.Parse("0.8", CultureInfo.InvariantCulture));
+        await Spoke(FinishEvent);
 
-        _textToSpeech.Speak(filtered, "en-US", float.Parse("0.8", CultureInfo.InvariantCulture));
-
-        isPlaying = true;
+        if(mButton )
+        mButton.image.sprite = mInitialSprite;
+        isPlaying = false;
 #endif
 
     }
 
+    public Task Spoke(UnityEvent unityEvent)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+
+        UnityAction handler = null;
+        handler = () =>
+        {
+            tcs.TrySetResult(true);          // Mark the task as completed
+            unityEvent.RemoveListener(handler); // Remove listener after invoked
+        };
+
+        unityEvent.AddListener(handler);
+
+        return tcs.Task;
+    }
+
     private void OnFinish()
     {
-        ResetAction();
         FinishEvent?.Invoke();
+        ResetAction();
+        Debug.Log("Speech is finished ..................");
     }
 
     private void OnError(string msg)

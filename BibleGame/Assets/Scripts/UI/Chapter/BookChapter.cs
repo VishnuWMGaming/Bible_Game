@@ -1,16 +1,14 @@
+using BibleGame;
+using BibleGame.API;
+using BibleGame.Data;
+using BibleGame.Utility;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
-using UnityEngine.UI;
 using TMPro;
-using System;
-using BibleGame;
-using BibleGame.Data;
-using BibleGame.API;
-
-
-using BibleGame.Utility;
+using UnityEngine;
+using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public interface IBookChapter
 {
@@ -60,11 +58,19 @@ public class BookChapter : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-       // previousBtn.onClick.AddListener(() => PageNavigateAction(Navigate.previous));
+       // previousBtn.onClick.AddListener(() =>  (Navigate.previous));
         nextBtn.onClick.AddListener(()=> 
         {
             speech.Stop();
             callback.EndBookAction();
+            AudioManager.Instance.PlayButton();
+        });
+
+
+        backBtn.onClick.AddListener(() =>
+        {
+            speech.Stop();
+            callback.BackToBooks();
             AudioManager.Instance.PlayButton();
         });
 
@@ -111,9 +117,9 @@ public class BookChapter : MonoBehaviour
         PopUp.Instance.EnableLoad(true);
         ChapterAPI.GetDetail((success, res) =>
         {
-            PopUp.Instance.EnableLoad(false);
             if (!success)
             {
+                PopUp.Instance.EnableLoad(false);
                 Debug.LogError("Error in getting chapter details");
                 return;
             }
@@ -126,19 +132,27 @@ public class BookChapter : MonoBehaviour
 
             string content = res.ResponseData.data.content.ToString();
 
-
             Debug.Log($"Content :{content}");
-
 
             content = Utils.ConvertHtmlToPlainText(content);
 
-
-
             Debug.Log($"Cleaned Content :{content}");
 
-            pagePanel.text = content;
-            //Actions.UpdateText?.Invoke();
-            speech.Initialise(pagePanel, true);
+          
+          
+            LanguageController.Instance.Translate(content, translation =>
+            {
+                pagePanel.text = translation;
+                PopUp.Instance.EnableLoad(false);
+                //Actions.UpdateText?.Invoke();
+
+                string[] versesArray = content.Split(new[] { "\r\n", "\r", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
+                List<string> versesList = new List<string>(versesArray);
+
+                 speech.Initialise(translation, true);
+            });
+
+           
 
         }, UserData.bibleId, UserData.chapterId);
     }

@@ -80,7 +80,7 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
         optionText.text = option;
         _index = index;
 
-        speech.Initialise(optionText);
+        speech.Initialise(optionText.text);
     }
 
     #region EVENT_FUNCTIONS

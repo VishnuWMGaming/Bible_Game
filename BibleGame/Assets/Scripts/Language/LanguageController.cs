@@ -1,10 +1,14 @@
+using BibleGame;
+using BibleGame.API;
 using BibleGame.Data;
+using DebugUtils;
 using Lean.Localization;
+using RestAPI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using BibleGame;
 
 public class LanguageController : MonoBehaviour
 {
@@ -14,6 +18,16 @@ public class LanguageController : MonoBehaviour
 
 
     public Dictionary<string, string> Languages;
+
+    [Header("Special Fonts:")]
+    [SerializeField] TMP_FontAsset chineseFontAsset;
+    public TMP_FontAsset ChineseFont => chineseFontAsset;
+
+
+    [SerializeField] TMP_FontAsset koreanFontAsset;
+
+    [SerializeField] TMP_FontAsset normalFontAsset;
+    public TMP_FontAsset NormalFont => normalFontAsset;
 
     [Header("Translator:")]
     [SerializeField] MyMemoryTranslator translator;
@@ -47,12 +61,32 @@ public class LanguageController : MonoBehaviour
             AppData.mLanguage = Language.English;
             PlayerPrefs.SetString("Language", "English");
         }
+
+        if (AppData.mLanguage == Language.Chinese)
+        {
+            ChangeAllFonts(chineseFontAsset);
+        }
+        else
+        {
+            ChangeAllFonts(normalFontAsset);
+        }
+
     }
 
     public void SetLanguage(Language lang)
     {
         AppData.mLanguage = lang;
         PlayerPrefs.SetString("Language", lang.ToString());
+
+        if (AppData.mLanguage == Language.Chinese)
+        {
+            ChangeAllFonts(chineseFontAsset);
+        }
+        else
+        {
+            ChangeAllFonts(normalFontAsset);
+        }
+
         Actions.UpdateText();
     }
     private void Start()
@@ -102,6 +136,30 @@ public class LanguageController : MonoBehaviour
         return selectedLanguage;
     }
 
+    public string GetLangVoiceCode(Language lang)
+    {
+        if (lang == null)
+        {
+            return "en-US";
+        }
+
+        string selectedLanguage = lang switch
+        {
+            Language.English => "en-US",
+            Language.Spanish => "es-ES",
+            Language.Korean => "ko-KR",
+            Language.Portuguese => "pt-PT",
+            Language.French => "fr-CA",
+            Language.Chinese => "zh-CN",
+            Language.Hindi => "hi-IN",
+            Language.Swahili => "sw",
+            Language.Kreyol => "en-US",
+            _ => "en-US",
+        };
+
+        return selectedLanguage;
+    }
+
     Language GetLang(string lang)
     {
         Language selLang = lang switch
@@ -119,6 +177,158 @@ public class LanguageController : MonoBehaviour
         };
 
         return selLang;
+    }
+
+    public void Translate(string texValue, Action<string> onCompleted)
+    {
+        if (String.IsNullOrEmpty(ApiBase.AuthKeyPair.Value))
+        {
+            onCompleted?.Invoke(texValue);
+            return;
+        }
+
+
+        if (AppData.mLanguage == null)
+        {
+            AppData.mLanguage = Language.English;
+            onCompleted?.Invoke(texValue);
+            return;
+        }
+
+        if (AppData.mLanguage == Language.English)
+        {
+            onCompleted?.Invoke(texValue);
+            return;
+        }
+
+            //Split long text into chunks 
+        List<string> chunks = SplitIntoChunks(texValue, 500);
+
+        StartCoroutine(TranslateChunks(chunks, onCompleted));
+    }
+
+    public void ChangeAllFonts(TMP_FontAsset newFont)
+    {
+        // UI Text
+        TextMeshProUGUI[] allTMP = FindObjectsOfType<TextMeshProUGUI>();
+        foreach (var tmp in allTMP)
+        {
+            tmp.font = newFont;
+        }
+
+        // 3D Text
+        TextMeshPro[] allTMP3D = FindObjectsOfType<TextMeshPro>();
+        foreach (var tmp3D in allTMP3D)
+        {
+            tmp3D.font = newFont;
+        }
+    }
+
+    private IEnumerator TranslateChunks(List<string> chunks, Action<string> callback)
+    {
+        string _translated_Text = "";
+        string translation = "";
+
+        foreach (var chunk in chunks)
+        {
+            bool done = false;
+
+            string selectedLanguage = LanguageController.Instance.GetLangStringVal(AppData.mLanguage);
+          
+
+            TransInput input = new TransInput
+            {
+                text = chunk,
+                language = selectedLanguage
+            };
+
+            TranslateAPI.Translate((success, res) =>
+            {
+                if (!success)
+                {
+                    Debug.LogError("Transaltion error");
+
+                }
+                done = true;
+
+                string translated = res.ResponseData;
+
+                if (translation != translated)
+                {
+                    _translated_Text += translated + " ";
+                    translation = translated;
+
+                    done = true;
+                }
+            }, input);
+
+            // Wait until translation finished before sending next chunk
+            yield return new WaitUntil(() => done);
+
+            callback(_translated_Text);
+        }
+    }
+
+
+    private IEnumerator TranslateChunks(List<string> chunks)
+    {
+       string _translated_Text = "";
+
+        foreach (var chunk in chunks)
+        {
+            bool done = false;
+
+
+            string selectedLanguage = LanguageController.Instance.GetLangStringVal(AppData.mLanguage);
+
+
+            TransInput input = new TransInput
+            {
+                text = chunk,
+                language = selectedLanguage
+            };
+
+            TranslateAPI.Translate((success, res) =>
+            {
+                if (!success)
+                {
+                    Debug.LogError("Transaltion error");
+
+                }
+                done = true;
+
+                string translated = res.ResponseData;
+
+                if (_translated_Text != translated)
+                {
+                    _translated_Text = translated;
+                    done = true;
+                }
+            }, input);
+
+            //     TranslateAPI.Translate.()
+            // {
+            //         translatedText.text += translated + " "; // append to final text
+            //         _translated_Text += translated + " ";
+            //         done = true;
+            //     });
+
+            // Wait until translation finished before sending next chunk
+            yield return new WaitUntil(() => done);
+        }
+    }
+
+    private List<string> SplitIntoChunks(string text, int maxChunkSize)
+    {
+        List<string> chunks = new List<string>();
+
+        for (int i = 0; i < text.Length; i += maxChunkSize)
+        {
+            int length = Mathf.Min(maxChunkSize, text.Length - i);
+            chunks.Add(text.Substring(i, length));
+        }
+
+        return chunks;
     }
 
 }

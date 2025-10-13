@@ -10,6 +10,7 @@ using UnityEngine.UIElements;
 using BibleGame.API;
 using BibleGame.Data;
 using RestAPI;
+using DebugUtils;
 
 [RequireComponent(typeof(TMP_Text))]
 public class TranslateLang : MonoBehaviour
@@ -58,6 +59,17 @@ public class TranslateLang : MonoBehaviour
             return;
         }
 
+        if(AppData.mLanguage == Language.Chinese || AppData.mLanguage == Language.Korean)
+        {
+            translatedText.font = LanguageController.Instance.ChineseFont;
+        }
+        else
+        {
+            translatedText.font = LanguageController.Instance.NormalFont;
+        }
+
+
+
         //Split long text into chunks 
         List<string> chunks = SplitIntoChunks(textValue, 500);
 
@@ -84,7 +96,7 @@ public class TranslateLang : MonoBehaviour
 
             
             string selectedLanguage = LanguageController.Instance.GetLangStringVal(AppData.mLanguage);
-
+            DevDebug.Log($"Selected language: {selectedLanguage}",DebugColor.Silver);
 
             TransInput input = new TransInput
             {
