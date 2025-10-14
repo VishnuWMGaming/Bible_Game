@@ -172,6 +172,9 @@ public class TextSpeech : MonoBehaviour
 
     void ResetAction()
     {
+        if (mButton != null)
+            mButton.image.sprite = mInitialSprite;
+
         AnimationClip clip = animator.runtimeAnimatorController.animationClips[0];
 
         // Jump to 1 second into the clip

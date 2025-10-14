@@ -148,8 +148,8 @@ namespace BibleGame
         [Serializable]
         public class GetQuestionsResponseObjectiveRData
         {
-            public List<GetQuestionsObjectiveData> questions;
-            public LevelData levelData;
+            public List<GetQuestionsObjectiveData> resArr;
+          //  public LevelData levelData;
         }
 
         [Serializable]

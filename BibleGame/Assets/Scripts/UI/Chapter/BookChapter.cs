@@ -70,7 +70,7 @@ public class BookChapter : MonoBehaviour
         backBtn.onClick.AddListener(() =>
         {
             speech.Stop();
-            callback.BackToBooks();
+            Actions.ChangePanelActions(CanvasType.home);
             AudioManager.Instance.PlayButton();
         });
 
