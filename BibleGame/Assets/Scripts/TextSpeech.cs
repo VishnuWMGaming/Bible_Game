@@ -62,7 +62,7 @@ public class TextSpeech : MonoBehaviour
     public async void Speak()
     {
 
-#if UNITY_EDITOR
+#if !UNITY_EDITOR
         if(isPlaying)
         {
             Stop();
@@ -93,10 +93,17 @@ public class TextSpeech : MonoBehaviour
 
                 isPlaying = true;
 
-                string filteredVal = Regex.Replace(versesList[i], @"[^a-zA-Z\s]", "");
+                string filteredVal = versesList[i];
 
-                filteredVal = Regex.Replace(filteredVal, @"\s+", " ");
-                filteredVal = filteredVal.Trim();
+                if (AppData.mLanguage != Language.Chinese ||
+                    AppData.mLanguage != Language.Korean ||
+                    AppData.mLanguage != Language.Hindi)
+                {
+                    filteredVal = Regex.Replace(versesList[i], @"[^a-zA-Z\s]", "");
+
+                    filteredVal = Regex.Replace(filteredVal, @"\s+", " ");
+                    filteredVal = filteredVal.Trim();
+                }
 
                 _textToSpeech.Speak(filteredVal, langCode, float.Parse("0.8", CultureInfo.InvariantCulture));
                 await Spoke(FinishEvent);

@@ -138,13 +138,15 @@ public class BookChapter : MonoBehaviour
 
             Debug.Log($"Cleaned Content :{content}");
 
-          
-          
+
+            pagePanel.GetComponent<TranslateLang>().UpdateText();
+
             LanguageController.Instance.Translate(content, translation =>
             {
                 pagePanel.text = translation;
+              //  pagePanel.GetComponent<TranslateLang>().UpdateText();
+
                 PopUp.Instance.EnableLoad(false);
-                //Actions.UpdateText?.Invoke();
 
                 string[] versesArray = content.Split(new[] { "\r\n", "\r", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
                 List<string> versesList = new List<string>(versesArray);

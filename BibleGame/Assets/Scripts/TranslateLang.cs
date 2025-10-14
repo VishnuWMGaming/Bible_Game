@@ -24,11 +24,23 @@ public class TranslateLang : MonoBehaviour
     {
         translatedText = GetComponent<TMP_Text>();
         textValue = translatedText.text;
+
+      
         UpdateText();
     }
 
     private void OnEnable()
     {
+        translatedText.font = AppData.mLanguage switch
+        {
+            Language.English => LanguageController.Instance.NormalFont,
+            Language.Korean => LanguageController.Instance.KoreanFont,
+            Language.Chinese => LanguageController.Instance.ChineseFont,
+            Language.Hindi => LanguageController.Instance.HindiFont,
+            _ => LanguageController.Instance.NormalFont
+        };
+
+
         UpdateText();
         Actions.UpdateText += UpdateText;
     }
@@ -37,7 +49,7 @@ public class TranslateLang : MonoBehaviour
         Actions.UpdateText -= UpdateText;
     }
 
-    private void UpdateText()
+    public void UpdateText()
     {
         if (String.IsNullOrEmpty(ApiBase.AuthKeyPair.Value))
             return;
@@ -59,15 +71,14 @@ public class TranslateLang : MonoBehaviour
             return;
         }
 
-        if(AppData.mLanguage == Language.Chinese || AppData.mLanguage == Language.Korean)
-        {
-            translatedText.font = LanguageController.Instance.ChineseFont;
-        }
-        else
-        {
-            translatedText.font = LanguageController.Instance.NormalFont;
-        }
-
+       translatedText.font =  AppData.mLanguage switch
+       {
+           Language.English => LanguageController.Instance.NormalFont,
+           Language.Korean => LanguageController.Instance.KoreanFont,
+           Language.Chinese => LanguageController.Instance.ChineseFont,
+           Language.Hindi => LanguageController.Instance.HindiFont,
+           _ => LanguageController.Instance.NormalFont
+       };
 
 
         //Split long text into chunks 

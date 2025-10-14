@@ -150,6 +150,8 @@ namespace BibleGame
                 html = Regex.Replace(html, @"\n{2,}", "\n");        // remove multiple blank lines
                 html = html.Trim();
 
+                html = html.Replace("¶", "");
+
                 return html;
             }
         }

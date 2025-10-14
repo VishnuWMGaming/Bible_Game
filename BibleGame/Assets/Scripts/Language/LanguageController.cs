@@ -25,9 +25,13 @@ public class LanguageController : MonoBehaviour
 
 
     [SerializeField] TMP_FontAsset koreanFontAsset;
+    public TMP_FontAsset KoreanFont => koreanFontAsset;
 
     [SerializeField] TMP_FontAsset normalFontAsset;
     public TMP_FontAsset NormalFont => normalFontAsset;
+
+    [SerializeField] TMP_FontAsset hindiFontAsset;
+    public TMP_FontAsset HindiFont => hindiFontAsset;
 
     [Header("Translator:")]
     [SerializeField] MyMemoryTranslator translator;
@@ -62,15 +66,7 @@ public class LanguageController : MonoBehaviour
             PlayerPrefs.SetString("Language", "English");
         }
 
-        if (AppData.mLanguage == Language.Chinese)
-        {
-            ChangeAllFonts(chineseFontAsset);
-        }
-        else
-        {
-            ChangeAllFonts(normalFontAsset);
-        }
-
+        ChangeAllFonts();
     }
 
     public void SetLanguage(Language lang)
@@ -78,14 +74,7 @@ public class LanguageController : MonoBehaviour
         AppData.mLanguage = lang;
         PlayerPrefs.SetString("Language", lang.ToString());
 
-        if (AppData.mLanguage == Language.Chinese)
-        {
-            ChangeAllFonts(chineseFontAsset);
-        }
-        else
-        {
-            ChangeAllFonts(normalFontAsset);
-        }
+        ChangeAllFonts();
 
         Actions.UpdateText();
     }
@@ -151,7 +140,7 @@ public class LanguageController : MonoBehaviour
             Language.Portuguese => "pt-PT",
             Language.French => "fr-CA",
             Language.Chinese => "zh-CN",
-            Language.Hindi => "hi-IN",
+            Language.Hindi => "hi_IN",
             Language.Swahili => "sw",
             Language.Kreyol => "en-US",
             _ => "en-US",
@@ -207,8 +196,17 @@ public class LanguageController : MonoBehaviour
         StartCoroutine(TranslateChunks(chunks, onCompleted));
     }
 
-    public void ChangeAllFonts(TMP_FontAsset newFont)
+    public void ChangeAllFonts()
     {
+        TMP_FontAsset newFont = AppData.mLanguage switch
+        {
+            Language.English => normalFontAsset,
+            Language.Korean => koreanFontAsset,
+            Language.Chinese => chineseFontAsset,
+            Language.Hindi => hindiFontAsset,
+            _=> normalFontAsset
+        };
+
         // UI Text
         TextMeshProUGUI[] allTMP = FindObjectsOfType<TextMeshProUGUI>();
         foreach (var tmp in allTMP)
