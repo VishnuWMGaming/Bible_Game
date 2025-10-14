@@ -139,7 +139,10 @@ public class BookChapter : MonoBehaviour
             Debug.Log($"Cleaned Content :{content}");
 
 
-            pagePanel.GetComponent<TranslateLang>().UpdateText();
+            pagePanel.GetComponent<TranslateLang>().UpdateText(() =>
+            {
+
+            });
 
             LanguageController.Instance.Translate(content, translation =>
             {

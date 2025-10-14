@@ -13,6 +13,7 @@ using BibleGame.API;
 
 using System.Linq;
 using TMPro;
+using DebugUtils;
 
 
 public interface IAnagramControl
@@ -65,6 +66,11 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
     #endregion
 
+
+    [Header("Screen Orintation:")]
+    [SerializeField] ScreenOrient screenOrient;
+    public ScreenOrient ScreenOrient => screenOrient;
+
     private void OnEnable()
     {
         layoutGroup = lettersParent.GetComponent<HorizontalLayoutGroup>();
@@ -113,7 +119,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
                 return;
             }
 
-            //GameData.levelID = res.ResponseData.levelData._id;
+            GameData.levelID = res.ResponseData.levelData._id;
 
             questions = res.ResponseData.resArr;
             GameInitilise(questions[currentQIndex]);
@@ -152,6 +158,10 @@ public class GameController_Anagram : MonoBehaviour,IBox
         string[] letterVals = word.Select(c => c.ToString()).ToArray();
 
         mTitle.text = question.title;
+        //mTitle.GetComponentInChildren<TranslateLang>().UpdateText(() =>
+        //{
+
+        //});
 
         _anagramLetters.Clear();
 
@@ -224,6 +234,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
         Debug.Log("Anagram  is set ");
         PopUp.Instance.EnableLoad(false);
+
     }
 
     string ShuffleWord(string word)
@@ -249,6 +260,8 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
         foreach (GramBox box in otherBoxes)
         {
+            DevDebug.Log($"Checking box {currentBox.Value} with {box.Value}",DebugColor.Gold);
+
             if(AnagramUtils.AreImagesOverlapping(currentBox.BoxT, box.BoxT))
             {
                 Vector2 newPos = box.BoxV;
@@ -336,6 +349,9 @@ public class GameController_Anagram : MonoBehaviour,IBox
        
     }
 }
+
+public enum ScreenOrient {portrait,landscape}
+
 
 [Serializable]
 public class AnagramLetter

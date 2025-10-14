@@ -25,8 +25,11 @@ public class TranslateLang : MonoBehaviour
         translatedText = GetComponent<TMP_Text>();
         textValue = translatedText.text;
 
-      
-        UpdateText();
+
+        UpdateText(() =>
+        {
+
+        });
     }
 
     private void OnEnable()
@@ -41,7 +44,11 @@ public class TranslateLang : MonoBehaviour
         };
 
 
-        UpdateText();
+        UpdateText(() =>
+        {
+
+        });
+
         Actions.UpdateText += UpdateText;
     }
     private void OnDisable()
@@ -49,25 +56,33 @@ public class TranslateLang : MonoBehaviour
         Actions.UpdateText -= UpdateText;
     }
 
-    public void UpdateText()
+    public void UpdateText(Action finish)
     {
         if (String.IsNullOrEmpty(ApiBase.AuthKeyPair.Value))
+        {
+            finish?.Invoke();
             return;
-
+        }
         string currentValue = translatedText.text;
 
         if (string.IsNullOrEmpty(currentValue))
+        {
+            finish?.Invoke();
             return;
+        }
 
         if (AppData.mLanguage == null)
         {
             AppData.mLanguage = Language.English;
+
+            finish?.Invoke();
             return;
         }
 
         if(AppData.mLanguage == Language.English)
         {
             translatedText.text = textValue;
+            finish?.Invoke();
             return;
         }
 
@@ -84,8 +99,11 @@ public class TranslateLang : MonoBehaviour
         //Split long text into chunks 
         List<string> chunks = SplitIntoChunks(textValue, 500);
 
-       
-        StartCoroutine(TranslateChunks(chunks));
+
+        StartCoroutine(TranslateChunks(chunks, () =>
+        {
+            finish?.Invoke();
+        }));
 
         // // LanguageController.Instance.Translation(textValue, translated =>
         // LanguageController.Instance.Translation(currentValue, translated =>
@@ -96,7 +114,7 @@ public class TranslateLang : MonoBehaviour
         // });
     }
 
-    private IEnumerator TranslateChunks(List<string> chunks)
+    private IEnumerator TranslateChunks(List<string> chunks,Action finish)
     {
         translatedText.text = " ";
         _translated_Text = "";
@@ -120,9 +138,8 @@ public class TranslateLang : MonoBehaviour
                 if (!success)
                 {
                     Debug.LogError("Transaltion error");
-
+                    done = true;
                 }
-                done = true;
 
                 string translated = res.ResponseData;
 
@@ -144,6 +161,8 @@ public class TranslateLang : MonoBehaviour
 
             // Wait until translation finished before sending next chunk
             yield return new WaitUntil(() => done);
+
+            finish?.Invoke();
         }
     }
 

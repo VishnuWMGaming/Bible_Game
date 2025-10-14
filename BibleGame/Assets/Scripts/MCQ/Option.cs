@@ -45,6 +45,9 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     [Header("Speaker:")]
     [SerializeField] TextSpeech speech;
 
+    [Header("Translate")]
+    [SerializeField] TranslateLang translateLang;
+
     /// <summary>
     /// Action implemented on enable
     /// </summary>
@@ -80,7 +83,10 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
         optionText.text = option;
         _index = index;
 
-        speech.Initialise(optionText.text);
+        translateLang.UpdateText(() =>
+        {
+            speech.Initialise(optionText.text);
+        });
     }
 
     #region EVENT_FUNCTIONS

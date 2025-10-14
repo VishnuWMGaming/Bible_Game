@@ -26,7 +26,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     [SerializeField] Button hintSubmitBtn;
     [SerializeField] Button hintCloseBtn;
     [SerializeField] Button rewardBtn;
-    [SerializeField] Button mHomeBtn;
+    [SerializeField] TextSpeech textSpeech;
 
     [Space]
     [SerializeField] private List<Question> questions = new List<Question>();
@@ -97,7 +97,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         {
             game_id = UserData.gameid,
             ageGroup = ageVal.ToString(),
-            language = LanguageController.Instance.GetLangStringVal(AppData.mLanguage),
+            language = "en",
             game_type = "objective",
             bible_id = UserData.bibleId,
             chapter_id = UserData.chapterId,
@@ -121,7 +121,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
                 return;
             }
 
-          //  GameData.levelID = res.ResponseData.levelData._id;
+            GameData.levelID = res.ResponseData.levelData._id;
 
             foreach (var data in res.ResponseData.resArr)
             {
@@ -281,7 +281,13 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     {
         questionTxt.text = questions[questionIndex]?.title;
 
+        questionTxt.GetComponent<TranslateLang>().UpdateText(() =>
+        {
+            textSpeech.Initialise(questionTxt.text, true);
+        });
+
         optionPanel.SetOptions(questions[questionIndex]?.answers);
+
         currentQuestionIndex++;
     }
 

@@ -60,6 +60,9 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     [SerializeField] LayoutElement layout;
 
+    [Header("Translate")]
+    [SerializeField] TranslateLang translateLang;
+
     public void Enable(bool enable) 
     { 
         isEnable = enable; 
@@ -129,9 +132,9 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
         this.startPosition = boxTransform.anchoredPosition;
 
+
+        boxTransform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
     }
-
-
 
     public Vector2 GetStartPos()
     {
@@ -163,13 +166,13 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
         Vector2 newPosition = Vector2.zero;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.transform as RectTransform,
+            maskArea.transform as RectTransform,
             Input.mousePosition,
             null,
             out newPosition
         );
 
-        Vector2 localPosition = AnagramUtils.GetMousePositionInCanvasSpace(canvas);
+        Vector2 localPosition = AnagramUtils.GetMousePositionInCanvasSpace(canvas,true);
 
         bool isInsideMask = AnagramUtils.IsPositionInside(localPosition, maskArea);
 
@@ -211,6 +214,11 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     {
         if (!isEnable) return;
         if (isCorrect) return;
+
+        //translateLang.UpdateText(() =>
+        //{
+
+        //})
 
         letterText.text = value;
         this.value = value;

@@ -33,6 +33,9 @@ public class StyleControl : MonoBehaviour
     [SerializeField] List<Image> mcqs = new List<Image>();
 
     [Space]
+    [SerializeField] List<Image> mcqs_Vertical = new List<Image>();
+
+    [Space]
     [SerializeField] List<Image> panelsColor = new List<Image>();
 
     [Space]
@@ -78,6 +81,8 @@ public class StyleControl : MonoBehaviour
         foreach(var title in mtitles) title.color = styleUI.textColor;
 
         foreach (var panel in mcqs) panel.sprite = styleUI.mcqTabPanel;
+
+        foreach (var panel in mcqs_Vertical) panel.sprite = styleUI.mcqTabPanel_Vertical;
 
         foreach (var panel in panelsColor)  panel.color = styleUI.textColor;
 

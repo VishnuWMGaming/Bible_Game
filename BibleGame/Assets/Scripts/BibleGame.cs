@@ -54,7 +54,7 @@ namespace BibleGame
     {
         public static Action<CanvasType> ChangePanelActions;
         public static Action<StartPage> StartPageAction;
-        public static Action UpdateText= delegate { };
+        public static Action<Action> UpdateText;
         public static Action<int> UpdateCoins;
     }
 

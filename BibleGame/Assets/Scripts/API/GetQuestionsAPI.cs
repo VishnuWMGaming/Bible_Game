@@ -149,7 +149,7 @@ namespace BibleGame
         public class GetQuestionsResponseObjectiveRData
         {
             public List<GetQuestionsObjectiveData> resArr;
-          //  public LevelData levelData;
+            public LevelData levelData;
         }
 
         [Serializable]
@@ -177,6 +177,7 @@ namespace BibleGame
         public class GetQuestionsResponseAnagramRData
         {
             public List<GetQuestionsAnagramData> resArr;
+            public LevelData levelData;
         }
 
         [Serializable]

@@ -30,6 +30,7 @@ MonoBehaviour:
     unselectPanel: {fileID: 0}
     bookTab: {fileID: 21300000, guid: 60ad687247ce31947a2bb85549802681, type: 3}
     mcqTabPanel: {fileID: 21300000, guid: 2775c22d32c4be341bf2c59d78395ebf, type: 3}
+    mcqTabPanel_Vertical: {fileID: 21300000, guid: 2842951c21bc36e4e8e7f73e80421553, type: 3}
     box: {fileID: 21300000, guid: e0fc30c4a739c7742b2e664614a945f7, type: 3}
     ageGroup: 0
   - BgSprite: {fileID: 21300000, guid: abd3c2a6766155e4584f468342491093, type: 3}
@@ -49,6 +50,7 @@ MonoBehaviour:
     unselectPanel: {fileID: 0}
     bookTab: {fileID: 21300000, guid: 60ad687247ce31947a2bb85549802681, type: 3}
     mcqTabPanel: {fileID: 21300000, guid: 2775c22d32c4be341bf2c59d78395ebf, type: 3}
+    mcqTabPanel_Vertical: {fileID: 21300000, guid: 2842951c21bc36e4e8e7f73e80421553, type: 3}
     box: {fileID: 0}
     ageGroup: 1
   - BgSprite: {fileID: 21300000, guid: abd3c2a6766155e4584f468342491093, type: 3}
@@ -68,6 +70,7 @@ MonoBehaviour:
     unselectPanel: {fileID: 0}
     bookTab: {fileID: 21300000, guid: 60ad687247ce31947a2bb85549802681, type: 3}
     mcqTabPanel: {fileID: 21300000, guid: 2775c22d32c4be341bf2c59d78395ebf, type: 3}
+    mcqTabPanel_Vertical: {fileID: 21300000, guid: 2842951c21bc36e4e8e7f73e80421553, type: 3}
     box: {fileID: 21300000, guid: e0fc30c4a739c7742b2e664614a945f7, type: 3}
     ageGroup: 2
   - BgSprite: {fileID: 21300000, guid: 8090d3e02f36c294a929a230a1de8371, type: 3}
@@ -87,5 +90,6 @@ MonoBehaviour:
     unselectPanel: {fileID: 0}
     bookTab: {fileID: 21300000, guid: d9dc2bd8ac4fdfa4389f10737a056ffa, type: 3}
     mcqTabPanel: {fileID: 21300000, guid: f08207507fc50d24f8a67996f131e29f, type: 3}
+    mcqTabPanel_Vertical: {fileID: 21300000, guid: c3c57b0533c69e0489ea0b2b923e4fd7, type: 3}
     box: {fileID: 21300000, guid: 02f2229169c9d204fb8d963e525e15d1, type: 3}
     ageGroup: 3

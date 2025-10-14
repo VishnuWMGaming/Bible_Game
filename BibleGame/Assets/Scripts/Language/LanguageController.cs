@@ -76,7 +76,10 @@ public class LanguageController : MonoBehaviour
 
         ChangeAllFonts();
 
-        Actions.UpdateText();
+        Actions.UpdateText(() =>
+        {
+
+        });
     }
     private void Start()
     {
