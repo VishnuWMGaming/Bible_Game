@@ -34,7 +34,14 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
    [SerializeField]  private int currentQuestionIndex = 0;
 
     int hintIndex = 0;
-    
+
+    TranslateLang qTrans;
+
+    private void Awake()
+    {
+        qTrans = questionTxt.GetComponent<TranslateLang>();
+    }
+
     /// <summary>
     /// Action implemented one enable
     /// </summary>
@@ -43,7 +50,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         optionPanel.callback = this;
         correctPanel.callback = this;
 
-        _homeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
+        _homeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.StartPageAction(StartPage.game_menu); });
         _submitBtn.onClick.AddListener(() => 
         {
             AudioManager.Instance.PlayButton();
@@ -66,7 +73,6 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         Initialise();
 
         hintIndex = 0;
-
         //SetData(currentQuestionIndex);
     }
 
@@ -278,10 +284,15 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
 
     private void SetData(int questionIndex)
-    {
+    { 
+        DebugUtils.DevDebug.Log($"Initialise question : {questions[questionIndex]?.title} :: {questionIndex}",DebugColor.Turquoise);
+
+        questionTxt.text = "";
         questionTxt.text = questions[questionIndex]?.title;
 
-        questionTxt.GetComponent<TranslateLang>().UpdateText(() =>
+        qTrans.UpdateValue(questions[questionIndex]?.title);
+
+        qTrans.UpdateText(() =>
         {
             textSpeech.Initialise(questionTxt.text, true);
         });

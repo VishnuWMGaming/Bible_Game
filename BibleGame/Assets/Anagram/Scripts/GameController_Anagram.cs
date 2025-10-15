@@ -71,6 +71,9 @@ public class GameController_Anagram : MonoBehaviour,IBox
     [SerializeField] ScreenOrient screenOrient;
     public ScreenOrient ScreenOrient => screenOrient;
 
+    [Header("TextSpeech")]
+    [SerializeField] TextSpeech speech;
+
     private void OnEnable()
     {
         layoutGroup = lettersParent.GetComponent<HorizontalLayoutGroup>();
@@ -154,6 +157,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
     void GameInitilise(GetQuestionsAnagramData question)
     {
+
         string word = question.hint;
         string[] letterVals = word.Select(c => c.ToString()).ToArray();
 
@@ -162,6 +166,8 @@ public class GameController_Anagram : MonoBehaviour,IBox
         //{
 
         //});
+
+        speech.Initialise(question.title, true);
 
         _anagramLetters.Clear();
 

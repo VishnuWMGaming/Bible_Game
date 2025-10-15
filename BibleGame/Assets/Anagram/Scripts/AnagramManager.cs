@@ -35,15 +35,16 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
         homeBtn.onClick.AddListener(() => 
         {
             AudioManager.Instance.PlayButton();
-            Actions.ChangePanelActions(CanvasType.home);
+            Actions.StartPageAction(StartPage.game_menu);
         });
+
         rewardBtn.onClick.AddListener(() => 
         {
             AudioManager.Instance.PlayButton();
             Actions.ChangePanelActions(CanvasType.reward); 
         });
 
-       submitBtn.onClick.AddListener(() => { SubmitAction(); AudioManager.Instance.PlayButton(); });
+        submitBtn.onClick.AddListener(() => { SubmitAction(); AudioManager.Instance.PlayButton(); });
 
         submitBtn.interactable = false;
         submitBtn.onClick.AddListener(() => { NextAction(); AudioManager.Instance.PlayButton(); });

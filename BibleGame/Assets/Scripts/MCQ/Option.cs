@@ -80,13 +80,15 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 
     public void SetChoice(string option ,int index)
     {
-        optionText.text = option;
-        _index = index;
-
-        translateLang.UpdateText(() =>
+        LanguageController.Instance.Translate(option, (translation) =>
         {
-            speech.Initialise(optionText.text);
+            optionText.text = translation;
+            _index = index;
+
+            speech.Initialise(translation);
         });
+
+      
     }
 
     #region EVENT_FUNCTIONS
@@ -110,7 +112,6 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 
     }
     #endregion
-
 
     public void SetOption(OptionType optionType)
     {

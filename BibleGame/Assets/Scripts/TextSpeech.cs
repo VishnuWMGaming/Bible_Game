@@ -95,15 +95,15 @@ public class TextSpeech : MonoBehaviour
 
                 string filteredVal = versesList[i];
 
-                if (AppData.mLanguage != Language.Chinese ||
-                    AppData.mLanguage != Language.Korean ||
-                    AppData.mLanguage != Language.Hindi)
-                {
-                    filteredVal = Regex.Replace(versesList[i], @"[^a-zA-Z\s]", "");
+                //if (AppData.mLanguage != Language.Chinese ||
+                //    AppData.mLanguage != Language.Korean ||
+                //    AppData.mLanguage != Language.Hindi)
+                //{
+                //    filteredVal = Regex.Replace(versesList[i], @"[^a-zA-Z\s]", "");
 
-                    filteredVal = Regex.Replace(filteredVal, @"\s+", " ");
-                    filteredVal = filteredVal.Trim();
-                }
+                //    filteredVal = Regex.Replace(filteredVal, @"\s+", " ");
+                //    filteredVal = filteredVal.Trim();
+                //}
 
                 _textToSpeech.Speak(filteredVal, langCode, float.Parse("0.8", CultureInfo.InvariantCulture));
                 await Spoke(FinishEvent);
@@ -116,18 +116,21 @@ public class TextSpeech : MonoBehaviour
             return;
         }
 
-        string filtered = Regex.Replace(mtext, @"[^a-zA-Z\s]", "");
+        //string filtered = Regex.Replace(mtext, @"[^a-zA-Z\s]", "");
 
-        filtered = Regex.Replace(filtered, @"\s+", " ");
-        filtered = filtered.Trim();
+        //filtered = Regex.Replace(filtered, @"\s+", " ");
+        //filtered = filtered.Trim();
 
+         animator.enabled = true;
+        animator.speed = 1.0f;
 
-        _textToSpeech.Speak(filtered, langCode , float.Parse("0.8", CultureInfo.InvariantCulture));
+         isPlaying = true;
+
+        _textToSpeech.Speak(mtext, langCode , float.Parse("0.8", CultureInfo.InvariantCulture));
         await Spoke(FinishEvent);
 
         if(mButton )
-        mButton.image.sprite = mInitialSprite;
-        isPlaying = false;
+          mButton.image.sprite = mInitialSprite;
 #endif
 
     }

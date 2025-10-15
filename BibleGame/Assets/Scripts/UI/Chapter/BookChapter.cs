@@ -126,7 +126,12 @@ public class BookChapter : MonoBehaviour
 
             mScorll.verticalNormalizedPosition = 1.0f;
 
-            header.text =  $"Chapter {res.ResponseData.data.number}";
+            header.text = $"Chapter {res.ResponseData.data.number}";
+
+            header.GetComponent<TranslateLang>().UpdateText(() =>
+            {
+
+            });
 
             Debug.Log($"<color=green> Chapter {res.ResponseData.data.id} is loaded.</color>");
 
@@ -139,10 +144,10 @@ public class BookChapter : MonoBehaviour
             Debug.Log($"Cleaned Content :{content}");
 
 
-            pagePanel.GetComponent<TranslateLang>().UpdateText(() =>
-            {
+            //pagePanel.GetComponent<TranslateLang>().UpdateText(() =>
+            //{
 
-            });
+            //});
 
             LanguageController.Instance.Translate(content, translation =>
             {

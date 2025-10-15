@@ -25,12 +25,12 @@ public class TranslateLang : MonoBehaviour
         translatedText = GetComponent<TMP_Text>();
         textValue = translatedText.text;
 
-
         UpdateText(() =>
         {
 
         });
     }
+
 
     private void OnEnable()
     {
@@ -56,6 +56,11 @@ public class TranslateLang : MonoBehaviour
         Actions.UpdateText -= UpdateText;
     }
 
+    public void UpdateValue(string value)
+    {
+        textValue = value;
+    }
+
     public void UpdateText(Action finish)
     {
         if (String.IsNullOrEmpty(ApiBase.AuthKeyPair.Value))
@@ -63,6 +68,7 @@ public class TranslateLang : MonoBehaviour
             finish?.Invoke();
             return;
         }
+
         string currentValue = translatedText.text;
 
         if (string.IsNullOrEmpty(currentValue))
