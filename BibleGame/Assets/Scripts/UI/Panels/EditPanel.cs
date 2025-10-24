@@ -10,6 +10,7 @@ using BibleGame.API;
 using BibleGame;
 using BibleGame.Data;
 using UnityEngine.Events;
+using BibleGame.Utility;
 
 public class EditPanel : MonoBehaviour
 {
@@ -18,8 +19,13 @@ public class EditPanel : MonoBehaviour
     [SerializeField] TMP_InputField email_InputField;
     [SerializeField] TMP_InputField church_InputField;
 
+    [Space]
     [SerializeField] Button saveBtn;
     [SerializeField] Button backbtn;
+    [SerializeField] Button saveProfile;
+
+    [Space]
+    [SerializeField] PostImage pic;
 
     string _name;
 
@@ -42,13 +48,62 @@ public class EditPanel : MonoBehaviour
         backbtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.setPanel); });
         backbtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); CloseAction?.Invoke(); });
         backbtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); gameObject.SetActive(false); });
+
+        saveProfile?.onClick.AddListener(SavePic);
+
+        if(AppData.loginData.Pic != null) 
+         pic.SetRightSize(AppData.loginData.Pic);
     }
 
     private void OnDisable()
     {
         saveBtn.onClick.RemoveAllListeners();
+        saveProfile?.onClick.RemoveAllListeners();
     }
 
+
+    void SavePic()
+    {
+        NativeGallery.GetImageFromGallery((path) =>
+        {
+
+            if (path != null)
+            {
+                // Load image data from file
+                byte[] imageData = System.IO.File.ReadAllBytes(path);
+                // Optional: Get file name
+                string fileName = System.IO.Path.GetFileName(path);
+
+                Sprite sprite =  Utils.LoadSpriteFromBytes(imageData);
+                pic.SetRightSize(sprite, true);
+
+                AppData.loginData.UpdateSprite(sprite);
+
+                WWWForm currentForm = new WWWForm();
+
+                string extension = System.IO.Path.GetExtension(fileName).ToLower();
+                string mimeType =Utils.GetImageMimeType(extension);
+
+                currentForm.AddBinaryData("image", imageData, fileName, mimeType);
+
+                PopUp.Instance.EnableLoad(true);
+                ProfileAPI.EditPic((success) =>
+                {
+                    PopUp.Instance.EnableLoad(false);
+                    if (!success)
+                    {
+                        PopUp.Instance.ShowMessage("Error in Updating the profile");
+                        return;
+                    };
+
+                    PopUp.Instance.ShowMessage("Profile pic updated successfully");
+
+                }, currentForm);
+               
+            }
+
+        }, "Select an image", "image/*");
+    }
 
     private void SaveChecKAction(string data)
     {
@@ -66,7 +121,7 @@ public class EditPanel : MonoBehaviour
         Debug.Log("Name :" + name.name);
 
         PopUp.Instance.EnableLoad(true);
-        UpdateProfileNameAPI.UpdateName(name, APICallback);
+        ProfileAPI.UpdateName(name, APICallback);
     }
 
     void APICallback(bool success)

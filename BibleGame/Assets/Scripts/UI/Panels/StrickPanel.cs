@@ -19,6 +19,9 @@ public class StrickPanel : MonoBehaviour
 
     [SerializeField] TMP_Text userName;
 
+    [Space]
+    [SerializeField] PostImage iPic;
+
 
     private void OnEnable()
     {
@@ -28,10 +31,14 @@ public class StrickPanel : MonoBehaviour
         streak1Btn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); GetStreak(0); });
         streak2Btn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); GetStreak(1); });
 
-        streak1Btn.gameObject.SetActive(StreakAPI.streakDatas.Count >=1 );
-        streak2Btn.gameObject.SetActive(StreakAPI.streakDatas.Count >=2);
+        streak1Btn.gameObject.SetActive(StreakAPI.streakDatas.Count >= 1);
+        streak2Btn.gameObject.SetActive(StreakAPI.streakDatas.Count >= 2);
 
         userName.text = AppData.loginData.Name;
+
+        if(AppData.loginData.Pic != null)
+        iPic.SetRightSize(AppData.loginData.Pic, true);
+
     }
 
     private void OnDisable()

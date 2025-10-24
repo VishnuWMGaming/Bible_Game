@@ -1,13 +1,14 @@
+using BibleGame;
+using BibleGame.API;
+using BibleGame.Data;
+using BibleGame.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
-using UnityEngine.UI;
+using System.Threading.Tasks;
 using TMPro;
-using BibleGame;
-using BibleGame.Data;
-using BibleGame.API;
+using UnityEngine;
+using UnityEngine.UI;
 public class HomePanel : MonoBehaviour
 {
     [Header("UI Settings:")]
@@ -17,6 +18,12 @@ public class HomePanel : MonoBehaviour
     [SerializeField] Button settingBtn;
     [SerializeField] Button playBtn;
     [SerializeField] Button leaderBoardBtn;
+
+    [Space]
+    [SerializeField] PostImage iPic;
+
+    [Header("ImageDownloader")]
+    [SerializeField] ImageDownloader imageDownloader;
 
     /// <summary>
     /// Action implemented on enable
@@ -40,7 +47,7 @@ public class HomePanel : MonoBehaviour
     void Initialise()
     {
         PopUp.Instance.EnableLoad(true);
-        GetProfileAPI.GetProfile((success,res) =>
+        GetProfileAPI.GetProfile(async (success,res) =>
         {
             PopUp.Instance.EnableLoad(false);
 
@@ -54,7 +61,14 @@ public class HomePanel : MonoBehaviour
             userName.text = res.ResponseData.name;
             churchName.text = $"Church: {res.ResponseData.church}";
 
-            AppData.loginData = new LoginData(AppData.loginData.Email, AppData.loginData.Password, AppData.loginData.Name, res.ResponseData.church);
+            PopUp.Instance.EnableLoad(true);
+            Sprite pic = res.ResponseData.profile_pic == "0" ? null : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData.profile_pic}");
+
+            if(pic != null)
+            iPic.SetRightSize(pic, true);
+
+            PopUp.Instance.EnableLoad(false);
+            AppData.loginData = new LoginData(AppData.loginData.Email, AppData.loginData.Password, AppData.loginData.Name, res.ResponseData.church,pic);
         });
 
         PopUp.Instance.EnableLoad(true);
@@ -93,5 +107,28 @@ public class HomePanel : MonoBehaviour
         settingBtn?.onClick.RemoveAllListeners();
         playBtn?.onClick.RemoveAllListeners();
         leaderBoardBtn.onClick.RemoveAllListeners();
+    }
+
+
+    public async Task<Sprite> DownloadSpriteAsync(string url)
+    {
+        var tcs = new TaskCompletionSource<Sprite>();
+
+        Debug.Log($"<color=cyan>Image URL: {url}</color>");
+
+        imageDownloader.DownloadImage(url, (tex) =>
+        {
+            if (tex != null)
+            {
+                Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
+                tcs.SetResult(sprite);
+            }
+            else
+            {
+                tcs.SetResult(null);
+            }
+        });
+
+        return await tcs.Task;
     }
 }

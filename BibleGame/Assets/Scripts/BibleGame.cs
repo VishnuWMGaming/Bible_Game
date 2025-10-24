@@ -15,14 +15,17 @@ namespace BibleGame
     public class ServiceURL
     {
         public const string baseURL = "http://52.22.241.165:10032/api/user/";
+        public const string imageURL = "http://52.22.241.165:10032/";
         public const string signupURL = "register";
         public const string login = "login";
         public const string verify = "verify_otp";
         public const string profileName = "update_profile";
+        public const string updateProfilePic = "update_profile_pic";
         public const string forgetPassword = "forget_password";
         public const string updatePassword = "update_new_password";
         public const string resendOtp = "resend_otp";
         public const string getProfile = "get_profile";
+        public const string setProfilePic = "update_profile_pic";
         public const string getChapters = "get-book-chapters";
         public const string getChapterDetail = "get-chapters-details";
         public const string getQuestions = "get-questions";
@@ -78,19 +81,26 @@ namespace BibleGame
             string password;
             string name;
             string churchName;
+            Sprite pic;
 
             public string Email => email;
             public string Password => password; 
             public string Name => name;
-
             public string Church => churchName;
+            public Sprite Pic => pic;
 
-            public  LoginData (string email, string password, string name,string church)
+            public  LoginData (string email, string password, string name,string church,Sprite pic = null)
             {
                 this.email = email;
                 this.password = password;
                 this.name = name;
                 this.churchName = church;
+                this.pic = pic;
+            }
+
+            public void UpdateSprite(Sprite pic)
+            {
+                this.pic = pic;
             }
         }
 
@@ -159,6 +169,34 @@ namespace BibleGame
                 html = html.Replace("¶", "");
 
                 return html;
+            }
+
+            public static string GetImageMimeType(string extension)
+            {
+                switch (extension)
+                {
+                    case ".jpg":
+                    case ".jpeg":
+                        return "image/jpeg";
+                    case ".png":
+                        return "image/png";
+                    default:
+                        return "UnknownImage; // fallback for unknown types";
+                }
+            }
+
+            public static Sprite LoadSpriteFromBytes(byte[] imageData)
+            {
+                Texture2D texture = new Texture2D(2, 2); // Dummy size; will be replaced by actual data
+                if (texture.LoadImage(imageData))
+                {
+                    return Sprite.Create(
+                        texture,
+                        new Rect(0, 0, texture.width, texture.height),
+                        new Vector2(0.5f, 0.5f)
+                    );
+                }
+                return null;
             }
         }
     }

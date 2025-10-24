@@ -13,19 +13,18 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
     public List<LeaderboardData> leaderboardDataList = new List<LeaderboardData>();
     void Start()
     {
-#if TESTING
-        for (int i = 0; i < 100; i++)
-        {
-            if (i == 30)
-            {
-                leaderboardDataList.Add(new LeaderboardData($"Vivek", i + 1));
-            }
-            else
-            {
-                leaderboardDataList.Add(new LeaderboardData($"Player{i + 1}", i + 1));
-            }
-        }
-#endif
+        //for (int i = 0; i < 100; i++)
+        //{
+        //    if (i == 30)
+        //    {
+        //        leaderboardDataList.Add(new LeaderboardData($"Vivek", i + 1));
+        //    }
+        //    else
+        //    {
+        //        leaderboardDataList.Add(new LeaderboardData($"Player{i + 1}", i + 1));
+        //    }
+        //}
+
         Invoke("Initialize", 0.3f);
     }
     private void Initialize()
@@ -59,6 +58,9 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
 
     public void SetCell(ICell cell, int index)
     {
+        
+
+
         LeaderboardItem leaderboardItem = cell as LeaderboardItem;
         string name = leaderboardDataList[index].name;
         int rank = leaderboardDataList[index].rank;
