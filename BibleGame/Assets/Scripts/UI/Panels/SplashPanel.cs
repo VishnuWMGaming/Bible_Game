@@ -66,7 +66,7 @@ public class SplashPanel : MonoBehaviour
     {
         if (success)
         {
-            AppData.loginData = new LoginData(response.ResponseData.email, "**********", response.ResponseData.name);
+            AppData.loginData = new LoginData(response.ResponseData.email, "**********", response.ResponseData.name,response.ResponseData.church);
           //  GetChapters();
         }
     }

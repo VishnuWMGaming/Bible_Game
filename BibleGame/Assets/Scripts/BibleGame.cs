@@ -68,6 +68,8 @@ namespace BibleGame
 
             public static List<BookData> bookDatas;
             public static Language mLanguage;
+
+            public static MScreenOriatation orientation; 
         }
 
         public  class LoginData
@@ -75,16 +77,20 @@ namespace BibleGame
             string email;
             string password;
             string name;
+            string churchName;
 
             public string Email => email;
             public string Password => password; 
-            public string Name => name; 
+            public string Name => name;
 
-            public  LoginData (string email, string password, string name)
+            public string Church => churchName;
+
+            public  LoginData (string email, string password, string name,string church)
             {
                 this.email = email;
                 this.password = password;
                 this.name = name;
+                this.churchName = church;
             }
         }
 

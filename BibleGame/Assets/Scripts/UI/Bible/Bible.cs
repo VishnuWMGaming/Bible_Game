@@ -17,6 +17,8 @@ public class Bible : MonoBehaviour
 
     [SerializeField] TMP_Text mName;
 
+    [SerializeField] TranslateLang translateLang;
+
     string id;
     public string mID => id;
 
@@ -35,6 +37,10 @@ public class Bible : MonoBehaviour
     {
         id = _id;
         mName.text = name;
+
+        translateLang.UpdateValue(name);
+        translateLang.UpdateText(() => { });
+
         callback = callbackIN;
     }
 }

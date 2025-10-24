@@ -12,6 +12,8 @@ public class HomePanel : MonoBehaviour
 {
     [Header("UI Settings:")]
     [SerializeField] TMP_Text userName;
+    [SerializeField] TMP_Text churchName;
+
     [SerializeField] Button settingBtn;
     [SerializeField] Button playBtn;
     [SerializeField] Button leaderBoardBtn;
@@ -25,8 +27,6 @@ public class HomePanel : MonoBehaviour
 
         playBtn.interactable = false;
 
-        userName.text = AppData.loginData.Name;
-
         //  Leaderboard button listener
         leaderBoardBtn?.onClick.AddListener(() =>
         {
@@ -39,6 +39,23 @@ public class HomePanel : MonoBehaviour
 
     void Initialise()
     {
+        PopUp.Instance.EnableLoad(true);
+        GetProfileAPI.GetProfile((success,res) =>
+        {
+            PopUp.Instance.EnableLoad(false);
+
+            if (!success)
+            {
+                Debug.LogError("Unable to fetch the profile");
+                PopUp.Instance.ShowMessage("Unable to fetch the profile ");
+                return;
+            }
+
+            userName.text = res.ResponseData.name;
+            churchName.text = $"Church: {res.ResponseData.church}";
+
+            AppData.loginData = new LoginData(AppData.loginData.Email, AppData.loginData.Password, AppData.loginData.Name, res.ResponseData.church);
+        });
 
         PopUp.Instance.EnableLoad(true);
 

@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
+public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
 {
     [SerializeField] private Button homeBtn;
     [SerializeField] private Button hintBtn;
@@ -28,34 +28,34 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
 
     private void OnEnable()
     {
-       // Screen.orientation = ScreenOrientation.LandscapeLeft;
+        // Screen.orientation = ScreenOrientation.LandscapeLeft;
 
         hintBtn.onClick.AddListener(UseHint);
         hintPanel.SetActive(false);
-        homeBtn.onClick.AddListener(() => 
+        homeBtn.onClick.AddListener(() =>
         {
             AudioManager.Instance.PlayButton();
             Actions.StartPageAction(StartPage.game_menu);
         });
 
-        rewardBtn.onClick.AddListener(() => 
+        rewardBtn.onClick.AddListener(() =>
         {
             AudioManager.Instance.PlayButton();
-            Actions.ChangePanelActions(CanvasType.reward); 
+            Actions.ChangePanelActions(CanvasType.reward);
         });
 
         submitBtn.onClick.AddListener(() => { SubmitAction(); AudioManager.Instance.PlayButton(); });
 
         submitBtn.interactable = false;
         submitBtn.onClick.AddListener(() => { NextAction(); AudioManager.Instance.PlayButton(); });
-        
-        hintBtn.onClick.AddListener(()=> 
+
+        hintBtn.onClick.AddListener(() =>
         {
             ShowHint();
             AudioManager.Instance.PlayButton();
         });
 
-        hintSubmitBtn.onClick.AddListener(()=>
+        hintSubmitBtn.onClick.AddListener(() =>
         {
             UseHint();
             AudioManager.Instance.PlayButton();
@@ -72,21 +72,25 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
 
         UpdateCoins(UserData.coins);
 
-       // hintBtn.gameObject.SetActive(false);
+        // hintBtn.gameObject.SetActive(false);
+
+        AppData.orientation = MScreenOriatation.landscape;
     }
 
     private void OnDisable()
     {
-       // Screen.orientation = ScreenOrientation.Portrait;
+        // Screen.orientation = ScreenOrientation.Portrait;
 
         homeBtn.onClick.RemoveAllListeners();
         hintBtn.onClick.RemoveAllListeners();
         submitBtn.onClick.RemoveAllListeners();
+
+        AppData.orientation = MScreenOriatation.portrait;
     }
 
     void Intialise()
     {
-       
+
     }
 
 
@@ -106,7 +110,7 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
     }
     private void ShowHint()
     {
-       
+
     }
 
     private void UseHint()
@@ -169,17 +173,17 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
 
     public void UpdateCoins(int coins)
     {
-        coinsText.text = coins.ToString(); 
+        coinsText.text = coins.ToString();
     }
-   
+
     public void RestartAction()
     {
-        
+
     }
 
     public void NextAction()
     {
-       // Actions.ChangePanelActions(CanvasType.home);
+        // Actions.ChangePanelActions(CanvasType.home);
     }
 
     public void ActivateSubmitBtn(bool enable)
@@ -202,7 +206,7 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
         };
 
         PopUp.Instance.EnableLoad(true);
-        
+
         GetQuestionsAPI.SubmitAnswer((success, res) =>
         {
             PopUp.Instance.EnableLoad(false);
@@ -218,3 +222,5 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel,IAnagramControl
         }, requestData);
     }
 }
+
+public enum MScreenOriatation { portrait, landscape }

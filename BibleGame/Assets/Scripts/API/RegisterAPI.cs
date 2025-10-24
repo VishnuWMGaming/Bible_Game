@@ -62,12 +62,14 @@ namespace BibleGame
             public string name;
             public string email;
             public string password;
+            public string church;
 
-            public RegisterData(string fullname, string email, string password)
+            public RegisterData(string fullname, string email, string password, string mChurch)
             {
                 this.name = fullname;
                 this.email = email;
                 this.password = password;
+                this.church = mChurch;
             }
         }
         #endregion

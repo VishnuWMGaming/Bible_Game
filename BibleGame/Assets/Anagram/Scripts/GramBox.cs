@@ -63,6 +63,12 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     [Header("Translate")]
     [SerializeField] TranslateLang translateLang;
 
+    private void Awake()
+    {
+       // boxTransform = GetComponent<RectTransform>();
+        canvas = FindObjectOfType<Canvas>();
+    }
+
     public void Enable(bool enable) 
     { 
         isEnable = enable; 
@@ -85,10 +91,10 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     private void OnEnable()
     {
-        boxTransform = GetComponent<RectTransform>();
-        canvas = FindObjectOfType<Canvas>();
-        boxTransform.anchorMax = new Vector2(0.5f, 0.5f);
-        boxTransform.anchorMin = new Vector2(0.5f, 0.5f);
+        //boxTransform = GetComponent<RectTransform>();
+        //canvas = FindObjectOfType<Canvas>();
+       // boxTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        //boxTransform.anchorMin = new Vector2(0.5f, 0.5f);
 
         startPosition = boxTransform.anchoredPosition;
         initialPosition = boxTransform.anchoredPosition;

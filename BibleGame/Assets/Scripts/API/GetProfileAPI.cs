@@ -14,6 +14,9 @@ namespace BibleGame
 
             public delegate void GetProfileCallback(bool success, GetProfileResponse response = null);
 
+
+            public static GetProfileResponse_ profilData;
+
             public static void GetProfile(GetProfileCallback callback)
             {
                 WebRequestGet(GetProfileURL, (url, success, data) => HandleGetProfileCallback(success, data, callback));
@@ -26,12 +29,14 @@ namespace BibleGame
 
                 if (aSuccess)
                 {
+                    profilData = response.ResponseData;
                     callback?.Invoke(response.succeeded, response);
                 }
                 else
                 {
                     
                 }
+
                 PopUp.Instance.EnableLoad(false);
             }
         }
@@ -47,6 +52,7 @@ namespace BibleGame
             public string name;
             public string email;
             public string profile_pic;
+            public string church;
         }
     }
 }

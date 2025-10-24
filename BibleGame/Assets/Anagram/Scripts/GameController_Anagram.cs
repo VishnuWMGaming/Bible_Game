@@ -28,8 +28,6 @@ public class GameController_Anagram : MonoBehaviour,IBox
     [SerializeField] private RectTransform lettersParent;
     HorizontalLayoutGroup layoutGroup;
 
-    [SerializeField] private GramBox letter;
-    
     [Header("Boxes:")]
     [SerializeField] List<GramBox> gramBoxes = new List<GramBox>();
 

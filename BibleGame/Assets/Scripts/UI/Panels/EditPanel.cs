@@ -16,6 +16,8 @@ public class EditPanel : MonoBehaviour
     [Header("UI Settings:")]
     [SerializeField] TMP_InputField name_InputField;
     [SerializeField] TMP_InputField email_InputField;
+    [SerializeField] TMP_InputField church_InputField;
+
     [SerializeField] Button saveBtn;
     [SerializeField] Button backbtn;
 
@@ -30,6 +32,7 @@ public class EditPanel : MonoBehaviour
 
         email_InputField.text = AppData.loginData.Email;
         name_InputField.text = AppData.loginData.Name;
+        church_InputField.text = AppData.loginData.Church;
 
         name_InputField.onValueChanged.AddListener(SaveChecKAction);
 
@@ -75,7 +78,7 @@ public class EditPanel : MonoBehaviour
             Debug.LogWarning("Updated the name");
             PopUp.Instance.ShowMessage("Profile details updated successfully");
 
-            AppData.loginData = new LoginData( AppData.loginData.Email,AppData.loginData.Password,_name);
+            AppData.loginData = new LoginData( AppData.loginData.Email,AppData.loginData.Password,_name,AppData.loginData.Church);
         }
         else
             Debug.LogError("Someting went wrong");

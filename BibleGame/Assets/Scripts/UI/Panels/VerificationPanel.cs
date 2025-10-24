@@ -101,7 +101,7 @@ public class VerificationPanel : MonoBehaviour
         {
             Debug.LogWarning("otp verified !!!");
 
-            AppData.loginData = new LoginData(AppData.loginData.Email, AppData.loginData.Password, response.ResponseData.name);
+            AppData.loginData = new LoginData(AppData.loginData.Email, AppData.loginData.Password, response.ResponseData.name,"");
 
             switch (AppData.otpData.OTPType)
             {
@@ -127,7 +127,7 @@ public class VerificationPanel : MonoBehaviour
     {
         if (success)
         {
-            AppData.loginData = new LoginData(response.ResponseData.email, "**********", response.ResponseData.name);
+            AppData.loginData = new LoginData(response.ResponseData.email, "**********", response.ResponseData.name, response.ResponseData.church);
            // GetChapters();
         }
         else

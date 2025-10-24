@@ -136,7 +136,7 @@ public class LoginPanel : MonoBehaviour
 
         if (success)
         {
-            AppData.loginData = new LoginData(email_Inputfield.text, password_Inputfield.Text, response.ResponseData.name);
+            AppData.loginData = new LoginData(email_Inputfield.text, password_Inputfield.Text, response.ResponseData.name,"");
 
             if (!response.ResponseData.verified)
             {
@@ -165,7 +165,7 @@ public class LoginPanel : MonoBehaviour
     {
         if (success)
         {
-            AppData.loginData = new LoginData(response.ResponseData.email, "**********", response.ResponseData.name);
+            AppData.loginData = new LoginData(response.ResponseData.email, "**********", response.ResponseData.name, response.ResponseData.church);
             // GetChapters();
 
             Actions.ChangePanelActions(CanvasType.home);
