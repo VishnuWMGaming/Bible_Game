@@ -36,8 +36,10 @@ namespace BibleGame
         public const string createStreak = "create-streak";
         public const string getStreak = "get-streaks";
         public const string getStreakDetail = "get-streak-details";
-         public const string getTrans = "translate";
-        
+        public const string getTrans = "translate";
+        public const string getLeaderBoard = "get-leaderboard";
+
+
     }
 
     namespace UI
