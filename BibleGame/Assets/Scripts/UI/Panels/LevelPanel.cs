@@ -27,15 +27,6 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 
     private void OnEnable()
     {
-        //for (int i = 0; i < level_Buttons.Count; i++)
-        //    level_Buttons[i].callback = this;
-        //Debug.Log("GameData.GetChapters().Count: " + GameData.GetChapters().Count);
-        //for (int i = 0; i < GameData.GetChapters().Count; i++)
-        //{
-        //    level_Buttons[i].ChapterID = GameData.GetChapters()[i].chapterID;
-        //    level_Buttons[i].Level = GameData.GetChapters()[i].chapterIndex;
-        //}
-
         scoreText.text = UserData.coins.ToString();
 
         Initialise();

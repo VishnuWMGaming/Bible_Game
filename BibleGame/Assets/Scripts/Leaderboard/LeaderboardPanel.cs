@@ -46,35 +46,40 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
         PopUp.Instance.EnableLoad(true);
         LeaderBoardAPI.GetData(async (success, res) =>
         {
-            PopUp.Instance.EnableLoad(false);
+           
 
             if (!success)
             {
+                PopUp.Instance.EnableLoad(false);
                 PopUp.Instance.ShowMessage("Error in fetching in leaderboard");
                 return;
             }
 
             if (res.ResponseData.Count <= 0)
             {
+                PopUp.Instance.EnableLoad(false);
                 PopUp.Instance.ShowMessage("No users found in the ranks");
                 return;
             }
 
-            Sprite firstsprite = res.ResponseData[0].profile_pic == "0" ? null : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData[0]}");
+            Sprite firstsprite = res.ResponseData[0].profile_pic == "0" ? null : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData[0].profile_pic}");
             firstLeader.Init(res.ResponseData[0].user_name, res.ResponseData[0].score, firstsprite);
 
-            Sprite secondsprite = res.ResponseData[1].profile_pic == "0" ? null : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData[1]}");
+            Sprite secondsprite = res.ResponseData[1].profile_pic == "0" ? null : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData[1].profile_pic}");
             secondLeader.Init(res.ResponseData[1].user_name, res.ResponseData[1].score, secondsprite);
 
-            Sprite thirdsprite = res.ResponseData[2].profile_pic == "0" ? null : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData[2]}");
+            Sprite thirdsprite = res.ResponseData[2].profile_pic == "0" ? null : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData[2].profile_pic}");
             thirdLeader.Init(res.ResponseData[2].user_name, res.ResponseData[2].score, thirdsprite);
 
             for (int i = 3; i < res.ResponseData.Count; i++)
             {
-                LeaderboardData data = new LeaderboardData(res.ResponseData[i].user_name, res.ResponseData[i].rank, res.ResponseData[i].profile_pic);
+                Sprite sprite = res.ResponseData[i].profile_pic == "0" ? null : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData[i].profile_pic}");
+
+                LeaderboardData data = new LeaderboardData(res.ResponseData[i].user_name, res.ResponseData[i].rank, sprite);
                 leaderboardDataList.Add(data);
             }
 
+            PopUp.Instance.EnableLoad(false);
             Invoke("Initialize", 0.3f);
         });
     }
@@ -113,27 +118,7 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
         string name = leaderboardDataList[index].name;
         int rank = leaderboardDataList[index].rank;
 
-        Sprite sprite = null;
-
-        if(leaderboardDataList[index].pic != "0")
-        {
-            _ = DownloadSpriteAsync($"{ServiceURL.imageURL}{leaderboardDataList[index].pic}").ContinueWith(task =>
-            {
-                if (task.Result != null)
-                {
-                    unitySyncContext.Post(_ =>
-                    {
-                        sprite = task.Result;
-                        leaderboardItem.Initialize(name, rank, sprite);
-
-                    }, null);
-                }
-            });
-        }
-        else
-        {
-            leaderboardItem.Initialize(name, rank, sprite);
-        }
+        leaderboardItem.Initialize(name, rank, leaderboardDataList[index].pic);
     }
     
     public void PageChanged(int index)
@@ -170,9 +155,9 @@ public class LeaderboardData
 {
     public string name;
     public int rank;
-    public string pic;
+    public Sprite pic;
 
-    public LeaderboardData(string name, int rank,string pic)
+    public LeaderboardData(string name, int rank,Sprite pic)
     {
         this.name = name;
         this.rank = rank;

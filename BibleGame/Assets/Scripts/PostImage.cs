@@ -12,6 +12,13 @@ public class PostImage : MonoBehaviour
 
     public Sprite sprite => image.sprite;
 
+    Sprite initialSprite;
+
+    private void Awake()
+    {
+        initialSprite = GetComponent<Image>().sprite;
+    }
+
     private void OnEnable()
     {
         image = GetComponent<Image>();
@@ -32,5 +39,11 @@ public class PostImage : MonoBehaviour
 
         float aspectRatio = sprite.rect.width / sprite.rect.height;
         aspect.aspectRatio = aspectRatio;
+    }
+
+
+    public void Reset()
+    {
+        image.sprite = initialSprite;
     }
 }

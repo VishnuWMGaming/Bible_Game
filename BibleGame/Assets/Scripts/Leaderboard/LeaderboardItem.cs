@@ -1,3 +1,4 @@
+using DebugUtils;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,13 +11,19 @@ public class LeaderboardItem : MonoBehaviour, ICell
     public PostImage profileImg;
     public TMP_Text nameTxt;
     public TMP_Text rankTxt;
-    public void Initialize(string name, int rank,Sprite sprite)
+    public void Initialize(string name, int rank, Sprite sprite)
     {
         nameTxt.text = name;
         rankTxt.text = rank.ToString();
 
-        if(sprite != null)
-         profileImg.SetRightSize(sprite, true);
+        profileImg.Reset();
+
+        if (sprite != null)
+        {
+           // DevDebug.Log($"Adding the sprite ... {name}", DebugColor.Magenta);
+
+            profileImg.SetRightSize(sprite, true);
+        }
     }
 
     public GameObject GetGameObject()
