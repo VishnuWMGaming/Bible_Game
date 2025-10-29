@@ -156,7 +156,8 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
                     foreach (var level in levelDatas)
                     {
                         //DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
-                        cells[0].Get(level.chapter_id).Finish(true);
+                        if (level.coin_earn >= 20)
+                            cells[0].Get(level.chapter_id).Finish(true);
                     }
 
             }, UserData.bibleId, UserData.bookId);
@@ -207,7 +208,9 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
             foreach (var level in levelDatas)
             {
                 DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
-                cells[activeIndex].Get(level.chapter_id).Finish(true);
+
+                if (level.coin_earn >= 20)
+                   cells[activeIndex].Get(level.chapter_id).Finish(true);
             }
     }
 
@@ -248,6 +251,8 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
             foreach (var level in levelDatas)
             {
                DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
+
+                if(level.coin_earn >=20)
                 cells[activeIndex].Get(level.chapter_id).Finish(true);
             }
     }
