@@ -34,8 +34,10 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
     [SerializeField] GameObject mLevelObj;
 
 
-   [SerializeField] int mFirstIndex = 0;
-   [SerializeField] int mLastIndex = 0;
+    [SerializeField] int mFirstIndex = 0;
+    [SerializeField] int mLastIndex = 0;
+
+    [SerializeField] List<LevelData> levelDatas;
 
 
     private void OnEnable()
@@ -95,7 +97,7 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 
             int coins = 0;
 
-            List<LevelData> levelDatas = res.ResponseData.levels;
+            levelDatas = res.ResponseData.levels;
 
             if(String.IsNullOrEmpty(res.ResponseData.streak.book_id) || String.IsNullOrEmpty(res.ResponseData.streak.bible_id))
             {
@@ -150,12 +152,12 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 
                 scoreText.text = coins.ToString();
 
-               if (levelDatas != null || levelDatas.Count != 0)
-                foreach(var level in levelDatas)
-                {
-                    DevDebug.Log($"Level Update:{level.chapter_id} :: {level.rating}", DebugColor.Turquoise);
-                    //levelBtns.Find(x => x.ID == level.chapter_id).StarUpdate(level.rating);
-                }
+                if (levelDatas != null || levelDatas.Count != 0)
+                    foreach (var level in levelDatas)
+                    {
+                        DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
+                        cells[0].Get(level.chapter_id).Finish(true);
+                    }
 
             }, UserData.bibleId, UserData.bookId);
 
@@ -200,6 +202,13 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 
         mPreviousBtn.interactable = mFirstIndex > 0;
         mNextBtn.interactable = true;
+
+        if (levelDatas != null || levelDatas.Count != 0)
+            foreach (var level in levelDatas)
+            {
+                DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
+                cells[activeIndex].Get(level.chapter_id).Finish(true);
+            }
     }
 
     void NextCell()
@@ -234,6 +243,13 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 
         mPreviousBtn.interactable = true;
         mNextBtn.interactable = mLastIndex +1  < GameData.mChapterDatas.Count;
+
+        if (levelDatas != null || levelDatas.Count != 0)
+            foreach (var level in levelDatas)
+            {
+               DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
+                cells[activeIndex].Get(level.chapter_id).Finish(true);
+            }
     }
 
     #endregion

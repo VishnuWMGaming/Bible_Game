@@ -18,13 +18,20 @@ public class Cell : MonoBehaviour
         isLoaded = true;
 
         for (int i = 0; i < levelObjs.Count; i++)
+        {
             levelObjs[i].gameObject.SetActive(false);
+        }
 
-        for (int i=0;i< chapterdatas.Count;i++)
+        for (int i = 0; i < chapterdatas.Count; i++)
         {
             levelObjs[i].gameObject.SetActive(true);
             levelObjs[i].Intialise(chapterdatas[i].id, callbackIN);
         }
+    }
+
+    public LevelObj Get(string id)
+    {
+        return levelObjs.Find(x => x.ID == id);
     }
 
     public void ClearAll()
