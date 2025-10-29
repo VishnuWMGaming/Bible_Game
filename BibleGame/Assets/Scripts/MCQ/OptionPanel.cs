@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public interface IOptionPanel
 {
+    public void WrongAnswer();
     public void CorrectAnswerAction();
-
     public void EnableSubmit(bool enabled);
 }
 
@@ -67,7 +67,6 @@ public class OptionPanel : MonoBehaviour, IOption
 
             callback.EnableSubmit(false);
 
-            //callback.CorrectAnswerAction();
             Invoke("CorrectAction", 2.0f);
         }
         else
@@ -76,6 +75,7 @@ public class OptionPanel : MonoBehaviour, IOption
             options[_currentIndex].SetDisplay(Option.OptionType.worng);
 
             callback.EnableSubmit(false);
+            callback.WrongAnswer();
 
             StartCoroutine(RestartAction());
         }

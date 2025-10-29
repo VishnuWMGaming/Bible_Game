@@ -223,7 +223,13 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
         string hintData = $"{position} letter is {correctAnswer[hintIndex]}";
 
         hintIndex++;
-        PopUp.Instance.ShowMessage($"Hint:{hintData}");
+
+        string hintMessage = $"Hint:{hintData}";
+
+        LanguageController.Instance.Translate(hintMessage, (translation) =>
+        {
+            PopUp.Instance.ShowMessage(translation);
+        });
     }
 
     public void UpdateScore()

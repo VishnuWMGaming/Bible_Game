@@ -35,6 +35,8 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
     int hintIndex = 0;
 
+    int wrongAnswer;
+
     TranslateLang qTrans;
 
     private void Awake()
@@ -56,6 +58,8 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
             AudioManager.Instance.PlayButton();
             optionPanel.CheckAnswerAction(); 
         });
+
+        wrongAnswer = 0;
 
         rewardBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.reward); });
 
@@ -157,8 +161,6 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
                 {
                     Debug.LogError("Unable to answer string!");
                 }
-
-               
             }
 
             SetData(currentQuestionIndex);
@@ -175,6 +177,91 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     {
         questionPanel.gameObject.SetActive(false);
         correctPanel.gameObject.SetActive(true);
+    }
+
+    public void WrongAnswer()
+    {
+        wrongAnswer++;
+
+        if(wrongAnswer > 1)
+        {
+            ReloadQuestions();
+            return;
+        }
+    }
+
+    void ReloadQuestions()
+    {
+        int ageVal = UserData.currentAge switch
+        {
+            AgeGroup.kindergarden => 1,
+            AgeGroup.elementary => 2,
+            AgeGroup.teenagers => 3,
+            AgeGroup.adult => 4,
+            _ => 1
+        };
+
+        GetQuestionsRequestData requestData = new GetQuestionsRequestData()
+        {
+            game_id = UserData.gameid,
+            ageGroup = ageVal.ToString(),
+            language = "en",
+            game_type = "objective",
+            bible_id = UserData.bibleId,
+            chapter_id = UserData.chapterId,
+            book_id = UserData.bookId,
+        };
+
+        questions.Clear();
+
+        PopUp.Instance.EnableLoad(true);
+
+       // currentQuestionIndex = 0;
+
+        GetQuestionsAPI.GetQuestionsObjective((success, res) =>
+        {
+            PopUp.Instance.EnableLoad(false);
+
+            if (!success)
+            {
+                Debug.LogError("Error in Get question objective");
+                Actions.StartPageAction(StartPage.game_menu);
+                return;
+            }
+
+            GameData.levelID = res.ResponseData.levelData._id;
+
+            foreach (var data in res.ResponseData.resArr)
+            {
+                List<Answer> answers = new List<Answer>();
+
+                answers.Add(new Answer(data.opt1, false));
+                answers.Add(new Answer(data.opt2, false));
+                answers.Add(new Answer(data.opt3, false));
+                answers.Add(new Answer(data.opt4, false));
+
+                string answer = data.hint.Replace("Correct answer: ", "");
+
+                int ansindex = -1;
+
+                if (int.TryParse(answer, out ansindex))
+                {
+                    Debug.Log("Answer at: " + ansindex);
+
+                    answers[ansindex - 1].SetStatus(true);
+
+                    Question question = new Question(data._id, data.title, answers);
+                    questions.Add(question);
+                }
+                else
+                {
+                    Debug.LogError("Unable to answer string!");
+                }
+            }
+
+            SetData(currentQuestionIndex);
+
+        }, requestData);
     }
 
     public void RestartAction()
@@ -286,38 +373,6 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
             return;
         });
-
-
-
-        //if (currentQuestionIndex > questions.Count)
-        //    return;
-
-        //int index = currentQuestionIndex - 1;
-
-        //if (index < 0)
-        //    index = 0;
-
-        //int coins = UserData.coins;
-        //coins -= 7;
-
-        //if (coins < 0)
-        //{
-        //    coins = 0;
-        //    UserData.coins = coins;
-
-        //    PopUp.Instance.ShowMessage($"Not enough coins !!");
-        //    return;
-        //}
-
-        //UserData.coins = coins;
-
-        //scoreText.text = UserData.coins.ToString();
-
-        //++hintIndex;
-
-        //string correctAnswer = questions[index].answers.Find(x => x.option_status).title;
-
-        //PopUp.Instance.ShowMessage($"Hint : {correctAnswer}");
     }
 
     private void HintAction()
@@ -332,7 +387,12 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
         string correctAnswer = questions[index].answers.Find(x => x.option_status).title;
 
-        PopUp.Instance.ShowMessage($"Hint : {correctAnswer}");
+        string mhintAnswer = $"Hint : {correctAnswer}";
+
+        LanguageController.Instance.Translate(mhintAnswer, (translation) =>
+        {
+            PopUp.Instance.ShowMessage(translation);
+        });
     }
 
     private void CloseHint()
@@ -344,7 +404,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     private void SetData(int questionIndex)
     { 
         DebugUtils.DevDebug.Log($"Initialise question : {questions[questionIndex]?.title} :: {questionIndex}",DebugColor.Turquoise);
-
+        wrongAnswer = 0;
         questionTxt.text = "";
         questionTxt.text = questions[questionIndex]?.title;
 
