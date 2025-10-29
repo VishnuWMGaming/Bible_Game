@@ -1,9 +1,11 @@
 using BibleGame;
 using BibleGame.API;
 using BibleGame.Data;
+using DebugUtils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,14 +18,25 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 
     [SerializeField] TMP_Text scoreText;
 
+    [Header("Cells:")]
+    [SerializeField] List<Cell> cells = new List<Cell>();
 
-    [Header("Level Buttons:")]
-    [SerializeField] List<LevelObj> levelBtns = new List<LevelObj>();
+    [Header("Chapters")]
+    [SerializeField] List<ChapterData> chapters = new List<ChapterData>();
+ 
+    [Space]
+    [SerializeField] Button mPreviousBtn;
+    [SerializeField] Button mNextBtn;
 
     [SerializeField] GameObject splashObj;
 
     [Header("LevelScreen:")]
     [SerializeField] GameObject mLevelObj;
+
+
+   [SerializeField] int mFirstIndex = 0;
+   [SerializeField] int mLastIndex = 0;
+
 
     private void OnEnable()
     {
@@ -36,6 +49,16 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 
         splashObj.SetActive(false);
         mLevelObj.SetActive(true);
+
+        mPreviousBtn.interactable = false;
+        mNextBtn.interactable = true;
+
+        mPreviousBtn.onClick.AddListener(PreviousCell);
+        mNextBtn.onClick.AddListener(NextCell);
+
+        cells[0].gameObject.SetActive(false);
+        cells[1].gameObject.SetActive(false);
+        cells[2].gameObject.SetActive(false);
     }
 
     private void OnDisable()
@@ -49,6 +72,7 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 
     void Initialise()
     {
+
         if (String.IsNullOrEmpty(UserData.gameid))
         {
             Debug.LogError("Streak api id is null");
@@ -92,10 +116,29 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 
                 GameData.mChapterDatas = res.ResponseData.data;
 
-                for(int i = 0; i< levelBtns.Count;++i)
+                chapters = GameData.mChapterDatas;
+
+                //for(int i = 0; i< levelBtns.Count;++i)
+                //{
+                //    levelBtns[i].Intialise(GameData.mChapterDatas[i].id, this);
+                //}
+
+                mFirstIndex = 0;
+                mLastIndex = cells[0].LevelObjs.Count - 1;
+
+                if (mLastIndex >= GameData.mChapterDatas.Count)
                 {
-                    levelBtns[i].Intialise(GameData.mChapterDatas[i].id, this);
+                    mLastIndex = GameData.mChapterDatas.Count - 1;
+                    mNextBtn.interactable = false;
                 }
+
+                List<ChapterData> chapterDatas = GameData.mChapterDatas
+                                             .Skip(mFirstIndex)
+                                             .Take(mLastIndex - mFirstIndex + 1)
+                                             .ToList();
+
+                cells[0].gameObject.SetActive(true);
+                cells[0].Init(chapterDatas, this);
 
                 int coins = 0;
 
@@ -110,7 +153,8 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
                if (levelDatas != null || levelDatas.Count != 0)
                 foreach(var level in levelDatas)
                 {
-                    levelBtns.Find(x => x.ID == level.chapter_id).StarUpdate(level.rating);
+                    DevDebug.Log($"Level Update:{level.chapter_id} :: {level.rating}", DebugColor.Turquoise);
+                    //levelBtns.Find(x => x.ID == level.chapter_id).StarUpdate(level.rating);
                 }
 
             }, UserData.bibleId, UserData.bookId);
@@ -118,6 +162,81 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 
         }, UserData.gameid);
     }
+
+
+    #region NAVIGATION
+
+    void PreviousCell()
+    {
+        if (mFirstIndex < 0)
+            return;
+
+        int activeIndex = cells.FindIndex(obj => obj.gameObject.activeInHierarchy);
+
+        activeIndex--;
+       
+        if(activeIndex < 0)
+            activeIndex = 2;
+
+        mLastIndex = mFirstIndex-1;
+        mFirstIndex = mFirstIndex - cells[activeIndex].LevelObjs.Count;
+
+        if (mFirstIndex < 0)
+        {
+            mFirstIndex = 0;
+            return;
+        }
+
+        List<ChapterData> chapterDatas = GameData.mChapterDatas
+                                                .Skip(mFirstIndex)
+                                                .Take(mLastIndex - mFirstIndex + 1)
+                                                .ToList();
+
+        foreach (var cell in cells)
+            cell.gameObject.SetActive(false);
+ 
+        cells[activeIndex].gameObject.SetActive(true);
+        cells[activeIndex].Init(chapterDatas, this);
+
+        mPreviousBtn.interactable = mFirstIndex > 0;
+        mNextBtn.interactable = true;
+    }
+
+    void NextCell()
+    {
+        if (mLastIndex >= GameData.mChapterDatas.Count)
+            return;
+
+        int activeIndex = cells.FindIndex(obj => obj.gameObject.activeInHierarchy);
+
+        activeIndex++;
+        if (activeIndex > cells.Count - 1)
+            activeIndex = 0;
+
+        mFirstIndex = mLastIndex +1;
+        mLastIndex = mFirstIndex + (cells[activeIndex].LevelObjs.Count - 1);
+
+        if(mLastIndex >= GameData.mChapterDatas.Count)
+            mLastIndex = GameData.mChapterDatas.Count - 1;
+
+        List<ChapterData> chapterDatas = GameData.mChapterDatas
+                                                 .Skip(mFirstIndex)
+                                                 .Take(mLastIndex - mFirstIndex + 1)
+                                                 .ToList();
+        foreach(var cell in cells) 
+            cell.gameObject.SetActive(false);
+
+        cells[activeIndex].gameObject.SetActive(true);
+        cells[activeIndex].Init(chapterDatas, this);
+
+       // mFirstIndex = mLastIndex;
+       // mLastIndex = cells[activeIndex].LevelObjs.Count;
+
+        mPreviousBtn.interactable = true;
+        mNextBtn.interactable = mLastIndex +1  < GameData.mChapterDatas.Count;
+    }
+
+    #endregion
 
     public void ChapterSelect(string id)
     {

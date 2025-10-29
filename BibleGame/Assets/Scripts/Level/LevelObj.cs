@@ -14,7 +14,7 @@ public class LevelObj : MonoBehaviour
     [SerializeField] string mChapterId;
     public string ID => mChapterId;
 
-    [SerializeField] List<GameObject> stars = new List<GameObject>();
+    [SerializeField] GameObject correctMark;
 
     bool isSelected = false;
 
@@ -23,15 +23,15 @@ public class LevelObj : MonoBehaviour
     private void OnEnable()
     {
         isSelected = false;
-        for (int i = 0; i < stars.Count; i++) stars[i].SetActive(false);
+        correctMark.SetActive(false);
     }
 
     private void OnDisable()
     {
-        
+
     }
 
-    public  void Intialise(string chapterId, ILevelObj callbackIN)
+    public void Intialise(string chapterId, ILevelObj callbackIN)
     {
         mChapterId = string.Empty;
         mChapterId = chapterId;
@@ -39,16 +39,7 @@ public class LevelObj : MonoBehaviour
         callback = callbackIN;
     }
 
-    public void StarUpdate(int starCount)
-    {
-        if (starCount > stars.Count)
-        {
-            Debug.LogError("Stars are greater than 3");
-            return;
-        }
-
-        for (int i = 0; i < starCount; i++) stars[i].SetActive(true);
-    }
+    public void Finish(bool enable) { correctMark.SetActive(enable); }
 
     private void OnMouseDown()
     {
@@ -62,5 +53,11 @@ public class LevelObj : MonoBehaviour
         Debug.Log($"Chapter is selected {mChapterId}");
 
         callback.ChapterSelect(mChapterId);
+    }
+
+    public void Clear()
+    {
+        mChapterId = string.Empty;
+        callback = null;
     }
 }
