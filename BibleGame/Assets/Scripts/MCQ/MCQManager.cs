@@ -64,7 +64,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         _submitBtn.interactable = false;
         
         hintBtn.onClick.AddListener(() => { ShowHint(); AudioManager.Instance.PlayButton(); });
-        hintSubmitBtn.onClick.AddListener(() => { UseHint(); AudioManager.Instance.PlayButton(); });
+       // hintSubmitBtn.onClick.AddListener(() => { UseHint(); AudioManager.Instance.PlayButton(); });
         hintCloseBtn.onClick.AddListener(() => { CloseHint(); AudioManager.Instance.PlayButton(); });
 
         //RestartAction();
@@ -84,8 +84,10 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         _homeBtn.onClick.RemoveAllListeners();
         _submitBtn.onClick.RemoveAllListeners();
         hintBtn.onClick.RemoveListener(ShowHint);
-        hintSubmitBtn.onClick.RemoveListener(UseHint);
+      //  hintSubmitBtn.onClick.RemoveListener(UseHint);
         hintCloseBtn.onClick.RemoveListener(CloseHint);
+
+        correctPanel.gameObject.SetActive(false);
     }
 
     void Initialise()
@@ -241,6 +243,85 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
     private void ShowHint()
     {
+        HintAPI.GetFreeHint((success,res) =>
+        {
+            if(!success)
+            {
+                PopUp.Instance.ShowMessage("Unable to get the free hints");
+                return;
+            }
+
+            int freeHints = res.ResponseData.freeHint;
+
+            if (freeHints <= 0)
+            {
+                int coins = UserData.coins;
+                coins -= 7;
+
+                if (coins < 0)
+                {
+                    coins = 0;
+                    UserData.coins = coins;
+
+                    PopUp.Instance.ShowMessage($"Not enough coins !!");
+                    return;
+                }
+
+                UserData.coins = coins;
+                scoreText.text = UserData.coins.ToString();
+
+                HintAction();
+                return;
+            }
+
+            HintAction();
+
+            HintAPI.DeductFreeHint((success) =>
+            {
+                if(!success)
+                {
+                    //  PopUp.Instance.ShowMessage("Unable to get the free hints");
+                }
+            });
+
+            return;
+        });
+
+
+
+        //if (currentQuestionIndex > questions.Count)
+        //    return;
+
+        //int index = currentQuestionIndex - 1;
+
+        //if (index < 0)
+        //    index = 0;
+
+        //int coins = UserData.coins;
+        //coins -= 7;
+
+        //if (coins < 0)
+        //{
+        //    coins = 0;
+        //    UserData.coins = coins;
+
+        //    PopUp.Instance.ShowMessage($"Not enough coins !!");
+        //    return;
+        //}
+
+        //UserData.coins = coins;
+
+        //scoreText.text = UserData.coins.ToString();
+
+        //++hintIndex;
+
+        //string correctAnswer = questions[index].answers.Find(x => x.option_status).title;
+
+        //PopUp.Instance.ShowMessage($"Hint : {correctAnswer}");
+    }
+
+    private void HintAction()
+    {
         if (currentQuestionIndex > questions.Count)
             return;
 
@@ -249,32 +330,9 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         if (index < 0)
             index = 0;
 
-        int coins = UserData.coins;
-        coins -= 7;
-
-        if (coins < 0)
-        {
-            coins = 0;
-            UserData.coins = coins;
-
-            PopUp.Instance.ShowMessage($"Not enough coins !!");
-            return;
-        }
-        UserData.coins = coins;
-
-        scoreText.text = UserData.coins.ToString();
-
-
-        ++hintIndex;
-
         string correctAnswer = questions[index].answers.Find(x => x.option_status).title;
 
         PopUp.Instance.ShowMessage($"Hint : {correctAnswer}");
-    }
-
-    private void UseHint()
-    {
-        
     }
 
     private void CloseHint()

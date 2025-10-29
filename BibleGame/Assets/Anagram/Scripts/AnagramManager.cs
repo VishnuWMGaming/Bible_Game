@@ -5,6 +5,7 @@ using BibleGame;
 using BibleGame.API;
 using BibleGame.Data;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -115,6 +116,87 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
 
     private void UseHint()
     {
+        HintAPI.GetFreeHint((success, res) =>
+        {
+            if (!success)
+            {
+                PopUp.Instance.ShowMessage("Unable to get the free hints");
+                return;
+            }
+
+            int freeHints = res.ResponseData.freeHint;
+
+            if (freeHints <= 0)
+            {
+                int coins = UserData.coins;
+                coins -= 7;
+
+
+                if (coins < 0)
+                {
+                    coins = 0;
+                    UserData.coins = coins;
+                    UpdateCoins(coins);
+
+                    PopUp.Instance.ShowMessage($"Not enough coins !!");
+                    return;
+                }
+
+                UserData.coins = coins;
+                UpdateCoins(coins);
+
+                HintAction();
+                return;
+            }
+
+
+            HintAction();
+
+            HintAPI.DeductFreeHint((success) =>
+            {
+                if (!success)
+                {
+                    //  PopUp.Instance.ShowMessage("Unable to get the free hints");
+                }
+            });
+
+            return;
+        });
+
+
+        //if (gameController.CurrentQIndex > 5)
+        //    return;
+
+        //int index = gameController.CurrentQIndex - 1;
+
+        //if (index < 0)
+        //    index = 0;
+
+        
+
+        //string correctAnswer = gameController.Questions[index].hint;
+
+        //string position = hintIndex switch
+        //{
+        //    0 => "first",
+        //    1 => "second",
+        //    2 => "third",
+        //    3 => "fourth",
+        //    4 => "fifth",
+        //    5 => "Sixth",
+        //    6 => "Seventh",
+        //    7 => "Eighth",
+        //    _ => throw new NotImplementedException()
+        //};
+
+        //string hintData = $"{position} letter is {correctAnswer[hintIndex]}";
+
+        //hintIndex++;
+        //PopUp.Instance.ShowMessage($"Hint:{hintData}");
+    }
+
+    public void HintAction()
+    {
         if (gameController.CurrentQIndex > 5)
             return;
 
@@ -122,23 +204,6 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
 
         if (index < 0)
             index = 0;
-
-        int coins = UserData.coins;
-        coins -= 7;
-
-
-        if (coins < 0)
-        {
-            coins = 0;
-            UserData.coins = coins;
-            UpdateCoins(coins);
-
-            PopUp.Instance.ShowMessage($"Not enough coins !!");
-            return;
-        }
-
-        UserData.coins = coins;
-        UpdateCoins(coins);
 
         string correctAnswer = gameController.Questions[index].hint;
 

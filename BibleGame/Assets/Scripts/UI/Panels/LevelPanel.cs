@@ -155,7 +155,7 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
                 if (levelDatas != null || levelDatas.Count != 0)
                     foreach (var level in levelDatas)
                     {
-                        DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
+                        //DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
                         cells[0].Get(level.chapter_id).Finish(true);
                     }
 
