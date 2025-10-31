@@ -56,6 +56,12 @@ public class OptionPanel : MonoBehaviour, IOption
         callback.EnableSubmit(true);
     }
 
+    public void EnableInteractable(string title, bool enable)
+    { 
+        options.Find(x => x.Val == title).EnableButtonInteraction(enable);
+        options.Find(x => x.Val == title).SetDisplay(Option.OptionType.disable);
+    }
+
     public void CheckAnswerAction()
     {
         OptionLockAction(true);
@@ -72,28 +78,33 @@ public class OptionPanel : MonoBehaviour, IOption
         else
         {
             Debug.LogError("WRONG!!!!!!!!!!");
-            options[_currentIndex].SetDisplay(Option.OptionType.worng);
+            options[_currentIndex].SetDisplay(Option.OptionType.wrong);
 
             callback.EnableSubmit(false);
             callback.WrongAnswer();
 
-            StartCoroutine(RestartAction());
+            StartCoroutine(RestartAction(false));
         }
     }
 
-    IEnumerator RestartAction()
+    IEnumerator RestartAction(bool isData)
     {
         yield return new WaitForSeconds(2.0f);
 
         for (int i = 0; i < options.Count; i++)
         {
+            //options[i].EnableInteractable(true);
             options[i].EnableButtonInteraction(true);
             options[i].SetDisplay(Option.OptionType.normal);
         }
-        
-        for (int i = 0; i < answers.Count; i++)
+
+        if (isData)
         {
-            options[i].SetChoice(answers[i].title, i);
+
+            for (int i = 0; i < answers.Count; i++)
+            {
+                options[i].SetChoice(answers[i].title, i);
+            }
         }
 
         /*options[0].SetChoice("1.Bird", 0);
@@ -120,6 +131,7 @@ public class OptionPanel : MonoBehaviour, IOption
     public void SetOptions(List<Answer> answers)
     {
         this.answers = answers;
+
         for (int i = 0; i < answers.Count; i++)
         {
             options[i].SetChoice(answers[i].title, i);

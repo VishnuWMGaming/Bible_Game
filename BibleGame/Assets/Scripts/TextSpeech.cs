@@ -169,6 +169,11 @@ public class TextSpeech : MonoBehaviour
 
 #if !UNITY_EDITOR
         _textToSpeech.Stop();
+
+#if UNITY_IOS
+          _textToSpeech =  TextToSpeech.Create(OnFinish,OnError);
+#endif
+
 #endif
 
     }

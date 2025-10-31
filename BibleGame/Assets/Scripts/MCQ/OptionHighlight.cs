@@ -32,7 +32,8 @@ public class OptionHighlight : MonoBehaviour
         Color value = optionType switch
         {
             Option.OptionType.correct => new Color32(39, 251, 111, 100),
-            Option.OptionType.worng => Color.red,
+            Option.OptionType.wrong => Color.red,
+            Option.OptionType.disable => new Color32(167, 167, 167, 100),
             _ => defaultcolor
         };
 

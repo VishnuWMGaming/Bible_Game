@@ -68,6 +68,8 @@ public class TextToSpeechExample : MonoBehaviour
     {
         SpeakButton.interactable = true;
         StopButton.interactable = false;
+
+        _textToSpeech = TextToSpeech.Create(OnFinish, OnError);
     }
 
     private void TTSStarted()

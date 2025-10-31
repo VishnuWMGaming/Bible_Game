@@ -89,20 +89,9 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
         AppData.orientation = MScreenOriatation.portrait;
     }
 
-    void Intialise()
+    public void NextQAction()
     {
 
-    }
-
-
-    private void OnClickHomeBtn()
-    {
-        SceneManager.LoadScene(0);
-    }
-
-    private void OnClickHintBtn()
-    {
-        hintPanel.SetActive(true);
     }
 
     private void CloseHint()
@@ -111,7 +100,7 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
     }
     private void ShowHint()
     {
-
+        hintIndex = 0;
     }
 
     private void UseHint()

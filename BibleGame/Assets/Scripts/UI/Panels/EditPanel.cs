@@ -66,9 +66,9 @@ public class EditPanel : MonoBehaviour
     {
         NativeGallery.GetImageFromGallery((path) =>
         {
-
             if (path != null)
             {
+                PopUp.Instance.EnableLoad(true);
                 // Load image data from file
                 byte[] imageData = System.IO.File.ReadAllBytes(path);
                 // Optional: Get file name
@@ -86,7 +86,7 @@ public class EditPanel : MonoBehaviour
 
                 currentForm.AddBinaryData("image", imageData, fileName, mimeType);
 
-                PopUp.Instance.EnableLoad(true);
+                
                 ProfileAPI.EditPic((success) =>
                 {
                     PopUp.Instance.EnableLoad(false);

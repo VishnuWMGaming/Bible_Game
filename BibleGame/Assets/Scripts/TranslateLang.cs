@@ -20,6 +20,9 @@ public class TranslateLang : MonoBehaviour
     // Start is called before the first frame update
      private string textValue;
 
+
+    [SerializeField] bool isTextChange = true;
+
     private void Awake()
     {
         translatedText = GetComponent<TMP_Text>();
@@ -100,6 +103,23 @@ public class TranslateLang : MonoBehaviour
            Language.Hindi => LanguageController.Instance.HindiFont,
            _ => LanguageController.Instance.NormalFont
        };
+
+
+        if (!isTextChange)
+            return;
+
+        translatedText.text = "";
+
+        if(textValue.Length <= 200)
+        {
+            LanguageController.Instance.Translate(textValue, (translation) =>
+            {
+                translatedText.text = translation;
+                finish?.Invoke();
+            });
+
+            return;
+        }
 
 
         //Split long text into chunks 

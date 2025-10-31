@@ -21,6 +21,8 @@ public interface IAnagramControl
     public void ActivateSubmitBtn(bool enable);
     public void SubmitAction();
     public void UpdateScore();
+
+    public void NextQAction();
 }
 
 public class GameController_Anagram : MonoBehaviour,IBox
@@ -125,6 +127,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
             questions = res.ResponseData.resArr;
             GameInitilise(questions[currentQIndex]);
 
+            callback.NextQAction();
             currentQIndex++;
 
         }, requestData);

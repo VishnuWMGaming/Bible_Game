@@ -10,6 +10,8 @@ using BibleGame.API;
 using UnityEngine.Serialization;
 using BibleGame.Data;
 using System;
+using DebugUtils;
+using System.Linq;
 
 public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 {
@@ -38,6 +40,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     int wrongAnswer;
 
     TranslateLang qTrans;
+    List<string> usedWrongs = new List<string>();
 
     private void Awake()
     {
@@ -49,6 +52,8 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     /// </summary>
     private void OnEnable()
     {
+        questionPanel.gameObject.SetActive(true);
+
         optionPanel.callback = this;
         correctPanel.callback = this;
 
@@ -87,7 +92,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     {
         _homeBtn.onClick.RemoveAllListeners();
         _submitBtn.onClick.RemoveAllListeners();
-        hintBtn.onClick.RemoveListener(ShowHint);
+        hintBtn.onClick.RemoveAllListeners();
       //  hintSubmitBtn.onClick.RemoveListener(UseHint);
         hintCloseBtn.onClick.RemoveListener(CloseHint);
 
@@ -385,14 +390,28 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         if (index < 0)
             index = 0;
 
-        string correctAnswer = questions[index].answers.Find(x => x.option_status).title;
-
-        string mhintAnswer = $"Hint : {correctAnswer}";
-
-        LanguageController.Instance.Translate(mhintAnswer, (translation) =>
+        if(hintIndex > 1)
         {
-            PopUp.Instance.ShowMessage(translation);
-        });
+            PopUp.Instance.ShowMessage("Could not use more hints !!");
+            return;
+        }
+
+        string wrongAnswer = questions[index].answers.Where(x => !x.option_status  && !usedWrongs.Contains(x.title) )
+                      .OrderBy(x => UnityEngine.Random.value)
+                      .FirstOrDefault()?.title;
+
+        //string mhintAnswer = $"Hint : {wrongAnswer}";
+
+        optionPanel.EnableInteractable(wrongAnswer, false);
+
+        hintIndex++;
+
+        usedWrongs.Add(wrongAnswer);
+
+        //LanguageController.Instance.Translate(mhintAnswer, (translation) =>
+        //{
+        //    PopUp.Instance.ShowMessage(translation);
+        //});
     }
 
     private void CloseHint()
@@ -402,7 +421,10 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
 
     private void SetData(int questionIndex)
-    { 
+    {
+        hintIndex = 0;
+        usedWrongs.Clear();
+
         DebugUtils.DevDebug.Log($"Initialise question : {questions[questionIndex]?.title} :: {questionIndex}",DebugColor.Turquoise);
         wrongAnswer = 0;
         questionTxt.text = "";
