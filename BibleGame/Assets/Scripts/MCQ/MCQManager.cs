@@ -42,6 +42,8 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     TranslateLang qTrans;
     List<string> usedWrongs = new List<string>();
 
+    GetQuestionsRequestData mCurrentrequestData;
+
     private void Awake()
     {
         qTrans = questionTxt.GetComponent<TranslateLang>();
@@ -110,7 +112,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
             _ => 1
         };
 
-        GetQuestionsRequestData requestData = new GetQuestionsRequestData()
+        mCurrentrequestData = new GetQuestionsRequestData()
         {
             game_id = UserData.gameid,
             ageGroup = ageVal.ToString(),
@@ -170,7 +172,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
             SetData(currentQuestionIndex);
 
-        }, requestData);
+        }, mCurrentrequestData);
     }
 
     public void EnableSubmit(bool enabled)
@@ -182,41 +184,46 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     {
         questionPanel.gameObject.SetActive(false);
         correctPanel.gameObject.SetActive(true);
+
+        currentQuestionIndex++;
     }
 
     public void WrongAnswer()
     {
         wrongAnswer++;
 
-        if(wrongAnswer > 1)
+        Debug.LogError($"Wrong >>>>> {wrongAnswer}");
+
+        if (wrongAnswer > 1)
         {
-            ReloadQuestions();
-            return;
+            Debug.LogWarning($"Reloading....{currentQuestionIndex}");
+            ReloadQuestions(questions[currentQuestionIndex]?.title);
         }
     }
 
-    void ReloadQuestions()
+    void ReloadQuestions(string questionReload)
     {
-        int ageVal = UserData.currentAge switch
-        {
-            AgeGroup.kindergarden => 1,
-            AgeGroup.elementary => 2,
-            AgeGroup.teenagers => 3,
-            AgeGroup.adult => 4,
-            _ => 1
-        };
+        //int ageVal = UserData.currentAge switch
+        //{
+        //    AgeGroup.kindergarden => 1,
+        //    AgeGroup.elementary => 2,
+        //    AgeGroup.teenagers => 3,
+        //    AgeGroup.adult => 4,
+        //    _ => 1
+        //};
 
-        GetQuestionsRequestData requestData = new GetQuestionsRequestData()
-        {
-            game_id = UserData.gameid,
-            ageGroup = ageVal.ToString(),
-            language = "en",
-            game_type = "objective",
-            bible_id = UserData.bibleId,
-            chapter_id = UserData.chapterId,
-            book_id = UserData.bookId,
-        };
+        //GetQuestionsRequestData requestData = new GetQuestionsRequestData()
+        //{
+        //    game_id = UserData.gameid,
+        //    ageGroup = ageVal.ToString(),
+        //    language = "en",
+        //    game_type = "objective",
+        //    bible_id = UserData.bibleId,
+        //    chapter_id = UserData.chapterId,
+        //    book_id = UserData.bookId,
+        //};
 
+        wrongAnswer = 0;
         questions.Clear();
 
         PopUp.Instance.EnableLoad(true);
@@ -264,9 +271,16 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
                 }
             }
 
+            if(questionReload == questions[currentQuestionIndex]?.title)
+            {
+                ReloadQuestions(questionReload);
+                return;
+            }
+
+
             SetData(currentQuestionIndex);
 
-        }, requestData);
+        }, mCurrentrequestData);
     }
 
     public void RestartAction()
@@ -282,6 +296,8 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         int coins = UserData.coins;
         coins += 4;
         UserData.coins = coins;
+
+        wrongAnswer = 0;
 
         scoreText.text = UserData.coins.ToString();
 
@@ -425,8 +441,8 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         hintIndex = 0;
         usedWrongs.Clear();
 
+
         DebugUtils.DevDebug.Log($"Initialise question : {questions[questionIndex]?.title} :: {questionIndex}",DebugColor.Turquoise);
-        wrongAnswer = 0;
         questionTxt.text = "";
         questionTxt.text = questions[questionIndex]?.title;
 
@@ -439,7 +455,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
         optionPanel.SetOptions(questions[questionIndex]?.answers);
 
-        currentQuestionIndex++;
+       
     }
 
     public int GetQuestionsCount()
