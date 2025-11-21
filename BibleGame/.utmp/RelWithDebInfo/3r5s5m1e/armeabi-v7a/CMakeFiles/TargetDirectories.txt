@@ -1,0 +1,5 @@
+E:/Vishnu_Work/Bible_Game/BibleGame/.utmp/RelWithDebInfo/3r5s5m1e/armeabi-v7a/CMakeFiles/edit_cache.dir
+E:/Vishnu_Work/Bible_Game/BibleGame/.utmp/RelWithDebInfo/3r5s5m1e/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+E:/Vishnu_Work/Bible_Game/BibleGame/.utmp/RelWithDebInfo/3r5s5m1e/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir
+E:/Vishnu_Work/Bible_Game/BibleGame/.utmp/RelWithDebInfo/3r5s5m1e/armeabi-v7a/FramePacing/CMakeFiles/edit_cache.dir
+E:/Vishnu_Work/Bible_Game/BibleGame/.utmp/RelWithDebInfo/3r5s5m1e/armeabi-v7a/FramePacing/CMakeFiles/rebuild_cache.dir

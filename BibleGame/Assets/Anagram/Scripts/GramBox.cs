@@ -1,3 +1,4 @@
+using BibleGame.Data;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
@@ -58,10 +59,16 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     [SerializeField] bool isEnable;
     public bool IsEnable => isEnable;
 
+    
+    public bool m_IsAble = false;
+
     [SerializeField] LayoutElement layout;
 
     [Header("Translate")]
     [SerializeField] TranslateLang translateLang;
+
+    [Space]
+    [SerializeField] bool isLandscape;
 
     private void Awake()
     {
@@ -88,7 +95,6 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     public IBox callback;
 
-
     private void OnEnable()
     {
         //boxTransform = GetComponent<RectTransform>();
@@ -104,6 +110,8 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         index = -1;
 
         isDragging = false;
+        m_IsAble = true;
+
         SetLetter();
     }
 
@@ -152,6 +160,8 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         if (!isEnable) return;
         if (isCorrect) return;
 
+        if (!m_IsAble) return;
+
         // Debug.Log($"<color=grey>Begin drag:{value}</color>");
 
         isDragging = true;
@@ -178,7 +188,7 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
             out newPosition
         );
 
-        Vector2 localPosition = AnagramUtils.GetMousePositionInCanvasSpace(canvas,true);
+        Vector2 localPosition = AnagramUtils.GetMousePositionInCanvasSpace(canvas, isLandscape);
 
         bool isInsideMask = AnagramUtils.IsPositionInside(localPosition, maskArea);
 
@@ -245,7 +255,7 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     public void SetImage(Sprite sprite)
     {
-        if (!isEnable) return;
+        //if (!isEnable) return;
 
         image.sprite = sprite;
         image.SetNativeSize();
@@ -272,6 +282,8 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         callback = null;
         boxTransform.anchoredPosition = initialPosition;
         letterText.color = Color.white;
+
+        m_IsAble = true;
 
         Enable(false);
     }

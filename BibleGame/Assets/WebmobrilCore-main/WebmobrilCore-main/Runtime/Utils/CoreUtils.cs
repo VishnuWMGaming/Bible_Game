@@ -15,7 +15,7 @@
 
         public static void ResetRigidbody(this Rigidbody rigidbody)
         {
-            rigidbody.velocity = Vector3.zero;
+            rigidbody.linearVelocity = Vector3.zero;
             rigidbody.angularVelocity = Vector3.zero;
             rigidbody.inertiaTensorRotation = Quaternion.identity;
             rigidbody.inertiaTensor = Vector3.zero;

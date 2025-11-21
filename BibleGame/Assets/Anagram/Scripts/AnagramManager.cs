@@ -1,20 +1,20 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using BibleGame;
 using BibleGame.API;
 using BibleGame.Data;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEngine.Tilemaps.Tilemap;
 
 public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
 {
     [SerializeField] private Button homeBtn;
     [SerializeField] private Button hintBtn;
-    [SerializeField] private Button submitBtn;
     [SerializeField] private Button hintSubmitBtn;
     [SerializeField] private Button hintCloseBtn;
     [SerializeField] private Button rewardBtn;
@@ -23,13 +23,36 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
     [SerializeField] TMP_Text coinsText;
 
     [Header("GameController:")]
-    [SerializeField] GameController_Anagram gameController;
+    [SerializeField] GameController_Anagram gameController_Landscape;
+    [SerializeField] GameController_Anagram gameController_Portrait;
+
+    GameController_Anagram gameController;
+
+    [Header("Orientation")]
+    [SerializeField] MScreenOriatation screenOriatation;
+    [SerializeField] Button mScreenOrientButton;
+
 
     int hintIndex = 0;
 
     private void OnEnable()
     {
-        // Screen.orientation = ScreenOrientation.LandscapeLeft;
+        #region ORIENTATION
+        PopUp.Instance.EnableLoad(true);
+
+        AppData.orientation = screenOriatation;
+
+       // screenOriatation = MScreenOriatation.landscape;
+        mScreenOrientButton?.onClick.AddListener(() =>
+        {
+            screenOriatation = screenOriatation == MScreenOriatation.landscape ? MScreenOriatation.portrait : MScreenOriatation.landscape;
+            Orientation();
+        });
+
+        Orientation();
+
+        PopUp.Instance.EnableLoad(false);
+        #endregion
 
         hintBtn.onClick.AddListener(UseHint);
         hintPanel.SetActive(false);
@@ -44,11 +67,6 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
             AudioManager.Instance.PlayButton();
             Actions.ChangePanelActions(CanvasType.reward);
         });
-
-        submitBtn.onClick.AddListener(() => { SubmitAction(); AudioManager.Instance.PlayButton(); });
-
-        submitBtn.interactable = false;
-        submitBtn.onClick.AddListener(() => { NextAction(); AudioManager.Instance.PlayButton(); });
 
         hintBtn.onClick.AddListener(() =>
         {
@@ -75,18 +93,29 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
 
         // hintBtn.gameObject.SetActive(false);
 
-        AppData.orientation = MScreenOriatation.landscape;
+       // AppData.orientation = MScreenOriatation.landscape;
     }
 
     private void OnDisable()
     {
-        // Screen.orientation = ScreenOrientation.Portrait;
-
         homeBtn.onClick.RemoveAllListeners();
         hintBtn.onClick.RemoveAllListeners();
-        submitBtn.onClick.RemoveAllListeners();
+        mScreenOrientButton?.onClick.RemoveAllListeners();
+    }
 
-        AppData.orientation = MScreenOriatation.portrait;
+    void Orientation()
+    {
+        if(gameController != null)
+        gameController.gameObject.SetActive(false);
+
+        gameController = screenOriatation switch
+        {
+            MScreenOriatation.portrait => gameController_Portrait,
+            MScreenOriatation.landscape => gameController_Landscape,
+        };
+
+        gameController.gameObject.SetActive(true);
+        gameController.callback = this;
     }
 
     public void NextQAction()
@@ -151,37 +180,6 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
 
             return;
         });
-
-
-        //if (gameController.CurrentQIndex > 5)
-        //    return;
-
-        //int index = gameController.CurrentQIndex - 1;
-
-        //if (index < 0)
-        //    index = 0;
-
-        
-
-        //string correctAnswer = gameController.Questions[index].hint;
-
-        //string position = hintIndex switch
-        //{
-        //    0 => "first",
-        //    1 => "second",
-        //    2 => "third",
-        //    3 => "fourth",
-        //    4 => "fifth",
-        //    5 => "Sixth",
-        //    6 => "Seventh",
-        //    7 => "Eighth",
-        //    _ => throw new NotImplementedException()
-        //};
-
-        //string hintData = $"{position} letter is {correctAnswer[hintIndex]}";
-
-        //hintIndex++;
-        //PopUp.Instance.ShowMessage($"Hint:{hintData}");
     }
 
     public void HintAction()
@@ -195,6 +193,9 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
             index = 0;
 
         string correctAnswer = gameController.Questions[index].hint;
+
+        if (hintIndex > 7)
+            hintIndex = 0;
 
         string position = hintIndex switch
         {
@@ -238,7 +239,7 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
 
     public void RestartAction()
     {
-
+        hintIndex = 0;
     }
 
     public void NextAction()
@@ -248,7 +249,7 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
 
     public void ActivateSubmitBtn(bool enable)
     {
-        submitBtn.interactable = enable;
+       
     }
 
     public void SubmitAction()

@@ -1,19 +1,17 @@
+using BibleGame;
+using BibleGame.API;
+using BibleGame.Data;
+using DebugUtils;
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
-using DG.Tweening;
-using UnityEngine.UIElements;
-using System;
+using System.Linq;
 using System.Reflection;
+using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
-using BibleGame.Data;
-using BibleGame.API;
-
-using System.Linq;
-using TMPro;
-using DebugUtils;
 
 
 public interface IAnagramControl
@@ -29,6 +27,10 @@ public class GameController_Anagram : MonoBehaviour,IBox
 {
     [SerializeField] private RectTransform lettersParent;
     HorizontalLayoutGroup layoutGroup;
+
+    [SerializeField] Button mSubmitButton;
+    [SerializeField] Button mHintButton;
+    [SerializeField] Button mBackButton;
 
     [Header("Boxes:")]
     [SerializeField] List<GramBox> gramBoxes = new List<GramBox>();
@@ -56,6 +58,8 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
     [SerializeField] TMP_Text mTitle;
 
+    [SerializeField] TMP_Text coinText;
+
     public IAnagramControl callback;
 
     #region LOCAL_VARIABLES
@@ -63,7 +67,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
     public int CurrentQIndex => currentQIndex;
 
     bool isWon = false;
-
+    int hintIndex = 0;
     #endregion
 
 
@@ -81,13 +85,38 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
         styleUI = spriteData.GetStyle(UserData.currentAge);
 
+        foreach (var grambox in gramBoxes)
+            grambox.SetImage(styleUI.box);
+
+        mSubmitButton?.onClick.AddListener(() =>
+        {
+            if (callback != null)
+                callback.SubmitAction();
+        });
+        mSubmitButton.interactable = false;
+
+        mHintButton?.onClick.AddListener(() => 
+        {
+            
+        });
+
+        mBackButton?.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.PlayButton();
+            Actions.StartPageAction(StartPage.game_menu);
+
+        });
+
         currentQIndex = 0;
+        hintIndex = 0;
         SetData();
     }
 
     private void OnDisable()
     {
-      
+        mSubmitButton?.onClick.RemoveAllListeners();
+        mHintButton?.onClick.RemoveAllListeners();
+        mBackButton?.onClick.RemoveAllListeners();
     }
 
     void SetData()
@@ -119,6 +148,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
             if (!success)
             {
                 Debug.LogError("Error in getting question in anagram");
+                Actions.StartPageAction(StartPage.game_menu);
                 return;
             }
 
@@ -146,7 +176,8 @@ public class GameController_Anagram : MonoBehaviour,IBox
         if (currentQIndex > questions.Count-1)
         {
             Debug.Log("Get read to submit !!!");
-            callback.ActivateSubmitBtn(true);
+           // callback.ActivateSubmitBtn(true);
+            mSubmitButton.interactable = true;
             return;
         }
 
@@ -158,7 +189,6 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
     void GameInitilise(GetQuestionsAnagramData question)
     {
-
         string word = question.hint;
         string[] letterVals = word.Select(c => c.ToString()).ToArray();
 
@@ -224,7 +254,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
             box.SetLetter(letters.val);
             box.SetIndex(letters.index);
 
-            box.SetImage(styleUI.box);
+            //box.SetImage(styleUI.box);
             box.callback = this;
         }
 
@@ -250,20 +280,13 @@ public class GameController_Anagram : MonoBehaviour,IBox
         return new string(word.OrderBy(c => rng.Next()).ToArray());
     }
 
-
-    IEnumerator ArrangeLetters(System.Action action)
-    { 
-        yield return null;
-       
-
-        action();
-    }
-
     public void UpdatedPos(int index, Vector2 position)
     {
         GramBox currentBox =  gramBoxes.Find(x => x.Index == index && x.IsEnable && !x.isCorrect);
 
         List<GramBox> otherBoxes = gramBoxes.Where(p => p != currentBox  && p.IsEnable && !p.IsDrag && !p.isCorrect).ToList();
+
+        foreach (GramBox box in otherBoxes) box.m_IsAble = false;
 
         foreach (GramBox box in otherBoxes)
         {
@@ -291,7 +314,6 @@ public class GameController_Anagram : MonoBehaviour,IBox
         StartCoroutine(CheckingResult(index));
     }
 
-
     void EndGame()
     {
         isWon = false;
@@ -300,6 +322,8 @@ public class GameController_Anagram : MonoBehaviour,IBox
         Debug.Log("Checking the result..");
 
         List<GramBox> enabledBoxes = gramBoxes.Where(x => x.IsEnable).ToList();
+
+        foreach (GramBox box in enabledBoxes) box.m_IsAble = true;
 
         for (int i = 0; i < enabledBoxes.Count; ++i)
         {
@@ -350,6 +374,104 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
         yield return null;
     }
+
+    #region HINT
+
+    private void UseHint()
+    {
+        HintAPI.GetFreeHint((success, res) =>
+        {
+            if (!success)
+            {
+                PopUp.Instance.ShowMessage("Unable to get the free hints");
+                return;
+            }
+
+            int freeHints = res.ResponseData.freeHint;
+
+            if (freeHints <= 0)
+            {
+                int coins = UserData.coins;
+                coins -= 7;
+
+
+                if (coins < 0)
+                {
+                    coins = 0;
+                    UserData.coins = coins;
+                    UpdateCoins(coins);
+
+                    PopUp.Instance.ShowMessage($"Not enough coins !!");
+                    return;
+                }
+
+                UserData.coins = coins;
+                UpdateCoins(coins);
+
+                HintAction();
+                return;
+            }
+
+
+            HintAction();
+
+            HintAPI.DeductFreeHint((success) =>
+            {
+                if (!success)
+                {
+                    //  PopUp.Instance.ShowMessage("Unable to get the free hints");
+                }
+            });
+
+            return;
+        });
+    }
+
+    private void UpdateCoins(int coins)
+    {
+       coinText.text = coins.ToString();
+    }
+
+    public void HintAction()
+    {
+        if (currentQIndex > 5)
+            return;
+
+        int index = currentQIndex - 1;
+
+        if (index < 0)
+            index = 0;
+
+        string correctAnswer = questions[index].hint;
+
+        if (hintIndex > 7)
+            hintIndex = 0;
+
+        string position = hintIndex switch
+        {
+            0 => "first",
+            1 => "second",
+            2 => "third",
+            3 => "fourth",
+            4 => "fifth",
+            5 => "Sixth",
+            6 => "Seventh",
+            7 => "Eighth",
+            _ => throw new NotImplementedException()
+        };
+
+        string hintData = $"{position} letter is {correctAnswer[hintIndex]}";
+
+        hintIndex++;
+
+        string hintMessage = $"Hint:{hintData}";
+
+        LanguageController.Instance.Translate(hintMessage, (translation) =>
+        {
+            PopUp.Instance.ShowMessage(translation);
+        });
+    }
+    #endregion
 
     void ClearAll()
     {
