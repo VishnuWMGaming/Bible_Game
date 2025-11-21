@@ -68,6 +68,9 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
         settingsBtn.onClick.RemoveAllListeners();
         backBtn.onClick.RemoveAllListeners();
 
+        mPreviousBtn.onClick.RemoveAllListeners();
+        mNextBtn.onClick.RemoveAllListeners();
+
         splashObj.SetActive(true);
         mLevelObj.SetActive(false);
     }
@@ -210,7 +213,7 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
                 DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
 
                 if (level.coin_earn >= 20)
-                   cells[activeIndex].Get(level.chapter_id).Finish(true);
+                   cells[activeIndex]?.Get(level.chapter_id)?.Finish(true);
             }
     }
 
@@ -253,7 +256,7 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
                DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
 
                 if(level.coin_earn >=20)
-                cells[activeIndex].Get(level.chapter_id).Finish(true);
+                cells[activeIndex]?.Get(level.chapter_id)?.Finish(true);
             }
     }
 

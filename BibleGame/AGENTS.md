@@ -2,7 +2,7 @@
 - Project name: BibleGame
 - Unity version: Unity 6000.0.58f2
 - Active game object:
-  - Name: Grey_Level
+  - Name: LevelCanvas
   - Tag: Untagged
-  - Layer: Default
+  - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
