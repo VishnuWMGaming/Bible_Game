@@ -1,6 +1,7 @@
 using BibleGame;
 using BibleGame.API;
 using BibleGame.Data;
+using DebugUtils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -65,26 +66,44 @@ public class StrickPanel : MonoBehaviour
         UserData.gameid = streakData._id;
         UserData.bookId = streakData.book_id;
         UserData.bibleId = streakData.bible_id;
-        UserData.currentAge = streakData.age switch
+
+        PopUp.Instance.EnableLoad(true);
+        GetBiblesAPI.GetDetail((success, res) =>
         {
-            "1" => AgeGroup.kindergarden,
-            "2" => AgeGroup.elementary,
-            "3" => AgeGroup.teenagers,
-            "4" => AgeGroup.adult,
-            _=> AgeGroup.elementary
-        };
+            PopUp.Instance.EnableLoad(false);
 
-        UserData.testament = streakData.testament switch
-        {
-            "Old" => Testament.Old,
-            "New" => Testament.New,
-            _ => throw new System.NotImplementedException(),
-        };
+            if (!success)
+            {
+                Debug.LogError("Error in getting bible details");
+            }
 
-        Debug.Log($"<color=cyan> testamant: {UserData.testament} </color>");
+            DevDebug.Log($"Bible Name: {res.ResponseData.data.nameLocal}", DebugColor.Green);
 
-        UserData.coins = streakData.coins;
+            UserData.bibleName = res.ResponseData.data.nameLocal;
 
-        Actions.ChangePanelActions(CanvasType.level);
+            UserData.currentAge = streakData.age switch
+            {
+                "1" => AgeGroup.kindergarden,
+                "2" => AgeGroup.elementary,
+                "3" => AgeGroup.teenagers,
+                "4" => AgeGroup.adult,
+                _ => AgeGroup.elementary
+            };
+
+            UserData.testament = streakData.testament switch
+            {
+                "Old" => Testament.Old,
+                "New" => Testament.New,
+                _ => throw new System.NotImplementedException(),
+            };
+
+            Debug.Log($"<color=cyan> testamant: {UserData.testament} </color>");
+
+            UserData.coins = streakData.coins;
+
+            Actions.ChangePanelActions(CanvasType.level);
+
+        }, UserData.bibleId);
+       
     }
 }

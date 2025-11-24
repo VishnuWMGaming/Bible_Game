@@ -39,6 +39,9 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 
     [SerializeField] List<LevelData> levelDatas;
 
+    [Space]
+    [SerializeField] string mBook;
+
 
     private void OnEnable()
     {
@@ -83,6 +86,8 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
             Debug.LogError("Streak api id is null");
             return;
         }
+
+       
 
         PopUp.Instance.EnableLoad(true);
         StreakAPI.GetDetail((success, res) =>
@@ -155,16 +160,17 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 
                 scoreText.text = coins.ToString();
 
+                AppData.coins = coins;
+
                 if (levelDatas != null || levelDatas.Count != 0)
                     foreach (var level in levelDatas)
                     {
                         //DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
-                        if (level.coin_earn >= 20)
+                        //if (level.coin_earn >= 20)
                             cells[0].Get(level.chapter_id).Finish(true);
                     }
 
             }, UserData.bibleId, UserData.bookId);
-
 
         }, UserData.gameid);
     }
@@ -212,7 +218,7 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
             {
                 DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
 
-                if (level.coin_earn >= 20)
+               // if (level.coin_earn >= 20)
                    cells[activeIndex]?.Get(level.chapter_id)?.Finish(true);
             }
     }
@@ -255,7 +261,7 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
             {
                DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
 
-                if(level.coin_earn >=20)
+               // if(level.coin_earn >=20)
                 cells[activeIndex]?.Get(level.chapter_id)?.Finish(true);
             }
     }

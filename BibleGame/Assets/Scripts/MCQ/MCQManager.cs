@@ -299,7 +299,6 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
         wrongAnswer = 0;
 
-        scoreText.text = UserData.coins.ToString();
 
      //   Actions.UpdateCoins.Invoke(coins);
 
@@ -319,14 +318,14 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
             }
 
             Debug.Log("Submitting....");
-            UserData.coins = 20;
+          //  UserData.coins = 20;
 
             scoreText.text = UserData.coins.ToString();
 
             SubmitRequestData requestData = new SubmitRequestData()
             {
                 level_id = GameData.levelID,
-                coins = 20,
+                coins = UserData.coins,
                 ratings = 3,
                 question_data = null
             };
@@ -401,7 +400,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         if (currentQuestionIndex > questions.Count)
             return;
 
-        int index = currentQuestionIndex - 1;
+        int index = currentQuestionIndex;
 
         if (index < 0)
             index = 0;
@@ -417,6 +416,8 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
                       .FirstOrDefault()?.title;
 
         //string mhintAnswer = $"Hint : {wrongAnswer}";
+
+        DevDebug.Log($"Wrong Answer : {wrongAnswer}",DebugColor.Indigo);
 
         optionPanel.EnableInteractable(wrongAnswer, false);
 
@@ -455,7 +456,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
         optionPanel.SetOptions(questions[questionIndex]?.answers);
 
-       
+        scoreText.text = UserData.coins.ToString();
     }
 
     public int GetQuestionsCount()

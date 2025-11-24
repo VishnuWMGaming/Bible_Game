@@ -93,6 +93,8 @@ namespace BibleGame
 
                 WebRequest(url, jsonData, (url, success, adata) =>
                 {
+                    Debug.Log($"<color=#FFA500> Submit data : {adata.ToString()}</color>");
+
                     if (!success)
                     {
                         Debug.LogError($"No success in submitting answer {adata.ToString()}");

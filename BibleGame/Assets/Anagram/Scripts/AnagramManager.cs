@@ -235,6 +235,7 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
     public void UpdateCoins(int coins)
     {
         coinsText.text = coins.ToString();
+        UserData.coins = coins;
     }
 
     public void RestartAction()
@@ -255,7 +256,7 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
     public void SubmitAction()
     {
         Debug.Log("Submitting....");
-        UserData.coins = 20;
+
         UpdateCoins(UserData.coins);
 
         SubmitRequestData requestData = new SubmitRequestData()

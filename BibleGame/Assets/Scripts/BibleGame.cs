@@ -72,6 +72,8 @@ namespace BibleGame
             public static OTPData otpData;
             public static StartPage mCurrentPage;
 
+            public static int coins;
+
             public static List<BookData> bookDatas;
             public static Language mLanguage;
 
@@ -127,6 +129,7 @@ namespace BibleGame
         public class UserData
         {
             public static string bibleId;
+            public static string bibleName;
             public static string bookName;
             public static string bookId;
             public static string chapterId;
