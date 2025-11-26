@@ -8,6 +8,7 @@ using BibleGame.Data;
 using BibleGame.API;
 
 using System.Linq;
+using DebugUtils;
 
 public class Books : MonoBehaviour, IMBook
 {
@@ -34,6 +35,9 @@ public class Books : MonoBehaviour, IMBook
         //book4.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
         //book5.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
         //book6.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
+
+        ClearAll();
+        DevDebug.Log("Book loaded ...", DebugColor.Blue);
 
         Intialise();
     }

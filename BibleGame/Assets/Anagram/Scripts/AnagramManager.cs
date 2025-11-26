@@ -1,6 +1,7 @@
 using BibleGame;
 using BibleGame.API;
 using BibleGame.Data;
+using DebugUtils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,10 +12,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEngine.Tilemaps.Tilemap;
 
-public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
+public class AnagramManager : MonoBehaviour, ICorrectPanel
 {
-    [SerializeField] private Button homeBtn;
-    [SerializeField] private Button hintBtn;
     [SerializeField] private Button hintSubmitBtn;
     [SerializeField] private Button hintCloseBtn;
     [SerializeField] private Button rewardBtn;
@@ -32,90 +31,127 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
     [SerializeField] MScreenOriatation screenOriatation;
     [SerializeField] Button mScreenOrientButton;
 
+    [Space]
+    [SerializeField] List<GetQuestionsAnagramData> questions = new List<GetQuestionsAnagramData>();
+    public List<GetQuestionsAnagramData> Questions => questions;
+
+
 
     int hintIndex = 0;
 
     private void OnEnable()
     {
+        GameData.QIndex = 0;
+
         #region ORIENTATION
         PopUp.Instance.EnableLoad(true);
 
-        AppData.orientation = screenOriatation;
+        Actions.ChangeLandscape += Orientation;
+
+        mScreenOrientButton.interactable = false;
 
        // screenOriatation = MScreenOriatation.landscape;
-        mScreenOrientButton?.onClick.AddListener(() =>
+       mScreenOrientButton?.onClick.AddListener(() =>
         {
             screenOriatation = screenOriatation == MScreenOriatation.landscape ? MScreenOriatation.portrait : MScreenOriatation.landscape;
-            Orientation();
+            Orientation(screenOriatation);
         });
 
-        Orientation();
+        SetData(() =>
+        {
+            Orientation(screenOriatation);
+            PopUp.Instance.EnableLoad(false);
 
-        PopUp.Instance.EnableLoad(false);
+            mScreenOrientButton.interactable = true;
+        });
+
         #endregion
 
-        hintBtn.onClick.AddListener(UseHint);
-        hintPanel.SetActive(false);
-        homeBtn.onClick.AddListener(() =>
-        {
-            AudioManager.Instance.PlayButton();
-            Actions.StartPageAction(StartPage.game_menu);
-        });
-
-        rewardBtn.onClick.AddListener(() =>
-        {
-            AudioManager.Instance.PlayButton();
-            Actions.ChangePanelActions(CanvasType.reward);
-        });
-
-        hintBtn.onClick.AddListener(() =>
-        {
-            ShowHint();
-            AudioManager.Instance.PlayButton();
-        });
-
-        hintSubmitBtn.onClick.AddListener(() =>
-        {
-            UseHint();
-            AudioManager.Instance.PlayButton();
-
-        });
-
-        hintCloseBtn.onClick.AddListener(() =>
-        {
-            CloseHint();
-            AudioManager.Instance.PlayButton();
-        });
-
-        gameController.callback = this;
-
-        UpdateCoins(UserData.coins);
-
-        // hintBtn.gameObject.SetActive(false);
-
-       // AppData.orientation = MScreenOriatation.landscape;
     }
 
     private void OnDisable()
     {
-        homeBtn.onClick.RemoveAllListeners();
-        hintBtn.onClick.RemoveAllListeners();
         mScreenOrientButton?.onClick.RemoveAllListeners();
+
+        Actions.ChangeLandscape -= Orientation;
     }
 
-    void Orientation()
+    void SetData(Action onComplete)
     {
-        if(gameController != null)
-        gameController.gameObject.SetActive(false);
-
-        gameController = screenOriatation switch
+        int ageVal = UserData.currentAge switch
         {
-            MScreenOriatation.portrait => gameController_Portrait,
-            MScreenOriatation.landscape => gameController_Landscape,
+            AgeGroup.kindergarden => 1,
+            AgeGroup.elementary => 2,
+            AgeGroup.teenagers => 3,
+            AgeGroup.adult => 4,
+            _ => 1
         };
 
-        gameController.gameObject.SetActive(true);
-        gameController.callback = this;
+        GetQuestionsRequestData requestData = new GetQuestionsRequestData()
+        {
+            game_id = UserData.gameid,
+            ageGroup = ageVal.ToString(),
+            language = LanguageController.Instance.GetLangStringVal(AppData.mLanguage),
+            game_type = "anagram",
+            bible_id = UserData.bibleId,
+            chapter_id = UserData.chapterId,
+            book_id = UserData.bookId,
+        };
+
+        PopUp.Instance.EnableLoad(true);
+        GetQuestionsAPI.GetQuestionsAnagram((success, res) =>
+        {
+            PopUp.Instance.EnableLoad(false);
+            if (!success)
+            {
+                Debug.LogError("Error in getting question in anagram");
+                Actions.StartPageAction(StartPage.game_menu);
+                return;
+            }
+
+            GameData.levelID = res.ResponseData.levelData._id;
+
+            GameData.QIndex = 0;
+
+            questions = res.ResponseData.resArr;
+
+            GameData.anagramquestions = questions;
+
+            onComplete?.Invoke();
+
+            //GameInitilise(questions[currentQIndex]);
+
+            //callback.NextQAction();
+           // currentQIndex++;
+
+        }, requestData);
+
+    }
+
+    public void Orientation(MScreenOriatation mscreenOrientation, bool isLock = false, bool isReload = true)
+    {
+        mScreenOrientButton.interactable = !isLock;
+
+        if (isLock && screenOriatation == MScreenOriatation.landscape)
+            return;
+
+        screenOriatation = mscreenOrientation;
+        AppData.orientation = screenOriatation;
+
+        if(gameController != null)
+          gameController.gameObject.SetActive(false);
+
+         gameController = screenOriatation switch
+         {
+             MScreenOriatation.portrait => gameController_Portrait,
+             MScreenOriatation.landscape => gameController_Landscape,
+         };
+
+           // gameController.isReload = isReload;
+         gameController.gameObject.SetActive(true);
+         gameController.SetData(questions);
+
+        //gameController.callback = this;
     }
 
     public void NextQAction()
@@ -132,111 +168,111 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
         hintIndex = 0;
     }
 
-    private void UseHint()
-    {
-        HintAPI.GetFreeHint((success, res) =>
-        {
-            if (!success)
-            {
-                PopUp.Instance.ShowMessage("Unable to get the free hints");
-                return;
-            }
+    //private void UseHint()
+    //{
+    //    HintAPI.GetFreeHint((success, res) =>
+    //    {
+    //        if (!success)
+    //        {
+    //            PopUp.Instance.ShowMessage("Unable to get the free hints");
+    //            return;
+    //        }
 
-            int freeHints = res.ResponseData.freeHint;
+    //        int freeHints = res.ResponseData.freeHint;
 
-            if (freeHints <= 0)
-            {
-                int coins = UserData.coins;
-                coins -= 7;
-
-
-                if (coins < 0)
-                {
-                    coins = 0;
-                    UserData.coins = coins;
-                    UpdateCoins(coins);
-
-                    PopUp.Instance.ShowMessage($"Not enough coins !!");
-                    return;
-                }
-
-                UserData.coins = coins;
-                UpdateCoins(coins);
-
-                HintAction();
-                return;
-            }
+    //        if (freeHints <= 0)
+    //        {
+    //            int coins = UserData.coins;
+    //            coins -= 7;
 
 
-            HintAction();
+    //            if (coins < 0)
+    //            {
+    //                coins = 0;
+    //                UserData.coins = coins;
+    //                UpdateCoins(coins);
 
-            HintAPI.DeductFreeHint((success) =>
-            {
-                if (!success)
-                {
-                    //  PopUp.Instance.ShowMessage("Unable to get the free hints");
-                }
-            });
+    //                PopUp.Instance.ShowMessage($"Not enough coins !!");
+    //                return;
+    //            }
 
-            return;
-        });
-    }
+    //            UserData.coins = coins;
+    //            UpdateCoins(coins);
 
-    public void HintAction()
-    {
-        if (gameController.CurrentQIndex > 5)
-            return;
+    //            HintAction();
+    //            return;
+    //        }
 
-        int index = gameController.CurrentQIndex - 1;
 
-        if (index < 0)
-            index = 0;
+    //        HintAction();
 
-        string correctAnswer = gameController.Questions[index].hint;
+    //        HintAPI.DeductFreeHint((success) =>
+    //        {
+    //            if (!success)
+    //            {
+    //                //  PopUp.Instance.ShowMessage("Unable to get the free hints");
+    //            }
+    //        });
 
-        if (hintIndex > 7)
-            hintIndex = 0;
+    //        return;
+    //    });
+    //}
 
-        string position = hintIndex switch
-        {
-            0 => "first",
-            1 => "second",
-            2 => "third",
-            3 => "fourth",
-            4 => "fifth",
-            5 => "Sixth",
-            6 => "Seventh",
-            7 => "Eighth",
-            _ => throw new NotImplementedException()
-        };
+    //public void HintAction()
+    //{
+    //    if (gameController.CurrentQIndex > 5)
+    //        return;
 
-        string hintData = $"{position} letter is {correctAnswer[hintIndex]}";
+    //    int index = gameController.CurrentQIndex - 1;
 
-        hintIndex++;
+    //    if (index < 0)
+    //        index = 0;
 
-        string hintMessage = $"Hint:{hintData}";
+    //    string correctAnswer = gameController.Questions[index].hint;
 
-        LanguageController.Instance.Translate(hintMessage, (translation) =>
-        {
-            PopUp.Instance.ShowMessage(translation);
-        });
-    }
+    //    if (hintIndex > 7)
+    //        hintIndex = 0;
+
+    //    string position = hintIndex switch
+    //    {
+    //        0 => "first",
+    //        1 => "second",
+    //        2 => "third",
+    //        3 => "fourth",
+    //        4 => "fifth",
+    //        5 => "Sixth",
+    //        6 => "Seventh",
+    //        7 => "Eighth",
+    //        _ => throw new NotImplementedException()
+    //    };
+
+    //    string hintData = $"{position} letter is {correctAnswer[hintIndex]}";
+
+    //    hintIndex++;
+
+    //    string hintMessage = $"Hint:{hintData}";
+
+    //    LanguageController.Instance.Translate(hintMessage, (translation) =>
+    //    {
+    //        PopUp.Instance.ShowMessage(translation);
+    //    });
+    //}
 
     public void UpdateScore()
     {
-        int coins = UserData.coins;
+        //int coins = UserData.coins;
 
-        coins += 4;
-        UserData.coins = coins;
+        //coins += 4;
+        //UserData.coins = coins;SW
 
-        UpdateCoins(coins);
+       // UpdateCoins(coins);
     }
 
-    public void UpdateCoins(int coins)
-    {
-        coinsText.text = coins.ToString();
-        UserData.coins = coins;
-    }
+    //public void UpdateCoins(int coins)
+    //{
+    //    coinsText.text = coins.ToString();
+    //    UserData.coins = coins;
+    //}
 
     public void RestartAction()
     {
@@ -253,36 +289,6 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel, IAnagramControl
        
     }
 
-    public void SubmitAction()
-    {
-        Debug.Log("Submitting....");
-
-        UpdateCoins(UserData.coins);
-
-        SubmitRequestData requestData = new SubmitRequestData()
-        {
-            level_id = GameData.levelID,
-            coins = 20,
-            ratings = 3,
-            question_data = null
-        };
-
-        PopUp.Instance.EnableLoad(true);
-
-        GetQuestionsAPI.SubmitAnswer((success, res) =>
-        {
-            PopUp.Instance.EnableLoad(false);
-            if (!success)
-            {
-                Debug.LogError("Error in submitting the answer");
-                return;
-            }
-
-            Debug.Log("<color=green>Submitted </color>");
-            Actions.ChangePanelActions(CanvasType.home);
-
-        }, requestData);
-    }
 }
 
 public enum MScreenOriatation { portrait, landscape }

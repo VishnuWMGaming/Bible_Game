@@ -1,12 +1,12 @@
+using BibleGame;
 using BibleGame.API;
+using BibleGame.Data;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
-
-using BibleGame.Data;
 using static BibleGame.API.GetBiblesAPI;
-using BibleGame;
 
 public class BiblePanel : MonoBehaviour,IBible
 {
@@ -67,13 +67,14 @@ public class BiblePanel : MonoBehaviour,IBible
 
     }
 
-    public void BibleSelect(string id)
+    public void BibleSelect(string id,string name)
     {
         if (string.IsNullOrEmpty(id))
             return;
 
-        Debug.Log($"<color= green> Bible:{id} is selected </color>");
+        Debug.Log($"<color= green> Bible:{id} {name} is selected </color>");
 
+        UserData.bibleName = name ;
         UserData.bibleId = id;
         Actions.ChangePanelActions(CanvasType.testament);
     }

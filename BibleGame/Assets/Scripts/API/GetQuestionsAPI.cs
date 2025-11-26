@@ -136,6 +136,7 @@ namespace BibleGame
             public string level_id;
             public int coins;
             public int ratings;
+            public int queAttempCount;
             public List<string> question_data;
         }
 
@@ -198,6 +199,7 @@ namespace BibleGame
         [Serializable]
         public class LevelData
         {
+            public int queAttempCount;
             public string _id;
             public string game_id;
             public string chapter_id;

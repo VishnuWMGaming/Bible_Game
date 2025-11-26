@@ -1,17 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-using UnityEngine.UI;
-using TMPro;
-
 using BibleGame;
 using BibleGame.API;
-using UnityEngine.Serialization;
 using BibleGame.Data;
-using System;
 using DebugUtils;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using TMPro;
+using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 {
@@ -54,12 +53,22 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     /// </summary>
     private void OnEnable()
     {
+        UserData.coins = AppData.coins;
+
         questionPanel.gameObject.SetActive(true);
 
         optionPanel.callback = this;
         correctPanel.callback = this;
 
-        _homeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.StartPageAction(StartPage.game_menu); });
+        _homeBtn.onClick.AddListener(() => 
+        {
+            AudioManager.Instance.PlayButton();
+            SubmitAction(() => 
+            {
+                Actions.StartPageAction(StartPage.game_menu);
+            });
+        });
+
         _submitBtn.onClick.AddListener(() => 
         {
             AudioManager.Instance.PlayButton();
@@ -293,9 +302,9 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
     public void NextAction()
     {
-        int coins = UserData.coins;
-        coins += 4;
-        UserData.coins = coins;
+        UserData.coins += 4;
+
+        UpdateCoins(UserData.coins);
 
         wrongAnswer = 0;
 
@@ -311,41 +320,57 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         }
         else
         {
-            if(String.IsNullOrEmpty(GameData.levelID))
+
+            SubmitAction(() =>
             {
-                Debug.LogError("level id is not initialised");
+                Actions.ChangePanelActions(CanvasType.home);
+            });
+        }
+    }
+
+
+    public void SubmitAction(Action onComplete)
+    {
+        if (String.IsNullOrEmpty(GameData.levelID))
+        {
+            Debug.LogError("level id is not initialised");
+            return;
+        }
+
+        Debug.Log("Submitting....");
+        //  UserData.coins = 20;
+
+        scoreText.text = UserData.coins.ToString();
+
+        int coins = AppData.coins - UserData.coins;
+        if(coins <=0)
+            coins = 0;
+
+        SubmitRequestData requestData = new SubmitRequestData()
+        {
+            level_id = GameData.levelID,
+            coins = coins,
+            ratings = 3,
+            queAttempCount = currentQuestionIndex,
+            question_data = null
+        };
+
+        PopUp.Instance.EnableLoad(true);
+        GetQuestionsAPI.SubmitAnswer((success, res) =>
+        {
+            PopUp.Instance.EnableLoad(false);
+            if (!success)
+            {
+                Debug.LogError("Error in submitting the answer");
                 return;
             }
 
-            Debug.Log("Submitting....");
-          //  UserData.coins = 20;
+            Debug.Log("<color=green>Submitted </color>");
+            onComplete?.Invoke();
 
-            scoreText.text = UserData.coins.ToString();
+            //Actions.ChangePanelActions(CanvasType.home);
 
-            SubmitRequestData requestData = new SubmitRequestData()
-            {
-                level_id = GameData.levelID,
-                coins = UserData.coins,
-                ratings = 3,
-                question_data = null
-            };
-
-            PopUp.Instance.EnableLoad(true);
-            GetQuestionsAPI.SubmitAnswer((success,res) =>
-            {
-                PopUp.Instance.EnableLoad(false);
-                if (!success)
-                {
-                    Debug.LogError("Error in submitting the answer");
-                    return;
-                }
-
-                Debug.Log("<color=green>Submitted </color>");
-                Actions.ChangePanelActions(CanvasType.home);
-
-            }, requestData);
-
-        }
+        }, requestData);
     }
 
     private void ShowHint()
@@ -368,14 +393,13 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
                 if (coins < 0)
                 {
                     coins = 0;
-                    UserData.coins = coins;
+                    UpdateCoins(coins);
 
                     PopUp.Instance.ShowMessage($"Not enough coins !!");
                     return;
                 }
 
-                UserData.coins = coins;
-                scoreText.text = UserData.coins.ToString();
+                UpdateCoins(coins);
 
                 HintAction();
                 return;
@@ -431,6 +455,12 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         //});
     }
 
+    void UpdateCoins(int coins)
+    {
+        UserData.coins = coins;
+        scoreText.text = UserData.coins.ToString();
+    }
+
     private void CloseHint()
     {
         hintPanel.SetActive(false);
@@ -456,7 +486,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
         optionPanel.SetOptions(questions[questionIndex]?.answers);
 
-        scoreText.text = UserData.coins.ToString();
+        UpdateCoins(UserData.coins);
     }
 
     public int GetQuestionsCount()

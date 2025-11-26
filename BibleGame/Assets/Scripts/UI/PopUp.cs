@@ -41,35 +41,20 @@ public class PopUp : MonoBehaviour
     {
         //loadingPanel.SetActive(enable);
 
-        if (AppData.orientation == null)
-            AppData.orientation = MScreenOriatation.portrait;
-
-        loadingPanel_Landscape.SetActive(false);
         loadingPanel_Portrait.SetActive(false);
 
-        Debug.Log($"ORIENTTION : {AppData.orientation}");
-
-        switch(AppData.orientation)
-        {
-           case MScreenOriatation.landscape:
-                loadingPanel_Landscape.SetActive(enable);
-                break;
-
-            case MScreenOriatation.portrait:
-                loadingPanel_Portrait.SetActive(enable);
-                break;
-        }
+        loadingPanel_Portrait.SetActive(enable);
     }
 
-    public void ShowMessage(string message,UnityAction closeAction = null)
+    public void ShowMessage(string message,UnityAction closeAction = null,MScreenOriatation mScreenOriatation = MScreenOriatation.portrait)
     {
         if (AppData.orientation == null)
             AppData.orientation = MScreenOriatation.portrait;
 
         panel_Portrait.gameObject.SetActive(false);
         panel_Landscape.gameObject.SetActive(false);
-        
-        PanelPop panelPop = AppData.orientation == MScreenOriatation.portrait ? panel_Portrait : panel_Landscape;
+
+        PanelPop panelPop = mScreenOriatation == MScreenOriatation.portrait? panel_Portrait : panel_Landscape;
 
         panelPop.gameObject.SetActive(true);
 

@@ -29,6 +29,7 @@ public class TestamentPanel : MonoBehaviour
 
         AppData.mCurrentPage = StartPage.book;
         Actions.ChangePanelActions(CanvasType.chapter);
+        Actions.StartPageAction(StartPage.book);
     }
 
     public void NewTestamentAction()

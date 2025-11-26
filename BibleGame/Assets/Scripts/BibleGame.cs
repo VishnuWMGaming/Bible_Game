@@ -62,6 +62,10 @@ namespace BibleGame
         public static Action<StartPage> StartPageAction;
         public static Action<Action> UpdateText;
         public static Action<int> UpdateCoins;
+
+        public static Action ResetBoxPosAction;
+
+        public static Action<MScreenOriatation,bool,bool> ChangeLandscape;
     }
 
    namespace Data
@@ -69,10 +73,15 @@ namespace BibleGame
         public static class AppData
         {
             public static LoginData loginData;
-            public static OTPData otpData;
+            public static OTPData mforgetotpData;
+            public static OTPData mSignOtpData;
+
+            public static OTPType otpPage;
+
             public static StartPage mCurrentPage;
 
             public static int coins;
+            public static int mSavedcoins;
 
             public static List<BookData> bookDatas;
             public static Language mLanguage;

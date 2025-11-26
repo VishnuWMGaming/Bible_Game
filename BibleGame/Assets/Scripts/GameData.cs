@@ -9,6 +9,10 @@ public static class GameData
     private static List<Question> Questions;
     public static List<ChapterData> mChapterDatas;
 
+    public static List<GetQuestionsAnagramData>  anagramquestions;
+
+    public static int QIndex = 0;
+
     public static string levelID;
 
     public static void SetChapters(List<Chapter> chapters)

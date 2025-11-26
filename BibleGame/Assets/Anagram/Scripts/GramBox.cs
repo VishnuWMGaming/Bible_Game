@@ -1,5 +1,7 @@
+using BibleGame;
 using BibleGame.Data;
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -112,7 +114,14 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         isDragging = false;
         m_IsAble = true;
 
+        Actions.ResetBoxPosAction += ResetBoxAct;
+
         SetLetter();
+    }
+
+    private void OnDisable()
+    {
+        Actions.ResetBoxPosAction -= ResetBoxAct;
     }
 
     public void SetStartPos(Vector2 startPosition , Vector3 worldPos)
@@ -147,7 +156,7 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         this.startPosition = boxTransform.anchoredPosition;
 
 
-        boxTransform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+//        boxTransform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
     }
 
     public Vector2 GetStartPos()
@@ -171,6 +180,7 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     {
         if (!isEnable) return;
         if (isCorrect) return;
+        if (!m_IsAble) return;
 
         if (!isDragging) return;
 
@@ -205,17 +215,18 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         callback.UpdatedPos(index, boxTransform.anchoredPosition);
     }
 
-    public void SetPos(Vector2 pos, int newIndex, bool isRun = false)
+    public void SetPos(Vector2 pos, int newIndex,Action onComplete = null ,bool isRun = false)
     {
         if (!isEnable) return;
         if (isCorrect) return;
 
-        if (isRun)
-            boxTransform.DOAnchorPos(pos, 0.2f);
-
         index = newIndex;
 
-        startPosition = pos;
+        if(startPosition != pos)
+           startPosition = pos;
+
+        if (isRun && !m_IsAble)
+            boxTransform.DOAnchorPos(pos, 0.2f).OnComplete(()=> onComplete?.Invoke());
     }
 
     public void SetLetter()
@@ -253,20 +264,28 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         letterText.color = enable ? Color.green : Color.red;
     }
 
-    public void SetImage(Sprite sprite)
+    public void SetImage(AgeGroup group)
     {
         //if (!isEnable) return;
 
-        image.sprite = sprite;
-        image.SetNativeSize();
+        image.color = group switch
+        {
+            AgeGroup.adult => new Color32(129, 227, 250, 70),
+            _ => new Color32(224, 141, 43, 100)
+        };
 
-        Vector2 size = boxTransform.sizeDelta;
-        boxTransform.sizeDelta = new Vector2(size.x / 4, size.y / 4);
+        //image.sprite = sprite;
+        //image.SetNativeSize();
+
+       // Vector2 size = boxTransform.sizeDelta;
+      //  boxTransform.sizeDelta = new Vector2(size.x / 4, size.y / 4);
     }
    
     public void OnEndDrag(PointerEventData eventData)
     {
         if (!isEnable) return;
+        if (!m_IsAble) return;
+        if (isCorrect) return;
 
         if (!isDragging)
             return;
@@ -275,6 +294,14 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         boxTransform.DOAnchorPos(startPosition, 0.2f);
 
         callback.ResultAction();
+    }
+
+    public void ResetBoxAct()
+    {
+        if (!isEnable) return;
+        if (isCorrect) return;
+
+        boxTransform.anchoredPosition = startPosition;
     }
 
     public void Restart()

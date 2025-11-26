@@ -117,9 +117,10 @@ public class SignPanel : MonoBehaviour
         if (success && response.succeeded)
         {
             Debug.Log("Response data >>>" + response.ResponseData);
-            AppData.otpData = new OTPData(response.ResponseData.otp,OTPType.sign);
+            AppData.mSignOtpData = new OTPData(response.ResponseData.otp,OTPType.sign);
             AppData.loginData = new LoginData(email_InputField.text, password_InputFieldConfirm.Text, name_InputField.text, churchName_InputField.text);
 
+            AppData.otpPage = OTPType.sign;
             Actions.ChangePanelActions(CanvasType.otp);
         }
         else

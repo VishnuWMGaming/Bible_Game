@@ -32,8 +32,8 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
     {
         //coverPanel.caklback = this;
 
-        if (AppData.mCurrentPage != null)
-            SelectPage(AppData.mCurrentPage);
+        //if (AppData.mCurrentPage != null)
+        //    SelectPage(AppData.mCurrentPage);
 
         Actions.StartPageAction += SelectPage;
 

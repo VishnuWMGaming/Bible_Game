@@ -166,7 +166,8 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
                     foreach (var level in levelDatas)
                     {
                         //DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
-                        //if (level.coin_earn >= 20)
+
+                        if (level.queAttempCount >= 5)
                             cells[0].Get(level.chapter_id).Finish(true);
                     }
 
@@ -174,7 +175,6 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 
         }, UserData.gameid);
     }
-
 
     #region NAVIGATION
 
@@ -218,8 +218,8 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
             {
                 DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
 
-               // if (level.coin_earn >= 20)
-                   cells[activeIndex]?.Get(level.chapter_id)?.Finish(true);
+                if (level.queAttempCount >= 5)
+                    cells[activeIndex]?.Get(level.chapter_id)?.Finish(true);
             }
     }
 
@@ -261,8 +261,8 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
             {
                DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
 
-               // if(level.coin_earn >=20)
-                cells[activeIndex]?.Get(level.chapter_id)?.Finish(true);
+                if (level.queAttempCount >= 5)
+                    cells[activeIndex]?.Get(level.chapter_id)?.Finish(true);
             }
     }
 

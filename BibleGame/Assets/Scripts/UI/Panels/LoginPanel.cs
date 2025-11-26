@@ -142,13 +142,12 @@ public class LoginPanel : MonoBehaviour
             {
                 PopUp.Instance.EnableLoad(false);
                 PopUp.Instance.ShowMessage("OTP not verified !!");
-                AppData.otpData = new OTPData(response.ResponseData.otp, OTPType.sign);
+                AppData.mSignOtpData = new OTPData(response.ResponseData.otp, OTPType.sign);
                 Actions.ChangePanelActions(CanvasType.otp);
                 return;
             }
 
             GetProfile();
-            
         }
         else
         {

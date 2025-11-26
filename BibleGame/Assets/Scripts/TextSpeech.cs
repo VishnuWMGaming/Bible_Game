@@ -108,6 +108,10 @@ public class TextSpeech : MonoBehaviour
                 _textToSpeech.Speak(filteredVal, langCode, float.Parse("0.8", CultureInfo.InvariantCulture));
                 await Spoke(FinishEvent);
 
+#if UNITY_IOS
+                await Task.Delay(3000);
+#endif
+
                 Debug.Log("Going to next line....");
             }
 
