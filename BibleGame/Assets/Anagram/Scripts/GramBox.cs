@@ -80,9 +80,10 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
     public void Enable(bool enable) 
     { 
-        isEnable = enable; 
+        isEnable = enable;
+        layout.ignoreLayout = !enable;
 
-        if(!isEnable) index = -1;
+        if (!isEnable) index = -1;
 
        Color32 colorT = letterText.color;
        letterText.color = enable? new Color32(colorT.r, colorT.g, colorT.b, 225) : new Color32(colorT.r, colorT.g, colorT.b, 0);
@@ -91,8 +92,6 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         Color32 colorI = image.color;
         image.color = enable? new Color32(colorI.r, colorI.g, colorI.b, 225) : new Color32(colorI.r, colorI.g, colorI.b, 0);
         image.raycastTarget = enable;
-
-        layout.ignoreLayout = !enable;
     }
 
     public IBox callback;
@@ -292,6 +291,8 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
         isDragging = false;
         boxTransform.DOAnchorPos(startPosition, 0.2f);
+
+        Actions.ResetBoxPosAction();
 
         callback.ResultAction();
     }

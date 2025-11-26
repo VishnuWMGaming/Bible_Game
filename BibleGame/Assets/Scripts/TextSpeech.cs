@@ -1,10 +1,12 @@
-using BibleGame.Data;
+﻿using BibleGame.Data;
+using DebugUtils;
 using NativeTextToSpeech;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -27,6 +29,13 @@ public class TextSpeech : MonoBehaviour
     UnityEvent FinishEvent;
 
     bool isPlaying = false;
+
+    CancellationTokenSource cts;
+
+    private void Awake()
+    {
+        cts = new CancellationTokenSource();
+    }
 
     private void OnEnable()
     {
@@ -51,11 +60,16 @@ public class TextSpeech : MonoBehaviour
         mtext = text;
 
         mButton.interactable = isButton;
+
+        cts = new CancellationTokenSource();
     }
 
     private void OnDisable()
     {
         mButton?.onClick.RemoveAllListeners();
+
+        cts.Cancel();
+        cts.Dispose();
     }
 
 
@@ -76,17 +90,20 @@ public class TextSpeech : MonoBehaviour
             return;
 
         string langCode = LanguageController.Instance.GetLangVoiceCode(AppData.mLanguage);
-        Debug.Log($"<color=magenta> Speaking..... {langCode} </color>");
+       
 
-        if (mtext.Length > 500)
+        if (mtext.Length > 300)
         {
             string[] versesArray = mtext.Split(new[] { "\r\n", "\r", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
             List<string> versesList = new List<string>(versesArray);
 
-           
-            for (int i = 0; i < versesList.Count; ++i)
+            DevDebug.Log($" Speaking..... {versesList.Count} </color>",DebugColor.Magenta);
+
+            int count = versesList.Count;
+
+            for (int i = 0; i < count; ++i)
             {
-                Debug.Log("Next line speaking....");
+                DevDebug.Log($"Next line speaking....{count} =>{i}",DebugColor.Violet);
 
                 animator.enabled = true;
                 animator.speed = 1.0f;
@@ -106,7 +123,7 @@ public class TextSpeech : MonoBehaviour
                 //}
 
                 _textToSpeech.Speak(filteredVal, langCode, float.Parse("0.8", CultureInfo.InvariantCulture));
-                await Spoke(FinishEvent);
+                await Spoke(FinishEvent, cts.Token);
 
 #if UNITY_IOS
                 await Task.Delay(3000);
@@ -131,7 +148,7 @@ public class TextSpeech : MonoBehaviour
          isPlaying = true;
 
         _textToSpeech.Speak(mtext, langCode , float.Parse("0.8", CultureInfo.InvariantCulture));
-        await Spoke(FinishEvent);
+        await Spoke(FinishEvent,cts.Token);
 
         if(mButton )
           mButton.image.sprite = mInitialSprite;
@@ -139,18 +156,30 @@ public class TextSpeech : MonoBehaviour
 
     }
 
-    public Task Spoke(UnityEvent unityEvent)
+    public Task Spoke(UnityEvent unityEvent, CancellationToken token)
     {
         var tcs = new TaskCompletionSource<bool>();
 
         UnityAction handler = null;
+
         handler = () =>
         {
-            tcs.TrySetResult(true);          // Mark the task as completed
-            unityEvent.RemoveListener(handler); // Remove listener after invoked
+            if (!tcs.Task.IsCompleted)
+                tcs.TrySetResult(true);
+
+            unityEvent.RemoveListener(handler);
         };
 
         unityEvent.AddListener(handler);
+
+        // When the token is cancelled → cancel the Task
+        token.Register(() =>
+        {
+            if (!tcs.Task.IsCompleted)
+                tcs.TrySetCanceled();
+
+            unityEvent.RemoveListener(handler);
+        });
 
         return tcs.Task;
     }
@@ -179,6 +208,9 @@ public class TextSpeech : MonoBehaviour
 #endif
 
 #endif
+
+        cts.Cancel();  
+        cts.Dispose();
 
     }
 

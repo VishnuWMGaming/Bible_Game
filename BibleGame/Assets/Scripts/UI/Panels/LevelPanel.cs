@@ -158,6 +158,9 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
                      coins += item.coin_earn;
                  }
 
+                if(coins <=0)
+                    coins = 0;
+
                 scoreText.text = coins.ToString();
 
                 AppData.coins = coins;

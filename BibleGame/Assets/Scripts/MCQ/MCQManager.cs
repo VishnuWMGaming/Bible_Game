@@ -337,13 +337,14 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
             return;
         }
 
-        Debug.Log("Submitting....");
+        int coins = AppData.coins > 0 ? UserData.coins - AppData.coins : UserData.coins;
+
+        Debug.Log($"Submitting.... {AppData.coins} - {UserData.coins} = {coins} ");
         //  UserData.coins = 20;
 
         scoreText.text = UserData.coins.ToString();
 
-        int coins = AppData.coins - UserData.coins;
-        if(coins <=0)
+        if (coins ==0)
             coins = 0;
 
         SubmitRequestData requestData = new SubmitRequestData()
@@ -387,17 +388,17 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
             if (freeHints <= 0)
             {
+                if(UserData.coins < 7)
+                {
+                    PopUp.Instance.ShowMessage($"Not enough coins !!");
+                    return;
+                }
+
                 int coins = UserData.coins;
                 coins -= 7;
 
                 if (coins < 0)
-                {
-                    coins = 0;
-                    UpdateCoins(coins);
-
-                    PopUp.Instance.ShowMessage($"Not enough coins !!");
-                    return;
-                }
+                coins = 0;
 
                 UpdateCoins(coins);
 
