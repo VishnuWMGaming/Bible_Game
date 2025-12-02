@@ -6,14 +6,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static BibleGame.API.GetBiblesAPI;
 
-public class StrickPanel : MonoBehaviour
+public class StrickPanel : MonoBehaviour,IStrick
 {
-    [SerializeField] Button streak1Btn;
-    [SerializeField] Button streak2Btn;
     [SerializeField] Button newGame;
 
     [SerializeField] Button homeBtn;
@@ -24,30 +24,32 @@ public class StrickPanel : MonoBehaviour
     [SerializeField] PostImage iPic;
 
 
+    [Header("Streak Settings:")]
+    [SerializeField] GameObject strickObj;
+    [SerializeField] Transform mStrkParent;
+    [SerializeField] GameObject noStreakObj;
+  
     private void OnEnable()
     {
         newGame?.onClick.AddListener(NewGame);
         homeBtn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
-
-        streak1Btn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); GetStreak(0); });
-        streak2Btn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); GetStreak(StreakAPI.streakDatas.Count -1); });
-
-        streak1Btn.gameObject.SetActive(StreakAPI.streakDatas.Count >= 1);
-        streak2Btn.gameObject.SetActive(StreakAPI.streakDatas.Count >= 2);
+        
 
         userName.text = AppData.loginData.Name;
 
         if(AppData.loginData.Pic != null)
         iPic.SetRightSize(AppData.loginData.Pic, true);
 
+        noStreakObj.SetActive(false);
+        Init();
     }
 
     private void OnDisable()
     {
-        streak1Btn?.onClick.RemoveAllListeners();
-        streak2Btn?.onClick.RemoveAllListeners();
         newGame?.onClick.RemoveAllListeners();
         homeBtn?.onClick.RemoveAllListeners();
+
+        ClearAll();
     }
 
 
@@ -56,10 +58,74 @@ public class StrickPanel : MonoBehaviour
         Actions.ChangePanelActions(CanvasType.ageSelect);
     }
 
-    void GetStreak(int index)
+
+    async void Init()
+    {
+        if (StreakAPI.streakDatas == null || StreakAPI.streakDatas.Count == 0)
+        {
+            noStreakObj.SetActive(true);
+            return;
+        }
+
+        for (int i = 0; i< StreakAPI.streakDatas.Count; i++) 
+        {
+            var data = StreakAPI.streakDatas[i];
+
+            GameObject go = Instantiate(strickObj, mStrkParent);
+
+            Strick strck = go.GetComponent<Strick>();
+
+            string bibleCode = "NIL";
+
+            var tcs = new TaskCompletionSource<(bool success, GetBibleDetailResponse res)>();
+
+            GetBiblesAPI.GetDetail((success, res) =>
+            {
+                tcs.TrySetResult((success, res));
+            }, data.bible_id);
+
+
+            var result = await tcs.Task;
+
+
+            if (!result.success)
+            {
+                Debug.LogError("Error in getting bible details");
+                return;
+            }
+
+            bibleCode = result.res.ResponseData.data.nameLocal;
+
+            bibleCode = bibleCode switch
+            {
+                "King James Version" => "KJV",
+                "The Holy Bible, American Standard Version" => "ASV"
+            };
+
+            string age = data.age switch
+            {
+                "1" => "kindergarden",
+                "2" => "Elementary",
+                "3" => "Teenagers",
+                "4" => "Adult",
+                _ => "Adult"
+            };
+
+            string title = $"<b>{bibleCode},{data.book_id}</b>\n<size=15>{age}\n{data.testament} Testamant</size>";
+
+            strck.Init(title, i,this);
+          
+        }
+    }
+
+
+    public  void GetStreak(int index)
     {
         if (StreakAPI.streakDatas == null || StreakAPI.streakDatas.Count == 0)
             return;
+
+        AudioManager.Instance.PlayButton();
+        DevDebug.Log($"Streak index: {index}", DebugColor.Turquoise);
 
         StreakData streakData = StreakAPI.streakDatas[index];
 
@@ -105,5 +171,17 @@ public class StrickPanel : MonoBehaviour
 
         }, UserData.bibleId);
        
+    }
+
+    void ClearAll()
+    {
+        if (mStrkParent.childCount <= 0)
+            return;
+
+        for(int i = 0; i< mStrkParent.childCount; i++)
+        {
+            GameObject go = mStrkParent.GetChild(i).gameObject;
+            Destroy(go);
+        }
     }
 }

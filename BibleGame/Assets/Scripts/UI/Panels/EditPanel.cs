@@ -1,16 +1,15 @@
+using BibleGame;
+using BibleGame.API;
+using BibleGame.Data;
+using BibleGame.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-
-using UnityEngine.UI;
-
-using BibleGame.API;
-using BibleGame;
-using BibleGame.Data;
 using UnityEngine.Events;
-using BibleGame.Utility;
+using UnityEngine.UI;
 
 public class EditPanel : MonoBehaviour
 {
@@ -74,7 +73,24 @@ public class EditPanel : MonoBehaviour
                 // Optional: Get file name
                 string fileName = System.IO.Path.GetFileName(path);
 
-                Sprite sprite =  Utils.LoadSpriteFromBytes(imageData);
+                Texture2D texture = NativeGallery.LoadImageAtPath(path, maxSize: 2048, false);
+
+                if (texture == null)
+                {
+                    PopUp.Instance.EnableLoad(false);
+
+                    Debug.LogError("Couldn't load texture from: " + path);
+                    PopUp.Instance.ShowMessage("Unable to save the profile.Please try again");
+
+                    return;
+                }
+
+                imageData = texture.EncodeToJPG(70);
+
+                Sprite sprite = Sprite.Create(texture,
+                                 new Rect(0, 0, texture.width, texture.height),
+                                 new Vector2(0.5f, 0.5f));
+
                 pic.SetRightSize(sprite, true);
 
                 AppData.loginData.UpdateSprite(sprite);
@@ -86,7 +102,6 @@ public class EditPanel : MonoBehaviour
 
                 currentForm.AddBinaryData("image", imageData, fileName, mimeType);
 
-                
                 ProfileAPI.EditPic((success) =>
                 {
                     PopUp.Instance.EnableLoad(false);
@@ -99,7 +114,6 @@ public class EditPanel : MonoBehaviour
                     PopUp.Instance.ShowMessage("Profile pic updated successfully");
 
                 }, currentForm);
-               
             }
 
         }, "Select an image", "image/*");
