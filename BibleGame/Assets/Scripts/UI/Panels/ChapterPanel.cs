@@ -53,6 +53,13 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
         Actions.StartPageAction -= SelectPage;
         settingsBtn?.onClick.RemoveAllListeners();
         homeBtn?.onClick.RemoveAllListeners();
+
+        booksPanel.SetActive(false);
+        chapterPanel.SetActive(false);
+        mCQManager.gameObject.SetActive(false);
+        anagramManager.gameObject.SetActive(false);
+        selectGame.gameObject.SetActive(false);
+        chapters.gameObject.SetActive(false);
     }
 
 

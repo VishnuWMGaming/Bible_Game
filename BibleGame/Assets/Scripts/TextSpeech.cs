@@ -68,16 +68,26 @@ public class TextSpeech : MonoBehaviour
     {
         mButton?.onClick.RemoveAllListeners();
 
-        cts.Cancel();
-        cts.Dispose();
+        if (cts != null && !cts.IsCancellationRequested)
+        {
+            cts.Cancel();
+            cts.Dispose();
+        }
     }
 
 
     public async void Speak()
     {
+        if (cts != null && !cts.IsCancellationRequested)
+        {
+            cts.Cancel();
+            cts.Dispose();
+        }
+
+        cts = new CancellationTokenSource();
 
 #if !UNITY_EDITOR
-        if(isPlaying)
+        if (isPlaying)
         {
             Stop();
             return;
@@ -126,7 +136,7 @@ public class TextSpeech : MonoBehaviour
                 await Spoke(FinishEvent, cts.Token);
 
 #if UNITY_IOS
-                await Task.Delay(3000);
+                await Task.Delay(1500);
 #endif
 
                 Debug.Log("Going to next line....");
@@ -142,7 +152,7 @@ public class TextSpeech : MonoBehaviour
         //filtered = Regex.Replace(filtered, @"\s+", " ");
         //filtered = filtered.Trim();
 
-         animator.enabled = true;
+        animator.enabled = true;
         animator.speed = 1.0f;
 
          isPlaying = true;
@@ -208,10 +218,11 @@ public class TextSpeech : MonoBehaviour
 #endif
 
 #endif
-
-        cts.Cancel();  
-        cts.Dispose();
-
+        if (cts != null && !cts.IsCancellationRequested)
+        {
+            cts.Cancel();
+            cts.Dispose();
+        }
     }
 
     void ResetAction()

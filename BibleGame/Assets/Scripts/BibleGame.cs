@@ -63,7 +63,9 @@ namespace BibleGame
         public static Action<Action> UpdateText;
         public static Action<int> UpdateCoins;
 
-        public static Action ResetBoxPosAction;
+        public static Action<bool> ResetBoxPosAction;
+
+        public static Action ApplyStyleAction;
 
         public static Action<MScreenOriatation,bool,bool> ChangeLandscape;
     }

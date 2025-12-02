@@ -1,5 +1,6 @@
 using BibleGame;
 using BibleGame.Data;
+using DebugUtils;
 using DG.Tweening;
 using System;
 using System.Collections;
@@ -72,6 +73,8 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     [Space]
     [SerializeField] bool isLandscape;
 
+    [SerializeField] bool isEnd = false;
+
     private void Awake()
     {
        // boxTransform = GetComponent<RectTransform>();
@@ -92,6 +95,8 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         Color32 colorI = image.color;
         image.color = enable? new Color32(colorI.r, colorI.g, colorI.b, 225) : new Color32(colorI.r, colorI.g, colorI.b, 0);
         image.raycastTarget = enable;
+
+        isEnd = true;
     }
 
     public IBox callback;
@@ -121,6 +126,16 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     private void OnDisable()
     {
         Actions.ResetBoxPosAction -= ResetBoxAct;
+    }
+
+    private void Update()
+    {
+        if (!isEnd)
+            return;
+
+
+        DevDebug.Log("RESETIING...", DebugColor.Lime);
+        boxTransform.anchoredPosition = startPosition;
     }
 
     public void SetStartPos(Vector2 startPosition , Vector3 worldPos)
@@ -173,6 +188,8 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         // Debug.Log($"<color=grey>Begin drag:{value}</color>");
 
         isDragging = true;
+
+        Actions.ResetBoxPosAction(false);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -290,15 +307,20 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
             return;
 
         isDragging = false;
-        boxTransform.DOAnchorPos(startPosition, 0.2f);
-
-        Actions.ResetBoxPosAction();
-
-        callback.ResultAction();
+        boxTransform.DOAnchorPos(startPosition, 0.2f).OnComplete(()=> 
+        {
+            callback.ResultAction();
+            Actions.ResetBoxPosAction(true);
+        });
     }
 
-    public void ResetBoxAct()
+    public void ResetBoxAct(bool isReset)
     {
+        isEnd = isReset;
+
+        if (!isReset)
+            return;
+
         if (!isEnable) return;
         if (isCorrect) return;
 

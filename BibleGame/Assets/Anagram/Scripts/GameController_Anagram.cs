@@ -85,6 +85,8 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
         styleUI = spriteData.GetStyle(UserData.currentAge);
 
+        Actions.ApplyStyleAction();
+
         foreach (var grambox in gramBoxes)
             grambox.SetImage(UserData.currentAge);
 
@@ -185,7 +187,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
         _anagramLetters.Clear();
 
-        if (letterVals.Length > 8)
+        if (letterVals.Length > 7)
         {
             Debug.LogError($"Exceeded the maximum grambox count: {question.hint}");
 
@@ -293,7 +295,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
                 int  newIndex = box.Index;
 
 
-                DevDebug.Log($"Checking box {currentBox.Value} :: {currentBox.Index} with {box.Value} :: {box.Index}", DebugColor.Gold);
+               // DevDebug.Log($"Checking box {currentBox.Value} :: {currentBox.Index} with {box.Value} :: {box.Index}", DebugColor.Gold);
 
                 Vector2 newPosE = currentBox.BoxV;
                 int newIndexE = currentBox.Index;
@@ -318,7 +320,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
         int index = 0;
 
         foreach (GramBox box in gramBoxes)
-            box.ResetBoxAct();
+            box.ResetBoxAct(true);
 
 
         StartCoroutine(CheckingResult(index));

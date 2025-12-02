@@ -27,7 +27,7 @@ public class TestamentPanel : MonoBehaviour
         UserData.testament = Testament.Old;
         //  Actions.ChangePanelActions(CanvasType.level);
 
-        AppData.mCurrentPage = StartPage.book;
+       // AppData.mCurrentPage = StartPage.book;
         Actions.ChangePanelActions(CanvasType.chapter);
         Actions.StartPageAction(StartPage.book);
     }
@@ -37,8 +37,9 @@ public class TestamentPanel : MonoBehaviour
         UserData.testament = Testament.New;
         // Actions.ChangePanelActions(CanvasType.level);
 
-        AppData.mCurrentPage = StartPage.book;
+        //AppData.mCurrentPage = StartPage.book;
         Actions.ChangePanelActions(CanvasType.chapter);
+        Actions.StartPageAction(StartPage.book);
     }
 
     
