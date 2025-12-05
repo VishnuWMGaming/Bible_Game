@@ -89,11 +89,14 @@ public class TextSpeech : MonoBehaviour
 #if !UNITY_EDITOR
         if (isPlaying)
         {
+            AudioManager.Instance.EnableVol(true);
             Stop();
             return;
         }
 
-         if (FinishEvent == null)
+        AudioManager.Instance.EnableVol(false);
+
+        if (FinishEvent == null)
             FinishEvent = new UnityEvent();
 
         if( mtext == null ||  String.IsNullOrWhiteSpace(mtext))
@@ -115,6 +118,7 @@ public class TextSpeech : MonoBehaviour
             {
                 DevDebug.Log($"Next line speaking....{count} =>{i}",DebugColor.Violet);
 
+                AudioManager.Instance.EnableVol(false);
                 animator.enabled = true;
                 animator.speed = 1.0f;
 
@@ -198,6 +202,8 @@ public class TextSpeech : MonoBehaviour
     {
         FinishEvent?.Invoke();
         ResetAction();
+
+        AudioManager.Instance.EnableVol(true);
         Debug.Log("Speech is finished ..................");
     }
 

@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -28,9 +29,13 @@ public class StrickPanel : MonoBehaviour,IStrick
     [SerializeField] GameObject strickObj;
     [SerializeField] Transform mStrkParent;
     [SerializeField] GameObject noStreakObj;
-  
+
+    CancellationTokenSource cts;
+
     private void OnEnable()
     {
+        ClearAll();
+
         newGame?.onClick.AddListener(NewGame);
         homeBtn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
         
@@ -61,32 +66,35 @@ public class StrickPanel : MonoBehaviour,IStrick
 
     async void Init()
     {
+        cts = new CancellationTokenSource();
+        CancellationToken token = cts.Token;
+
         if (StreakAPI.streakDatas == null || StreakAPI.streakDatas.Count == 0)
         {
             noStreakObj.SetActive(true);
             return;
         }
 
-        for (int i = 0; i< StreakAPI.streakDatas.Count; i++) 
+        for (int i = 0; i < StreakAPI.streakDatas.Count; i++)
         {
+            token.ThrowIfCancellationRequested();
+
             var data = StreakAPI.streakDatas[i];
 
             GameObject go = Instantiate(strickObj, mStrkParent);
-
             Strick strck = go.GetComponent<Strick>();
 
-            string bibleCode = "NIL";
-
-            var tcs = new TaskCompletionSource<(bool success, GetBibleDetailResponse res)>();
+            var tcs = new TaskCompletionSource<(bool success, GetBiblesAPI.GetBibleDetailResponse res)>();
 
             GetBiblesAPI.GetDetail((success, res) =>
             {
-                tcs.TrySetResult((success, res));
+                if (!token.IsCancellationRequested)
+                    tcs.TrySetResult((success, res));
+
             }, data.bible_id);
 
-
-            var result = await tcs.Task;
-
+            // Cancel-safe wait
+            var result = await tcs.Task.WithCancellation(token);
 
             if (!result.success)
             {
@@ -94,12 +102,11 @@ public class StrickPanel : MonoBehaviour,IStrick
                 return;
             }
 
-            bibleCode = result.res.ResponseData.data.nameLocal;
-
-            bibleCode = bibleCode switch
+            string bibleCode = result.res.ResponseData.data.nameLocal switch
             {
                 "King James Version" => "KJV",
-                "The Holy Bible, American Standard Version" => "ASV"
+                "The Holy Bible, American Standard Version" => "ASV",
+                _ => "NIL"
             };
 
             string age = data.age switch
@@ -107,17 +114,16 @@ public class StrickPanel : MonoBehaviour,IStrick
                 "1" => "kindergarden",
                 "2" => "Elementary",
                 "3" => "Teenagers",
-                "4" => "Adult",
                 _ => "Adult"
             };
 
-            string title = $"<b>{bibleCode},{data.book_id}</b>\n<size=15>{age}\n{data.testament} Testamant</size>";
+            string title =
+                $"<b>{bibleCode},{data.book_id}</b> {data.percentage:F2}%\n" +
+                $"<size=15>{age}\n{data.testament} Testamant</size>";
 
-            strck.Init(title, i,this);
-          
+            strck.Init(title, i, this);
         }
     }
-
 
     public  void GetStreak(int index)
     {
@@ -175,6 +181,12 @@ public class StrickPanel : MonoBehaviour,IStrick
 
     void ClearAll()
     {
+        if (cts != null && !cts.IsCancellationRequested)
+        {
+            cts.Cancel();
+            cts.Dispose();
+        }
+
         if (mStrkParent.childCount <= 0)
             return;
 

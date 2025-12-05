@@ -59,7 +59,17 @@ public class SettingsPanel : MonoBehaviour
         else
             sfxSlider.value = 1.0f;
 
+
+        if (PlayerPrefs.HasKey("BGVol"))
+        {
+            bgSlider.value = PlayerPrefs.GetFloat("BGVol");
+        }
+        else
+            bgSlider.value = 1.0f;
+
         sfxSlider?.onValueChanged.AddListener(AudioManager.Instance.ChangeVolSfx);
+
+        bgSlider?.onValueChanged.AddListener(AudioManager.Instance.ChangeVolBG);
 
         userName.text = AppData.loginData.Name;
     }

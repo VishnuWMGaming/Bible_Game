@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using TMPro;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -96,6 +97,9 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
             SubmitAction(() =>
             {
+                PopUp.Instance.ShowMessage($"You have completed the chapter {UserData.chapterId}", null, MScreenOriatation.portrait);
+                AudioManager.Instance.PlaySFX(SFXType.success);
+
                 Actions.ChangePanelActions(CanvasType.home);
             });
         });
@@ -110,11 +114,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
         {
             AudioManager.Instance.PlayButton();
             //Actions.StartPageAction(StartPage.game_menu);
-
-            SubmitAction(() =>
-            {
-                Actions.StartPageAction(StartPage.game_menu);
-            });
+            Actions.StartPageAction(StartPage.game_menu);
         });
 
         //mBackButton.interactable = true;
@@ -146,6 +146,8 @@ public class GameController_Anagram : MonoBehaviour,IBox
         if (!isWon)
             return;
 
+        AudioManager.Instance.PlaySFX(SFXType.correct);
+
         DevDebug.Log("Next question is loaded", DebugColor.Cyan);
 
         int coins = UserData.coins + 4;
@@ -174,102 +176,122 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
     void GameInitilise(GetQuestionsAnagramData question)
     {
-        string word = question.hint;
-        string[] letterVals = word.Select(c => c.ToString()).ToArray();
-
-        mTitle.text = question.title;
-        //mTitle.GetComponentInChildren<TranslateLang>().UpdateText(() =>
-        //{
-
-        //});
-
-        speech.Initialise(question.title, true);
-
-        _anagramLetters.Clear();
-
-        if (letterVals.Length > 7)
+       
+        LanguageController.Instance.Translate(question.hint, translation =>
         {
-            Debug.LogError($"Exceeded the maximum grambox count: {question.hint}");
+            DevDebug.Log($"Translation: {translation}", DebugColor.Green);
 
-            if(AppData.orientation == MScreenOriatation.portrait)
+            string word = translation;
+
+            string[] letterVals = word
+                                     .Select(c => c.ToString())
+                                     .ToArray();
+
+            letterVals = letterVals
+                                 .Where(v => !string.IsNullOrWhiteSpace(v))
+                                 .ToArray();
+
+            LanguageController.Instance.Translate(question.title, trans =>
             {
-                PopUp.Instance.ShowMessage("Words have exceeded the limitatioon of the portrait mode");
-                Actions.ChangeLandscape(MScreenOriatation.landscape, true,false);
+                mTitle.text = trans;
+          
 
-                return;
-            }
+            //mTitle.GetComponentInChildren<TranslateLang>().UpdateText(() =>
+            //{
+            //   // mTitle.text = question.title;
+            //});
 
-            Actions.ChangeLandscape(MScreenOriatation.landscape, true,false);
-        }
-        
-        for (int i = 0;i< letterVals.Length;++i)
-        {
-            AnagramLetter letter = new AnagramLetter
-            {
-                index = i,
-                val = letterVals[i]
-            };
+                 speech.Initialise(mTitle.text, true);
 
-            _anagramLetters.Add(letter);
-        }
+                _anagramLetters.Clear();
 
-        //Scrambing process...
-        Debug.Log($"Scrambled word: {ShuffleWord(word)} ... Scrambling");
+                if (letterVals.Length > 7)
+                {
+                    Debug.LogError($"Exceeded the maximum grambox count: {question.hint}");
 
-        foreach (var box in gramBoxes) box.Restart();
-        layoutGroup.enabled = true;
+                    if (AppData.orientation == MScreenOriatation.portrait)
+                    {
+                        PopUp.Instance.ShowMessage("Words have exceeded the limitatioon of the portrait mode");
+                        Actions.ChangeLandscape(MScreenOriatation.landscape, true, false);
 
-        List<AnagramLetter> scrambledLetters = new List<AnagramLetter>();
+                        return;
+                    }
 
-        string scrambledWord = ShuffleWord(word);
-        string[] scrambledletterVals = scrambledWord.Select(c => c.ToString()).ToArray();
+                    Actions.ChangeLandscape(MScreenOriatation.landscape, true, false);
+                }
 
-        for (int i = 0; i < scrambledletterVals.Length; ++i)
-        {
-            AnagramLetter letter = new AnagramLetter
-            {
-                index = i,
-                val = scrambledletterVals[i]
-            };
+                for (int i = 0; i < letterVals.Length; ++i)
+                {
+                    AnagramLetter letter = new AnagramLetter
+                    {
+                        index = i,
+                        val = letterVals[i]
+                    };
 
-            scrambledLetters.Add(letter);
-        }
+                    _anagramLetters.Add(letter);
+                }
 
-        //Scrambing process...
-        Debug.Log($"Scrambling 1");
+             //Scrambing process...
+             Debug.Log($"Scrambled word: {ShuffleWord(word)} ... Scrambling");
 
-        for (int index = 0; index < scrambledLetters.Count; index++)
-        {
-            var letters = scrambledLetters[index];
+                foreach (var box in gramBoxes) box.Restart();
+                layoutGroup.enabled = true;
 
-            GramBox box = gramBoxes[index];
-            box.Enable(true);
+                List<AnagramLetter> scrambledLetters = new List<AnagramLetter>();
 
-            box.SetLetter(letters.val);
-            box.SetIndex(letters.index);
+                string scrambledWord = ShuffleWord(word);
+                string[] scrambledletterVals = scrambledWord.Select(c => c.ToString())
+                                                            .Where(v => !string.IsNullOrWhiteSpace(v))
+                                                            .ToArray();
 
-            //box.SetImage(styleUI.box);
-            box.callback = this;
-        }
+                for (int i = 0; i < scrambledletterVals.Length; ++i)
+                {
+                    AnagramLetter letter = new AnagramLetter
+                    {
+                        index = i,
+                        val = scrambledletterVals[i]
+                    };
 
-        foreach (var box in gramBoxes) box.Enable(box.Index != -1);
+                    scrambledLetters.Add(letter);
+                }
 
-        Debug.Log($"Scrambling 2");
+                //Scrambing process...
+                Debug.Log($"Scrambling 1");
 
-        LayoutRebuilder.ForceRebuildLayoutImmediate(lettersParent);
+                for (int index = 0; index < scrambledLetters.Count; index++)
+                {
+                    var letters = scrambledLetters[index];
 
-        foreach (var box in gramBoxes) box.SetStartPos(box.BoxT.anchoredPosition, box.BoxT.position);
-        layoutGroup.enabled = false;
-        foreach (var box in gramBoxes) box.Arrange();
+                    GramBox box = gramBoxes[index];
+                    box.Enable(true);
+
+                    box.SetLetter(letters.val);
+                    box.SetIndex(letters.index);
+
+                    //box.SetImage(styleUI.box);
+                    box.callback = this;
+                }
+
+             foreach (var box in gramBoxes) box.Enable(box.Index != -1);
+
+             Debug.Log($"Scrambling 2");
+
+             LayoutRebuilder.ForceRebuildLayoutImmediate(lettersParent);
+    
+             foreach (var box in gramBoxes) box.SetStartPos(box.BoxT.anchoredPosition, box.BoxT.position);
+                layoutGroup.enabled = false;
+              foreach (var box in gramBoxes) box.Arrange();
 
 
-        Debug.Log("Anagram  is set ");
+              Debug.Log("Anagram  is set ");
 
-        //foreach (var grambox in gramBoxes)
-        //    grambox.SetImage(styleUI.box);
+            //foreach (var grambox in gramBoxes)
+            //    grambox.SetImage(styleUI.box);
 
-        PopUp.Instance.EnableLoad(false);
+                PopUp.Instance.EnableLoad(false);
 
+            });
+        });
     }
 
     string ShuffleWord(string word)

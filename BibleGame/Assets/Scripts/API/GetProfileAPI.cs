@@ -24,7 +24,7 @@ namespace BibleGame
 
             private static void HandleGetProfileCallback(bool aSuccess, object aData, GetProfileCallback callback)
             {
-                Debug.Log("Get Profile: " + aData.ToString());
+                Debug.Log("Get Profile: " + aData.ToString()  + " "  + AuthKeyPair.Value);
                 var response = JsonConvert.DeserializeObject<GetProfileResponse>(aData.ToString());
 
                 if (aSuccess)

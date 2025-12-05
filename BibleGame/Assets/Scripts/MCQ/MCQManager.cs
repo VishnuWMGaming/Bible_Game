@@ -63,10 +63,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         _homeBtn.onClick.AddListener(() => 
         {
             AudioManager.Instance.PlayButton();
-            SubmitAction(() => 
-            {
-                Actions.StartPageAction(StartPage.game_menu);
-            });
+            Actions.StartPageAction(StartPage.game_menu);
         });
 
         _submitBtn.onClick.AddListener(() => 
@@ -195,10 +192,13 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         correctPanel.gameObject.SetActive(true);
 
         currentQuestionIndex++;
+
+        AudioManager.Instance.PlaySFX(SFXType.correct);
     }
 
     public void WrongAnswer()
     {
+        AudioManager.Instance.PlaySFX(SFXType.wrong);
         wrongAnswer++;
 
         Debug.LogError($"Wrong >>>>> {wrongAnswer}");
@@ -323,6 +323,9 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
             SubmitAction(() =>
             {
+                PopUp.Instance.ShowMessage($"You have completed the chapter {UserData.chapterId}", null, MScreenOriatation.portrait);
+                AudioManager.Instance.PlaySFX(SFXType.success);
+
                 Actions.ChangePanelActions(CanvasType.home);
             });
         }
