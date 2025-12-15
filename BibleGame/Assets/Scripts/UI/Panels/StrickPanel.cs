@@ -28,6 +28,7 @@ public class StrickPanel : MonoBehaviour,IStrick
     [Header("Streak Settings:")]
     [SerializeField] GameObject strickObj;
     [SerializeField] Transform mStrkParent;
+    [SerializeField] ScrollRect mStrkScroll;
     [SerializeField] GameObject noStreakObj;
 
     CancellationTokenSource cts;
@@ -35,6 +36,8 @@ public class StrickPanel : MonoBehaviour,IStrick
     private void OnEnable()
     {
         ClearAll();
+
+        mStrkScroll.verticalNormalizedPosition = 1;
 
         newGame?.onClick.AddListener(NewGame);
         homeBtn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });

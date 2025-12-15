@@ -34,6 +34,8 @@ public class HomePanel : MonoBehaviour
 
         playBtn.interactable = false;
 
+        AudioManager.Instance.PlayBG(AudioType.Bg);
+
         //  Leaderboard button listener
         leaderBoardBtn?.onClick.AddListener(() =>
         {

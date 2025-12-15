@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -15,6 +16,9 @@ public class LevelObj : MonoBehaviour
     public string ID => mChapterId;
 
     [SerializeField] GameObject correctMark;
+
+    [Space]
+    [SerializeField] TMP_Text chapterID;
 
     bool isSelected = false;
 
@@ -35,6 +39,9 @@ public class LevelObj : MonoBehaviour
     {
         mChapterId = string.Empty;
         mChapterId = chapterId;
+
+       if(chapterID  != null )
+        chapterID.text = mChapterId;
 
         callback = callbackIN;
     }

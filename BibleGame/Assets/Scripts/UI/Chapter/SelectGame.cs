@@ -19,6 +19,14 @@ public class SelectGame : MonoBehaviour
     
     private void OnEnable()
     {
+        AudioManager.Instance.PlayBG(UserData.currentAge switch
+        {
+            AgeGroup.adult => AudioType.adult,
+            AgeGroup.kindergarden => AudioType.kindergarden,
+            AgeGroup.elementary => AudioType.elementary,
+            AgeGroup.teenagers => AudioType.teenager,
+        });
+
         homeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.StartPageAction(StartPage.chapter); });
         triviaBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); CallbackSelectGame.PlayTriviaGame(); });
         wordBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); CallbackSelectGame.PlayWordGame(); });

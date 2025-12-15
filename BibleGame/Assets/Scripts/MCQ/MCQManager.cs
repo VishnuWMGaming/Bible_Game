@@ -193,12 +193,12 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
         currentQuestionIndex++;
 
-        AudioManager.Instance.PlaySFX(SFXType.correct);
+        AudioManager.Instance.PlaySFX(AudioType.Correct);
     }
 
     public void WrongAnswer()
     {
-        AudioManager.Instance.PlaySFX(SFXType.wrong);
+        AudioManager.Instance.PlaySFX(AudioType.Wrong);
         wrongAnswer++;
 
         Debug.LogError($"Wrong >>>>> {wrongAnswer}");
@@ -324,7 +324,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
             SubmitAction(() =>
             {
                 PopUp.Instance.ShowMessage($"You have completed the chapter {UserData.chapterId}", null, MScreenOriatation.portrait);
-                AudioManager.Instance.PlaySFX(SFXType.success);
+                AudioManager.Instance.PlaySFX(AudioType.Win);
 
                 Actions.ChangePanelActions(CanvasType.home);
             });

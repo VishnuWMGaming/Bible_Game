@@ -58,6 +58,9 @@ public class BookChapter : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        AudioManager.Instance.PlayBG(AudioType.reading);
+
+
        // previousBtn.onClick.AddListener(() =>  (Navigate.previous));
         nextBtn.onClick.AddListener(()=> 
         {

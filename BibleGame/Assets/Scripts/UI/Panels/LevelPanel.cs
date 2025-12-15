@@ -81,13 +81,21 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
     void Initialise()
     {
 
+        AudioManager.Instance.PlayBG(UserData.currentAge switch
+        {
+            AgeGroup.adult => AudioType.adult,
+            AgeGroup.kindergarden => AudioType.kindergarden,
+            AgeGroup.elementary => AudioType.elementary,
+            AgeGroup.teenagers => AudioType.teenager,
+        });
+
         if (String.IsNullOrEmpty(UserData.gameid))
         {
             Debug.LogError("Streak api id is null");
             return;
         }
 
-       
+ 
 
         PopUp.Instance.EnableLoad(true);
         StreakAPI.GetDetail((success, res) =>

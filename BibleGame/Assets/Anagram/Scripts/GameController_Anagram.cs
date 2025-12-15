@@ -98,7 +98,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
             SubmitAction(() =>
             {
                 PopUp.Instance.ShowMessage($"You have completed the chapter {UserData.chapterId}", null, MScreenOriatation.portrait);
-                AudioManager.Instance.PlaySFX(SFXType.success);
+                AudioManager.Instance.PlaySFX(AudioType.Win);
 
                 Actions.ChangePanelActions(CanvasType.home);
             });
@@ -146,7 +146,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
         if (!isWon)
             return;
 
-        AudioManager.Instance.PlaySFX(SFXType.correct);
+        AudioManager.Instance.PlaySFX(AudioType.Correct);
 
         DevDebug.Log("Next question is loaded", DebugColor.Cyan);
 

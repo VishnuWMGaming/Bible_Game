@@ -39,7 +39,9 @@ public class AudioManager : MonoBehaviour
         else
         {
             EnableVol(true);
-            bgVol = -1.0f;
+            bgVol = 1.0f;
+
+            ChangeVolBG(bgVol);
         }
     }
 
@@ -51,10 +53,10 @@ public class AudioManager : MonoBehaviour
         if (sfxVol >= 0.0f)
             audioSource.volume = sfxVol;
 
-        audioSource.PlayOneShot(audioData.GetAudioClip("Button"), 1.0f);
+        audioSource.PlayOneShot(audioData.GetAudioClip(AudioType.button), 1.0f);
     }
 
-    public void PlaySFX(SFXType type)
+    public void PlaySFX(AudioType type)
     {
         if (audioSource == null || audioData == null)
             return;
@@ -62,20 +64,26 @@ public class AudioManager : MonoBehaviour
         if (sfxVol >= 0.0f)
             audioSource.volume = sfxVol;
 
-        switch(type)
+        audioSource.PlayOneShot(audioData.GetAudioClip(type), 1.0f);
+    }
+
+    public void PlayBG(AudioType type)
+    {
+        AudioClip clip = audioData.GetAudioClip(type);
+
+        if(clip == null)
         {
-            case SFXType.correct:
-                audioSource.PlayOneShot(audioData.GetAudioClip("Win"), 1.0f);
-                break;
-
-            case SFXType.wrong:
-                audioSource.PlayOneShot(audioData.GetAudioClip("Wrong"), 1.0f);
-                break;
-
-            case SFXType.success:
-                audioSource.PlayOneShot(audioData.GetAudioClip("Success"), 1.0f);
-                break;
+            Debug.LogError($"{type} BG not found");
+            return;
         }
+
+        if (audioSource.clip == clip)
+            return;
+
+        float vol = type == AudioType.reading ? 0.45f : bgVol;
+
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 
     public void ChangeVolSfx(float vol)
@@ -83,6 +91,7 @@ public class AudioManager : MonoBehaviour
         sfxVol = vol;
         PlayerPrefs.SetFloat("SfxVol", sfxVol);
     }
+
 
     public void ChangeVolBG(float vol)
     {
@@ -92,7 +101,7 @@ public class AudioManager : MonoBehaviour
         audioSource.volume = bgVol;
     }
 
-    public void EnableVol(bool enable)
+    public void EnableVol(bool enable,AudioType audioType = AudioType.Bg)
     {
         if (enable)
             audioSource.Play();
