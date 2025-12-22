@@ -58,7 +58,7 @@ public class SplashPanel : MonoBehaviour
 
     private void OpenHome()
     {
-        PopUp.Instance.EnableLoad(false);
+       // PopUp.Instance.EnableLoad(false);
         Actions.ChangePanelActions(CanvasType.home);
     }
 

@@ -36,8 +36,6 @@ namespace BibleGame
                 {
                     
                 }
-
-                PopUp.Instance.EnableLoad(false);
             }
         }
 

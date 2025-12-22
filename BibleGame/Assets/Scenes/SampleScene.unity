@@ -8409,7 +8409,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 306224528}
   m_TextViewport: {fileID: 501880487}
   m_TextComponent: {fileID: 1045291718}
@@ -28252,9 +28252,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece9e4c0350d18a48b77d1c249279382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Requestcallback:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &1009120836
 Transform:
   m_ObjectHideFlags: 0
@@ -43473,6 +43470,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioData: {fileID: 11400000, guid: 91e495ed0c5855547997765a8340a197, type: 2}
   audioSource: {fileID: 1542314466}
+  maxVolBg: 0.45
+  maxVolReadBg: 0.25
 --- !u!1 &1544418809
 GameObject:
   m_ObjectHideFlags: 0
@@ -50988,7 +50987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1764529715
 RectTransform:
   m_ObjectHideFlags: 0

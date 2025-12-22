@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
 using BibleGame.Data;
+using DebugUtils;
 
 public class PopUp : MonoBehaviour
 {
@@ -41,8 +42,9 @@ public class PopUp : MonoBehaviour
     {
         //loadingPanel.SetActive(enable);
 
-        loadingPanel_Portrait.SetActive(false);
+        //loadingPanel_Portrait.SetActive(false);
 
+       // DevDebug.Log($"LoadingP .. {enable}", DebugColor.Brown);
         loadingPanel_Portrait.SetActive(enable);
     }
 

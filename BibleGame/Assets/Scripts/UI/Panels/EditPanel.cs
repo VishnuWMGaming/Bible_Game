@@ -39,7 +39,10 @@ public class EditPanel : MonoBehaviour
         name_InputField.text = AppData.loginData.Name;
         church_InputField.text = AppData.loginData.Church;
 
+
+
         name_InputField.onValueChanged.AddListener(SaveChecKAction);
+        church_InputField.onValueChanged.AddListener(SaveChecKAction);
 
         saveBtn.interactable = false;
         saveBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); SaveAction(); });
@@ -58,6 +61,8 @@ public class EditPanel : MonoBehaviour
     {
         saveBtn.onClick.RemoveAllListeners();
         saveProfile?.onClick.RemoveAllListeners();
+        name_InputField.onValueChanged.RemoveAllListeners();
+        church_InputField.onValueChanged.RemoveAllListeners();
     }
 
 
@@ -121,35 +126,39 @@ public class EditPanel : MonoBehaviour
 
     private void SaveChecKAction(string data)
     {
-        saveBtn.interactable = !String.IsNullOrEmpty(data);
+        saveBtn.interactable = !String.IsNullOrWhiteSpace(data);
        
-        _name = data;
+        //_name = data;
     }
 
     private void SaveAction()
     {
         Debug.Log("Name :" +  _name);
 
-       var name =  new nameDATA(_name);
+       var name =  new nameDATA(name_InputField.text,church_InputField.text);
 
-        Debug.Log("Name :" + name.name);
+        Debug.Log($"Name : {name_InputField.text} Church: {church_InputField.text} ");
 
         PopUp.Instance.EnableLoad(true);
-        ProfileAPI.UpdateName(name, APICallback);
-    }
-
-    void APICallback(bool success)
-    {
-        PopUp.Instance.EnableLoad(false);
-
-        if (success)
+        ProfileAPI.UpdateName(name, (success) =>
         {
-            Debug.LogWarning("Updated the name");
+            PopUp.Instance.EnableLoad(false);
+
+            if (!success)
+            {
+                PopUp.Instance.ShowMessage("Profile details not updated.Please Try again");
+                Debug.LogError("Someting went wrong");
+                return;
+            }
+           
+            Debug.LogWarning("Updated the profile");
             PopUp.Instance.ShowMessage("Profile details updated successfully");
 
-            AppData.loginData = new LoginData( AppData.loginData.Email,AppData.loginData.Password,_name,AppData.loginData.Church);
-        }
-        else
-            Debug.LogError("Someting went wrong");
+            AppData.loginData = new LoginData(AppData.loginData.Email, 
+                                              AppData.loginData.Password,
+                                              name_InputField.text,
+                                              church_InputField.text);
+          
+        });
     }
 }

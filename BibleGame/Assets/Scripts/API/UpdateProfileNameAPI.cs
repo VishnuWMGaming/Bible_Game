@@ -23,10 +23,8 @@ namespace BibleGame
 
             public static void UpdateName(nameDATA name, ProfileCallback callback)
             {
-                Debug.Log("Name 3:" + name.name);
-
                 var jsonData = JsonConvert.SerializeObject(name);
-                Debug.Log(jsonData);
+                Debug.Log($"Edit profile :{jsonData}");
 
                 WebRequest(profileNameURL, jsonData, (url, success, data) => HandleResponse(success, data, callback));
             }
@@ -87,10 +85,12 @@ namespace BibleGame
         public class  nameDATA
         {
            public string name;
+           public string church;
 
-            public nameDATA(string name)
+            public nameDATA(string name,string church)
             {
                 this.name = name;
+                this.church = church;
             }
         }
 

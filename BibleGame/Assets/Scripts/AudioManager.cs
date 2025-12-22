@@ -16,7 +16,11 @@ public class AudioManager : MonoBehaviour
     float sfxVol = 0.0f;
     float bgVol = 0.0f;
 
-   
+    [Header("Settings:")]
+    [Range(0,1.0f)]
+    [SerializeField] float maxVolBg;
+    [Range(0, 1.0f)]
+    [SerializeField] float maxVolReadBg;
 
     private void Awake()
     {
@@ -33,7 +37,7 @@ public class AudioManager : MonoBehaviour
         if (PlayerPrefs.HasKey("BGVol"))
         {
             bgVol = PlayerPrefs.GetFloat("BGVol");
-            audioSource.volume = bgVol;
+            audioSource.volume = bgVol >=  1.0f ? maxVolBg : bgVol;
             EnableVol(true);
         }
         else
@@ -80,8 +84,12 @@ public class AudioManager : MonoBehaviour
         if (audioSource.clip == clip)
             return;
 
-        float vol = type == AudioType.reading ? 0.45f : bgVol;
+        float vol = type == AudioType.reading ? 
+                                                bgVol <= maxVolReadBg ? bgVol : maxVolReadBg
+                                                : bgVol >= 1.0f ? maxVolBg : bgVol; 
 
+        audioSource.volume = vol;
+                                                
         audioSource.clip = clip;
         audioSource.Play();
     }
@@ -98,7 +106,7 @@ public class AudioManager : MonoBehaviour
         bgVol = vol;
         PlayerPrefs.SetFloat("BGVol", bgVol);
 
-        audioSource.volume = bgVol;
+        audioSource.volume = bgVol >= 1.0f ? maxVolBg : bgVol;
     }
 
     public void EnableVol(bool enable,AudioType audioType = AudioType.Bg)
@@ -107,6 +115,8 @@ public class AudioManager : MonoBehaviour
             audioSource.Play();
         else
             audioSource.Pause();
+
+        audioSource.volume = bgVol >= 1.0f ? maxVolBg : bgVol;
     }
 }
 
