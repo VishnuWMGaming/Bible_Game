@@ -1,11 +1,9 @@
 using BibleGame;
-using BibleGame.Data;
 using DebugUtils;
 using DG.Tweening;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -134,7 +132,7 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
             return;
 
 
-        DevDebug.Log("RESETIING...", DebugColor.Lime);
+//        DevDebug.Log("RESETIING...", DebugColor.Lime);
         boxTransform.anchoredPosition = startPosition;
     }
 
@@ -231,18 +229,26 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         callback.UpdatedPos(index, boxTransform.anchoredPosition);
     }
 
-    public void SetPos(Vector2 pos, int newIndex,Action onComplete = null ,bool isRun = false)
+    public void SetPos(Vector2 pos, int newIndex, Action onComplete = null, bool isRun = false)
     {
         if (!isEnable) return;
         if (isCorrect) return;
 
         index = newIndex;
 
-        if(startPosition != pos)
-           startPosition = pos;
+        if (startPosition != pos)
+            startPosition = pos;
 
         if (isRun && !m_IsAble)
-            boxTransform.DOAnchorPos(pos, 0.2f).OnComplete(()=> onComplete?.Invoke());
+        {
+            isEnable = false;
+            boxTransform.DOAnchorPos(pos, 0.12f).OnComplete(() => 
+                                                                  {
+                                                                      isEnable = true;
+                                                                      onComplete?.Invoke();
+           
+                                                                  });
+        }
     }
 
     public void SetLetter()
@@ -307,7 +313,7 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
             return;
 
         isDragging = false;
-        boxTransform.DOAnchorPos(startPosition, 0.2f).OnComplete(()=> 
+        boxTransform.DOAnchorPos(startPosition, 0.12f).OnComplete(()=> 
         {
             callback.ResultAction();
             Actions.ResetBoxPosAction(true);

@@ -35,14 +35,12 @@ public class SettingsPanel : MonoBehaviour
         {
             "English",
             "Spanish",
-            "Portuguese",
-            "Korean",
             "French",
-            "Chinese",
             "Hindi",
             "Swahili",
             "Kreyol"
         };
+
      languageDropdown.AddOptions(options);
 
         languageDropdown.value = PlayerPrefs.HasKey("lang") ? PlayerPrefs.GetInt("lang") : 0;

@@ -1733,7 +1733,7 @@ MonoBehaviour:
   m_CharacterValidation: 5
   m_RegexValue: 
   m_GlobalPointSize: 14
-  m_CharacterLimit: 35
+  m_CharacterLimit: 20
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -8428,7 +8428,7 @@ MonoBehaviour:
   m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 14
-  m_CharacterLimit: 0
+  m_CharacterLimit: 20
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -20589,7 +20589,7 @@ MonoBehaviour:
   m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 2
   m_fontSizeMax: 24
   m_fontStyle: 0
@@ -28252,6 +28252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece9e4c0350d18a48b77d1c249279382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Requestcallback:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1009120836
 Transform:
   m_ObjectHideFlags: 0
@@ -28751,7 +28754,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 654914409}
   m_HandleRect: {fileID: 654914408}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -29242,8 +29245,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -90.469, y: 12.1234}
-  m_SizeDelta: {x: 180.94, y: 45.7532}
+  m_AnchoredPosition: {x: -90.469, y: -9.9515}
+  m_SizeDelta: {x: 180.94, y: 89.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1051334273
 MonoBehaviour:
@@ -29295,7 +29298,7 @@ MonoBehaviour:
   m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 2
   m_fontSizeMax: 24
   m_fontStyle: 0
@@ -32636,7 +32639,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 005bfd03cd8fd7b4689a03b301d7950c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -41918,7 +41921,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -44452,7 +44455,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2095514914535534615, guid: 8ad069e490fd26f4985f94517b859823, type: 3}
       propertyPath: m_CharacterLimit
-      value: 50
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2095514914535534615, guid: 8ad069e490fd26f4985f94517b859823, type: 3}
       propertyPath: m_CharacterValidation
@@ -44762,7 +44765,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2095514914535534615, guid: 8ad069e490fd26f4985f94517b859823, type: 3}
       propertyPath: m_CharacterLimit
-      value: 35
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2095514914535534615, guid: 8ad069e490fd26f4985f94517b859823, type: 3}
       propertyPath: m_CharacterValidation
@@ -48281,7 +48284,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -48901,7 +48904,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -50189,7 +50192,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2126723143}
   m_HandleRect: {fileID: 2126723142}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -62159,7 +62162,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -315.50012}
-  m_SizeDelta: {x: 230, y: 352}
+  m_SizeDelta: {x: 309, y: 426}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2075584764
 MonoBehaviour:
@@ -65733,8 +65736,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 2

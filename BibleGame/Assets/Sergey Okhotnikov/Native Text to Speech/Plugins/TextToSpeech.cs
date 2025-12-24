@@ -82,7 +82,7 @@ namespace NativeTextToSpeech
         {
             Debug.Log("Start speaking from Unity");
 #if UNITY_IOS 
-            speak_tts(text, language, 0.35f);
+            speak_tts(text, language, 0.32f);
 #endif
 #if UNITY_ANDROID 
             activity.Call("runOnUiThread", new AndroidJavaRunnable(() =>

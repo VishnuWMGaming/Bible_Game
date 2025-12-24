@@ -2,7 +2,7 @@
 - Project name: BibleGame
 - Unity version: Unity 6000.0.58f2
 - Active game object:
-  - Name: Question_Landscape
+  - Name: [LANGUAGE]
   - Tag: Untagged
-  - Layer: UI
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
