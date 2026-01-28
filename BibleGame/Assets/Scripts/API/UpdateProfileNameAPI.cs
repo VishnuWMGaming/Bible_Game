@@ -1,11 +1,12 @@
+﻿using DebugUtils;
 using Newtonsoft.Json;
 using RestAPI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
-
-using DebugUtils;
+using UnityEngine.Networking;
 
 namespace BibleGame
 {
@@ -18,6 +19,7 @@ namespace BibleGame
 
             public delegate void ProfileCallback(bool success);
 
+            public delegate void ProfileDeleteCallback(bool success);
 
             public delegate void ProfilePicCallback(bool success);
 
@@ -76,6 +78,48 @@ namespace BibleGame
 
                     callback?.Invoke(true);    
                 });
+            }
+
+
+            public static async void DeleteProfile(ProfileDeleteCallback callback)
+            {
+                string url = $"{ServiceURL.baseURL}{ServiceURL.deleteProfile}";
+
+                DevDebug.Log($"Delete profile:{url} ::: {mToken}",DebugColor.Magenta);
+
+                var result = await DeleteProfileAsync(url, mToken);
+
+                DevDebug.Log($"Deleted Response: {result.response.ToString()}", DebugColor.Orange);
+
+                callback?.Invoke(result.success);
+            }
+
+            public static async Task<(bool success, string response)> DeleteProfileAsync(
+            string serverUrl,
+            string token)
+            {
+                string url = serverUrl;
+
+                using (UnityWebRequest request = UnityWebRequest.Delete(url))
+                {
+                    request.downloadHandler = new DownloadHandlerBuffer();
+                    request.SetRequestHeader("authorization", "bearer " + token);
+
+                    var operation = request.SendWebRequest();
+
+                    // 🔄 Await without blocking main thread
+                    while (!operation.isDone)
+                        await Task.Yield();
+
+                    if (request.result == UnityWebRequest.Result.Success)
+                    {
+                        return (true, request.downloadHandler.text);
+                    }
+                    else
+                    {
+                        return (false, request.error);
+                    }
+                }
             }
         }
 

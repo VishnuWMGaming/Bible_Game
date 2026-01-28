@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 public class HomePanel : MonoBehaviour
@@ -44,6 +45,8 @@ public class HomePanel : MonoBehaviour
             Actions.ChangePanelActions(CanvasType.leaderboard); // match enum
         });
 
+
+        DevDebug.Log($"Token: {PlayerPrefs.GetString("AuthorizationToken")}",DebugColor.Indigo);
 
         PopUp.Instance.EnableLoad(true);
         Initialise();

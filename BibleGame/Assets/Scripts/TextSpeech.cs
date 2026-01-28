@@ -140,7 +140,7 @@ public class TextSpeech : MonoBehaviour
                 await Spoke(FinishEvent, cts.Token);
 
 #if UNITY_IOS
-                await Task.Delay(1500);
+                await Task.Delay(2000);
 #endif
 
                 Debug.Log("Going to next line....");

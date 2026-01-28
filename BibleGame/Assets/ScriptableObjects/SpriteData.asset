@@ -50,7 +50,7 @@ MonoBehaviour:
     unselectPanel: {fileID: 0}
     bookTab: {fileID: 21300000, guid: 60ad687247ce31947a2bb85549802681, type: 3}
     mcqTabPanel: {fileID: 21300000, guid: 2775c22d32c4be341bf2c59d78395ebf, type: 3}
-    mcqTabPanel_Vertical: {fileID: 21300000, guid: 98f798ab549d7ed4c8496a15172414f1, type: 3}
+    mcqTabPanel_Vertical: {fileID: 21300000, guid: 07a123bf9d96ab94895d5f1729e57597, type: 3}
     box: {fileID: 0}
     ageGroup: 1
   - BgSprite: {fileID: 21300000, guid: abd3c2a6766155e4584f468342491093, type: 3}

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RestAPI
@@ -8,15 +9,18 @@ namespace RestAPI
 
         private static string AuthKey = "authorization";
         public static KeyValuePair<string, string> AuthKeyPair = new KeyValuePair<string, string>(AuthKey,"");
+        public static string mToken;
         
         public static void SetAuthToken(string token)
         {
             AuthKeyPair = new KeyValuePair<string, string>(AuthKey,"bearer "+token);
+            mToken = token;
         }
         
         public static void SetAuthToken(string token , string bearer)
         {
             AuthKeyPair = new KeyValuePair<string, string>(AuthKey,bearer +token);
+            mToken = token;
         }
         
         protected static void WebRequest(string serviceUrl, string jsonData, WebHelpers.CallbackGet callback)

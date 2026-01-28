@@ -1,5 +1,7 @@
 using BibleGame;
+using BibleGame.API;
 using BibleGame.Data;
+using DebugUtils;
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ public class SettingsPanel : MonoBehaviour
     [SerializeField] Button myProfileButton;
     [SerializeField] Button termsConditionButton;
     [SerializeField] Button logoutButton;
+    [SerializeField] Button deleteButton;
     [SerializeField] Button homeButton;
     [SerializeField] TMP_Text userName;
 
@@ -35,7 +38,10 @@ public class SettingsPanel : MonoBehaviour
         {
             "English",
             "Spanish",
+            "Portuguese",
+            "Korean",
             "French",
+            "Chinese",
             "Hindi",
             "Swahili",
             "Kreyol"
@@ -48,6 +54,12 @@ public class SettingsPanel : MonoBehaviour
         termsConditionButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); EnablePanel(SetPanelType.termsCondition); });
         logoutButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); EnablePanel(SetPanelType.logout); });
         homeButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
+
+        deleteButton.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.PlayButton();
+            EnablePanel(SetPanelType.delete);
+        });
 
         languageDropdown.onValueChanged.AddListener(OnLanguageChanged);
         if (PlayerPrefs.HasKey("SfxVol"))
@@ -100,4 +112,4 @@ public class SettingsPanel : MonoBehaviour
 
 }
 
-public enum SetPanelType { myProfile, termsCondition, logout }
+public enum SetPanelType { myProfile, termsCondition, logout,delete }
