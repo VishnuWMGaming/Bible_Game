@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using BibleGame.Data;
+using BibleGame;
 
 public class StyleControl : MonoBehaviour
 {
@@ -33,6 +34,9 @@ public class StyleControl : MonoBehaviour
     [SerializeField] List<Image> mcqs = new List<Image>();
 
     [Space]
+    [SerializeField] List<Image> mcqs_Vertical = new List<Image>();
+
+    [Space]
     [SerializeField] List<Image> panelsColor = new List<Image>();
 
     [Space]
@@ -57,6 +61,13 @@ public class StyleControl : MonoBehaviour
     {
         styleUI = spriteData.GetStyle(UserData.currentAge);
         ApplyStyle();
+
+        Actions.ApplyStyleAction += ApplyStyle;
+    }
+
+    private void OnDisable()
+    {
+        Actions.ApplyStyleAction -= ApplyStyle;
     }
 
     void ApplyStyle()
@@ -78,6 +89,8 @@ public class StyleControl : MonoBehaviour
         foreach(var title in mtitles) title.color = styleUI.textColor;
 
         foreach (var panel in mcqs) panel.sprite = styleUI.mcqTabPanel;
+
+        foreach (var panel in mcqs_Vertical) panel.sprite = styleUI.mcqTabPanel_Vertical;
 
         foreach (var panel in panelsColor)  panel.color = styleUI.textColor;
 

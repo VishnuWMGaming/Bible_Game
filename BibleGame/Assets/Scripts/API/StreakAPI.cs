@@ -160,6 +160,7 @@ namespace BibleGame
             public string age;
             public string testament;
             public int coins;
+            public float percentage;
         }
 
         #endregion

@@ -27,6 +27,8 @@ public class MChapter : MonoBehaviour
     string mid;
     public string ID => mid;
 
+    [SerializeField] TranslateLang mLang;
+
     IMChapter callback;
 
     private void OnEnable()
@@ -52,6 +54,13 @@ public class MChapter : MonoBehaviour
     {
         mTitle.text = $"Chapter {data.number}";
         mSubTitle.text = "";
+
+
+        mLang.UpdateValue(mTitle.text);
+        mLang.UpdateText(() => { 
+        
+        
+        });
 
         mid = data.id;
 

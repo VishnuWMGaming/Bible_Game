@@ -20,7 +20,7 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     [SerializeField] private OptionColors optionColors;
     [SerializeField]  Button button;
 
-    public enum OptionType {normal,selected,correct, worng};
+    public enum OptionType {normal,selected,correct, wrong,disable};
 
     [Header("OptionType:")]
     [Tooltip("it gives the current state of the option")]
@@ -41,9 +41,16 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 
     bool isEnable = true;
 
+    string mValue;
+    public string Val => mValue;
 
     [Header("Speaker:")]
     [SerializeField] TextSpeech speech;
+
+    [Header("Translate")]
+    [SerializeField] TranslateLang translateLang;
+
+    public void EnableInteractable(bool enable) { button.interactable = enable; }
 
     /// <summary>
     /// Action implemented on enable
@@ -77,10 +84,19 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 
     public void SetChoice(string option ,int index)
     {
-        optionText.text = option;
-        _index = index;
+        mValue = option;
 
-        speech.Initialise(optionText);
+        optionText.text = "";
+
+        LanguageController.Instance.Translate(option, (translation) =>
+        {
+            optionText.text = translation;
+            _index = index;
+
+            speech.Initialise(translation);
+        });
+
+      
     }
 
     #region EVENT_FUNCTIONS
@@ -104,7 +120,6 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 
     }
     #endregion
-
 
     public void SetOption(OptionType optionType)
     {
@@ -133,11 +148,11 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
                 optionHighlight.ChangeSet(OptionType.normal);
                  break;
 
-            case OptionType.worng:
+            case OptionType.wrong:
                 optionHighlight.gameObject.SetActive(true);
                 button.image.color = new Color32(254,6,6,255);
 
-                optionHighlight.ChangeSet(OptionType.worng);
+                optionHighlight.ChangeSet(OptionType.wrong);
                 break;
 
              case OptionType.correct:
@@ -145,6 +160,13 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
                 optionHighlight.gameObject.SetActive(true);
 
               //  button.image.color = new Color32(39,163,38,255);
+
+                break;
+
+            case OptionType.disable:
+                optionHighlight.gameObject.SetActive(true);
+                optionHighlight.ChangeSet(OptionType.disable);
+                
 
                 break;
             

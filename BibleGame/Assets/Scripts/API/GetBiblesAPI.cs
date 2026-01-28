@@ -1,4 +1,5 @@
 using BibleGame.Data;
+using DebugUtils;
 using Newtonsoft.Json;
 using RestAPI;
 using System;
@@ -55,8 +56,12 @@ namespace BibleGame
             {
                 var url = $"{ServiceURL.baseURL}{ServiceURL.getBibleDetail}?bible_id={id}";
 
+                DevDebug.Log($"Get bibles: url =>{url}", DebugColor.Cyan);
+
                 WebRequestGet(url, (url, success, adata) =>
                 {
+                    DevDebug.Log($"Get bibles response  =>{adata.ToString()}", DebugColor.Orange);
+
                     if (!success)
                     {
                         Debug.LogError("No Success in get bible detail");
@@ -131,6 +136,18 @@ namespace BibleGame
             }
 
             public class GetBibleDetailResponse : ResponseBase
+            {
+                public GetBibleDatR ResponseData;
+            }
+
+            [Serializable]
+            public class GetBibleDatR
+            {
+                public GetBibleData data;
+            }
+
+            [Serializable]
+            public class GetBibleData
             {
                 public string nameLocal;
             }

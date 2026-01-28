@@ -34,6 +34,6 @@ public class CorrectPanel : MonoBehaviour
     private void OnDisable()
     {
         /*restartBtn.onClick.RemoveAllListeners();*/
-        nexttBtn.onClick.RemoveListener(callback.NextAction);
+        nexttBtn.onClick.RemoveAllListeners();
     }
 }

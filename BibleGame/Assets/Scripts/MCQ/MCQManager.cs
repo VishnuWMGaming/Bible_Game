@@ -1,15 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-using UnityEngine.UI;
-using TMPro;
-
 using BibleGame;
 using BibleGame.API;
-using UnityEngine.Serialization;
 using BibleGame.Data;
+using DebugUtils;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using TMPro;
+using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 {
@@ -26,6 +27,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     [SerializeField] Button hintSubmitBtn;
     [SerializeField] Button hintCloseBtn;
     [SerializeField] Button rewardBtn;
+    [SerializeField] TextSpeech textSpeech;
 
     [Space]
     [SerializeField] private List<Question> questions = new List<Question>();
@@ -33,21 +35,44 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
    [SerializeField]  private int currentQuestionIndex = 0;
 
     int hintIndex = 0;
-    
+
+    int wrongAnswer;
+
+    TranslateLang qTrans;
+    List<string> usedWrongs = new List<string>();
+
+    GetQuestionsRequestData mCurrentrequestData;
+
+    private void Awake()
+    {
+        qTrans = questionTxt.GetComponent<TranslateLang>();
+    }
+
     /// <summary>
     /// Action implemented one enable
     /// </summary>
     private void OnEnable()
     {
+        UserData.coins = AppData.coins;
+
+        questionPanel.gameObject.SetActive(true);
+
         optionPanel.callback = this;
         correctPanel.callback = this;
 
-        _homeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
+        _homeBtn.onClick.AddListener(() => 
+        {
+            AudioManager.Instance.PlayButton();
+            Actions.StartPageAction(StartPage.game_menu);
+        });
+
         _submitBtn.onClick.AddListener(() => 
         {
             AudioManager.Instance.PlayButton();
             optionPanel.CheckAnswerAction(); 
         });
+
+        wrongAnswer = 0;
 
         rewardBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.reward); });
 
@@ -56,7 +81,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         _submitBtn.interactable = false;
         
         hintBtn.onClick.AddListener(() => { ShowHint(); AudioManager.Instance.PlayButton(); });
-        hintSubmitBtn.onClick.AddListener(() => { UseHint(); AudioManager.Instance.PlayButton(); });
+       // hintSubmitBtn.onClick.AddListener(() => { UseHint(); AudioManager.Instance.PlayButton(); });
         hintCloseBtn.onClick.AddListener(() => { CloseHint(); AudioManager.Instance.PlayButton(); });
 
         //RestartAction();
@@ -65,7 +90,6 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         Initialise();
 
         hintIndex = 0;
-
         //SetData(currentQuestionIndex);
     }
 
@@ -76,9 +100,11 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     {
         _homeBtn.onClick.RemoveAllListeners();
         _submitBtn.onClick.RemoveAllListeners();
-        hintBtn.onClick.RemoveListener(ShowHint);
-        hintSubmitBtn.onClick.RemoveListener(UseHint);
+        hintBtn.onClick.RemoveAllListeners();
+      //  hintSubmitBtn.onClick.RemoveListener(UseHint);
         hintCloseBtn.onClick.RemoveListener(CloseHint);
+
+        correctPanel.gameObject.SetActive(false);
     }
 
     void Initialise()
@@ -92,10 +118,11 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
             _ => 1
         };
 
-        GetQuestionsRequestData requestData = new GetQuestionsRequestData()
+        mCurrentrequestData = new GetQuestionsRequestData()
         {
             game_id = UserData.gameid,
             ageGroup = ageVal.ToString(),
+            language = "en",
             game_type = "objective",
             bible_id = UserData.bibleId,
             chapter_id = UserData.chapterId,
@@ -121,7 +148,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
             GameData.levelID = res.ResponseData.levelData._id;
 
-            foreach (var data in res.ResponseData.questions)
+            foreach (var data in res.ResponseData.resArr)
             {
                 List<Answer> answers = new List<Answer>();
 
@@ -147,13 +174,11 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
                 {
                     Debug.LogError("Unable to answer string!");
                 }
-
-               
             }
 
             SetData(currentQuestionIndex);
 
-        }, requestData);
+        }, mCurrentrequestData);
     }
 
     public void EnableSubmit(bool enabled)
@@ -165,6 +190,106 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     {
         questionPanel.gameObject.SetActive(false);
         correctPanel.gameObject.SetActive(true);
+
+        currentQuestionIndex++;
+
+        AudioManager.Instance.PlaySFX(AudioType.Correct);
+    }
+
+    public void WrongAnswer()
+    {
+        AudioManager.Instance.PlaySFX(AudioType.Wrong);
+        wrongAnswer++;
+
+        Debug.LogError($"Wrong >>>>> {wrongAnswer}");
+
+        if (wrongAnswer > 1)
+        {
+            Debug.LogWarning($"Reloading....{currentQuestionIndex}");
+            ReloadQuestions(questions[currentQuestionIndex]?.title);
+        }
+    }
+
+    void ReloadQuestions(string questionReload)
+    {
+        //int ageVal = UserData.currentAge switch
+        //{
+        //    AgeGroup.kindergarden => 1,
+        //    AgeGroup.elementary => 2,
+        //    AgeGroup.teenagers => 3,
+        //    AgeGroup.adult => 4,
+        //    _ => 1
+        //};
+
+        //GetQuestionsRequestData requestData = new GetQuestionsRequestData()
+        //{
+        //    game_id = UserData.gameid,
+        //    ageGroup = ageVal.ToString(),
+        //    language = "en",
+        //    game_type = "objective",
+        //    bible_id = UserData.bibleId,
+        //    chapter_id = UserData.chapterId,
+        //    book_id = UserData.bookId,
+        //};
+
+        wrongAnswer = 0;
+        questions.Clear();
+
+        PopUp.Instance.EnableLoad(true);
+
+       // currentQuestionIndex = 0;
+
+        GetQuestionsAPI.GetQuestionsObjective((success, res) =>
+        {
+            PopUp.Instance.EnableLoad(false);
+
+            if (!success)
+            {
+                Debug.LogError("Error in Get question objective");
+                Actions.StartPageAction(StartPage.game_menu);
+                return;
+            }
+
+            GameData.levelID = res.ResponseData.levelData._id;
+
+            foreach (var data in res.ResponseData.resArr)
+            {
+                List<Answer> answers = new List<Answer>();
+
+                answers.Add(new Answer(data.opt1, false));
+                answers.Add(new Answer(data.opt2, false));
+                answers.Add(new Answer(data.opt3, false));
+                answers.Add(new Answer(data.opt4, false));
+
+                string answer = data.hint.Replace("Correct answer: ", "");
+
+                int ansindex = -1;
+
+                if (int.TryParse(answer, out ansindex))
+                {
+                    Debug.Log("Answer at: " + ansindex);
+
+                    answers[ansindex - 1].SetStatus(true);
+
+                    Question question = new Question(data._id, data.title, answers);
+                    questions.Add(question);
+                }
+                else
+                {
+                    Debug.LogError("Unable to answer string!");
+                }
+            }
+
+            if(questionReload == questions[currentQuestionIndex]?.title)
+            {
+                ReloadQuestions(questionReload);
+                return;
+            }
+
+
+            SetData(currentQuestionIndex);
+
+        }, mCurrentrequestData);
     }
 
     public void RestartAction()
@@ -177,11 +302,12 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
     public void NextAction()
     {
-        int coins = UserData.coins;
-        coins += 4;
-        UserData.coins = coins;
+        UserData.coins += 4;
 
-        scoreText.text = UserData.coins.ToString();
+        UpdateCoins(UserData.coins);
+
+        wrongAnswer = 0;
+
 
      //   Actions.UpdateCoins.Invoke(coins);
 
@@ -194,79 +320,149 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         }
         else
         {
-            if(String.IsNullOrEmpty(GameData.levelID))
+
+            SubmitAction(() =>
             {
-                Debug.LogError("level id is not initialised");
+                PopUp.Instance.ShowMessage($"You have completed the chapter {UserData.chapterId}", null, MScreenOriatation.portrait);
+                AudioManager.Instance.PlaySFX(AudioType.Win);
+
+                Actions.ChangePanelActions(CanvasType.home);
+            });
+        }
+    }
+
+
+    public void SubmitAction(Action onComplete)
+    {
+        if (String.IsNullOrEmpty(GameData.levelID))
+        {
+            Debug.LogError("level id is not initialised");
+            return;
+        }
+
+        int coins = AppData.coins > 0 ? UserData.coins - AppData.coins : UserData.coins;
+
+        Debug.Log($"Submitting.... {AppData.coins} - {UserData.coins} = {coins} ");
+        //  UserData.coins = 20;
+
+        scoreText.text = UserData.coins.ToString();
+
+        if (coins ==0)
+            coins = 0;
+
+        SubmitRequestData requestData = new SubmitRequestData()
+        {
+            level_id = GameData.levelID,
+            coins = coins,
+            ratings = 3,
+            queAttempCount = currentQuestionIndex,
+            question_data = null
+        };
+
+        PopUp.Instance.EnableLoad(true);
+        GetQuestionsAPI.SubmitAnswer((success, res) =>
+        {
+            PopUp.Instance.EnableLoad(false);
+            if (!success)
+            {
+                Debug.LogError("Error in submitting the answer");
                 return;
             }
 
-            Debug.Log("Submitting....");
-            UserData.coins = 20;
+            Debug.Log("<color=green>Submitted </color>");
+            onComplete?.Invoke();
 
-            scoreText.text = UserData.coins.ToString();
+            //Actions.ChangePanelActions(CanvasType.home);
 
-            SubmitRequestData requestData = new SubmitRequestData()
-            {
-                level_id = GameData.levelID,
-                coins = 20,
-                ratings = 3,
-                question_data = null
-            };
-
-            PopUp.Instance.EnableLoad(true);
-            GetQuestionsAPI.SubmitAnswer((success,res) =>
-            {
-                PopUp.Instance.EnableLoad(false);
-                if (!success)
-                {
-                    Debug.LogError("Error in submitting the answer");
-                    return;
-                }
-
-                Debug.Log("<color=green>Submitted </color>");
-                Actions.ChangePanelActions(CanvasType.home);
-
-            }, requestData);
-
-        }
+        }, requestData);
     }
 
     private void ShowHint()
     {
+        HintAPI.GetFreeHint((success,res) =>
+        {
+            if(!success)
+            {
+                PopUp.Instance.ShowMessage("Unable to get the free hints");
+                return;
+            }
+
+            int freeHints = res.ResponseData.freeHint;
+
+            if (freeHints <= 0)
+            {
+                if(UserData.coins < 7)
+                {
+                    PopUp.Instance.ShowMessage($"Not enough coins !!");
+                    return;
+                }
+
+                int coins = UserData.coins;
+                coins -= 7;
+
+                if (coins < 0)
+                coins = 0;
+
+                UpdateCoins(coins);
+
+                HintAction();
+                return;
+            }
+
+            HintAction();
+
+            HintAPI.DeductFreeHint((success) =>
+            {
+                if(!success)
+                {
+                    //  PopUp.Instance.ShowMessage("Unable to get the free hints");
+                }
+            });
+
+            return;
+        });
+    }
+
+    private void HintAction()
+    {
         if (currentQuestionIndex > questions.Count)
             return;
 
-        int index = currentQuestionIndex - 1;
+        int index = currentQuestionIndex;
 
         if (index < 0)
             index = 0;
 
-        int coins = UserData.coins;
-        coins -= 7;
-
-        if (coins < 0)
+        if(hintIndex > 1)
         {
-            coins = 0;
-            UserData.coins = coins;
-
-            PopUp.Instance.ShowMessage($"Not enough coins !!");
+            PopUp.Instance.ShowMessage("Could not use more hints !!");
             return;
         }
-        UserData.coins = coins;
 
-        scoreText.text = UserData.coins.ToString();
+        string wrongAnswer = questions[index].answers.Where(x => !x.option_status  && !usedWrongs.Contains(x.title) )
+                      .OrderBy(x => UnityEngine.Random.value)
+                      .FirstOrDefault()?.title;
 
+        //string mhintAnswer = $"Hint : {wrongAnswer}";
 
-        ++hintIndex;
+        DevDebug.Log($"Wrong Answer : {wrongAnswer}",DebugColor.Indigo);
 
-        string correctAnswer = questions[index].answers.Find(x => x.option_status).title;
+        optionPanel.EnableInteractable(wrongAnswer, false);
 
-        PopUp.Instance.ShowMessage($"Hint : {correctAnswer}");
+        hintIndex++;
+
+        usedWrongs.Add(wrongAnswer);
+
+        //LanguageController.Instance.Translate(mhintAnswer, (translation) =>
+        //{
+        //    PopUp.Instance.ShowMessage(translation);
+        //});
     }
 
-    private void UseHint()
+    void UpdateCoins(int coins)
     {
-        
+        UserData.coins = coins;
+        scoreText.text = UserData.coins.ToString();
     }
 
     private void CloseHint()
@@ -277,10 +473,24 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
     private void SetData(int questionIndex)
     {
+        hintIndex = 0;
+        usedWrongs.Clear();
+
+
+        DebugUtils.DevDebug.Log($"Initialise question : {questions[questionIndex]?.title} :: {questionIndex}",DebugColor.Turquoise);
+        questionTxt.text = "";
         questionTxt.text = questions[questionIndex]?.title;
 
+        qTrans.UpdateValue(questions[questionIndex]?.title);
+
+        qTrans.UpdateText(() =>
+        {
+            textSpeech.Initialise(questionTxt.text, true);
+        });
+
         optionPanel.SetOptions(questions[questionIndex]?.answers);
-        currentQuestionIndex++;
+
+        UpdateCoins(UserData.coins);
     }
 
     public int GetQuestionsCount()

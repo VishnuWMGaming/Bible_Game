@@ -25,6 +25,8 @@ public class Chapters : MonoBehaviour,IMChapter
     private void OnDisable()
     {
         backBtn.onClick.RemoveAllListeners();
+
+        ClearAll();
     }
 
     public void SelectAction(string id)

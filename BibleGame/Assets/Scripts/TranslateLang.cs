@@ -10,6 +10,7 @@ using UnityEngine.UIElements;
 using BibleGame.API;
 using BibleGame.Data;
 using RestAPI;
+using DebugUtils;
 
 [RequireComponent(typeof(TMP_Text))]
 public class TranslateLang : MonoBehaviour
@@ -19,16 +20,38 @@ public class TranslateLang : MonoBehaviour
     // Start is called before the first frame update
      private string textValue;
 
+
+    [SerializeField] bool isTextChange = true;
+
     private void Awake()
     {
         translatedText = GetComponent<TMP_Text>();
         textValue = translatedText.text;
-        UpdateText();
+
+        UpdateText(() =>
+        {
+
+        });
     }
+
 
     private void OnEnable()
     {
-        UpdateText();
+        translatedText.font = AppData.mLanguage switch
+        {
+            Language.English => LanguageController.Instance.NormalFont,
+            Language.Korean => LanguageController.Instance.KoreanFont,
+            Language.Chinese => LanguageController.Instance.ChineseFont,
+            Language.Hindi => LanguageController.Instance.HindiFont,
+            _ => LanguageController.Instance.NormalFont
+        };
+
+
+        UpdateText(() =>
+        {
+
+        });
+
         Actions.UpdateText += UpdateText;
     }
     private void OnDisable()
@@ -36,33 +59,77 @@ public class TranslateLang : MonoBehaviour
         Actions.UpdateText -= UpdateText;
     }
 
-    private void UpdateText()
+    public void UpdateValue(string value)
+    {
+        textValue = value;
+    }
+
+    public void UpdateText(Action finish)
     {
         if (String.IsNullOrEmpty(ApiBase.AuthKeyPair.Value))
+        {
+            finish?.Invoke();
             return;
+        }
 
         string currentValue = translatedText.text;
 
         if (string.IsNullOrEmpty(currentValue))
+        {
+            finish?.Invoke();
             return;
+        }
 
         if (AppData.mLanguage == null)
         {
             AppData.mLanguage = Language.English;
+
+            finish?.Invoke();
             return;
         }
 
         if(AppData.mLanguage == Language.English)
         {
             translatedText.text = textValue;
+            finish?.Invoke();
             return;
         }
+
+       translatedText.font =  AppData.mLanguage switch
+       {
+           Language.English => LanguageController.Instance.NormalFont,
+           Language.Korean => LanguageController.Instance.KoreanFont,
+           Language.Chinese => LanguageController.Instance.ChineseFont,
+           Language.Hindi => LanguageController.Instance.HindiFont,
+           _ => LanguageController.Instance.NormalFont
+       };
+
+
+        if (!isTextChange)
+            return;
+
+        translatedText.text = "";
+
+        if(textValue.Length <= 200)
+        {
+            LanguageController.Instance.Translate(textValue, (translation) =>
+            {
+                translatedText.text = translation;
+                finish?.Invoke();
+            });
+
+            return;
+        }
+
 
         //Split long text into chunks 
         List<string> chunks = SplitIntoChunks(textValue, 500);
 
-       
-        StartCoroutine(TranslateChunks(chunks));
+
+        StartCoroutine(TranslateChunks(chunks, () =>
+        {
+            finish?.Invoke();
+        }));
 
         // // LanguageController.Instance.Translation(textValue, translated =>
         // LanguageController.Instance.Translation(currentValue, translated =>
@@ -73,7 +140,7 @@ public class TranslateLang : MonoBehaviour
         // });
     }
 
-    private IEnumerator TranslateChunks(List<string> chunks)
+    private IEnumerator TranslateChunks(List<string> chunks,Action finish)
     {
         translatedText.text = " ";
         _translated_Text = "";
@@ -84,7 +151,7 @@ public class TranslateLang : MonoBehaviour
 
             
             string selectedLanguage = LanguageController.Instance.GetLangStringVal(AppData.mLanguage);
-
+            DevDebug.Log($"Selected language: {selectedLanguage}",DebugColor.Silver);
 
             TransInput input = new TransInput
             {
@@ -97,9 +164,8 @@ public class TranslateLang : MonoBehaviour
                 if (!success)
                 {
                     Debug.LogError("Transaltion error");
-
+                    done = true;
                 }
-                done = true;
 
                 string translated = res.ResponseData;
 
@@ -121,6 +187,8 @@ public class TranslateLang : MonoBehaviour
 
             // Wait until translation finished before sending next chunk
             yield return new WaitUntil(() => done);
+
+            finish?.Invoke();
         }
     }
 

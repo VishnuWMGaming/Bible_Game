@@ -12,15 +12,29 @@ public class SelectGame : MonoBehaviour
 
     [SerializeField] TMP_Text userName;
 
+    [Space]
+    [SerializeField] PostImage iPic;
+
     public ISelectGame CallbackSelectGame;
     
     private void OnEnable()
     {
-        homeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
+        AudioManager.Instance.PlayBG(UserData.currentAge switch
+        {
+            AgeGroup.adult => AudioType.adult,
+            AgeGroup.kindergarden => AudioType.kindergarden,
+            AgeGroup.elementary => AudioType.elementary,
+            AgeGroup.teenagers => AudioType.teenager,
+        });
+
+        homeBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.StartPageAction(StartPage.chapter); });
         triviaBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); CallbackSelectGame.PlayTriviaGame(); });
         wordBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); CallbackSelectGame.PlayWordGame(); });
 
         userName.text = AppData.loginData.Name;
+
+        if (AppData.loginData.Pic != null)
+            iPic.SetRightSize(AppData.loginData.Pic, true);
     }
 
     private void OnDisable()

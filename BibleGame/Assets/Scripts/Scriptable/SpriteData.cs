@@ -39,6 +39,7 @@ public class StyleUI
     public Sprite unselectPanel;
     public Sprite bookTab;
     public Sprite mcqTabPanel;
+    public Sprite mcqTabPanel_Vertical;
     public Sprite box;
 
     [Space]

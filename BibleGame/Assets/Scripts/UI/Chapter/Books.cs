@@ -8,6 +8,7 @@ using BibleGame.Data;
 using BibleGame.API;
 
 using System.Linq;
+using DebugUtils;
 
 public class Books : MonoBehaviour, IMBook
 {
@@ -34,6 +35,9 @@ public class Books : MonoBehaviour, IMBook
         //book4.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
         //book5.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
         //book6.onClick.AddListener((() => bookCallback.SelectBook("bookName")));
+
+        ClearAll();
+        DevDebug.Log("Book loaded ...", DebugColor.Blue);
 
         Intialise();
     }
@@ -79,7 +83,7 @@ public class Books : MonoBehaviour, IMBook
             AppData.bookDatas = UserData.testament switch
             {
                 Testament.Old => res.ResponseData.GetRange(0, 39),
-                Testament.New => res.ResponseData.GetRange(38, 28),
+                Testament.New => res.ResponseData.GetRange(39, 27),
                 _ => throw new NotImplementedException()
             };
 
@@ -93,6 +97,8 @@ public class Books : MonoBehaviour, IMBook
             {
                 GameObject go = Instantiate(mBookObj, mBookTransform);
                 go.transform.localScale = Vector3.one;
+
+                go.gameObject.name = book.name;
 
                 MBook mBook = go.GetComponent<MBook>();
                 mBook.Intialise(book, this);

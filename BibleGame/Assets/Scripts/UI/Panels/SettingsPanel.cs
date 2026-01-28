@@ -1,5 +1,7 @@
 using BibleGame;
+using BibleGame.API;
 using BibleGame.Data;
+using DebugUtils;
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ public class SettingsPanel : MonoBehaviour
     [SerializeField] Button myProfileButton;
     [SerializeField] Button termsConditionButton;
     [SerializeField] Button logoutButton;
+    [SerializeField] Button deleteButton;
     [SerializeField] Button homeButton;
     [SerializeField] TMP_Text userName;
 
@@ -43,6 +46,7 @@ public class SettingsPanel : MonoBehaviour
             "Swahili",
             "Kreyol"
         };
+
      languageDropdown.AddOptions(options);
 
         languageDropdown.value = PlayerPrefs.HasKey("lang") ? PlayerPrefs.GetInt("lang") : 0;
@@ -50,6 +54,12 @@ public class SettingsPanel : MonoBehaviour
         termsConditionButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); EnablePanel(SetPanelType.termsCondition); });
         logoutButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); EnablePanel(SetPanelType.logout); });
         homeButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.home); });
+
+        deleteButton.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.PlayButton();
+            EnablePanel(SetPanelType.delete);
+        });
 
         languageDropdown.onValueChanged.AddListener(OnLanguageChanged);
         if (PlayerPrefs.HasKey("SfxVol"))
@@ -59,7 +69,17 @@ public class SettingsPanel : MonoBehaviour
         else
             sfxSlider.value = 1.0f;
 
+
+        if (PlayerPrefs.HasKey("BGVol"))
+        {
+            bgSlider.value = PlayerPrefs.GetFloat("BGVol");
+        }
+        else
+            bgSlider.value = 1.0f;
+
         sfxSlider?.onValueChanged.AddListener(AudioManager.Instance.ChangeVolSfx);
+
+        bgSlider?.onValueChanged.AddListener(AudioManager.Instance.ChangeVolBG);
 
         userName.text = AppData.loginData.Name;
     }
@@ -92,4 +112,4 @@ public class SettingsPanel : MonoBehaviour
 
 }
 
-public enum SetPanelType { myProfile, termsCondition, logout }
+public enum SetPanelType { myProfile, termsCondition, logout,delete }

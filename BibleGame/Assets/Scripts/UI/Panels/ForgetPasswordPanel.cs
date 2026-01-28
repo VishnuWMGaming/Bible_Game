@@ -81,7 +81,8 @@ public class ForgetPasswordPanel : MonoBehaviour
 
         if (success)
         {
-            AppData.otpData = new OTPData(response.ResponseData.otp, OTPType.forget);
+            AppData.mforgetotpData = new OTPData(response.ResponseData.otp, OTPType.forget);
+            AppData.otpPage = OTPType.forget;
 
             Actions.ChangePanelActions(CanvasType.otp);
         }

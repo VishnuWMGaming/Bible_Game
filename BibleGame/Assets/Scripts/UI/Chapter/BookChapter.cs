@@ -1,16 +1,14 @@
+using BibleGame;
+using BibleGame.API;
+using BibleGame.Data;
+using BibleGame.Utility;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
-using UnityEngine.UI;
 using TMPro;
-using System;
-using BibleGame;
-using BibleGame.Data;
-using BibleGame.API;
-
-
-using BibleGame.Utility;
+using UnityEngine;
+using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public interface IBookChapter
 {
@@ -60,11 +58,22 @@ public class BookChapter : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-       // previousBtn.onClick.AddListener(() => PageNavigateAction(Navigate.previous));
+        AudioManager.Instance.PlayBG(AudioType.reading);
+
+
+       // previousBtn.onClick.AddListener(() =>  (Navigate.previous));
         nextBtn.onClick.AddListener(()=> 
         {
             speech.Stop();
             callback.EndBookAction();
+            AudioManager.Instance.PlayButton();
+        });
+
+
+        backBtn.onClick.AddListener(() =>
+        {
+            speech.Stop();
+            Actions.ChangePanelActions(CanvasType.home);
             AudioManager.Instance.PlayButton();
         });
 
@@ -111,34 +120,52 @@ public class BookChapter : MonoBehaviour
         PopUp.Instance.EnableLoad(true);
         ChapterAPI.GetDetail((success, res) =>
         {
-            PopUp.Instance.EnableLoad(false);
             if (!success)
             {
+                PopUp.Instance.EnableLoad(false);
                 Debug.LogError("Error in getting chapter details");
                 return;
             }
 
             mScorll.verticalNormalizedPosition = 1.0f;
 
-            header.text =  $"Chapter {res.ResponseData.data.number}";
+            header.text = $"Chapter {res.ResponseData.data.number}";
+
+            header.GetComponent<TranslateLang>().UpdateText(() =>
+            {
+
+            });
 
             Debug.Log($"<color=green> Chapter {res.ResponseData.data.id} is loaded.</color>");
 
             string content = res.ResponseData.data.content.ToString();
 
-
             Debug.Log($"Content :{content}");
-
 
             content = Utils.ConvertHtmlToPlainText(content);
 
-
-
             Debug.Log($"Cleaned Content :{content}");
 
-            pagePanel.text = content;
-            //Actions.UpdateText?.Invoke();
-            speech.Initialise(pagePanel, true);
+
+            //pagePanel.GetComponent<TranslateLang>().UpdateText(() =>
+            //{
+
+            //});
+
+            LanguageController.Instance.Translate(content, translation =>
+            {
+                pagePanel.text = translation;
+              //  pagePanel.GetComponent<TranslateLang>().UpdateText();
+
+                PopUp.Instance.EnableLoad(false);
+
+                string[] versesArray = content.Split(new[] { "\r\n", "\r", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
+                List<string> versesList = new List<string>(versesArray);
+
+                 speech.Initialise(translation, true);
+            });
+
+           
 
         }, UserData.bibleId, UserData.chapterId);
     }

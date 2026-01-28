@@ -9,13 +9,13 @@ public class AudioData : ScriptableObject
     [Header("AudioClips:")]
     [SerializeField] List<AudioD> audios = new List<AudioD>();
 
-    public AudioClip GetAudioClip(string audioname)
+    public AudioClip GetAudioClip(AudioType type)
     {
-        return audios.Find(x => x.name == audioname).clip;
+        return audios.Find(x => x.type == type).clip;
     }
 }
 
-public enum AudioType {sfx,Bg}
+public enum AudioType {button,Win,Correct,Wrong,Bg,teenager,reading,kindergarden,elementary,adult}
 
 [Serializable]
 public class AudioD

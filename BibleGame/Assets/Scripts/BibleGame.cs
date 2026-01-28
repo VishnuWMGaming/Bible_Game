@@ -15,14 +15,18 @@ namespace BibleGame
     public class ServiceURL
     {
         public const string baseURL = "http://52.22.241.165:10032/api/user/";
+        public const string imageURL = "http://52.22.241.165:10032/";
         public const string signupURL = "register";
+        public const string deleteProfile = "delete_profile";
         public const string login = "login";
         public const string verify = "verify_otp";
         public const string profileName = "update_profile";
+        public const string updateProfilePic = "update_profile_pic";
         public const string forgetPassword = "forget_password";
         public const string updatePassword = "update_new_password";
         public const string resendOtp = "resend_otp";
         public const string getProfile = "get_profile";
+        public const string setProfilePic = "update_profile_pic";
         public const string getChapters = "get-book-chapters";
         public const string getChapterDetail = "get-chapters-details";
         public const string getQuestions = "get-questions";
@@ -33,8 +37,12 @@ namespace BibleGame
         public const string createStreak = "create-streak";
         public const string getStreak = "get-streaks";
         public const string getStreakDetail = "get-streak-details";
-         public const string getTrans = "translate";
-        
+        public const string getTrans = "translate";
+        public const string getLeaderBoard = "get-leaderboard";
+        public const string getFreeHint = "get_free_hint";
+        public const string deductFreeHint = "deduct_hint";
+
+
     }
 
     namespace UI
@@ -54,8 +62,14 @@ namespace BibleGame
     {
         public static Action<CanvasType> ChangePanelActions;
         public static Action<StartPage> StartPageAction;
-        public static Action UpdateText= delegate { };
+        public static Action<Action> UpdateText;
         public static Action<int> UpdateCoins;
+
+        public static Action<bool> ResetBoxPosAction;
+
+        public static Action ApplyStyleAction;
+
+        public static Action<MScreenOriatation,bool,bool> ChangeLandscape;
     }
 
    namespace Data
@@ -63,11 +77,20 @@ namespace BibleGame
         public static class AppData
         {
             public static LoginData loginData;
-            public static OTPData otpData;
+            public static OTPData mforgetotpData;
+            public static OTPData mSignOtpData;
+
+            public static OTPType otpPage;
+
             public static StartPage mCurrentPage;
+
+            public static int coins;
+            public static int mSavedcoins;
 
             public static List<BookData> bookDatas;
             public static Language mLanguage;
+
+            public static MScreenOriatation orientation; 
         }
 
         public  class LoginData
@@ -75,16 +98,27 @@ namespace BibleGame
             string email;
             string password;
             string name;
+            string churchName;
+            Sprite pic;
 
             public string Email => email;
             public string Password => password; 
-            public string Name => name; 
+            public string Name => name;
+            public string Church => churchName;
+            public Sprite Pic => pic;
 
-            public  LoginData (string email, string password, string name)
+            public  LoginData (string email, string password, string name,string church,Sprite pic = null)
             {
                 this.email = email;
                 this.password = password;
                 this.name = name;
+                this.churchName = church;
+                this.pic = pic;
+            }
+
+            public void UpdateSprite(Sprite pic)
+            {
+                this.pic = pic;
             }
         }
 
@@ -108,6 +142,7 @@ namespace BibleGame
         public class UserData
         {
             public static string bibleId;
+            public static string bibleName;
             public static string bookName;
             public static string bookId;
             public static string chapterId;
@@ -150,7 +185,37 @@ namespace BibleGame
                 html = Regex.Replace(html, @"\n{2,}", "\n");        // remove multiple blank lines
                 html = html.Trim();
 
+                html = html.Replace("¶", "");
+
                 return html;
+            }
+
+            public static string GetImageMimeType(string extension)
+            {
+                switch (extension)
+                {
+                    case ".jpg":
+                    case ".jpeg":
+                        return "image/jpeg";
+                    case ".png":
+                        return "image/png";
+                    default:
+                        return "UnknownImage; // fallback for unknown types";
+                }
+            }
+
+            public static Sprite LoadSpriteFromBytes(byte[] imageData)
+            {
+                Texture2D texture = new Texture2D(2, 2); // Dummy size; will be replaced by actual data
+                if (texture.LoadImage(imageData))
+                {
+                    return Sprite.Create(
+                        texture,
+                        new Rect(0, 0, texture.width, texture.height),
+                        new Vector2(0.5f, 0.5f)
+                    );
+                }
+                return null;
             }
         }
     }

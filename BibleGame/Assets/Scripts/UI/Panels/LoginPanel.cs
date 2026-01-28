@@ -136,19 +136,18 @@ public class LoginPanel : MonoBehaviour
 
         if (success)
         {
-            AppData.loginData = new LoginData(email_Inputfield.text, password_Inputfield.Text, response.ResponseData.name);
+            AppData.loginData = new LoginData(email_Inputfield.text, password_Inputfield.Text, response.ResponseData.name,"");
 
             if (!response.ResponseData.verified)
             {
                 PopUp.Instance.EnableLoad(false);
                 PopUp.Instance.ShowMessage("OTP not verified !!");
-                AppData.otpData = new OTPData(response.ResponseData.otp, OTPType.sign);
+                AppData.mSignOtpData = new OTPData(response.ResponseData.otp, OTPType.sign);
                 Actions.ChangePanelActions(CanvasType.otp);
                 return;
             }
 
             GetProfile();
-            
         }
         else
         {
@@ -165,7 +164,7 @@ public class LoginPanel : MonoBehaviour
     {
         if (success)
         {
-            AppData.loginData = new LoginData(response.ResponseData.email, "**********", response.ResponseData.name);
+            AppData.loginData = new LoginData(response.ResponseData.email, "**********", response.ResponseData.name, response.ResponseData.church);
             // GetChapters();
 
             Actions.ChangePanelActions(CanvasType.home);

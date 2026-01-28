@@ -1,14 +1,13 @@
+using BibleGame;
+using BibleGame.API;
+using BibleGame.Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
-using UnityEngine.UI;
 using TMPro;
-
-using BibleGame.Data;
-using BibleGame.API;
-using BibleGame;
-using System;
+using UnityEngine;
+using UnityEngine.UI;
+using static System.Net.WebRequestMethods;
 
 public class VerificationPanel : MonoBehaviour
 {
@@ -35,9 +34,15 @@ public class VerificationPanel : MonoBehaviour
     private void OnEnable()
     {
         otpInputField.onValueChanged.AddListener(OnValueChanged_Action);
-        Debug.Log("OTP >>>" + AppData.otpData.Otp);
 
-        otp.text = AppData.otpData.Otp;
+        string otpvalue = AppData.otpPage switch
+        {
+            OTPType.forget => AppData.mforgetotpData.Otp,
+            OTPType.sign => AppData.mSignOtpData.Otp
+        };
+
+        Debug.Log("OTP >>>" + otpvalue);
+        otp.text = otpvalue;
 
         //Notifications.Instance.SendNotification("OTP", "your otp " + AppData.otpData.Otp);
 
@@ -47,14 +52,13 @@ public class VerificationPanel : MonoBehaviour
         backBtn.onClick.AddListener(() => {
 
             AudioManager.Instance.PlayButton();
-            Actions.ChangePanelActions(AppData.otpData.OTPType switch
+            Actions.ChangePanelActions(AppData.otpPage switch
             {
                 OTPType.sign => CanvasType.signup,
                 OTPType.forget => CanvasType.forgetpassword,
-                _ => throw new ArgumentOutOfRangeException(nameof(AppData.otpData.OTPType), AppData.otpData.OTPType, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(AppData.otpPage), AppData.otpPage, null)
             });
         });
-
 
         DisplayTimer("00:00");
 
@@ -81,6 +85,8 @@ public class VerificationPanel : MonoBehaviour
             otps[i].text = string.Empty;
         }
 
+        otp.text = "";
+
         StopAllCoroutines();
     }
 
@@ -101,13 +107,16 @@ public class VerificationPanel : MonoBehaviour
         {
             Debug.LogWarning("otp verified !!!");
 
-            AppData.loginData = new LoginData(AppData.loginData.Email, AppData.loginData.Password, response.ResponseData.name);
-
-            switch (AppData.otpData.OTPType)
+            switch (AppData.otpPage)
             {
                 case OTPType.sign:
-                    GetProfile(); Actions.ChangePanelActions(CanvasType.home); break;
-                case OTPType.forget: Actions.ChangePanelActions(CanvasType.updatepassword); break;
+                    AppData.loginData = new LoginData(AppData.loginData.Email, AppData.loginData.Password, response.ResponseData.name, "");
+                    GetProfile(); 
+                    Actions.ChangePanelActions(CanvasType.home); break;
+
+                case OTPType.forget:
+                    Debug.Log("Forget password page !!!");
+                    Actions.ChangePanelActions(CanvasType.updatepassword); break;
             }
         }
         else
@@ -127,7 +136,7 @@ public class VerificationPanel : MonoBehaviour
     {
         if (success)
         {
-            AppData.loginData = new LoginData(response.ResponseData.email, "**********", response.ResponseData.name);
+            AppData.loginData = new LoginData(response.ResponseData.email, "**********", response.ResponseData.name, response.ResponseData.church);
            // GetChapters();
         }
         else
@@ -217,10 +226,10 @@ public class VerificationPanel : MonoBehaviour
 
             PopUp.Instance.ShowMessage("OTP resent on your registered email");
 
-            OTPType oTPType = AppData.otpData.OTPType;
-            AppData.otpData = new OTPData(response.ResponseData.otp, oTPType);
+           // OTPType oTPType = AppData.otpData.OTPType;
+            //AppData.otpData = new OTPData(response.ResponseData.otp, oTPType);
 
-            otp.text = AppData.otpData.Otp;
+            otp.text = response.ResponseData.otp;
 
            // Notifications.Instance.SendNotification("OTP", "your otp " + AppData.otpData.Otp);
 

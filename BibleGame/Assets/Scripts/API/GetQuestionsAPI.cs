@@ -93,6 +93,8 @@ namespace BibleGame
 
                 WebRequest(url, jsonData, (url, success, adata) =>
                 {
+                    Debug.Log($"<color=#FFA500> Submit data : {adata.ToString()}</color>");
+
                     if (!success)
                     {
                         Debug.LogError($"No success in submitting answer {adata.ToString()}");
@@ -134,6 +136,7 @@ namespace BibleGame
             public string level_id;
             public int coins;
             public int ratings;
+            public int queAttempCount;
             public List<string> question_data;
         }
 
@@ -148,7 +151,7 @@ namespace BibleGame
         [Serializable]
         public class GetQuestionsResponseObjectiveRData
         {
-            public List<GetQuestionsObjectiveData> questions;
+            public List<GetQuestionsObjectiveData> resArr;
             public LevelData levelData;
         }
 
@@ -177,6 +180,7 @@ namespace BibleGame
         public class GetQuestionsResponseAnagramRData
         {
             public List<GetQuestionsAnagramData> resArr;
+            public LevelData levelData;
         }
 
         [Serializable]
@@ -195,6 +199,7 @@ namespace BibleGame
         [Serializable]
         public class LevelData
         {
+            public int queAttempCount;
             public string _id;
             public string game_id;
             public string chapter_id;

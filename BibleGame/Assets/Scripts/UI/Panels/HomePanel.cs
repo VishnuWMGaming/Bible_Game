@@ -1,20 +1,31 @@
+using BibleGame;
+using BibleGame.API;
+using BibleGame.Data;
+using BibleGame.Utility;
+using DebugUtils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
-using UnityEngine.UI;
+using System.Threading.Tasks;
 using TMPro;
-using BibleGame;
-using BibleGame.Data;
-using BibleGame.API;
+using Unity.VisualScripting.Antlr3.Runtime;
+using UnityEngine;
+using UnityEngine.UI;
 public class HomePanel : MonoBehaviour
 {
     [Header("UI Settings:")]
     [SerializeField] TMP_Text userName;
+    [SerializeField] TMP_Text churchName;
+
     [SerializeField] Button settingBtn;
     [SerializeField] Button playBtn;
     [SerializeField] Button leaderBoardBtn;
+
+    [Space]
+    [SerializeField] PostImage iPic;
+
+    [Header("ImageDownloader")]
+    [SerializeField] ImageDownloader imageDownloader;
 
     /// <summary>
     /// Action implemented on enable
@@ -23,9 +34,9 @@ public class HomePanel : MonoBehaviour
     {
         settingBtn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.setPanel); });
 
-        playBtn.interactable = false;
+        //playBtn.interactable = false;
 
-        userName.text = AppData.loginData.Name;
+        AudioManager.Instance.PlayBG(AudioType.Bg);
 
         //  Leaderboard button listener
         leaderBoardBtn?.onClick.AddListener(() =>
@@ -34,37 +45,69 @@ public class HomePanel : MonoBehaviour
             Actions.ChangePanelActions(CanvasType.leaderboard); // match enum
         });
 
+
+        DevDebug.Log($"Token: {PlayerPrefs.GetString("AuthorizationToken")}",DebugColor.Indigo);
+
+        PopUp.Instance.EnableLoad(true);
         Initialise();
     }
 
-    void Initialise()
+    async void Initialise()
     {
-
-        PopUp.Instance.EnableLoad(true);
-
-        StreakAPI.Get((success, res) =>
+        GetProfileAPI.GetProfile(async (success,res) =>
         {
             PopUp.Instance.EnableLoad(false);
-            playBtn.interactable = true;
 
             if (!success)
             {
-                Debug.LogError("Error in getting the streaks");
-                playBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.ageSelect));
-
+                Debug.LogError("Unable to fetch the profile");
+                PopUp.Instance.ShowMessage("Unable to fetch the profile ");
                 return;
             }
 
-            playBtn?.onClick.AddListener(() =>
+            userName.text = res.ResponseData.name;
+            churchName.text = $"Church: {res.ResponseData.church}";
+
+            Sprite pic = res.ResponseData.profile_pic == "0" ? null  : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData.profile_pic}");
+
+            if(pic != null)
+            iPic.SetRightSize(pic, true);
+
+            AppData.loginData = new LoginData(AppData.loginData.Email, AppData.loginData.Password, AppData.loginData.Name, res.ResponseData.church,pic);
+
+            #region Fetching streak details
+
+
+            PopUp.Instance.EnableLoad(true);
+            DevDebug.Log("Fetching the streak details", DebugColor.Silver);
+
+            StreakAPI.Get((success, res) =>
             {
-                AudioManager.Instance.PlayButton();
+                PopUp.Instance.EnableLoad(false);
+                DevDebug.Log("Streak details fetched", DebugColor.Green);
 
-                if (res.ResponseData == null || res.ResponseData.Count <= 0)
-                    Actions.ChangePanelActions(CanvasType.ageSelect);
-                else
-                    Actions.ChangePanelActions(CanvasType.selectStreak);
+                // playBtn.interactable = true;
+
+                if (!success)
+                {
+                    Debug.LogError("Error in getting the streaks");
+                    playBtn?.onClick.AddListener(() => Actions.ChangePanelActions(CanvasType.ageSelect));
+
+                    return;
+                }
+
+                playBtn?.onClick.AddListener(() =>
+                {
+                    AudioManager.Instance.PlayButton();
+
+                    if (res.ResponseData == null || res.ResponseData.Count <= 0)
+                        Actions.ChangePanelActions(CanvasType.ageSelect);
+                    else
+                        Actions.ChangePanelActions(CanvasType.selectStreak);
+                });
+
             });
-
+            #endregion
         });
     }
 
@@ -76,5 +119,28 @@ public class HomePanel : MonoBehaviour
         settingBtn?.onClick.RemoveAllListeners();
         playBtn?.onClick.RemoveAllListeners();
         leaderBoardBtn.onClick.RemoveAllListeners();
+    }
+
+
+    public async Task<Sprite> DownloadSpriteAsync(string url)
+    {
+        var tcs = new TaskCompletionSource<Sprite>();
+
+        Debug.Log($"<color=cyan>Image URL: {url}</color>");
+
+        imageDownloader.DownloadImage(url, (tex) =>
+        {
+            if (tex != null)
+            {
+                Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
+                tcs.SetResult(sprite);
+            }
+            else
+            {
+                tcs.SetResult(null);
+            }
+        });
+
+        return await tcs.Task;
     }
 }

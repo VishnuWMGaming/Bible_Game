@@ -92,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14.65
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 6164530713635389247}
   - component: {fileID: 8596116035973037897}
   - component: {fileID: 2849047048084134907}
+  - component: {fileID: 1263858493110273147}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -226,7 +227,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15.9
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -268,6 +269,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1263858493110273147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4943369000364666603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee0bd596287e974db4f3bb18feefff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translatedText: {fileID: 2849047048084134907}
+  _translated_Text: 
 --- !u!1 &5283154129134057687
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,3 +420,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mTitle: {fileID: 2849047048084134907}
   mSubTitle: {fileID: 1702278799451140803}
+  mLang: {fileID: 1263858493110273147}

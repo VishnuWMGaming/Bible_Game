@@ -18,11 +18,11 @@ namespace BibleGame
                 string url = $"{ServiceURL.baseURL}{ServiceURL.getTrans}";
 
                 string jsonData = JsonConvert.SerializeObject(input);
-                Debug.Log($"translate  :{url} : {jsonData}");
+               // DebugUtils.DevDebug.Log($"translate  :{url} : {jsonData}",DebugColor.Magenta);
 
                 WebRequest(url, jsonData, (url, success, adata) =>
                {
-                   Debug.Log($"<color=#FFA500> trramnslate response : {adata.ToString()}</color>");
+                  // Debug.Log($"<color=#FFA500> trramnslate response : {adata.ToString()}</color>");
 
                    if (!success)
                    {

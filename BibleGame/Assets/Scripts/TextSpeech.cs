@@ -1,9 +1,13 @@
+﻿using BibleGame.Data;
+using DebugUtils;
 using NativeTextToSpeech;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,7 +16,7 @@ using UnityEngine.Windows;
 
 public class TextSpeech : MonoBehaviour
 {
-    [SerializeField] TMP_Text mtext;
+    [SerializeField] string mtext;
 
     private TextToSpeech _textToSpeech;
 
@@ -20,9 +24,18 @@ public class TextSpeech : MonoBehaviour
 
     Button mButton;
 
+    Sprite mInitialSprite;
+
     UnityEvent FinishEvent;
 
     bool isPlaying = false;
+
+    CancellationTokenSource cts;
+
+    private void Awake()
+    {
+        cts = new CancellationTokenSource();
+    }
 
     private void OnEnable()
     {
@@ -30,63 +43,168 @@ public class TextSpeech : MonoBehaviour
         mButton?.onClick.AddListener(() => { Speak(); AudioManager.Instance.PlayButton(); });
 
         mtext = null;
-        mtext = this.GetComponentInParent<TMP_Text>(); 
+        //mtext = this.GetComponentInParent<TMP_Text>(); 
+
+        mInitialSprite = mButton.image.sprite;
 
         ResetAction();
 
-#if !UNITY_EDITOR
+#if! UNITY_EDITOR
         _textToSpeech = TextToSpeech.Create(OnFinish, OnError);
 #endif
 
     }
 
-    public void Initialise(TMP_Text text,bool isButton = false)
+    public void Initialise(string text,bool isButton = false)
     {
         mtext = text;
 
         mButton.interactable = isButton;
+
+        cts = new CancellationTokenSource();
     }
 
     private void OnDisable()
     {
         mButton?.onClick.RemoveAllListeners();
+
+        if (cts != null && !cts.IsCancellationRequested)
+        {
+            cts.Cancel();
+            cts.Dispose();
+        }
     }
 
 
-    public void Speak()
+    public async void Speak()
     {
+        if (cts != null && !cts.IsCancellationRequested)
+        {
+            cts.Cancel();
+            cts.Dispose();
+        }
+
+        cts = new CancellationTokenSource();
 
 #if !UNITY_EDITOR
-        if(isPlaying)
+        if (isPlaying)
         {
+            //AudioManager.Instance.EnableVol(true);
             Stop();
             return;
         }
 
-        if( mtext == null ||  String.IsNullOrWhiteSpace(mtext.text))
+        //AudioManager.Instance.EnableVol(false);
+
+        if (FinishEvent == null)
+            FinishEvent = new UnityEvent();
+
+        if( mtext == null ||  String.IsNullOrWhiteSpace(mtext))
             return;
 
-        string filtered = Regex.Replace(mtext.text, @"[^a-zA-Z\s]", "");
+        string langCode = LanguageController.Instance.GetLangVoiceCode(AppData.mLanguage);
+       
 
-        filtered = Regex.Replace(filtered, @"\s+", " ");
-        filtered = filtered.Trim();
+        if (mtext.Length > 300)
+        {
+            string[] versesArray = mtext.Split(new[] { "\r\n", "\r", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
+            List<string> versesList = new List<string>(versesArray);
 
-        Debug.Log($"<color=magenta> Speaking..... {filtered} </color>");
+            DevDebug.Log($" Speaking..... {versesList.Count} </color>",DebugColor.Magenta);
+
+            int count = versesList.Count;
+
+            for (int i = 0; i < count; ++i)
+            {
+                DevDebug.Log($"Next line speaking....{count} =>{i}",DebugColor.Violet);
+
+                //AudioManager.Instance.EnableVol(false);
+                animator.enabled = true;
+                animator.speed = 1.0f;
+
+                isPlaying = true;
+
+                string filteredVal = versesList[i];
+
+                //if (AppData.mLanguage != Language.Chinese ||
+                //    AppData.mLanguage != Language.Korean ||
+                //    AppData.mLanguage != Language.Hindi)
+                //{
+                //    filteredVal = Regex.Replace(versesList[i], @"[^a-zA-Z\s]", "");
+
+                //    filteredVal = Regex.Replace(filteredVal, @"\s+", " ");
+                //    filteredVal = filteredVal.Trim();
+                //}
+
+                _textToSpeech.Speak(filteredVal, langCode, float.Parse("0.8", CultureInfo.InvariantCulture));
+                await Spoke(FinishEvent, cts.Token);
+
+#if UNITY_IOS
+                await Task.Delay(2000);
+#endif
+
+                Debug.Log("Going to next line....");
+            }
+
+            mButton.image.sprite = mInitialSprite;
+            isPlaying = false;
+            return;
+        }
+
+        //string filtered = Regex.Replace(mtext, @"[^a-zA-Z\s]", "");
+
+        //filtered = Regex.Replace(filtered, @"\s+", " ");
+        //filtered = filtered.Trim();
 
         animator.enabled = true;
         animator.speed = 1.0f;
 
-        _textToSpeech.Speak(filtered, "en-US", float.Parse("0.8", CultureInfo.InvariantCulture));
+         isPlaying = true;
 
-        isPlaying = true;
+        _textToSpeech.Speak(mtext, langCode , float.Parse("0.8", CultureInfo.InvariantCulture));
+        await Spoke(FinishEvent,cts.Token);
+
+        if(mButton )
+          mButton.image.sprite = mInitialSprite;
 #endif
 
     }
 
+    public Task Spoke(UnityEvent unityEvent, CancellationToken token)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+
+        UnityAction handler = null;
+
+        handler = () =>
+        {
+            if (!tcs.Task.IsCompleted)
+                tcs.TrySetResult(true);
+
+            unityEvent.RemoveListener(handler);
+        };
+
+        unityEvent.AddListener(handler);
+
+        // When the token is cancelled → cancel the Task
+        token.Register(() =>
+        {
+            if (!tcs.Task.IsCompleted)
+                tcs.TrySetCanceled();
+
+            unityEvent.RemoveListener(handler);
+        });
+
+        return tcs.Task;
+    }
+
     private void OnFinish()
     {
-        ResetAction();
         FinishEvent?.Invoke();
+        ResetAction();
+
+        //AudioManager.Instance.EnableVol(true);
+        Debug.Log("Speech is finished ..................");
     }
 
     private void OnError(string msg)
@@ -100,12 +218,24 @@ public class TextSpeech : MonoBehaviour
 
 #if !UNITY_EDITOR
         _textToSpeech.Stop();
+
+#if UNITY_IOS
+          _textToSpeech =  TextToSpeech.Create(OnFinish,OnError);
 #endif
 
+#endif
+        if (cts != null && !cts.IsCancellationRequested)
+        {
+            cts.Cancel();
+            cts.Dispose();
+        }
     }
 
     void ResetAction()
     {
+        if (mButton != null)
+            mButton.image.sprite = mInitialSprite;
+
         AnimationClip clip = animator.runtimeAnimatorController.animationClips[0];
 
         // Jump to 1 second into the clip

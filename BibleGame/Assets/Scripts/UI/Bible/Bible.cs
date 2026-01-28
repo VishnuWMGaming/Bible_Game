@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public interface IBible
 {
-    public void BibleSelect(string id);
+    public void BibleSelect(string id,string name);
 }
 
 [RequireComponent(typeof(Button))]
@@ -17,13 +17,15 @@ public class Bible : MonoBehaviour
 
     [SerializeField] TMP_Text mName;
 
+    [SerializeField] TranslateLang translateLang;
+
     string id;
     public string mID => id;
 
     private void OnEnable()
     {
         mButton = GetComponent<Button>();
-        mButton?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); callback.BibleSelect(id); });
+        mButton?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); callback.BibleSelect(id,mName.text); });
     }
 
     private void OnDisable()
@@ -35,6 +37,10 @@ public class Bible : MonoBehaviour
     {
         id = _id;
         mName.text = name;
+
+        translateLang.UpdateValue(name);
+        translateLang.UpdateText(() => { });
+
         callback = callbackIN;
     }
 }

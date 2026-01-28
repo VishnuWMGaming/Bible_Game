@@ -17,6 +17,9 @@ public class MBook : MonoBehaviour
     [SerializeField] TMP_Text mTitle;
     [SerializeField] TMP_Text mSubTitle;
 
+    [SerializeField] TranslateLang mTranslateT;
+    [SerializeField] TranslateLang mTranslateS;
+
     string mBibleId;
     public string BibleId => mBibleId;
 
@@ -46,6 +49,12 @@ public class MBook : MonoBehaviour
     {
         mTitle.text = data.name;
         mSubTitle.text = data.nameLong;
+
+        mTranslateT.UpdateValue(data.name);
+        mTranslateT.UpdateText(() => { });
+
+        mTranslateS.UpdateValue(data.name);
+        mTranslateS.UpdateText(() => { });
 
         mid = data.id;
         mBibleId = data.bibleId;

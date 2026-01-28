@@ -1,7 +1,9 @@
+using BibleGame;
+using DebugUtils;
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -58,13 +60,31 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     [SerializeField] bool isEnable;
     public bool IsEnable => isEnable;
 
+    
+    public bool m_IsAble = false;
+
     [SerializeField] LayoutElement layout;
+
+    [Header("Translate")]
+    [SerializeField] TranslateLang translateLang;
+
+    [Space]
+    [SerializeField] bool isLandscape;
+
+    [SerializeField] bool isEnd = false;
+
+    private void Awake()
+    {
+       // boxTransform = GetComponent<RectTransform>();
+        canvas = FindObjectOfType<Canvas>();
+    }
 
     public void Enable(bool enable) 
     { 
-        isEnable = enable; 
+        isEnable = enable;
+        layout.ignoreLayout = !enable;
 
-        if(!isEnable) index = -1;
+        if (!isEnable) index = -1;
 
        Color32 colorT = letterText.color;
        letterText.color = enable? new Color32(colorT.r, colorT.g, colorT.b, 225) : new Color32(colorT.r, colorT.g, colorT.b, 0);
@@ -74,18 +94,17 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         image.color = enable? new Color32(colorI.r, colorI.g, colorI.b, 225) : new Color32(colorI.r, colorI.g, colorI.b, 0);
         image.raycastTarget = enable;
 
-        layout.ignoreLayout = !enable;
+        isEnd = true;
     }
 
     public IBox callback;
 
-
     private void OnEnable()
     {
-        boxTransform = GetComponent<RectTransform>();
-        canvas = FindObjectOfType<Canvas>();
-        boxTransform.anchorMax = new Vector2(0.5f, 0.5f);
-        boxTransform.anchorMin = new Vector2(0.5f, 0.5f);
+        //boxTransform = GetComponent<RectTransform>();
+        //canvas = FindObjectOfType<Canvas>();
+       // boxTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        //boxTransform.anchorMin = new Vector2(0.5f, 0.5f);
 
         startPosition = boxTransform.anchoredPosition;
         initialPosition = boxTransform.anchoredPosition;
@@ -95,7 +114,26 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         index = -1;
 
         isDragging = false;
+        m_IsAble = true;
+
+        Actions.ResetBoxPosAction += ResetBoxAct;
+
         SetLetter();
+    }
+
+    private void OnDisable()
+    {
+        Actions.ResetBoxPosAction -= ResetBoxAct;
+    }
+
+    private void Update()
+    {
+        if (!isEnd)
+            return;
+
+
+//        DevDebug.Log("RESETIING...", DebugColor.Lime);
+        boxTransform.anchoredPosition = startPosition;
     }
 
     public void SetStartPos(Vector2 startPosition , Vector3 worldPos)
@@ -129,9 +167,9 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
         this.startPosition = boxTransform.anchoredPosition;
 
+
+//        boxTransform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
     }
-
-
 
     public Vector2 GetStartPos()
     {
@@ -143,15 +181,20 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         if (!isEnable) return;
         if (isCorrect) return;
 
+        if (!m_IsAble) return;
+
         // Debug.Log($"<color=grey>Begin drag:{value}</color>");
 
         isDragging = true;
+
+        Actions.ResetBoxPosAction(false);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         if (!isEnable) return;
         if (isCorrect) return;
+        if (!m_IsAble) return;
 
         if (!isDragging) return;
 
@@ -163,13 +206,13 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
 
         Vector2 newPosition = Vector2.zero;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.transform as RectTransform,
+            maskArea.transform as RectTransform,
             Input.mousePosition,
             null,
             out newPosition
         );
 
-        Vector2 localPosition = AnagramUtils.GetMousePositionInCanvasSpace(canvas);
+        Vector2 localPosition = AnagramUtils.GetMousePositionInCanvasSpace(canvas, isLandscape);
 
         bool isInsideMask = AnagramUtils.IsPositionInside(localPosition, maskArea);
 
@@ -186,17 +229,26 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         callback.UpdatedPos(index, boxTransform.anchoredPosition);
     }
 
-    public void SetPos(Vector2 pos, int newIndex, bool isRun = false)
+    public void SetPos(Vector2 pos, int newIndex, Action onComplete = null, bool isRun = false)
     {
         if (!isEnable) return;
         if (isCorrect) return;
 
-        if (isRun)
-            boxTransform.DOAnchorPos(pos, 0.2f);
-
         index = newIndex;
 
-        startPosition = pos;
+        if (startPosition != pos)
+            startPosition = pos;
+
+        if (isRun && !m_IsAble)
+        {
+            isEnable = false;
+            boxTransform.DOAnchorPos(pos, 0.12f).OnComplete(() => 
+                                                                  {
+                                                                      isEnable = true;
+                                                                      onComplete?.Invoke();
+           
+                                                                  });
+        }
     }
 
     public void SetLetter()
@@ -211,6 +263,11 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
     {
         if (!isEnable) return;
         if (isCorrect) return;
+
+        //translateLang.UpdateText(() =>
+        //{
+
+        //})
 
         letterText.text = value;
         this.value = value;
@@ -229,28 +286,51 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         letterText.color = enable ? Color.green : Color.red;
     }
 
-    public void SetImage(Sprite sprite)
+    public void SetImage(AgeGroup group)
     {
-        if (!isEnable) return;
+        //if (!isEnable) return;
 
-        image.sprite = sprite;
-        image.SetNativeSize();
+        image.color = group switch
+        {
+            AgeGroup.adult => new Color32(129, 227, 250, 70),
+            _ => new Color32(224, 141, 43, 100)
+        };
 
-        Vector2 size = boxTransform.sizeDelta;
-        boxTransform.sizeDelta = new Vector2(size.x / 4, size.y / 4);
+        //image.sprite = sprite;
+        //image.SetNativeSize();
+
+       // Vector2 size = boxTransform.sizeDelta;
+      //  boxTransform.sizeDelta = new Vector2(size.x / 4, size.y / 4);
     }
    
     public void OnEndDrag(PointerEventData eventData)
     {
         if (!isEnable) return;
+        if (!m_IsAble) return;
+        if (isCorrect) return;
 
         if (!isDragging)
             return;
 
         isDragging = false;
-        boxTransform.DOAnchorPos(startPosition, 0.2f);
+        boxTransform.DOAnchorPos(startPosition, 0.12f).OnComplete(()=> 
+        {
+            callback.ResultAction();
+            Actions.ResetBoxPosAction(true);
+        });
+    }
 
-        callback.ResultAction();
+    public void ResetBoxAct(bool isReset)
+    {
+        isEnd = isReset;
+
+        if (!isReset)
+            return;
+
+        if (!isEnable) return;
+        if (isCorrect) return;
+
+        boxTransform.anchoredPosition = startPosition;
     }
 
     public void Restart()
@@ -258,6 +338,8 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         callback = null;
         boxTransform.anchoredPosition = initialPosition;
         letterText.color = Color.white;
+
+        m_IsAble = true;
 
         Enable(false);
     }

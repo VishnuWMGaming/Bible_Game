@@ -1,25 +1,27 @@
+using BibleGame;
+using BibleGame.API;
+using BibleGame.Data;
+using DebugUtils;
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
-using DG.Tweening;
-using UnityEngine.UIElements;
-using System;
+using System.Linq;
 using System.Reflection;
+using TMPro;
+using Unity.Burst.CompilerServices;
+using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
-using BibleGame.Data;
-using BibleGame.API;
-
-using System.Linq;
-using TMPro;
 
 
 public interface IAnagramControl
 {
     public void ActivateSubmitBtn(bool enable);
-    public void SubmitAction();
+    public void SubmitAction(Action onComplete);
     public void UpdateScore();
+
+    public void NextQAction();
 }
 
 public class GameController_Anagram : MonoBehaviour,IBox
@@ -27,8 +29,10 @@ public class GameController_Anagram : MonoBehaviour,IBox
     [SerializeField] private RectTransform lettersParent;
     HorizontalLayoutGroup layoutGroup;
 
-    [SerializeField] private GramBox letter;
-    
+    [SerializeField] Button mSubmitButton;
+    [SerializeField] Button mHintButton;
+    [SerializeField] Button mBackButton;
+
     [Header("Boxes:")]
     [SerializeField] List<GramBox> gramBoxes = new List<GramBox>();
 
@@ -47,100 +51,124 @@ public class GameController_Anagram : MonoBehaviour,IBox
     [Header("SpriteData")]
     [SerializeField] SpriteData spriteData;
 
-    [Space]
-    [SerializeField] List<GetQuestionsAnagramData> questions = new List<GetQuestionsAnagramData>();
-    public List<GetQuestionsAnagramData> Questions => questions;
-
     StyleUI styleUI;
 
     [SerializeField] TMP_Text mTitle;
 
-    public IAnagramControl callback;
+    [SerializeField] TMP_Text coinText;
 
     #region LOCAL_VARIABLES
     [SerializeField] int currentQIndex = 0;
     public int CurrentQIndex => currentQIndex;
 
     bool isWon = false;
+    int hintIndex = 0;
 
+    [SerializeField]List<GetQuestionsAnagramData> questions = new List<GetQuestionsAnagramData>();
+    public List<GetQuestionsAnagramData> Questions => questions;
     #endregion
+
+
+    [Header("Screen Orintation:")]
+    [SerializeField] ScreenOrient screenOrient;
+    public ScreenOrient ScreenOrient => screenOrient;
+
+    [Header("TextSpeech")]
+    [SerializeField] TextSpeech speech;
+
 
     private void OnEnable()
     {
+        UpdateCoins(UserData.coins);
+
         layoutGroup = lettersParent.GetComponent<HorizontalLayoutGroup>();
         layoutGroup.enabled = true;
 
         styleUI = spriteData.GetStyle(UserData.currentAge);
 
-        currentQIndex = 0;
-        SetData();
+        Actions.ApplyStyleAction();
+
+        foreach (var grambox in gramBoxes)
+            grambox.SetImage(UserData.currentAge);
+
+        mSubmitButton?.onClick.AddListener(() =>
+        {
+           AudioManager.Instance.PlayButton();
+
+            SubmitAction(() =>
+            {
+                PopUp.Instance.ShowMessage($"You have completed the chapter {UserData.chapterId}", null, MScreenOriatation.portrait);
+                AudioManager.Instance.PlaySFX(AudioType.Win);
+
+                Actions.ChangePanelActions(CanvasType.home);
+            });
+        });
+        mSubmitButton.interactable = false;
+
+        mHintButton?.onClick.AddListener(() => 
+        {
+            UseHint();
+        });
+
+        mBackButton?.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.PlayButton();
+            //Actions.StartPageAction(StartPage.game_menu);
+            Actions.StartPageAction(StartPage.game_menu);
+        });
+
+        //mBackButton.interactable = true;
+
+        currentQIndex = GameData.QIndex;
+        hintIndex = 0;
     }
 
     private void OnDisable()
     {
-      
+        mSubmitButton?.onClick.RemoveAllListeners();
+        mHintButton?.onClick.RemoveAllListeners();
+        //mBackButton?.onClick.RemoveAllListeners();
     }
 
-    void SetData()
-    {
-        int ageVal = UserData.currentAge switch
-        {
-            AgeGroup.kindergarden => 1,
-            AgeGroup.elementary => 2,
-            AgeGroup.teenagers => 3,
-            AgeGroup.adult => 4,
-            _ => 1
-        };
 
-        GetQuestionsRequestData requestData = new GetQuestionsRequestData()
-        {
-            game_id = UserData.gameid,
-            ageGroup = ageVal.ToString(),
-            language = LanguageController.Instance.GetLangStringVal(AppData.mLanguage),
-            game_type = "anagram",
-            bible_id = UserData.bibleId,
-            chapter_id = UserData.chapterId,
-            book_id = UserData.bookId,
-        };
+     public void SetData(List<GetQuestionsAnagramData> mquestions)
+     {
+        questions = mquestions;
 
-        PopUp.Instance.EnableLoad(true);
-        GetQuestionsAPI.GetQuestionsAnagram((success,res) =>
-        {
-            PopUp.Instance.EnableLoad(false);
-            if (!success)
-            {
-                Debug.LogError("Error in getting question in anagram");
-                return;
-            }
-
-            //GameData.levelID = res.ResponseData.levelData._id;
-
-            questions = res.ResponseData.resArr;
-            GameInitilise(questions[currentQIndex]);
-
-            currentQIndex++;
-
-        }, requestData);
-
-    }
+        GameInitilise(questions[currentQIndex]);
+        //callback.NextQAction();
+        currentQIndex++;
+     }
+    
 
     public void NextQAct()
     {
         if (!isWon)
             return;
 
+        AudioManager.Instance.PlaySFX(AudioType.Correct);
+
+        DevDebug.Log("Next question is loaded", DebugColor.Cyan);
+
+        int coins = UserData.coins + 4;
+
+        UpdateCoins(coins);
+
         isWon = false;
 
-        callback.UpdateScore();
+        //callback.UpdateScore();
 
         if (currentQIndex > questions.Count-1)
         {
             Debug.Log("Get read to submit !!!");
-            callback.ActivateSubmitBtn(true);
+           // callback.ActivateSubmitBtn(true);
+            mSubmitButton.interactable = true;
             return;
         }
 
         PopUp.Instance.EnableLoad(true);
+
+        GameData.QIndex = currentQIndex;
 
         GameInitilise(questions[currentQIndex]);
         currentQIndex++;
@@ -148,82 +176,122 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
     void GameInitilise(GetQuestionsAnagramData question)
     {
-        string word = question.hint;
-        string[] letterVals = word.Select(c => c.ToString()).ToArray();
-
-        mTitle.text = question.title;
-
-        _anagramLetters.Clear();
-
-        if (letterVals.Length > 8)
+       
+        LanguageController.Instance.Translate(question.hint, translation =>
         {
-            Debug.LogError($"Exceeded the maximum grambox count: {question.hint}");
-            return;
-        }
-        
-        for (int i = 0;i< letterVals.Length;++i)
-        {
-            AnagramLetter letter = new AnagramLetter
+            DevDebug.Log($"Translation: {translation}", DebugColor.Green);
+
+            string word = translation;
+
+            string[] letterVals = word
+                                     .Select(c => c.ToString())
+                                     .ToArray();
+
+            letterVals = letterVals
+                                 .Where(v => !string.IsNullOrWhiteSpace(v))
+                                 .ToArray();
+
+            LanguageController.Instance.Translate(question.title, trans =>
             {
-                index = i,
-                val = letterVals[i]
-            };
+                mTitle.text = trans;
+          
 
-            _anagramLetters.Add(letter);
-        }
+            //mTitle.GetComponentInChildren<TranslateLang>().UpdateText(() =>
+            //{
+            //   // mTitle.text = question.title;
+            //});
 
-        //Scrambing process...
-        Debug.Log($"Scrambled word: {ShuffleWord(word)} ... Scrambling");
+                 speech.Initialise(mTitle.text, true);
 
-        foreach (var box in gramBoxes) box.Restart();
-        layoutGroup.enabled = true;
+                _anagramLetters.Clear();
 
-        List<AnagramLetter> scrambledLetters = new List<AnagramLetter>();
+                if (letterVals.Length > 7)
+                {
+                    Debug.LogError($"Exceeded the maximum grambox count: {question.hint}");
 
-        string scrambledWord = ShuffleWord(word);
-        string[] scrambledletterVals = scrambledWord.Select(c => c.ToString()).ToArray();
+                    if (AppData.orientation == MScreenOriatation.portrait)
+                    {
+                        PopUp.Instance.ShowMessage("Words have exceeded the limitatioon of the portrait mode");
+                        Actions.ChangeLandscape(MScreenOriatation.landscape, true, false);
 
-        for (int i = 0; i < scrambledletterVals.Length; ++i)
-        {
-            AnagramLetter letter = new AnagramLetter
-            {
-                index = i,
-                val = scrambledletterVals[i]
-            };
+                        return;
+                    }
 
-            scrambledLetters.Add(letter);
-        }
+                    Actions.ChangeLandscape(MScreenOriatation.landscape, true, false);
+                }
 
-        //Scrambing process...
-        Debug.Log($"Scrambling 1");
+                for (int i = 0; i < letterVals.Length; ++i)
+                {
+                    AnagramLetter letter = new AnagramLetter
+                    {
+                        index = i,
+                        val = letterVals[i]
+                    };
 
-        for (int index = 0; index < scrambledLetters.Count; index++)
-        {
-            var letters = scrambledLetters[index];
+                    _anagramLetters.Add(letter);
+                }
 
-            GramBox box = gramBoxes[index];
-            box.Enable(true);
+             //Scrambing process...
+             Debug.Log($"Scrambled word: {ShuffleWord(word)} ... Scrambling");
 
-            box.SetLetter(letters.val);
-            box.SetIndex(letters.index);
+                foreach (var box in gramBoxes) box.Restart();
+                layoutGroup.enabled = true;
 
-            box.SetImage(styleUI.box);
-            box.callback = this;
-        }
+                List<AnagramLetter> scrambledLetters = new List<AnagramLetter>();
 
-        foreach (var box in gramBoxes) box.Enable(box.Index != -1);
+                string scrambledWord = ShuffleWord(word);
+                string[] scrambledletterVals = scrambledWord.Select(c => c.ToString())
+                                                            .Where(v => !string.IsNullOrWhiteSpace(v))
+                                                            .ToArray();
 
-        Debug.Log($"Scrambling 2");
+                for (int i = 0; i < scrambledletterVals.Length; ++i)
+                {
+                    AnagramLetter letter = new AnagramLetter
+                    {
+                        index = i,
+                        val = scrambledletterVals[i]
+                    };
 
-        LayoutRebuilder.ForceRebuildLayoutImmediate(lettersParent);
+                    scrambledLetters.Add(letter);
+                }
 
-        foreach (var box in gramBoxes) box.SetStartPos(box.BoxT.anchoredPosition, box.BoxT.position);
-        layoutGroup.enabled = false;
-        foreach (var box in gramBoxes) box.Arrange();
+                //Scrambing process...
+                Debug.Log($"Scrambling 1");
+
+                for (int index = 0; index < scrambledLetters.Count; index++)
+                {
+                    var letters = scrambledLetters[index];
+
+                    GramBox box = gramBoxes[index];
+                    box.Enable(true);
+
+                    box.SetLetter(letters.val);
+                    box.SetIndex(letters.index);
+
+                    //box.SetImage(styleUI.box);
+                    box.callback = this;
+                }
+
+             foreach (var box in gramBoxes) box.Enable(box.Index != -1);
+
+             Debug.Log($"Scrambling 2");
+
+             LayoutRebuilder.ForceRebuildLayoutImmediate(lettersParent);
+    
+             foreach (var box in gramBoxes) box.SetStartPos(box.BoxT.anchoredPosition, box.BoxT.position);
+                layoutGroup.enabled = false;
+              foreach (var box in gramBoxes) box.Arrange();
 
 
-        Debug.Log("Anagram  is set ");
-        PopUp.Instance.EnableLoad(false);
+              Debug.Log("Anagram  is set ");
+
+            //foreach (var grambox in gramBoxes)
+            //    grambox.SetImage(styleUI.box);
+
+                PopUp.Instance.EnableLoad(false);
+
+            });
+        });
     }
 
     string ShuffleWord(string word)
@@ -232,31 +300,35 @@ public class GameController_Anagram : MonoBehaviour,IBox
         return new string(word.OrderBy(c => rng.Next()).ToArray());
     }
 
-
-    IEnumerator ArrangeLetters(System.Action action)
-    { 
-        yield return null;
-       
-
-        action();
-    }
-
-    public void UpdatedPos(int index, Vector2 position)
+    public async void UpdatedPos(int index, Vector2 position)
     {
         GramBox currentBox =  gramBoxes.Find(x => x.Index == index && x.IsEnable && !x.isCorrect);
 
         List<GramBox> otherBoxes = gramBoxes.Where(p => p != currentBox  && p.IsEnable && !p.IsDrag && !p.isCorrect).ToList();
 
+        foreach (GramBox box in otherBoxes) box.m_IsAble = false;
+
         foreach (GramBox box in otherBoxes)
         {
+         
             if(AnagramUtils.AreImagesOverlapping(currentBox.BoxT, box.BoxT))
             {
                 Vector2 newPos = box.BoxV;
                 int  newIndex = box.Index;
 
-                box.SetPos(currentBox.BoxV,currentBox.Index,true);
-                currentBox.SetPos(newPos,newIndex);
-                
+
+               // DevDebug.Log($"Checking box {currentBox.Value} :: {currentBox.Index} with {box.Value} :: {box.Index}", DebugColor.Gold);
+
+                Vector2 newPosE = currentBox.BoxV;
+                int newIndexE = currentBox.Index;
+
+                currentBox.SetPos(newPos, newIndex);
+                 box.SetPos(newPosE, newIndexE, ()=>
+                 {
+                     
+                 },true);
+
+
                 break;
             }
         }
@@ -268,9 +340,13 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
         result = string.Empty;
         int index = 0;
+
+        foreach (GramBox box in gramBoxes)
+            box.ResetBoxAct(true);
+
+
         StartCoroutine(CheckingResult(index));
     }
-
 
     void EndGame()
     {
@@ -280,6 +356,8 @@ public class GameController_Anagram : MonoBehaviour,IBox
         Debug.Log("Checking the result..");
 
         List<GramBox> enabledBoxes = gramBoxes.Where(x => x.IsEnable).ToList();
+
+        foreach (GramBox box in enabledBoxes) box.m_IsAble = true;
 
         for (int i = 0; i < enabledBoxes.Count; ++i)
         {
@@ -331,11 +409,150 @@ public class GameController_Anagram : MonoBehaviour,IBox
         yield return null;
     }
 
+    #region HINT
+
+    private void UseHint()
+    {
+        HintAPI.GetFreeHint((success, res) =>
+        {
+            if (!success)
+            {
+                PopUp.Instance.ShowMessage("Unable to get the free hints",null,AppData.orientation);
+                return;
+            }
+
+            int freeHints = res.ResponseData.freeHint;
+
+            if (freeHints <= 0)
+            {
+                if (UserData.coins < 7)
+                {
+                    PopUp.Instance.ShowMessage($"Not enough coins !!");
+                    return;
+                }
+
+                int coins = UserData.coins;
+                coins -= 7;
+
+                if (coins < 0)
+                    coins = 0;
+
+                UserData.coins = coins;
+                UpdateCoins(coins);
+
+                HintAction();
+                return;
+            }
+
+
+            HintAction();
+
+            HintAPI.DeductFreeHint((success) =>
+            {
+                if (!success)
+                {
+                    //  PopUp.Instance.ShowMessage("Unable to get the free hints");
+                }
+            });
+
+            return;
+        });
+    }
+
+    private void UpdateCoins(int coins)
+    {
+       UserData.coins = coins;
+       coinText.text = coins.ToString();
+    }
+
+    public void HintAction()
+    {
+        if (currentQIndex > 5)
+            return;
+
+        int index = currentQIndex - 1;
+
+        if (index < 0)
+            index = 0;
+
+        string correctAnswer = questions[index].hint;
+
+        if (hintIndex > 7)
+            hintIndex = 0;
+
+        string position = hintIndex switch
+        {
+            0 => "first",
+            1 => "second",
+            2 => "third",
+            3 => "fourth",
+            4 => "fifth",
+            5 => "Sixth",
+            6 => "Seventh",
+            7 => "Eighth",
+            _ => throw new NotImplementedException()
+        };
+
+        string hintData = $"{position} letter is {correctAnswer[hintIndex]}";
+
+        hintIndex++;
+
+        string hintMessage = $"Hint:{hintData}";
+
+        LanguageController.Instance.Translate(hintMessage, (translation) =>
+        {
+            PopUp.Instance.ShowMessage(translation, null, AppData.orientation);
+        });
+    }
+    #endregion
+
+
+    public void SubmitAction(Action onComplete)
+    {
+        int coins = AppData.coins > 0 ? UserData.coins - AppData.coins : UserData.coins;
+
+        if (coins == 0)
+            coins = 0;
+
+        // UpdateCoins(UserData.coins);
+
+        SubmitRequestData requestData = new SubmitRequestData()
+        {
+            level_id = GameData.levelID,
+            coins = coins,
+            queAttempCount = currentQIndex +1,
+            ratings = 3,
+            question_data = null
+        };
+
+        PopUp.Instance.EnableLoad(true);
+
+        GetQuestionsAPI.SubmitAnswer((success, res) =>
+        {
+            PopUp.Instance.EnableLoad(false);
+            if (!success)
+            {
+                Debug.LogError("Error in submitting the answer");
+                return;
+            }
+
+            Debug.Log("<color=green>Submitted </color>");
+
+            onComplete?.Invoke();
+
+            // Actions.ChangePanelActions(CanvasType.home);
+
+        }, requestData);
+    }
+
     void ClearAll()
     {
        
     }
 }
+
+public enum ScreenOrient {portrait,landscape}
+
 
 [Serializable]
 public class AnagramLetter

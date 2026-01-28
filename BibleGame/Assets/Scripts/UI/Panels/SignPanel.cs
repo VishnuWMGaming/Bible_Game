@@ -93,8 +93,17 @@ public class SignPanel : MonoBehaviour
             return;
         }
 
+
+        //if(string.IsNullOrWhiteSpace(churchName_InputField.text))
+        //{
+        //    Debug.LogError(error_message);
+        //    PopUp.Instance.ShowMessage("Please enter the church name");
+        //    return;
+        //}
+
+
         PopUp.Instance.EnableLoad(true);
-        var registerData  = new RegisterData(name_InputField.text,email_InputField.text,password_InputFieldConfirm.Text);
+        var registerData  = new RegisterData(name_InputField.text,email_InputField.text,password_InputFieldConfirm.Text, churchName_InputField.text);
 
         PlayerPrefs.SetString("ChurchName", churchName_InputField.text);
 
@@ -108,9 +117,10 @@ public class SignPanel : MonoBehaviour
         if (success && response.succeeded)
         {
             Debug.Log("Response data >>>" + response.ResponseData);
-            AppData.otpData = new OTPData(response.ResponseData.otp,OTPType.sign);
-            AppData.loginData = new LoginData(email_InputField.text, password_InputFieldConfirm.Text, name_InputField.text);
+            AppData.mSignOtpData = new OTPData(response.ResponseData.otp,OTPType.sign);
+            AppData.loginData = new LoginData(email_InputField.text, password_InputFieldConfirm.Text, name_InputField.text, churchName_InputField.text);
 
+            AppData.otpPage = OTPType.sign;
             Actions.ChangePanelActions(CanvasType.otp);
         }
         else
