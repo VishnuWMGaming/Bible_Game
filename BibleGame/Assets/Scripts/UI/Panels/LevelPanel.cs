@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,6 +42,9 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
 
     [Space]
     [SerializeField] string mBook;
+
+    [Space]
+    [SerializeField]Cell mCurrentCell;
 
 
     private void OnEnable()
@@ -122,7 +126,7 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
             }
 
             PopUp.Instance.EnableLoad(true);
-            ChapterAPI.Get((success, res) =>
+            ChapterAPI.Get(async (success, res) =>
             {
                 PopUp.Instance.EnableLoad(false);
 
@@ -158,6 +162,8 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
                 cells[0].gameObject.SetActive(true);
                 cells[0].Init(chapterDatas, this);
 
+                mCurrentCell = cells[0];
+
                 int coins = 0;
 
                 if (levelDatas != null || levelDatas.Count != 0)
@@ -179,12 +185,43 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
                         //DevDebug.Log($"Level Update:{level.chapter_id} :: {level.coin_earn}", DebugColor.Turquoise);
 
                         if (level.queAttempCount >= 5)
-                            cells[0].Get(level.chapter_id).Finish(true);
+                            cells[0]?.Get(level.chapter_id)?.Finish(true);
                     }
+
+
+                PopUp.Instance.EnableLoad(true);
+                mCurrentCell = await CheckForInCompleteChapters();
+
+                PopUp.Instance.EnableLoad(false);
+                
+                if(mCurrentCell == null)
+                PopUp.Instance.ShowMessage($"You have completeted {UserData.bookId}");
 
             }, UserData.bibleId, UserData.bookId);
 
         }, UserData.gameid);
+    }
+
+    public async Task<Cell> CheckForInCompleteChapters()
+    {
+        var tcs = new TaskCompletionSource<Cell>();
+
+        while (true)
+        {
+            if (!mCurrentCell.IsCleared())
+                break;
+
+            if(levelDatas.Count >= chapters.Count)
+            {
+                mCurrentCell = null;
+                break;
+            }
+
+            NextCell();
+        }
+
+        tcs.SetResult(mCurrentCell);
+        return await tcs.Task;
     }
 
     #region NAVIGATION
@@ -232,6 +269,8 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
                 if (level.queAttempCount >= 5)
                     cells[activeIndex]?.Get(level.chapter_id)?.Finish(true);
             }
+
+        mCurrentCell = cells[activeIndex];
     }
 
     void NextCell()
@@ -275,6 +314,8 @@ public class LevelPanel : MonoBehaviour,IChapterButton ,ICover,ILevelObj
                 if (level.queAttempCount >= 5)
                     cells[activeIndex]?.Get(level.chapter_id)?.Finish(true);
             }
+
+        mCurrentCell = cells[activeIndex];
     }
 
     #endregion

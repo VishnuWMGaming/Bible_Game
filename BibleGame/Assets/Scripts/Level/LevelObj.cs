@@ -16,6 +16,7 @@ public class LevelObj : MonoBehaviour
     public string ID => mChapterId;
 
     [SerializeField] GameObject correctMark;
+    public bool IsCorrect => correctMark.activeInHierarchy;
 
     [Space]
     [SerializeField] TMP_Text chapterID;

@@ -45,7 +45,6 @@ public class HomePanel : MonoBehaviour
             Actions.ChangePanelActions(CanvasType.leaderboard); // match enum
         });
 
-
         DevDebug.Log($"Token: {PlayerPrefs.GetString("AuthorizationToken")}",DebugColor.Indigo);
 
         PopUp.Instance.EnableLoad(true);

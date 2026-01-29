@@ -34,6 +34,11 @@ public class Cell : MonoBehaviour
         return levelObjs.Find(x => x.ID == id);
     }
 
+    public bool IsCleared()
+    {
+        return levelObjs.Find(x => !x.IsCorrect) == null;
+    }
+
     public void ClearAll()
     {
         for (int i = 0; i < levelObjs.Count; i++)
