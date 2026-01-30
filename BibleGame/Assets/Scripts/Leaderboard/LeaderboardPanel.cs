@@ -1,5 +1,6 @@
 using BibleGame;
 using BibleGame.API;
+using DebugUtils;
 using PolyAndCode.UI;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using static BibleGame.API.LeaderBoardAPI;
 
 public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
 {
@@ -23,6 +25,8 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
     [SerializeField] TopLeader firstLeader;
     [SerializeField] TopLeader secondLeader;
     [SerializeField] TopLeader thirdLeader;
+
+    [SerializeField] UserItem mUserItem;
 
 
     private SynchronizationContext unitySyncContext;
@@ -46,8 +50,7 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
         PopUp.Instance.EnableLoad(true);
         LeaderBoardAPI.GetData(async (success, res) =>
         {
-           
-
+       
             if (!success)
             {
                 PopUp.Instance.EnableLoad(false);
@@ -73,10 +76,22 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
 
             for (int i = 3; i < res.ResponseData.Count; i++)
             {
-                Sprite sprite = res.ResponseData[i].profile_pic == "0" ? null : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData[i].profile_pic}");
+                //Sprite sprite = res.ResponseData[i].profile_pic == "0" ? null : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData[i].profile_pic}");'
 
-                LeaderboardData data = new LeaderboardData(res.ResponseData[i].user_name, res.ResponseData[i].rank, sprite);
+                string mSpriteUrl = res.ResponseData[i].profile_pic == "0" ? "0" : $"{ServiceURL.imageURL}{res.ResponseData[i].profile_pic}";
+
+                LeaderboardData data = new LeaderboardData(res.ResponseData[i].user_name, res.ResponseData[i].rank, mSpriteUrl);
                 leaderboardDataList.Add(data);
+            }
+
+            RankUser user = res.ResponseData.Find(x => x.user_name.ToLower().Contains(GetProfileAPI.profilData.name.ToLower()));
+
+            if (res != null)
+            {
+                string mSpriteUrl = user.profile_pic == "0" ? "0" : $"{ServiceURL.imageURL}{user.profile_pic}";
+
+                DevDebug.Log("User is present in the leaderboard !!!", DebugColor.Coral);
+                mUserItem.Initialize(user.user_name, user.rank, mSpriteUrl);
             }
 
             PopUp.Instance.EnableLoad(false);
@@ -155,9 +170,9 @@ public class LeaderboardData
 {
     public string name;
     public int rank;
-    public Sprite pic;
+    public string pic;
 
-    public LeaderboardData(string name, int rank,Sprite pic)
+    public LeaderboardData(string name, int rank,string pic)
     {
         this.name = name;
         this.rank = rank;

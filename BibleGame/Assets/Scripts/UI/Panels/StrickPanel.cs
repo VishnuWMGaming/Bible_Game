@@ -121,7 +121,7 @@ public class StrickPanel : MonoBehaviour,IStrick
             };
 
             string title =
-                $"<b>{bibleCode},{data.book_id}</b> {data.percentage:F2}%\n" +
+                $"<b>{bibleCode},{data.bible_id}</b> {data.percentage:F2}%\n" +
                 $"<size=15>{age}\n{data.testament} Testamant</size>";
 
             strck.Init(title, i, this);
