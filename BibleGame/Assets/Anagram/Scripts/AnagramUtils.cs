@@ -16,20 +16,41 @@ public  static class AnagramUtils
 
     public static Vector2 GetMousePositionInCanvasSpace(Canvas canvas,bool isLandscape)
     {
-        RectTransform canvasRectTransform = canvas.GetComponent<RectTransform>();
+        //RectTransform canvasRectTransform = canvas.GetComponent<RectTransform>();
 
-        canvasRectTransform.localEulerAngles = isLandscape ? new Vector3(0, 0, 90) : Vector3.zero;
+        //canvasRectTransform.localEulerAngles = isLandscape ? new Vector3(0, 0, 90) : Vector3.zero;
 
-        Vector2 mousePosition = Input.mousePosition;
+        //Vector2 mousePosition = Input.mousePosition;
+        //Vector2 localPoint;
+
+        //// Convert the mouse position to local position in the RectTransform
+        //RectTransformUtility.ScreenPointToLocalPointInRectangle(
+        //    canvasRectTransform,
+        //    mousePosition,
+        //    canvas.worldCamera, // Camera associated with the canvas (null if Overlay mode)
+        //    out localPoint
+        //);
+
+        //return localPoint;
+
+
+        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+
         Vector2 localPoint;
 
-        // Convert the mouse position to local position in the RectTransform
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvasRectTransform,
-            mousePosition,
-            canvas.worldCamera, // Camera associated with the canvas (null if Overlay mode)
+            canvasRect,
+            Input.mousePosition,
+            canvas.worldCamera,   // MUST be the canvas camera
             out localPoint
         );
+
+        // Handle landscape rotation logically (not by rotating canvas)
+        if (isLandscape)
+        {
+            // Rotate point by 90 degrees
+            localPoint = new Vector2(localPoint.y, -localPoint.x);
+        }
 
         return localPoint;
     }

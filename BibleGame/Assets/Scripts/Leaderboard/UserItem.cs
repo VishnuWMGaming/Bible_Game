@@ -22,7 +22,8 @@ public class UserItem : MonoBehaviour
     public async Task Initialize(string name, int rank, string spriteurl)
     {
         nameTxt.text = name;
-        rankTxt.text = rank.ToString();
+ 
+        rankTxt.text = rank >= 0? rank.ToString() : "NULL";
 
         profileImg.Reset();
 

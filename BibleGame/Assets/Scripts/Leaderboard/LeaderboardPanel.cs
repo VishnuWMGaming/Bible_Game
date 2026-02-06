@@ -84,15 +84,33 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
                 leaderboardDataList.Add(data);
             }
 
-            RankUser user = res.ResponseData.Find(x => x.user_name.ToLower().Contains(GetProfileAPI.profilData.name.ToLower()));
 
-            if (res != null)
+            DevDebug.Log($"UserName :{GetProfileAPI.profilData.name}", DebugColor.Brown);
+
+            string profileName = GetProfileAPI.profilData?.name;
+
+
+            string mSpriteUrlUser = GetProfileAPI.profilData?.profile_pic == "0" ? "0" : $"{ServiceURL.imageURL}{GetProfileAPI.profilData?.profile_pic}";
+
+            RankUser user = res.ResponseData.Find(x =>
+                                                  x != null &&
+                                                  !string.IsNullOrEmpty(x.user_name) &&
+                                                  x.user_name.IndexOf(profileName, StringComparison.OrdinalIgnoreCase) >= 0
+                                                 );
+
+
+            if (user == null)
             {
-                string mSpriteUrl = user.profile_pic == "0" ? "0" : $"{ServiceURL.imageURL}{user.profile_pic}";
+                mUserItem.Initialize(GetProfileAPI.profilData.name,-1, mSpriteUrlUser);
 
-                DevDebug.Log("User is present in the leaderboard !!!", DebugColor.Coral);
-                mUserItem.Initialize(user.user_name, user.rank, mSpriteUrl);
+                PopUp.Instance.EnableLoad(false);
+                Invoke("Initialize", 0.3f);
+
+                return;
             }
+
+            DevDebug.Log("User is present in the leaderboard !!!", DebugColor.Coral);
+            mUserItem.Initialize(user.user_name, user.rank, mSpriteUrlUser);
 
             PopUp.Instance.EnableLoad(false);
             Invoke("Initialize", 0.3f);
