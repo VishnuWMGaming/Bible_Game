@@ -1,5 +1,5 @@
 # ninja log v5
-10	516	7917170525069735	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	b3a277d5bc143115
-516	826	7917170528160177	E:/Vishnu_Work/Bible_Game/BibleGame/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3r5s5m1e/obj/arm64-v8a/libswappywrapper.so	b1c9d6ebebec8534
 5	520	7918017755775197	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	b3a277d5bc143115
 520	825	7918017758821049	E:/Vishnu_Work/Bible_Game/BibleGame/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3r5s5m1e/obj/arm64-v8a/libswappywrapper.so	b1c9d6ebebec8534
+3	1118	7920879009668593	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	b3a277d5bc143115
+1118	1644	7920879014937010	E:/Vishnu_Work/Bible_Game/BibleGame/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3r5s5m1e/obj/arm64-v8a/libswappywrapper.so	b1c9d6ebebec8534
