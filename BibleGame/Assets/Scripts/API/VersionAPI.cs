@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using RestAPI;
 using System;
 using UnityEngine;
-using static BibleGame.API.LeaderBoardAPI;
 
 
 namespace BibleGame
@@ -52,7 +51,7 @@ namespace BibleGame
             {
                 public string _id;
                 public string andriod_minimum_version;
-                public string andriod_latest_version;
+                public string android_latest_version;
                 public string ios_minimum_version;
                 public string ios_latest_version;
             }

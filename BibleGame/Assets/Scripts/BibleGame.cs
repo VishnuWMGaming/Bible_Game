@@ -42,8 +42,7 @@ namespace BibleGame
         public const string getFreeHint = "get_free_hint";
         public const string deductFreeHint = "deduct_hint";
         public const string version = "get-latest-app-verson";
-
-
+        public const string userInfo = "get-leaderboard-user-details";
     }
 
     namespace UI
@@ -220,6 +219,7 @@ namespace BibleGame
                 }
                 return null;
             }
+
         }
     }
 }

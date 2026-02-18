@@ -6,12 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using static BibleGame.API.LeaderBoardAPI;
 
-public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
+public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource,ITopLeader,ILeaderboardItem,IUserItem
 {
     [Header("UI Settings:")]
     [SerializeField] Button backButton;
@@ -27,6 +28,9 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
     [SerializeField] TopLeader thirdLeader;
 
     [SerializeField] UserItem mUserItem;
+
+    [Header("UserInfo")]
+    [SerializeField] UserInfoPanel infoPanel;
 
 
     private SynchronizationContext unitySyncContext;
@@ -46,6 +50,7 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
             Actions.ChangePanelActions(CanvasType.home);
         });
 
+        recyclableScrollRect.ClearData();
         leaderboardDataList.Clear();
 
         PopUp.Instance.EnableLoad(true);
@@ -67,13 +72,13 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
             }
 
             Sprite firstsprite = res.ResponseData[0].profile_pic == "0" ? null : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData[0].profile_pic}");
-            firstLeader.Init(res.ResponseData[0].user_name, res.ResponseData[0].score, firstsprite);
+            firstLeader.Init(res.ResponseData[0].user_id, res.ResponseData[0].user_name, res.ResponseData[0].score, firstsprite, this);
 
             Sprite secondsprite = res.ResponseData[1].profile_pic == "0" ? null : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData[1].profile_pic}");
-            secondLeader.Init(res.ResponseData[1].user_name, res.ResponseData[1].score, secondsprite);
+            secondLeader.Init(res.ResponseData[1].user_id, res.ResponseData[1].user_name, res.ResponseData[1].score, secondsprite, this);
 
             Sprite thirdsprite = res.ResponseData[2].profile_pic == "0" ? null : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData[2].profile_pic}");
-            thirdLeader.Init(res.ResponseData[2].user_name, res.ResponseData[2].score, thirdsprite);
+            thirdLeader.Init(res.ResponseData[2].user_id, res.ResponseData[2].user_name, res.ResponseData[2].score, thirdsprite, this);
 
             for (int i = 3; i < res.ResponseData.Count; i++)
             {
@@ -81,7 +86,7 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
 
                 string mSpriteUrl = res.ResponseData[i].profile_pic == "0" ? "0" : $"{ServiceURL.imageURL}{res.ResponseData[i].profile_pic}";
 
-                LeaderboardData data = new LeaderboardData(res.ResponseData[i].user_name, res.ResponseData[i].rank, mSpriteUrl);
+                LeaderboardData data = new LeaderboardData(res.ResponseData[i].user_id, res.ResponseData[i].user_name, res.ResponseData[i].rank, mSpriteUrl);
                 leaderboardDataList.Add(data);
             }
 
@@ -91,7 +96,7 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
             string profileName = GetProfileAPI.profilData?.name;
 
 
-            string mSpriteUrlUser = GetProfileAPI.profilData?.profile_pic == "0" ? "0" : $"{ServiceURL.imageURL}{GetProfileAPI.profilData?.profile_pic}";
+            string mSpriteUrlUser = GetProfileAPI.profilData?.profile_pic == "0" ? null : $"{ServiceURL.imageURL}{GetProfileAPI.profilData?.profile_pic}";
 
             RankUser user = res.ResponseData.Find(x =>
                                                   x != null &&
@@ -99,10 +104,9 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
                                                   x.user_name.IndexOf(profileName, StringComparison.OrdinalIgnoreCase) >= 0
                                                  );
 
-
             if (user == null)
             {
-                mUserItem.Initialize(GetProfileAPI.profilData.name,-1, mSpriteUrlUser);
+                mUserItem.Initialize(GetProfileAPI.profilData.user_id, GetProfileAPI.profilData.name,-1, mSpriteUrlUser,this);
 
                 PopUp.Instance.EnableLoad(false);
                 Invoke("Initialize", 0.3f);
@@ -110,20 +114,19 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
                 return;
             }
 
-            DevDebug.Log("User is present in the leaderboard !!!", DebugColor.Coral);
-            mUserItem.Initialize(user.user_name, user.rank, mSpriteUrlUser);
+            DevDebug.Log($"User is present in the leaderboard  : {user.user_id}", DebugColor.Coral);
+            mUserItem.Initialize(user.user_id, user.user_name, user.rank, mSpriteUrlUser,this);
 
             PopUp.Instance.EnableLoad(false);
             Invoke("Initialize", 0.3f);
         });
     }
 
+
     private void OnDisable()
     {
         backButton?.onClick.RemoveAllListeners();
     }
-
-
 
     private void Start()
     {
@@ -133,6 +136,15 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
     private void Initialize()
     {
         recyclableScrollRect.Initialize(this);
+    }
+
+    public void ShowInfo(string id)
+    {
+        if (string.IsNullOrWhiteSpace(id))
+            return;
+
+        infoPanel.gameObject.SetActive(true);
+        infoPanel.Init(id);
     }
 
     #region SCROLL
@@ -149,10 +161,12 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
     public void SetCell(ICell cell, int index)
     {
         LeaderboardItem leaderboardItem = cell as LeaderboardItem;
+
+        string id = leaderboardDataList[index].id;
         string name = leaderboardDataList[index].name;
         int rank = leaderboardDataList[index].rank;
 
-        leaderboardItem.Initialize(name, rank, leaderboardDataList[index].pic);
+        leaderboardItem.Initialize(id, name, rank, leaderboardDataList[index].pic,this);
     }
     
     public void PageChanged(int index)
@@ -187,12 +201,14 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
 [Serializable]
 public class LeaderboardData
 {
+    public string id;
     public string name;
     public int rank;
     public string pic;
 
-    public LeaderboardData(string name, int rank,string pic)
+    public LeaderboardData(string id, string name, int rank,string pic)
     {
+        this.id = id;
         this.name = name;
         this.rank = rank;
         this.pic = pic;

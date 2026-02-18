@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using BibleGame.API;
 using BibleGame;
+using DebugUtils;
 
 [RequireComponent(typeof(TMP_Text))]
 public class Version : MonoBehaviour
@@ -36,13 +37,15 @@ public class Version : MonoBehaviour
             if (!success)
                 return;
 
+            DevDebug.Log($"Current Ver : {Application.version} :: {res.ResponseData.android_latest_version}", DebugColor.Grey);
+
 #if UNITY_ANDROID
-     if(Application.version != res.ResponseData.andriod_latest_version)
+     if(Application.version != res.ResponseData.android_latest_version)
             {
                 PopUp.Instance.ShowMessage("Your Application is outdated.Please do update the application");
             }
 #else
-     if(Application.version != res.ResponseData.andriod_latest_version)
+            if(Application.version != res.ResponseData.ios_latest_version)
             {
                 PopUp.Instance.ShowMessage("Your Application is outdated.Please do update the application");
             }

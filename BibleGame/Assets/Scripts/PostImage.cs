@@ -44,6 +44,9 @@ public class PostImage : MonoBehaviour
 
     public void Reset()
     {
-        image.sprite = initialSprite;
+        image.sprite = null;
+       image.SetNativeSize();
+
+       aspect.aspectMode = AspectRatioFitter.AspectMode.EnvelopeParent;
     }
 }

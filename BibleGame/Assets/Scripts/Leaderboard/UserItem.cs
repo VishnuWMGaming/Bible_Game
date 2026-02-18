@@ -9,6 +9,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+public interface IUserItem
+{
+    public void ShowInfo(string id);
+}
+
+
 public class UserItem : MonoBehaviour
 {
     public PostImage profileImg;
@@ -19,8 +25,27 @@ public class UserItem : MonoBehaviour
 
     public ImageDownloader imageDownloader;
 
-    public async Task Initialize(string name, int rank, string spriteurl)
+    [Space]
+    [SerializeField] string mID;
+
+    [SerializeField] Button mbutton;
+
+    private IUserItem callback;
+
+    public async void Initialize(string id, string name, int rank, string spriteurl, IUserItem callbackIN)
     {
+        DevDebug.Log($"Id: {id} :: {spriteurl}", DebugColor.Gold);
+        mID = id;
+
+        callback = callbackIN;
+
+        mbutton?.onClick.RemoveAllListeners();
+        mbutton?.onClick.AddListener(() =>
+        {
+            DevDebug.Log($"Id: called {id}", DebugColor.Gold);
+            callback.ShowInfo(id);
+        });
+
         nameTxt.text = name;
  
         rankTxt.text = rank >= 0? rank.ToString() : "NULL";
@@ -28,13 +53,14 @@ public class UserItem : MonoBehaviour
         profileImg.Reset();
 
         loadingObj.SetActive(true);
-        Sprite sprite = spriteurl == "0" ? null : await DownloadSpriteAsync($"{spriteurl}");
+        Sprite sprite = spriteurl == null ? null : await DownloadSpriteAsync($"{spriteurl}");
         loadingObj.SetActive(false);
 
         if (sprite != null)
         {
             profileImg.SetRightSize(sprite, true);
         }
+
     }
 
     public async Task<Sprite> DownloadSpriteAsync(string url)

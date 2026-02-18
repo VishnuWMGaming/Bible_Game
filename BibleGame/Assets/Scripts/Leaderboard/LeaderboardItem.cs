@@ -9,6 +9,11 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+public interface ILeaderboardItem
+{
+    public void ShowInfo( string info);
+}
+
 public class LeaderboardItem : MonoBehaviour, ICell
 {
     public PostImage profileImg;
@@ -19,10 +24,27 @@ public class LeaderboardItem : MonoBehaviour, ICell
 
     public ImageDownloader imageDownloader;
 
-    public async Task Initialize(string name, int rank, string spriteurl)
+    ILeaderboardItem callback;
+
+    [Space]
+    [SerializeField] string mID;
+
+    [Space]
+    [SerializeField] Button mButton;
+
+
+    private void OnDisable()
+    {
+        
+    }
+
+    public async Task Initialize(string id, string name, int rank, string spriteurl,ILeaderboardItem callbackIN)
     {
         nameTxt.text = name;
         rankTxt.text = rank.ToString();
+
+        callback = callbackIN;
+        mID = id;
 
         profileImg.Reset();
 
@@ -34,6 +56,12 @@ public class LeaderboardItem : MonoBehaviour, ICell
         {
             profileImg.SetRightSize(sprite, true);
         }
+
+        mButton?.onClick.RemoveAllListeners();
+        mButton?.onClick.AddListener(() =>
+        {
+            callback.ShowInfo(id);
+        });
     }
 
     public GameObject GetGameObject()

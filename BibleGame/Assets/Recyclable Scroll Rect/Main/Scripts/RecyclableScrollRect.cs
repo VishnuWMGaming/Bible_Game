@@ -137,22 +137,33 @@ namespace PolyAndCode.UI
             }
         }
 
-        /*
-        #region Testing
-        private void OnDrawGizmos()
+        public void ClearData()
         {
-            if (_recyclableScrollRect is VerticalRecyclingSystem)
+            // Stop movement
+            StopMovement();
+
+            // Remove scroll listener
+            onValueChanged.RemoveListener(OnValueChangedListener);
+
+            // Clear recycling system
+            if (_recyclingSystem != null)
             {
-                ((VerticalRecyclingSystem)_recyclableScrollRect).OnDrawGizmos();
+                _recyclingSystem.DataSource = null;
             }
 
-            if (_recyclableScrollRect is HorizontalRecyclingSystem)
+            // Destroy all existing cells
+            var cells = content.GetComponentsInChildren<ICell>();
+            foreach (var cell in cells)
             {
-                ((HorizontalRecyclingSystem)_recyclableScrollRect).OnDrawGizmos();
+                Destroy(cell.GetGameObject());
             }
 
+            // Reset content position
+            content.anchoredPosition = Vector2.zero;
+            _prevAnchoredPos = Vector2.zero;
+
+            // Optional: Clear datasource reference
+            DataSource = null;
         }
-        #endregion
-        */
     }
 }
