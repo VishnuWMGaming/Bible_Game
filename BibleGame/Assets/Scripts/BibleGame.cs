@@ -41,6 +41,7 @@ namespace BibleGame
         public const string getLeaderBoard = "get-leaderboard";
         public const string getFreeHint = "get_free_hint";
         public const string deductFreeHint = "deduct_hint";
+        public const string version = "get-latest-app-verson";
 
 
     }
@@ -64,6 +65,8 @@ namespace BibleGame
         public static Action<StartPage> StartPageAction;
         public static Action<Action> UpdateText;
         public static Action<int> UpdateCoins;
+
+        public static Action VersionCheck;
 
         public static Action<bool> ResetBoxPosAction;
 

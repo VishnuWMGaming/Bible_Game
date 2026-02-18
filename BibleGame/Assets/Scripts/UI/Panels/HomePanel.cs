@@ -120,6 +120,11 @@ public class HomePanel : MonoBehaviour
         leaderBoardBtn.onClick.RemoveAllListeners();
     }
 
+    private void Start()
+    {
+        Actions.VersionCheck();
+    }
+
 
     public async Task<Sprite> DownloadSpriteAsync(string url)
     {

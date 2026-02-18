@@ -46,6 +46,7 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource
             Actions.ChangePanelActions(CanvasType.home);
         });
 
+        leaderboardDataList.Clear();
 
         PopUp.Instance.EnableLoad(true);
         LeaderBoardAPI.GetData(async (success, res) =>

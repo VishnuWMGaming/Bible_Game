@@ -4,6 +4,8 @@ using UnityEngine;
 
 using UnityEngine.UI;
 using TMPro;
+using BibleGame.API;
+using BibleGame;
 
 [RequireComponent(typeof(TMP_Text))]
 public class Version : MonoBehaviour
@@ -18,5 +20,34 @@ public class Version : MonoBehaviour
     private void OnEnable()
     {
         mText.text = $"ver {Application.version}";
+
+        Actions.VersionCheck += VersionCheck;
+    }
+
+    private void OnDisable()
+    {
+        Actions.VersionCheck -= VersionCheck;
+    }
+
+    public void VersionCheck()
+    {
+        VersionAPI.GetVersion((success, res) =>
+        {
+            if (!success)
+                return;
+
+#if UNITY_ANDROID
+     if(Application.version != res.ResponseData.andriod_latest_version)
+            {
+                PopUp.Instance.ShowMessage("Your Application is outdated.Please do update the application");
+            }
+#else
+     if(Application.version != res.ResponseData.andriod_latest_version)
+            {
+                PopUp.Instance.ShowMessage("Your Application is outdated.Please do update the application");
+            }
+#endif
+
+        });
     }
 }
