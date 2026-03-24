@@ -79,7 +79,12 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource,I
 
             Sprite thirdsprite = res.ResponseData[2].profile_pic == "0" ? null : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData[2].profile_pic}");
             thirdLeader.Init(res.ResponseData[2].user_id, res.ResponseData[2].user_name, res.ResponseData[2].score, thirdsprite, this);
-
+            //-------------------------------------------LeaderBoard List Response From Backend--------------------------//
+            for (int i = 0; i < res.ResponseData.Count; i++)
+            {
+                Debug.LogWarning($"Index: {i}, Rank: {res.ResponseData[i].rank}, Name: {res.ResponseData[i].user_name}"); 
+            }
+            //-----------------------------------------------------------------------------------------------------------//
             for (int i = 3; i < res.ResponseData.Count; i++)
             {
                 //Sprite sprite = res.ResponseData[i].profile_pic == "0" ? null : await DownloadSpriteAsync($"{ServiceURL.imageURL}{res.ResponseData[i].profile_pic}");'
@@ -150,7 +155,7 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource,I
     #region SCROLL
     public int GetStartingIndex()
     {
-        return 30;
+        return 0;  //30
     }
 
     public int GetItemCount()
