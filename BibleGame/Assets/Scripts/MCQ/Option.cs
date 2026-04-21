@@ -93,7 +93,7 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
             optionText.text = translation;
             _index = index;
 
-            speech.Initialise(translation);
+            AudioManager.Instance.PlayVoice(translation);
         });
 
       

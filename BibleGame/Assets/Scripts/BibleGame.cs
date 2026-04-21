@@ -16,6 +16,9 @@ namespace BibleGame
     {
         public const string baseURL = "http://52.22.241.165:10032/api/user/";
         public const string imageURL = "http://52.22.241.165:10032/";
+
+        public const string voiceURL = "http://52.22.241.165:10032/api/tts";
+
         public const string signupURL = "register";
         public const string deleteProfile = "delete_profile";
         public const string login = "login";
@@ -43,6 +46,7 @@ namespace BibleGame
         public const string deductFreeHint = "deduct_hint";
         public const string version = "get-latest-app-verson";
         public const string userInfo = "get-leaderboard-user-details";
+
     }
 
     namespace UI

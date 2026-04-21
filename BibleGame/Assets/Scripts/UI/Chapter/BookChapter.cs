@@ -2,6 +2,7 @@ using BibleGame;
 using BibleGame.API;
 using BibleGame.Data;
 using BibleGame.Utility;
+using DebugUtils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,7 +37,9 @@ public class BookChapter : MonoBehaviour
     [SerializeField] private TextMeshProUGUI pagePanel;
     [SerializeField] ScrollRect mScorll;
 
-
+    [Space]
+    [SerializeField] Animator animator;
+    
     enum Navigate { previous , next };
 
 
@@ -47,11 +50,6 @@ public class BookChapter : MonoBehaviour
 
     [Header("SpriteData")]
     [SerializeField] SpriteData spriteData;
-
-    [Header("Speaker")]
-    [SerializeField] TextSpeech speech;
-
-  
 
     /// <summary>
     /// Action imeplemented on enable
@@ -64,7 +62,8 @@ public class BookChapter : MonoBehaviour
        // previousBtn.onClick.AddListener(() =>  (Navigate.previous));
         nextBtn.onClick.AddListener(()=> 
         {
-            speech.Stop();
+           // speech.Stop();
+
             callback.EndBookAction();
             AudioManager.Instance.PlayButton();
         });
@@ -72,7 +71,8 @@ public class BookChapter : MonoBehaviour
 
         backBtn.onClick.AddListener(() =>
         {
-            speech.Stop();
+           // speech.Stop();
+          
             Actions.ChangePanelActions(CanvasType.home);
             AudioManager.Instance.PlayButton();
         });
@@ -162,12 +162,44 @@ public class BookChapter : MonoBehaviour
                 string[] versesArray = content.Split(new[] { "\r\n", "\r", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
                 List<string> versesList = new List<string>(versesArray);
 
-                 speech.Initialise(translation, true);
+                //AudioManager.Instance.PlayVoice(translation);
+                 //speech.Initialise(translation, true);
             });
 
            
 
         }, UserData.bibleId, UserData.chapterId);
+    }
+
+
+    public void SpeechAction()
+    {
+        string translateText = pagePanel.text;
+        //AudioManager.Instance.PlayVoice(translateText);
+
+        string[] versesArray = translateText.Split(new[] { "\r\n", "\r", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
+        List<string> versesList = new List<string>(versesArray);
+
+        StartCoroutine(PlaySequence(versesList));
+    }
+
+    private IEnumerator PlaySequence(List<string> texts)
+    {
+        for (int i = 0; i < texts.Count; i++)
+        {
+            bool finished = false;
+
+            AudioManager.Instance.PlayVoice(texts[i], () =>
+            {
+                finished = true;
+            });
+
+            yield return new WaitUntil(() => finished);
+
+            DevDebug.Log("Next line speaks ... ", DebugColor.Cyan);
+        }
+
+        Debug.Log("All voices completed");
     }
 
 

@@ -201,7 +201,9 @@ public class GameController_Anagram : MonoBehaviour,IBox
             //   // mTitle.text = question.title;
             //});
 
-                 speech.Initialise(mTitle.text, true);
+                // speech.Initialise(mTitle.text, true);
+
+                AudioManager.Instance.PlayVoice(mTitle.text);
 
                 _anagramLetters.Clear();
 

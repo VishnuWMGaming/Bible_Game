@@ -86,7 +86,7 @@ public class TextSpeech : MonoBehaviour
 
         cts = new CancellationTokenSource();
 
-#if !UNITY_EDITOR
+#if UNITY_EDITOR
         if (isPlaying)
         {
             //AudioManager.Instance.EnableVol(true);
@@ -114,7 +114,7 @@ public class TextSpeech : MonoBehaviour
 
             int count = versesList.Count;
 
-            for (int i = 0; i < count; ++i)
+            for (int i = 0; i < versesList.Count; ++i)
             {
                 DevDebug.Log($"Next line speaking....{count} =>{i}",DebugColor.Violet);
 
@@ -136,8 +136,10 @@ public class TextSpeech : MonoBehaviour
                 //    filteredVal = filteredVal.Trim();
                 //}
 
-                _textToSpeech.Speak(filteredVal, langCode, float.Parse("0.8", CultureInfo.InvariantCulture));
-                await Spoke(FinishEvent, cts.Token);
+
+
+                //_textToSpeech.Speak(filteredVal, langCode, float.Parse("0.8", CultureInfo.InvariantCulture));
+             //   await Spoke(FinishEvent, cts.Token);
 
 #if UNITY_IOS
                 await Task.Delay(2000);
@@ -168,6 +170,23 @@ public class TextSpeech : MonoBehaviour
           mButton.image.sprite = mInitialSprite;
 #endif
 
+    }
+
+    private IEnumerator PlaySequence(List<string> texts)
+    {
+        for (int i = 0; i < texts.Count; i++)
+        {
+            bool finished = false;
+
+            AudioManager.Instance.PlayVoice(texts[i], () =>
+            {
+                finished = true;
+            });
+
+            yield return new WaitUntil(() => finished);
+        }
+
+        Debug.Log("All voices completed");
     }
 
     public Task Spoke(UnityEvent unityEvent, CancellationToken token)

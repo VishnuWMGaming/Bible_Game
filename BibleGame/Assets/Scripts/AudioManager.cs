@@ -1,4 +1,7 @@
+using BibleGame.API;
+using BibleGame.Data;
 using NUnit.Framework.Interfaces;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +15,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioData audioData;
 
     [SerializeField] AudioSource audioSource;
+
+    [SerializeField] AudioSource voiceAudioSource;
 
     float sfxVol = 0.0f;
     float bgVol = 0.0f;
@@ -98,6 +103,34 @@ public class AudioManager : MonoBehaviour
     {
         sfxVol = vol;
         PlayerPrefs.SetFloat("SfxVol", sfxVol);
+    }
+
+    public void PlayVoice(string text,Action onComplete = null)
+    {
+        StopAllCoroutines();
+
+        VoiceOverAPI.Get(this, (success, clip) =>
+        {
+            voiceAudioSource.clip = clip;
+            voiceAudioSource.Play();
+
+            voiceAudioSource.volume = 1.0f;
+
+            StartCoroutine(WaitForVoiceEnd(clip.length, onComplete));
+
+        },text,AppData.mLanguage);
+    }
+
+    public void EndVoice()
+    {
+        voiceAudioSource.Stop();
+    }
+
+    private IEnumerator WaitForVoiceEnd(float duration, Action onComplete)
+    {
+        yield return new WaitForSeconds(duration);
+
+        onComplete?.Invoke();
     }
 
 

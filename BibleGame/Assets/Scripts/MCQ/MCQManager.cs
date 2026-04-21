@@ -485,7 +485,9 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
         qTrans.UpdateText(() =>
         {
-            textSpeech.Initialise(questionTxt.text, true);
+            //textSpeech.Initialise(questionTxt.text, true);
+
+            AudioManager.Instance.PlayVoice(questionTxt.text);
         });
 
         optionPanel.SetOptions(questions[questionIndex]?.answers);
