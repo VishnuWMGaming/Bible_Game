@@ -6,11 +6,11 @@ using BibleGame;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEngine.UIElements;
 using BibleGame.API;
 using BibleGame.Data;
 using RestAPI;
 using DebugUtils;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(TMP_Text))]
 public class TranslateLang : MonoBehaviour
@@ -23,6 +23,10 @@ public class TranslateLang : MonoBehaviour
 
     [SerializeField] bool isTextChange = true;
 
+    [Header("Speech")]
+    [SerializeField] Animator animator;
+    [SerializeField] Button mSpeech;
+
     private void Awake()
     {
         translatedText = GetComponent<TMP_Text>();
@@ -32,6 +36,8 @@ public class TranslateLang : MonoBehaviour
         {
 
         });
+
+     
     }
 
 
@@ -53,10 +59,33 @@ public class TranslateLang : MonoBehaviour
         });
 
         Actions.UpdateText += UpdateText;
+
+        mSpeech?.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.PlayButton();
+
+            animator.enabled = true;
+            AudioManager.Instance.PlayVoice(translatedText.text, () =>
+            {
+                animator.Rebind();
+                animator.Update(0f);
+                animator.enabled = false;
+            });
+        });
     }
+
     private void OnDisable()
     {
         Actions.UpdateText -= UpdateText;
+
+        if (animator != null)
+        {
+            animator.Rebind();
+            animator.Update(0f);
+            animator.enabled = false;
+        }
+
+        mSpeech?.onClick.RemoveAllListeners();
     }
 
     public void UpdateValue(string value)
@@ -103,7 +132,6 @@ public class TranslateLang : MonoBehaviour
            Language.Hindi => LanguageController.Instance.HindiFont,
            _ => LanguageController.Instance.NormalFont
        };
-
 
         if (!isTextChange)
             return;
@@ -171,11 +199,11 @@ public class TranslateLang : MonoBehaviour
 
                 if (_translated_Text != translated)
                 {
-
                     translatedText.text += translated + " ";
                     _translated_Text = translated;
                     done = true;
                 }
+
             }, input);
 
         //     TranslateAPI.Translate.()

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 54635457741385294}
   - component: {fileID: 5937145835292146137}
   - component: {fileID: 6683479988486757099}
-  - component: {fileID: 7272033474613548895}
   - component: {fileID: 5685035572963753614}
   m_Layer: 5
   m_Name: Speak
@@ -68,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -190722920, guid: 1e94fe793833a3b4ba6f71f817d294d7, type: 3}
+  m_Sprite: {fileID: -1841436980, guid: f4a7b47382a802c45a366cf92d357f64, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -122,29 +121,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7272033474613548895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5057715527225093186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 878de5b452a1ab6488d6700d8256765b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mtext: {fileID: 0}
-  animator: {fileID: 5685035572963753614}
 --- !u!95 &5685035572963753614
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5057715527225093186}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: dcc253a020b4d2341b53f93031b8a34a, type: 2}
   m_CullingMode: 0
@@ -152,6 +137,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1

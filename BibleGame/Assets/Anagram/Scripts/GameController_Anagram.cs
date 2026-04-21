@@ -73,9 +73,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
     [SerializeField] ScreenOrient screenOrient;
     public ScreenOrient ScreenOrient => screenOrient;
 
-    [Header("TextSpeech")]
-    [SerializeField] TextSpeech speech;
-
+  
 
     private void OnEnable()
     {
@@ -203,7 +201,7 @@ public class GameController_Anagram : MonoBehaviour,IBox
 
                 // speech.Initialise(mTitle.text, true);
 
-                AudioManager.Instance.PlayVoice(mTitle.text);
+                //AudioManager.Instance.PlayVoice(mTitle.text);
 
                 _anagramLetters.Clear();
 

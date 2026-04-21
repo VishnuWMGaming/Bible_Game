@@ -19,6 +19,7 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 {
     [SerializeField] private OptionColors optionColors;
     [SerializeField]  Button button;
+    [SerializeField] Animator animator;
 
     public enum OptionType {normal,selected,correct, wrong,disable};
 
@@ -44,8 +45,6 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     string mValue;
     public string Val => mValue;
 
-    [Header("Speaker:")]
-    [SerializeField] TextSpeech speech;
 
     [Header("Translate")]
     [SerializeField] TranslateLang translateLang;
@@ -92,11 +91,7 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
         {
             optionText.text = translation;
             _index = index;
-
-            AudioManager.Instance.PlayVoice(translation);
         });
-
-      
     }
 
     #region EVENT_FUNCTIONS
@@ -129,7 +124,15 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     public void SelectAction()
     {
         SetDisplay(OptionType.selected);
-        speech.Speak();
+        //speech.Speak();
+
+        animator.enabled = true;
+        AudioManager.Instance.PlayVoice(optionText.text, () =>
+        {
+            animator.Rebind();
+            animator.Update(0f);
+            animator.enabled = false;
+        });
 
         callback.OptionSelected(_index);
     }

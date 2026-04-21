@@ -1222,6 +1222,8 @@ MonoBehaviour:
   translatedText: {fileID: 45327766}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &58933899
 GameObject:
   m_ObjectHideFlags: 0
@@ -2077,6 +2079,8 @@ MonoBehaviour:
   translatedText: {fileID: 85592506}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &85592509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2092,6 +2096,8 @@ MonoBehaviour:
   translatedText: {fileID: 0}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &85593554
 GameObject:
   m_ObjectHideFlags: 0
@@ -2245,6 +2251,8 @@ MonoBehaviour:
   translatedText: {fileID: 85593556}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &91294056
 GameObject:
   m_ObjectHideFlags: 0
@@ -2398,6 +2406,8 @@ MonoBehaviour:
   translatedText: {fileID: 91294058}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &95247974 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1606907237530843243, guid: 8ad069e490fd26f4985f94517b859823, type: 3}
@@ -2418,6 +2428,8 @@ MonoBehaviour:
   translatedText: {fileID: 95247977}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &95247977 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5577023899933298341, guid: 8ad069e490fd26f4985f94517b859823, type: 3}
@@ -2584,6 +2596,8 @@ MonoBehaviour:
   translatedText: {fileID: 96759478}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &100020311
 GameObject:
   m_ObjectHideFlags: 0
@@ -3746,24 +3760,16 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5057715527225093186, guid: 6032695d13c174841bb1046a54faff54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 999084285}
   m_SourcePrefab: {fileID: 100100000, guid: 6032695d13c174841bb1046a54faff54, type: 3}
 --- !u!224 &120760130 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2297110257334979791, guid: 6032695d13c174841bb1046a54faff54, type: 3}
   m_PrefabInstance: {fileID: 120760129}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &120760131 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7272033474613548895, guid: 6032695d13c174841bb1046a54faff54, type: 3}
-  m_PrefabInstance: {fileID: 120760129}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 878de5b452a1ab6488d6700d8256765b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &133845610
 GameObject:
   m_ObjectHideFlags: 0
@@ -3895,6 +3901,8 @@ MonoBehaviour:
   translatedText: {fileID: 134621626}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &134621626 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3819687452856583835, guid: 258cbf27178cac24282cd2f72b5218b7, type: 3}
@@ -4545,6 +4553,8 @@ MonoBehaviour:
   translatedText: {fileID: 173949201}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &174093004
 GameObject:
   m_ObjectHideFlags: 0
@@ -5110,6 +5120,8 @@ MonoBehaviour:
   translatedText: {fileID: 191489049}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &191584909
 GameObject:
   m_ObjectHideFlags: 0
@@ -6273,6 +6285,8 @@ MonoBehaviour:
   translatedText: {fileID: 230001953}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &230995923
 GameObject:
   m_ObjectHideFlags: 0
@@ -6428,6 +6442,8 @@ MonoBehaviour:
   translatedText: {fileID: 230995925}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &233739296
 GameObject:
   m_ObjectHideFlags: 0
@@ -7073,6 +7089,8 @@ MonoBehaviour:
   translatedText: {fileID: 237687456}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!224 &241131027 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8264564100450391007, guid: 8ad069e490fd26f4985f94517b859823, type: 3}
@@ -7170,7 +7188,6 @@ MonoBehaviour:
   currentQIndex: 0
   questions: []
   screenOrient: 0
-  speech: {fileID: 2072501404}
 --- !u!1 &247555313
 GameObject:
   m_ObjectHideFlags: 0
@@ -7560,6 +7577,8 @@ MonoBehaviour:
   translatedText: {fileID: 257111796}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &265524742
 GameObject:
   m_ObjectHideFlags: 0
@@ -9408,6 +9427,8 @@ MonoBehaviour:
   translatedText: {fileID: 329718528}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &332095520
 GameObject:
   m_ObjectHideFlags: 0
@@ -10518,6 +10539,8 @@ MonoBehaviour:
   translatedText: {fileID: 360827109}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &361102933
 GameObject:
   m_ObjectHideFlags: 0
@@ -10671,6 +10694,8 @@ MonoBehaviour:
   translatedText: {fileID: 361102935}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &361848566
 GameObject:
   m_ObjectHideFlags: 0
@@ -11381,6 +11406,8 @@ MonoBehaviour:
   translatedText: {fileID: 384081031}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &387608210
 GameObject:
   m_ObjectHideFlags: 0
@@ -11750,6 +11777,8 @@ MonoBehaviour:
   translatedText: {fileID: 392692680}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &392811499
 GameObject:
   m_ObjectHideFlags: 0
@@ -12551,6 +12580,8 @@ MonoBehaviour:
   translatedText: {fileID: 427183658}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &432476853
 GameObject:
   m_ObjectHideFlags: 0
@@ -13161,6 +13192,8 @@ MonoBehaviour:
   translatedText: {fileID: 443463114}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &443463114 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5577023899933298341, guid: 8ad069e490fd26f4985f94517b859823, type: 3}
@@ -16268,6 +16301,8 @@ MonoBehaviour:
   translatedText: {fileID: 544865031}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &545297907
 GameObject:
   m_ObjectHideFlags: 0
@@ -16781,6 +16816,8 @@ MonoBehaviour:
   translatedText: {fileID: 553772560}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &556844295
 GameObject:
   m_ObjectHideFlags: 0
@@ -17077,7 +17114,7 @@ MonoBehaviour:
   hintSubmitBtn: {fileID: 1432099185}
   hintCloseBtn: {fileID: 1544418811}
   rewardBtn: {fileID: 911445678}
-  textSpeech: {fileID: 1740413073}
+  textSpeech: {fileID: 0}
   questions: []
   currentQuestionIndex: 0
 --- !u!1 &590891417
@@ -17220,6 +17257,8 @@ MonoBehaviour:
   translatedText: {fileID: 591301028}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &591301028 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5970554138477124025, guid: b3bb6d116676feb42b34249473822187, type: 3}
@@ -17460,6 +17499,8 @@ MonoBehaviour:
   translatedText: {fileID: 607192108}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &610741349
 GameObject:
   m_ObjectHideFlags: 0
@@ -17614,6 +17655,8 @@ MonoBehaviour:
   translatedText: {fileID: 610741351}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &610741354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17629,6 +17672,8 @@ MonoBehaviour:
   translatedText: {fileID: 0}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &614820415
 GameObject:
   m_ObjectHideFlags: 0
@@ -17782,6 +17827,8 @@ MonoBehaviour:
   translatedText: {fileID: 614820417}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &624047128
 GameObject:
   m_ObjectHideFlags: 0
@@ -18308,6 +18355,8 @@ MonoBehaviour:
   translatedText: {fileID: 631514039}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &632248660
 GameObject:
   m_ObjectHideFlags: 0
@@ -18692,6 +18741,8 @@ MonoBehaviour:
   translatedText: {fileID: 643450289}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &643450289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19096,6 +19147,8 @@ MonoBehaviour:
   translatedText: {fileID: 661748170}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &668953924
 GameObject:
   m_ObjectHideFlags: 0
@@ -19719,6 +19772,8 @@ MonoBehaviour:
   translatedText: {fileID: 698557504}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1001 &701296665
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20462,6 +20517,8 @@ MonoBehaviour:
   translatedText: {fileID: 721337320}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &721465318
 GameObject:
   m_ObjectHideFlags: 0
@@ -20816,6 +20873,8 @@ MonoBehaviour:
   translatedText: {fileID: 726976767}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1001 &734692382
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21247,6 +21306,8 @@ MonoBehaviour:
   translatedText: {fileID: 742705195}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &742705198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21262,6 +21323,8 @@ MonoBehaviour:
   translatedText: {fileID: 0}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &750259367
 GameObject:
   m_ObjectHideFlags: 0
@@ -21658,6 +21721,8 @@ MonoBehaviour:
   translatedText: {fileID: 751771032}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &751771035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21673,6 +21738,8 @@ MonoBehaviour:
   translatedText: {fileID: 0}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &754050783
 GameObject:
   m_ObjectHideFlags: 0
@@ -22340,7 +22407,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_fontSize
-      value: 2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_fontSizeMax
@@ -22353,6 +22420,10 @@ PrefabInstance:
     - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 5355475484526990217, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_Pivot.x
@@ -22608,6 +22679,8 @@ MonoBehaviour:
   translatedText: {fileID: 770841281}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &774995625
 GameObject:
   m_ObjectHideFlags: 0
@@ -24517,6 +24590,8 @@ MonoBehaviour:
   translatedText: {fileID: 830696869}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &830696869 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5970554138477124025, guid: b3bb6d116676feb42b34249473822187, type: 3}
@@ -24581,6 +24656,8 @@ MonoBehaviour:
   translatedText: {fileID: 830729709}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &830729709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25474,6 +25551,8 @@ MonoBehaviour:
   translatedText: {fileID: 883225432}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &897164340
 GameObject:
   m_ObjectHideFlags: 0
@@ -28394,6 +28473,8 @@ MonoBehaviour:
   translatedText: {fileID: 982938361}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &985595670 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 587255355374224641, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
@@ -28654,6 +28735,30 @@ RectTransform:
   m_AnchoredPosition: {x: 5.4921875, y: -19.1}
   m_SizeDelta: {x: -27.700012, y: 35.147}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &999084280 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5057715527225093186, guid: 6032695d13c174841bb1046a54faff54, type: 3}
+  m_PrefabInstance: {fileID: 120760129}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &999084281 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5685035572963753614, guid: 6032695d13c174841bb1046a54faff54, type: 3}
+  m_PrefabInstance: {fileID: 120760129}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &999084285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999084280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b45bfa9faac5f04f98f6aeeb9906d25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeechBox
+  message: {fileID: 1410810957}
+  animator: {fileID: 999084281}
 --- !u!1 &999531232
 GameObject:
   m_ObjectHideFlags: 0
@@ -29285,6 +29390,8 @@ MonoBehaviour:
   translatedText: {fileID: 1023603896}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1023603896 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7999838857212385113, guid: 61cd161c4e11e764dbae3f39a5ae16f9, type: 3}
@@ -29871,6 +29978,8 @@ MonoBehaviour:
   translatedText: {fileID: 1045291718}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1045291718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30125,6 +30234,8 @@ MonoBehaviour:
   translatedText: {fileID: 1051334273}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1051334276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30140,6 +30251,8 @@ MonoBehaviour:
   translatedText: {fileID: 0}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1051724371
 GameObject:
   m_ObjectHideFlags: 0
@@ -30566,6 +30679,8 @@ MonoBehaviour:
   translatedText: {fileID: 1069412475}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1074850461
 GameObject:
   m_ObjectHideFlags: 0
@@ -30717,7 +30832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_fontSize
-      value: 2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_fontSizeMax
@@ -30730,6 +30845,10 @@ PrefabInstance:
     - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 5355475484526990217, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_Pivot.x
@@ -31393,6 +31512,8 @@ MonoBehaviour:
   translatedText: {fileID: 1088806483}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1088806483 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7999838857212385113, guid: 61cd161c4e11e764dbae3f39a5ae16f9, type: 3}
@@ -31813,6 +31934,8 @@ MonoBehaviour:
   translatedText: {fileID: 1113422355}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1113422355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32481,6 +32604,8 @@ MonoBehaviour:
   translatedText: {fileID: 1138289512}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1138289512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32911,6 +33036,8 @@ MonoBehaviour:
   translatedText: {fileID: 1140429763}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1145806392
 GameObject:
   m_ObjectHideFlags: 0
@@ -33138,7 +33265,6 @@ MonoBehaviour:
   currentQIndex: 0
   questions: []
   screenOrient: 0
-  speech: {fileID: 120760131}
 --- !u!114 &1158959909 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
@@ -33736,6 +33862,8 @@ MonoBehaviour:
   translatedText: {fileID: 1181390985}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1181390985 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5970554138477124025, guid: b3bb6d116676feb42b34249473822187, type: 3}
@@ -35451,6 +35579,8 @@ MonoBehaviour:
   translatedText: {fileID: 1245348093}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1245491692
 GameObject:
   m_ObjectHideFlags: 0
@@ -35622,6 +35752,8 @@ MonoBehaviour:
   translatedText: {fileID: 1245491695}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1246508419
 GameObject:
   m_ObjectHideFlags: 0
@@ -37144,6 +37276,8 @@ MonoBehaviour:
   translatedText: {fileID: 1282384503}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1296150767
 GameObject:
   m_ObjectHideFlags: 0
@@ -37410,6 +37544,8 @@ MonoBehaviour:
   translatedText: {fileID: 1309510464}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1310262886
 GameObject:
   m_ObjectHideFlags: 0
@@ -38448,6 +38584,8 @@ MonoBehaviour:
   translatedText: {fileID: 1360256423}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1364673702
 GameObject:
   m_ObjectHideFlags: 0
@@ -38845,6 +38983,8 @@ MonoBehaviour:
   translatedText: {fileID: 1366524388}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1367123820
 GameObject:
   m_ObjectHideFlags: 0
@@ -40566,6 +40706,8 @@ MonoBehaviour:
   translatedText: {fileID: 1411467600}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 1740413074}
+  mSpeech: {fileID: 1740413075}
 --- !u!1 &1412090018
 GameObject:
   m_ObjectHideFlags: 0
@@ -40952,6 +41094,8 @@ MonoBehaviour:
   translatedText: {fileID: 1413799133}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1413811849
 GameObject:
   m_ObjectHideFlags: 0
@@ -41434,6 +41578,8 @@ MonoBehaviour:
   translatedText: {fileID: 1438310921}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1442532393
 GameObject:
   m_ObjectHideFlags: 0
@@ -41587,6 +41733,8 @@ MonoBehaviour:
   translatedText: {fileID: 1442532395}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1449664749
 GameObject:
   m_ObjectHideFlags: 0
@@ -42185,6 +42333,8 @@ MonoBehaviour:
   translatedText: {fileID: 1470959550}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1470959550 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5577023899933298341, guid: 8ad069e490fd26f4985f94517b859823, type: 3}
@@ -42307,6 +42457,8 @@ MonoBehaviour:
   translatedText: {fileID: 1475460774}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1475460774 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3819687452856583835, guid: 258cbf27178cac24282cd2f72b5218b7, type: 3}
@@ -42728,6 +42880,8 @@ MonoBehaviour:
   translatedText: {fileID: 1495109872}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1498805508 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7849648253234369254, guid: 8b039d4bede58f84290097463a061069, type: 3}
@@ -43625,6 +43779,8 @@ MonoBehaviour:
   translatedText: {fileID: 1511170869}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1511170872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43640,6 +43796,8 @@ MonoBehaviour:
   translatedText: {fileID: 0}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1515732085
 GameObject:
   m_ObjectHideFlags: 0
@@ -44760,6 +44918,8 @@ MonoBehaviour:
   translatedText: {fileID: 1533524341}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1536600946
 GameObject:
   m_ObjectHideFlags: 0
@@ -45052,6 +45212,8 @@ MonoBehaviour:
   translatedText: {fileID: 1537611383}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1541849302
 GameObject:
   m_ObjectHideFlags: 0
@@ -45591,6 +45753,8 @@ MonoBehaviour:
   translatedText: {fileID: 1557724219}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1557724219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47681,6 +47845,8 @@ MonoBehaviour:
   translatedText: {fileID: 1598387997}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1599482022
 GameObject:
   m_ObjectHideFlags: 0
@@ -48255,6 +48421,8 @@ MonoBehaviour:
   translatedText: {fileID: 1612142263}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1613312888
 GameObject:
   m_ObjectHideFlags: 0
@@ -48408,6 +48576,8 @@ MonoBehaviour:
   translatedText: {fileID: 1613312889}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1613933438
 GameObject:
   m_ObjectHideFlags: 0
@@ -48772,6 +48942,8 @@ MonoBehaviour:
   translatedText: {fileID: 1621091091}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1623481488
 GameObject:
   m_ObjectHideFlags: 0
@@ -49062,6 +49234,8 @@ MonoBehaviour:
   translatedText: {fileID: 1635238729}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1635238729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49460,6 +49634,8 @@ MonoBehaviour:
   translatedText: {fileID: 1640123568}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1646761145
 GameObject:
   m_ObjectHideFlags: 0
@@ -49764,6 +49940,8 @@ MonoBehaviour:
   translatedText: {fileID: 1659407326}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1663550286
 GameObject:
   m_ObjectHideFlags: 0
@@ -50390,6 +50568,8 @@ MonoBehaviour:
   translatedText: {fileID: 1695220820}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1695220820 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3819687452856583835, guid: 258cbf27178cac24282cd2f72b5218b7, type: 3}
@@ -50554,6 +50734,8 @@ MonoBehaviour:
   translatedText: {fileID: 1695326942}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1696290584
 GameObject:
   m_ObjectHideFlags: 0
@@ -51022,6 +51204,8 @@ MonoBehaviour:
   translatedText: {fileID: 1706211919}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1709512176
 GameObject:
   m_ObjectHideFlags: 0
@@ -51176,6 +51360,8 @@ MonoBehaviour:
   translatedText: {fileID: 1709512178}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1709512181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51191,6 +51377,8 @@ MonoBehaviour:
   translatedText: {fileID: 0}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1711525999
 GameObject:
   m_ObjectHideFlags: 0
@@ -52096,15 +52284,20 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2297110257334979791, guid: 6032695d13c174841bb1046a54faff54, type: 3}
   m_PrefabInstance: {fileID: 8989058010343522344}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1740413073 stripped
+--- !u!95 &1740413074 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5685035572963753614, guid: 6032695d13c174841bb1046a54faff54, type: 3}
+  m_PrefabInstance: {fileID: 8989058010343522344}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1740413075 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7272033474613548895, guid: 6032695d13c174841bb1046a54faff54, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6683479988486757099, guid: 6032695d13c174841bb1046a54faff54, type: 3}
   m_PrefabInstance: {fileID: 8989058010343522344}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 878de5b452a1ab6488d6700d8256765b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1740503447
@@ -52288,6 +52481,8 @@ MonoBehaviour:
   translatedText: {fileID: 1745675566}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1745675566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52801,6 +52996,8 @@ MonoBehaviour:
   translatedText: {fileID: 1754630469}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1755045321 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2940159765318102204, guid: b3bb6d116676feb42b34249473822187, type: 3}
@@ -52821,6 +53018,8 @@ MonoBehaviour:
   translatedText: {fileID: 1755045324}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1755045324 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5970554138477124025, guid: b3bb6d116676feb42b34249473822187, type: 3}
@@ -52985,6 +53184,8 @@ MonoBehaviour:
   translatedText: {fileID: 1756339097}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1757472410
 GameObject:
   m_ObjectHideFlags: 0
@@ -53508,6 +53709,7 @@ MonoBehaviour:
   pagePanels: []
   pagePanel: {fileID: 4422533822858606180}
   mScorll: {fileID: 2121703716}
+  animator: {fileID: 1956656021}
   spriteData: {fileID: 11400000, guid: 05eeaf1103add7242b607da48f6b120b, type: 2}
 --- !u!1 &1771810859
 GameObject:
@@ -53737,6 +53939,8 @@ MonoBehaviour:
   translatedText: {fileID: 1779275994}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1001 &1779879964
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53945,6 +54149,8 @@ MonoBehaviour:
   translatedText: {fileID: 1783044180}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1783044180 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5577023899933298341, guid: 8ad069e490fd26f4985f94517b859823, type: 3}
@@ -54672,6 +54878,8 @@ MonoBehaviour:
   translatedText: {fileID: 1807887875}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1807887875 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3819687452856583835, guid: 258cbf27178cac24282cd2f72b5218b7, type: 3}
@@ -55212,6 +55420,8 @@ MonoBehaviour:
   translatedText: {fileID: 1831399298}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1831399298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55554,6 +55764,8 @@ MonoBehaviour:
   translatedText: {fileID: 1836452554}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1837711406
 GameObject:
   m_ObjectHideFlags: 0
@@ -55963,10 +56175,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Speak
       objectReference: {fileID: 0}
-    - target: {fileID: 5685035572963753614, guid: 6032695d13c174841bb1046a54faff54, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6683479988486757099, guid: 6032695d13c174841bb1046a54faff54, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -55999,8 +56207,7 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7272033474613548895, guid: 6032695d13c174841bb1046a54faff54, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -56739,6 +56946,8 @@ MonoBehaviour:
   translatedText: {fileID: 1868634265}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1869273201
 GameObject:
   m_ObjectHideFlags: 0
@@ -57383,6 +57592,8 @@ MonoBehaviour:
   translatedText: {fileID: 1891633710}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1891633710 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3819687452856583835, guid: 258cbf27178cac24282cd2f72b5218b7, type: 3}
@@ -57547,6 +57758,8 @@ MonoBehaviour:
   translatedText: {fileID: 1895779298}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1001 &1896839865
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57577,7 +57790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_fontSize
-      value: 2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_fontSizeMax
@@ -57590,6 +57803,10 @@ PrefabInstance:
     - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 5355475484526990217, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_Pivot.x
@@ -58153,6 +58370,8 @@ MonoBehaviour:
   translatedText: {fileID: 1911558464}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1911558464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58993,6 +59212,8 @@ MonoBehaviour:
   translatedText: {fileID: 1924582122}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1929458032
 GameObject:
   m_ObjectHideFlags: 0
@@ -59581,6 +59802,8 @@ MonoBehaviour:
   translatedText: {fileID: 1935324930}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1935324930 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5970554138477124025, guid: b3bb6d116676feb42b34249473822187, type: 3}
@@ -59862,6 +60085,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1940687656}
   m_CullTransparentMesh: 1
+--- !u!1 &1945885013 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5057715527225093186, guid: 6032695d13c174841bb1046a54faff54, type: 3}
+  m_PrefabInstance: {fileID: 2072501401}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1947230604
 GameObject:
   m_ObjectHideFlags: 0
@@ -60725,6 +60953,13 @@ MonoBehaviour:
   translatedText: {fileID: 1953367504}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
+--- !u!95 &1956656021 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5685035572963753614, guid: 6032695d13c174841bb1046a54faff54, type: 3}
+  m_PrefabInstance: {fileID: 1854664108}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1957825317 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1827089607617430992, guid: 8d95c89159a6cc24d91dd47db58bec41, type: 3}
@@ -61973,6 +62208,8 @@ MonoBehaviour:
   translatedText: {fileID: 1987027840}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &1987027840 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5577023899933298341, guid: 8ad069e490fd26f4985f94517b859823, type: 3}
@@ -62257,6 +62494,8 @@ MonoBehaviour:
   translatedText: {fileID: 1991643156}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &1993055810
 GameObject:
   m_ObjectHideFlags: 0
@@ -62740,6 +62979,8 @@ MonoBehaviour:
   translatedText: {fileID: 1999998405}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &2000424028
 GameObject:
   m_ObjectHideFlags: 0
@@ -62793,6 +63034,8 @@ MonoBehaviour:
   translatedText: {fileID: 2000424031}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &2000424031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63224,6 +63467,8 @@ MonoBehaviour:
   translatedText: {fileID: 2016793331}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!114 &2016793331 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5970554138477124025, guid: b3bb6d116676feb42b34249473822187, type: 3}
@@ -63509,6 +63754,8 @@ MonoBehaviour:
   translatedText: {fileID: 2022342939}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &2026438634
 GameObject:
   m_ObjectHideFlags: 0
@@ -64150,6 +64397,8 @@ MonoBehaviour:
   translatedText: {fileID: 2033779391}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &2036727389
 GameObject:
   m_ObjectHideFlags: 0
@@ -64592,7 +64841,6 @@ MonoBehaviour:
   currentQIndex: 0
   questions: []
   screenOrient: 0
-  speech: {fileID: 0}
 --- !u!4 &2051616424
 Transform:
   m_ObjectHideFlags: 0
@@ -65344,7 +65592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2297110257334979791, guid: 6032695d13c174841bb1046a54faff54, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 13
+      value: 12.999998
       objectReference: {fileID: 0}
     - target: {fileID: 2297110257334979791, guid: 6032695d13c174841bb1046a54faff54, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -65365,24 +65613,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5057715527225093186, guid: 6032695d13c174841bb1046a54faff54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2072501409}
   m_SourcePrefab: {fileID: 100100000, guid: 6032695d13c174841bb1046a54faff54, type: 3}
 --- !u!224 &2072501402 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2297110257334979791, guid: 6032695d13c174841bb1046a54faff54, type: 3}
   m_PrefabInstance: {fileID: 2072501401}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2072501404 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7272033474613548895, guid: 6032695d13c174841bb1046a54faff54, type: 3}
+--- !u!95 &2072501405 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5685035572963753614, guid: 6032695d13c174841bb1046a54faff54, type: 3}
   m_PrefabInstance: {fileID: 2072501401}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &2072501409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945885013}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 878de5b452a1ab6488d6700d8256765b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b45bfa9faac5f04f98f6aeeb9906d25, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeechBox
+  message: {fileID: 1983954341}
+  animator: {fileID: 2072501405}
 --- !u!1001 &2074304751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -66602,6 +66861,8 @@ MonoBehaviour:
   translatedText: {fileID: 2112745981}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &2113996635
 GameObject:
   m_ObjectHideFlags: 0
@@ -67361,6 +67622,8 @@ MonoBehaviour:
   translatedText: {fileID: 2125752395}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!1 &2126165083 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7849648253234369254, guid: 8b039d4bede58f84290097463a061069, type: 3}
@@ -68564,7 +68827,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_fontSize
-      value: 2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_fontSizeMax
@@ -68577,6 +68840,10 @@ PrefabInstance:
     - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_enableAutoSizing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5345146704074938597, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 5355475484526990217, guid: 845ef8a657799e04a98febbd5a5d39b6, type: 3}
       propertyPath: m_Pivot.x
@@ -70582,6 +70849,8 @@ MonoBehaviour:
   translatedText: {fileID: 4422533822858606180}
   _translated_Text: 
   isTextChange: 1
+  animator: {fileID: 0}
+  mSpeech: {fileID: 0}
 --- !u!224 &8253596211987789381
 RectTransform:
   m_ObjectHideFlags: 0

@@ -111,6 +111,12 @@ public class AudioManager : MonoBehaviour
 
         VoiceOverAPI.Get(this, (success, clip) =>
         {
+            if(!success)
+            {
+                onComplete?.Invoke();
+                return;
+            }
+
             voiceAudioSource.clip = clip;
             voiceAudioSource.Play();
 

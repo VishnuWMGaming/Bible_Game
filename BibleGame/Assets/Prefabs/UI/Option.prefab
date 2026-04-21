@@ -104,20 +104,23 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -149,6 +152,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   translatedText: {fileID: 5345146704074938597}
   _translated_Text: 
+  isTextChange: 1
+  animator: {fileID: 6113830294191538816}
+  mSpeech: {fileID: 5115385878525961957}
 --- !u!1 &2762596828722241423
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,11 +293,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   optionColors: {fileID: 11400000, guid: f5296d580e749fc4cb57aaf806e4b90c, type: 2}
   button: {fileID: 3700359264682395812}
+  animator: {fileID: 6113830294191538816}
   _optionType: 0
   optionHighlight: {fileID: 4901198679509769670}
   _index: 0
   optionText: {fileID: 5345146704074938597}
-  speech: {fileID: 9139648708779879249}
   translateLang: {fileID: 420363778144864443}
 --- !u!1 &4125541499018890438
 GameObject:
@@ -484,14 +490,19 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2297110257334979791, guid: 6032695d13c174841bb1046a54faff54, type: 3}
   m_PrefabInstance: {fileID: 1890946665321970702}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9139648708779879249 stripped
+--- !u!114 &5115385878525961957 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7272033474613548895, guid: 6032695d13c174841bb1046a54faff54, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6683479988486757099, guid: 6032695d13c174841bb1046a54faff54, type: 3}
   m_PrefabInstance: {fileID: 1890946665321970702}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 878de5b452a1ab6488d6700d8256765b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &6113830294191538816 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5685035572963753614, guid: 6032695d13c174841bb1046a54faff54, type: 3}
+  m_PrefabInstance: {fileID: 1890946665321970702}
+  m_PrefabAsset: {fileID: 0}

@@ -30,9 +30,9 @@ namespace BibleGame
                     Language.Portuguese => "pt-BR",
                     Language.Korean => "ko-KR",
                     Language.French => "fr-FR",
-                    Language.Chinese => "zh-CN",
-                    Language.Swahili => "sw-KE",
-                    Language.Kreyol => "ht-HT",
+                    Language.Chinese => "cmn-CN",
+                    Language.Swahili => "en-US",
+                    Language.Kreyol => "fr-FR",
                     Language.Hindi => "hi-IN"
                 };
 
@@ -43,9 +43,9 @@ namespace BibleGame
                     Language.Portuguese => "pt-BR-Neural2-B",
                     Language.Korean => "ko-KR-Neural2-B",
                     Language.French => "fr-FR-Neural2-B",
-                    Language.Chinese => "zh-CN-Neural2-B",
-                    Language.Swahili => "sw-KE-Wavenet-B",
-                    Language.Kreyol => "ht-HT-Wavenet-B",
+                    Language.Chinese => "cmn-CN-Standard-B",
+                    Language.Swahili => "en-US-Neural2-J",
+                    Language.Kreyol => "fr-FR-Neural2-D",
                     Language.Hindi => "hi-IN-Neural2-B"
                 };
 

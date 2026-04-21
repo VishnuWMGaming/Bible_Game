@@ -51,6 +51,8 @@ public class BookChapter : MonoBehaviour
     [Header("SpriteData")]
     [SerializeField] SpriteData spriteData;
 
+    bool isPlaying = false;
+
     /// <summary>
     /// Action imeplemented on enable
     /// </summary>
@@ -104,6 +106,13 @@ public class BookChapter : MonoBehaviour
     {
         previousBtn.onClick.RemoveAllListeners();
         nextBtn.onClick.RemoveAllListeners();
+
+        isPlaying = false;
+        AudioManager.Instance.EndVoice();
+
+        animator.Rebind();
+        animator.Update(0f);
+        animator.enabled = false;
     }
 
 
@@ -174,6 +183,22 @@ public class BookChapter : MonoBehaviour
 
     public void SpeechAction()
     {
+        AudioManager.Instance.PlayButton();
+
+        if(isPlaying)
+        {
+            isPlaying = false;
+            AudioManager.Instance.EndVoice();
+
+            animator.enabled = false;
+            animator.Rebind();
+            animator.Update(0f);
+
+            return;
+        }
+
+        isPlaying = true;
+
         string translateText = pagePanel.text;
         //AudioManager.Instance.PlayVoice(translateText);
 
@@ -188,10 +213,15 @@ public class BookChapter : MonoBehaviour
         for (int i = 0; i < texts.Count; i++)
         {
             bool finished = false;
+            animator.enabled = !finished;
 
             AudioManager.Instance.PlayVoice(texts[i], () =>
             {
                 finished = true;
+
+                animator.Rebind();
+                animator.Update(0f);
+                animator.enabled = !finished;
             });
 
             yield return new WaitUntil(() => finished);
@@ -199,6 +229,7 @@ public class BookChapter : MonoBehaviour
             DevDebug.Log("Next line speaks ... ", DebugColor.Cyan);
         }
 
+        isPlaying = false;
         Debug.Log("All voices completed");
     }
 

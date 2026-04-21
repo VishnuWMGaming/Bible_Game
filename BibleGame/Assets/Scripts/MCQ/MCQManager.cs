@@ -27,7 +27,6 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     [SerializeField] Button hintSubmitBtn;
     [SerializeField] Button hintCloseBtn;
     [SerializeField] Button rewardBtn;
-    [SerializeField] TextSpeech textSpeech;
 
     [Space]
     [SerializeField] private List<Question> questions = new List<Question>();
@@ -487,7 +486,7 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
         {
             //textSpeech.Initialise(questionTxt.text, true);
 
-            AudioManager.Instance.PlayVoice(questionTxt.text);
+           // AudioManager.Instance.PlayVoice(questionTxt.text);
         });
 
         optionPanel.SetOptions(questions[questionIndex]?.answers);
