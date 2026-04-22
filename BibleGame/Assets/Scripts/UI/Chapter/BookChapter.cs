@@ -48,6 +48,9 @@ public class BookChapter : MonoBehaviour
     int _currentPageIndex = 0;
     int pageCount = 0;
 
+    int passageIndex = -1;
+    List<string> versesList  = new List<string>();
+
     [Header("SpriteData")]
     [SerializeField] SpriteData spriteData;
 
@@ -88,6 +91,10 @@ public class BookChapter : MonoBehaviour
 
         pagePanel.color = styleUI.textColor;
 
+        animator.Rebind();
+        animator.Update(0f);
+        passageIndex = -1;
+
         //int pageCount = Mathf.CeilToInt(chapter.chapterDescription.Length / 100);
         //pageCount++;
 
@@ -113,6 +120,11 @@ public class BookChapter : MonoBehaviour
         animator.Rebind();
         animator.Update(0f);
         animator.enabled = false;
+
+        versesList = new List<string>();
+        passageIndex = -1;
+
+        StopAllCoroutines();
     }
 
 
@@ -194,6 +206,9 @@ public class BookChapter : MonoBehaviour
             animator.Rebind();
             animator.Update(0f);
 
+            //ContinueSequnece(passageIndex);
+            StopAllCoroutines();
+
             return;
         }
 
@@ -203,15 +218,20 @@ public class BookChapter : MonoBehaviour
         //AudioManager.Instance.PlayVoice(translateText);
 
         string[] versesArray = translateText.Split(new[] { "\r\n", "\r", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
-        List<string> versesList = new List<string>(versesArray);
+        versesList = new List<string>(versesArray);
 
         StartCoroutine(PlaySequence(versesList));
     }
 
     private IEnumerator PlaySequence(List<string> texts)
     {
-        for (int i = 0; i < texts.Count; i++)
+        int starIndex = passageIndex < 0 ? 0 : passageIndex;
+
+        for (int i = starIndex; i < texts.Count; i++)
         {
+            passageIndex = i;
+            DevDebug.Log($"Next line speaks ...{passageIndex} ", DebugColor.Cyan);
+
             bool finished = false;
             animator.enabled = !finished;
 
@@ -225,10 +245,43 @@ public class BookChapter : MonoBehaviour
             });
 
             yield return new WaitUntil(() => finished);
-
-            DevDebug.Log("Next line speaks ... ", DebugColor.Cyan);
         }
 
+        versesList = new List<string>();
+        passageIndex = -1;
+        isPlaying = false;
+        Debug.Log("All voices completed");
+    }
+
+    private IEnumerator ContinueSequnece(int index)
+    {
+        if (index < 0)
+        {
+            StopAllCoroutines();
+        }
+
+        for (int i = index; i < versesList.Count; i++)
+        {
+            passageIndex = i;
+            DevDebug.Log($"Next line speaks ...{i} ", DebugColor.Cyan);
+
+            bool finished = false;
+            animator.enabled = !finished;
+
+            AudioManager.Instance.PlayVoice(versesList[i], () =>
+            {
+                finished = true;
+
+                animator.Rebind();
+                animator.Update(0f);
+                animator.enabled = !finished;
+            });
+
+            yield return new WaitUntil(() => finished);
+        }
+
+        versesList = new List<string>();
+        passageIndex = -1;
         isPlaying = false;
         Debug.Log("All voices completed");
     }
