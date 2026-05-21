@@ -1,0 +1,247 @@
+using System;
+using System.Collections;
+using System.Text.RegularExpressions;
+using TMPro;
+using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.UI;
+
+[RequireComponent(typeof(Button))]
+public class VideoPIc : MonoBehaviour
+{
+    string mUrl;
+    public string URL => mUrl;
+
+    [SerializeField] Image thumbnailImage;
+    [SerializeField] TMP_Text titleText;
+
+    [SerializeField] Button button;
+
+    public event Action<Sprite, string> OnMetaFetched;
+
+    private void Awake()
+    {
+        button = GetComponent<Button>();
+    }
+
+    private void OnEnable()
+    {
+        button = GetComponent<Button>();
+    }
+
+    public void Init (string url)
+    {
+        string videoId = ExtractVideoId(url);
+
+        if (string.IsNullOrEmpty(videoId))
+        {
+            Debug.LogError("[YouTube] Could not parse video ID: " + url);
+            return;
+        }
+
+        StartCoroutine(FetchAll(videoId, url));
+    }
+
+    public static string ExtractVideoId(string url)
+    {
+        if (string.IsNullOrEmpty(url)) return null;
+        if (!Uri.TryCreate(url, UriKind.Absolute, out Uri uri)) return null;
+
+        if (uri.Host.Contains("youtu.be"))
+            return uri.AbsolutePath.Trim('/');
+
+        string path = uri.AbsolutePath;
+        if (path.StartsWith("/shorts/") || path.StartsWith("/embed/"))
+            return path.Split('/')[2];
+
+        foreach (string param in uri.Query.TrimStart('?').Split('&'))
+        {
+            string[] kv = param.Split('=');
+            if (kv.Length == 2 && kv[0] == "v")
+                return kv[1];
+        }
+
+        return null;
+    }
+
+    IEnumerator FetchAll(string videoId, string originalUrl)
+    {
+        Sprite sprite = null;
+        string title = "Unknown";
+
+        titleText.text = "Loading...";
+        button.interactable = false;
+
+        Coroutine c1 = StartCoroutine(FetchSprite(videoId, s => sprite = s));
+        Coroutine c2 = StartCoroutine(FetchTitle(originalUrl, t => title = t));
+
+        yield return c1;
+        yield return c2;
+
+        button.interactable = true;
+
+        ApplySprite(thumbnailImage, sprite);
+
+        //if (thumbnailImage != null && sprite != null)
+        //    thumbnailImage.sprite = sprite;
+
+        if (titleText != null)
+            titleText.text = title;
+
+        OnMetaFetched?.Invoke(sprite, title);
+
+        Debug.Log($"[YouTube] Title : {title}");
+        Debug.Log($"[YouTube] Sprite: {(sprite != null ? $"{sprite.rect.width}x{sprite.rect.height}" : "null")}");
+    }
+
+    IEnumerator FetchSprite(string videoId, Action<Sprite> callback)
+    {
+        string[] qualities = { "maxresdefault", "hqdefault", "mqdefault" };
+
+        foreach (string quality in qualities)
+        {
+            string url = $"https://img.youtube.com/vi/{videoId}/{quality}.jpg";
+
+            using UnityWebRequest req = UnityWebRequestTexture.GetTexture(url);
+            yield return req.SendWebRequest();
+
+            if (req.result != UnityWebRequest.Result.Success)
+                continue;
+
+            Texture2D tex = DownloadHandlerTexture.GetContent(req);
+
+            // 120x90 = YouTube's grey placeholder for unavailable quality
+            if (tex.width <= 120)
+            {
+                Destroy(tex);
+                continue;
+            }
+
+            callback(TextureToSprite(tex));
+            yield break;
+        }
+
+        Debug.LogWarning("[YouTube] All thumbnail qualities failed.");
+        callback(null);
+    }
+
+    IEnumerator FetchTitle(string pageUrl, Action<string> callback)
+    {
+        using UnityWebRequest req = UnityWebRequest.Get(pageUrl);
+
+        // Spoof a browser User-Agent so YouTube returns full HTML
+        req.SetRequestHeader("User-Agent",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+            "AppleWebKit/537.36 (KHTML, like Gecko) " +
+            "Chrome/120.0.0.0 Safari/537.36");
+
+        yield return req.SendWebRequest();
+
+        if (req.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("[YouTube] Page fetch failed: " + req.error);
+            callback("Unknown");
+            yield break;
+        }
+
+        string html = req.downloadHandler.text;
+        string title = ParseTitleFromHtml(html);
+
+        callback(title);
+    }
+
+    static string ParseTitleFromHtml(string html)
+    {
+        // Method 1: og:title meta tag  →  most reliable
+        Match og = Regex.Match(html,
+            @"<meta\s+property=""og:title""\s+content=""([^""]+)""",
+            RegexOptions.IgnoreCase);
+
+        if (og.Success)
+            return DecodeHtml(og.Groups[1].Value);
+
+        // Method 2: <title> tag  →  appends " - YouTube" suffix
+        Match t = Regex.Match(html,
+            @"<title>([^<]+)</title>",
+            RegexOptions.IgnoreCase);
+
+        if (t.Success)
+        {
+            string raw = t.Groups[1].Value;
+            // Strip the " - YouTube" suffix
+            int suffix = raw.LastIndexOf(" - YouTube", StringComparison.OrdinalIgnoreCase);
+            return DecodeHtml(suffix >= 0 ? raw.Substring(0, suffix) : raw);
+        }
+
+        // Method 3: JSON-LD / ytInitialData title field
+        Match js = Regex.Match(html,
+            @"""title""\s*:\s*""([^""\\]*(?:\\.[^""\\]*)*)""");
+
+        if (js.Success)
+            return DecodeHtml(js.Groups[1].Value);
+
+        return "Unknown";
+    }
+
+    // ── Decode common HTML entities ──────────────────────────────
+    static string DecodeHtml(string text)
+    {
+        return text
+            .Replace("&amp;", "&")
+            .Replace("&quot;", "\"")
+            .Replace("&#39;", "'")
+            .Replace("&lt;", "<")
+            .Replace("&gt;", ">")
+            .Replace("\\u0026", "&")
+            .Replace("\\\"", "\"");
+    }
+
+    public static Sprite TextureToSprite(Texture2D tex)
+    {
+        // Re-encode to fix raw JPEG bottom-left origin
+        Texture2D correct = new Texture2D(tex.width, tex.height, TextureFormat.RGBA32, false);
+
+        Color[] src = tex.GetPixels();
+        Color[] dst = new Color[src.Length];
+
+        int w = tex.width;
+        int h = tex.height;
+
+        for (int y = 0; y < h; y++)
+            for (int x = 0; x < w; x++)
+                dst[y * w + x] = src[(h - 1 - y) * w + x];
+
+        correct.SetPixels(dst);
+        correct.Apply();
+        Destroy(tex);
+
+        return Sprite.Create(
+            correct,
+            new Rect(0, 0, correct.width, correct.height),
+            new Vector2(0.5f, 0.5f),   // center pivot
+            100f,                       // pixels per unit
+            0,                          // extrude edges
+            SpriteMeshType.FullRect     // no mesh trimming
+        );
+    }
+
+
+    void ApplySprite(Image image, Sprite sprite)
+    {
+        if (image == null || sprite == null) return;
+
+        image.sprite = sprite;
+        image.type = Image.Type.Simple;
+        image.preserveAspect = true;
+
+        float aspect = sprite.rect.width / sprite.rect.height;
+
+        // Add or get AspectRatioFitter
+        AspectRatioFitter fitter = image.GetComponent<AspectRatioFitter>();
+        if (fitter == null)
+            fitter = image.gameObject.AddComponent<AspectRatioFitter>();
+
+        fitter.aspectMode = AspectRatioFitter.AspectMode.WidthControlsHeight;
+        fitter.aspectRatio = aspect;
+    }
+}

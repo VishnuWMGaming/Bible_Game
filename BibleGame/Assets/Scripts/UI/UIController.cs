@@ -28,6 +28,7 @@ public class UIController : MonoBehaviour
     GameObject biblePanel;
     GameObject streakPanel;
     GameObject leaderboardPanel;
+    GameObject bibleExplororPanel;
 
     /// <summary>
     /// Action called on validation
@@ -61,6 +62,7 @@ public class UIController : MonoBehaviour
         biblePanel = FindObjectOfType<BiblePanel>(true).gameObject;
         streakPanel = FindObjectOfType<StrickPanel>(true).gameObject;
         leaderboardPanel = FindObjectOfType<LeaderboardPanel>(true).gameObject;
+        bibleExplororPanel = FindObjectOfType<BibleExplorerPanel>(true).gameObject;
         _canvasType = CanvasType.splash;
         currentPanel = splashCanvas;
         currentPanel.SetActive(true);
@@ -110,6 +112,7 @@ public class UIController : MonoBehaviour
                                            CanvasType.bible => biblePanel,
                                            CanvasType.selectStreak => streakPanel,
                                            CanvasType.leaderboard => leaderboardPanel,
+                                           CanvasType.BibleExplorer => bibleExplororPanel,
                                            _ => null
                                          };
 
@@ -135,5 +138,6 @@ public enum CanvasType
     bible,
     reward,
     selectStreak,
-    leaderboard
+    leaderboard,
+    BibleExplorer
 }

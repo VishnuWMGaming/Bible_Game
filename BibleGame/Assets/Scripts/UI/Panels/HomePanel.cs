@@ -22,6 +22,7 @@ public class HomePanel : MonoBehaviour
     [SerializeField] Button settingBtn;
     [SerializeField] Button playBtn;
     [SerializeField] Button leaderBoardBtn;
+    [SerializeField] Button explorerBtn;
 
     [Space]
     [SerializeField] PostImage iPic;
@@ -45,6 +46,12 @@ public class HomePanel : MonoBehaviour
         {
             AudioManager.Instance.PlayButton();
             Actions.ChangePanelActions(CanvasType.leaderboard); // match enum
+        });
+
+        explorerBtn?.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.PlayButton();
+            Actions.ChangePanelActions(CanvasType.BibleExplorer);
         });
 
         DevDebug.Log($"Token: {PlayerPrefs.GetString("AuthorizationToken")}",DebugColor.Indigo);
@@ -122,6 +129,8 @@ public class HomePanel : MonoBehaviour
         settingBtn?.onClick.RemoveAllListeners();
         playBtn?.onClick.RemoveAllListeners();
         leaderBoardBtn.onClick.RemoveAllListeners();
+
+        explorerBtn?.onClick.RemoveAllListeners();
     }
 
     private void Start()
