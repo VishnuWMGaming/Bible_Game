@@ -6,12 +6,20 @@ using UnityEngine;
 public class VideoUrlData : ScriptableObject
 {
     [Header("VideoUrls:")]
-    [TextArea(2,4)]
-    [SerializeField] List<string> videoUrls = new List<string>();
+    [SerializeField] List<VidData> videoUrls = new List<VidData>();
 
 
-    public List<string> GetAll()
+    public List<VidData> GetAll()
     {
         return videoUrls;   
     }
+}
+
+[Serializable]
+public class VidData
+{
+    [TextArea(2, 4)]
+    public string youtubeLink;
+    [TextArea(2, 4)]
+    public string vidStoreLink;
 }

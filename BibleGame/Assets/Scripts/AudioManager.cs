@@ -157,6 +157,14 @@ public class AudioManager : MonoBehaviour
 
         audioSource.volume = bgVol >= 1.0f ? maxVolBg : bgVol;
     }
+
+
+    public void MuteBG(bool enable)
+    {
+        bgVol = PlayerPrefs.GetFloat("BGVol");
+
+        audioSource.volume = enable? 0 : bgVol; 
+    }
 }
 
 public enum SFXType { wrong ,correct,success}

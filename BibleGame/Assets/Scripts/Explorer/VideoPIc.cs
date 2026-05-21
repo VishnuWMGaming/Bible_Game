@@ -6,6 +6,11 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
+public interface IVidPic
+{
+    public void InitVid(string vidUrl);
+}
+
 [RequireComponent(typeof(Button))]
 public class VideoPIc : MonoBehaviour
 {
@@ -19,6 +24,8 @@ public class VideoPIc : MonoBehaviour
 
     public event Action<Sprite, string> OnMetaFetched;
 
+    public IVidPic callback;
+
     private void Awake()
     {
         button = GetComponent<Button>();
@@ -29,8 +36,10 @@ public class VideoPIc : MonoBehaviour
         button = GetComponent<Button>();
     }
 
-    public void Init (string url)
+    public void Init (string url,string vidUrl,IVidPic callbackIN)
     {
+        mUrl = vidUrl;
+
         string videoId = ExtractVideoId(url);
 
         if (string.IsNullOrEmpty(videoId))
@@ -38,6 +47,8 @@ public class VideoPIc : MonoBehaviour
             Debug.LogError("[YouTube] Could not parse video ID: " + url);
             return;
         }
+
+        callback = callbackIN;
 
         StartCoroutine(FetchAll(videoId, url));
     }
@@ -79,6 +90,14 @@ public class VideoPIc : MonoBehaviour
         yield return c2;
 
         button.interactable = true;
+
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(() =>
+        {
+            if (callback == null) return;
+
+            callback?.InitVid(mUrl);
+        });
 
         ApplySprite(thumbnailImage, sprite);
 

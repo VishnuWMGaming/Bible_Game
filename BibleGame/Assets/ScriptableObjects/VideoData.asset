@@ -13,13 +13,5 @@ MonoBehaviour:
   m_Name: VideoData
   m_EditorClassIdentifier: Assembly-CSharp::VideoUrlData
   videoUrls:
-  - https://www.youtube.com/watch?v=Lszj0N7S-nc&t=155s
-  - https://www.youtube.com/watch?v=ub5r3LokSpw
-  - https://www.youtube.com/watch?v=Pjrl8h-qrio&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=4
-  - https://www.youtube.com/watch?v=7RI3M3ohlGc&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=5
-  - https://www.youtube.com/watch?v=J3_vyCAsvxo&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=6
-  - https://www.youtube.com/watch?v=WLxvjkCp-mY&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=7
-  - https://www.youtube.com/watch?v=uzGDaaY_2Mw&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=8
-  - https://www.youtube.com/watch?v=D90gsJgae14&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=9
-  - https://www.youtube.com/watch?v=dcpTGKG5iB0&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=10
-  - https://www.youtube.com/watch?v=NQCW1itFyes&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=11
+  - youtubeLink: https://www.youtube.com/watch?v=Lszj0N7S-nc&t=155s
+    vidStoreLink: https://archive.org/details/vidssave.com-chesters-garage-summer-camp-pt.-1-s-4-e-1-480-p/vidssave.com+Chester's+Garage+-+Summer+Camp+Pt.+1+(S4E1)+480P.mp4

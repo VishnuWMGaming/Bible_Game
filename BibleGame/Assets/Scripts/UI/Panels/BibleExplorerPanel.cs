@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BibleExplorerPanel : MonoBehaviour
+public class BibleExplorerPanel : MonoBehaviour,IVidPic
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -11,6 +11,9 @@ public class BibleExplorerPanel : MonoBehaviour
 
     [SerializeField] VideoPIc videoPIc;
     [SerializeField] Transform videoPicTransform;
+
+    [Space]
+    [SerializeField] Video mVideoPlayer;
 
     [Header("VideoStore")]
     [SerializeField] VideoUrlData videoUrlData;
@@ -36,19 +39,26 @@ public class BibleExplorerPanel : MonoBehaviour
 
     void Init()
     {
-        List<string> list = videoUrlData.GetAll();
+        List<VidData> list = videoUrlData.GetAll();
 
         for (int i = 0; i < list.Count; i++)
         {
-            string vidUrl = list[i];
+            string vidyoutubeUrl = list[i].youtubeLink;
+            string vidStorUrl = list[i].vidStoreLink;
 
             GameObject go = Instantiate(videoPIc.gameObject,videoPicTransform);
             go.transform.localScale = Vector3.one;
 
             VideoPIc video = go.GetComponent<VideoPIc>();
 
-            video.Init(vidUrl);
+            video.Init(vidyoutubeUrl,vidStorUrl, this);
         }
+    }
+
+    public void InitVid(string vidUrl)
+    {
+        mVideoPlayer.gameObject.SetActive(true);
+        mVideoPlayer.StartVideo(vidUrl);
     }
 
     void ClearAll()
