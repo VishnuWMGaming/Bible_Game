@@ -26,11 +26,16 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     public TMP_Text currentTimeText;
     public TMP_Text durationText;
+    [SerializeField] TMP_Text mtitle;
 
     public Button playPauseButton;
+    public Button replayButton;
 
     [SerializeField] private Sprite pauseSprite;
     [SerializeField] private Sprite playSprite;
+
+    [Space]
+    [SerializeField] GameObject mLoadingPanel;
 
     private CancellationTokenSource cancellationTokenSource;
     private bool isDragging = false;
@@ -46,13 +51,47 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         progressSlider.onValueChanged.AddListener(OnSliderChanged);
 
         playPauseButton.onClick.AddListener(TogglePlayPause);
+
+        mLoadingPanel.SetActive(true);
+
+        videoPlayer.loopPointReached += OnVideoFinished;
     }
 
     private void OnDisable()
     {
         playPauseButton.onClick.RemoveAllListeners();
         progressSlider.onValueChanged.RemoveAllListeners();
+
+        videoPlayer.loopPointReached -= OnVideoFinished;
     }
+
+    private void OnVideoFinished(VideoPlayer source)
+    {
+        replayButton.gameObject.SetActive(true);
+
+        replayButton.onClick.RemoveAllListeners();
+        replayButton.onClick.AddListener(() =>
+        {
+            replayButton.gameObject.SetActive(false);
+            //CloseAction();
+
+            progressSlider.value = 0;
+
+            currentTimeText.text = "00";
+            durationText.text = "00";
+
+            Color32 color = renderImg.color;
+            renderImg.color = new Color32(color.r, color.g, color.b, 0);
+
+            cancellationTokenSource?.Cancel();
+            cancellationTokenSource?.Dispose();
+
+            mLoadingPanel?.SetActive(true);
+            StartVideo(url);
+        });
+    }
+
+    public void SetTitle(string title) { mtitle.text = title; }
 
     // START VIDEO
     public async void StartVideo(string vidurl)
@@ -144,6 +183,7 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         durationText.text = FormatTime(videoPlayer.length);
 
         videoPlayer.Play();
+        mLoadingPanel.SetActive(false);
 
         renderImg.color = new Color32(color.r, color.g, color.b, 255);
 

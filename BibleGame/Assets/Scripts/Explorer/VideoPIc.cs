@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public interface IVidPic
 {
-    public void InitVid(string vidUrl);
+    public void InitVid(string vidUr,string title);
 }
 
 [RequireComponent(typeof(Button))]
@@ -96,7 +96,7 @@ public class VideoPIc : MonoBehaviour
         {
             if (callback == null) return;
 
-            callback?.InitVid(mUrl);
+            callback?.InitVid(mUrl,title);
         });
 
         ApplySprite(thumbnailImage, sprite);

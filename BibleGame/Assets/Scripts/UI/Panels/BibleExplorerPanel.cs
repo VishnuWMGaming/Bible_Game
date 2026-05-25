@@ -1,5 +1,6 @@
 using BibleGame;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,10 +56,12 @@ public class BibleExplorerPanel : MonoBehaviour,IVidPic
         }
     }
 
-    public void InitVid(string vidUrl)
+    public void InitVid(string vidUrl,string title)
     {
         mVideoPlayer.gameObject.SetActive(true);
         mVideoPlayer.StartVideo(vidUrl);
+
+        mVideoPlayer.SetTitle(title);
     }
 
     void ClearAll()
