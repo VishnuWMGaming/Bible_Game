@@ -32,7 +32,7 @@ namespace BibleGame
                     Language.French => "fr-FR",
                     Language.Chinese => "cmn-CN",
                     Language.Swahili => "en-US",
-                    Language.Kreyol => "fr-FR",
+                    Language.Kreyol => "ht-HT",
                     Language.Hindi => "hi-IN"
                 };
 
@@ -45,7 +45,7 @@ namespace BibleGame
                     Language.French => "fr-FR-Neural2-B",
                     Language.Chinese => "cmn-CN-Standard-B",
                     Language.Swahili => "en-US-Neural2-J",
-                    Language.Kreyol => "fr-FR-Neural2-D",
+                    Language.Kreyol => "Puck",
                     Language.Hindi => "hi-IN-Neural2-B"
                 };
 
