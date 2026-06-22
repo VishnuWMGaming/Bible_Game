@@ -1,15 +1,14 @@
+using BibleGame;
+using BibleGame.API;
+using BibleGame.Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
-using TMPro;
-using UnityEngine.UI;
-
-using BibleGame.API;
-using BibleGame;
-
 using System.Text.RegularExpressions;
-using BibleGame.Data;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using static CountryLoader;
 
 public class SignPanel : MonoBehaviour
 {
@@ -19,9 +18,17 @@ public class SignPanel : MonoBehaviour
     [SerializeField] UIPasswordField password_InputField;
     [SerializeField] UIPasswordField password_InputFieldConfirm;
     [SerializeField] TMP_InputField churchName_InputField;
+    [SerializeField] TMP_InputField mobileNumber_InputField;
+    [SerializeField] TMP_Text phoneCodeTxt;
 
     [SerializeField] Button loginButton;
     [SerializeField] Button signUpButton;
+
+    [Space]
+    [SerializeField] CountryLoader countryLoader;
+
+
+    string phoneCode;
 
 
     private const string matchEmailPattern =
@@ -33,8 +40,6 @@ public class SignPanel : MonoBehaviour
 
     string error_message;
 
-
-
     private void OnEnable()
     {
         email_InputField.text = "";
@@ -42,15 +47,40 @@ public class SignPanel : MonoBehaviour
 
         loginButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.login); });
         signUpButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); SignUpAction(); });
+
+        phoneCodeTxt.text = "Phone Code";
+
+        phoneCode = "";
+        countryLoader.SetPhoneCode += SetPhoneCode;
+
+        mobileNumber_InputField.onSelect.AddListener((str) =>
+        {
+            if(string.IsNullOrWhiteSpace(phoneCode))
+            {
+                PopUp.Instance.ShowMessage("Please select the country code");
+                return;
+            }
+        });
     }
 
     private void OnDisable()
     {
         loginButton.onClick.RemoveAllListeners();
         signUpButton.onClick.RemoveAllListeners();
+        mobileNumber_InputField.onSelect.RemoveAllListeners();
+
+        countryLoader.SetPhoneCode -= SetPhoneCode;
     }
 
-    
+    private void SetPhoneCode(CountryPhoneData phoneData)
+    {
+        phoneCode = phoneData.phoneCode;
+        mobileNumber_InputField.characterLimit = phoneData.digitLength;
+
+        phoneCodeTxt.text = $"+ {phoneData.phoneCode}";
+    }
+
+
     /// <summary>
     /// Action implemented sign up is clicked
     /// </summary>
@@ -101,9 +131,10 @@ public class SignPanel : MonoBehaviour
         //    return;
         //}
 
+        string phoneNumber = $"+{phoneCode}{mobileNumber_InputField.text}";
 
         PopUp.Instance.EnableLoad(true);
-        var registerData  = new RegisterData(name_InputField.text,email_InputField.text,password_InputFieldConfirm.Text, churchName_InputField.text);
+        var registerData  = new RegisterData(name_InputField.text,email_InputField.text,password_InputFieldConfirm.Text, churchName_InputField.text, phoneNumber);
 
         PlayerPrefs.SetString("ChurchName", churchName_InputField.text);
 

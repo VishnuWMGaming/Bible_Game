@@ -1,0 +1,250 @@
+Code,Name,DigitLength
+AF,Afghanistan,9
+AL,Albania,9
+DZ,Algeria,9
+AS,American Samoa,7
+AD,Andorra,6
+AO,Angola,9
+AI,Anguilla,7
+AQ,Antarctica,7
+AG,Antigua and Barbuda,7
+AR,Argentina,10
+AM,Armenia,8
+AW,Aruba,7
+AU,Australia,9
+AT,Austria,11
+AZ,Azerbaijan,9
+BS,Bahamas,7
+BH,Bahrain,8
+BD,Bangladesh,10
+BB,Barbados,7
+BY,Belarus,9
+BE,Belgium,9
+BZ,Belize,7
+BJ,Benin,8
+BM,Bermuda,7
+BT,Bhutan,8
+BO,Bolivia Plurinational State of,8
+BQ,Bonaire Sint Eustatius and Saba,7
+BA,Bosnia and Herzegovina,8
+BW,Botswana,8
+BV,Bouvet Island,7
+BR,Brazil,11
+IO,British Indian Ocean Territory,7
+BN,Brunei Darussalam,7
+BG,Bulgaria,9
+BF,Burkina Faso,8
+BI,Burundi,8
+KH,Cambodia,9
+CM,Cameroon,9
+CA,Canada,10
+CV,Cape Verde,7
+KY,Cayman Islands,7
+CF,Central African Republic,8
+TD,Chad,8
+CL,Chile,9
+CN,China,11
+CX,Christmas Island,10
+CC,Cocos (Keeling) Islands,10
+CO,Colombia,10
+KM,Comoros,7
+CG,Congo,9
+CD,Congo the Democratic Republic of the,9
+CK,Cook Islands,5
+CR,Costa Rica,8
+HR,Croatia,9
+CU,Cuba,8
+CW,Curaçao,7
+CY,Cyprus,8
+CZ,Czech Republic,9
+CI,Côte d'Ivoire,10
+DK,Denmark,8
+DJ,Djibouti,8
+DM,Dominica,7
+DO,Dominican Republic,10
+EC,Ecuador,9
+EG,Egypt,10
+SV,El Salvador,8
+GQ,Equatorial Guinea,9
+ER,Eritrea,7
+EE,Estonia,8
+SZ,Eswatini,8
+ET,Ethiopia,9
+FK,Falkland Islands (Malvinas),5
+FO,Faroe Islands,6
+FJ,Fiji,7
+FI,Finland,10
+FR,France,9
+GF,French Guiana,9
+PF,French Polynesia,8
+TF,French Southern Territories,9
+GA,Gabon,8
+GM,Gambia,7
+GE,Georgia,9
+DE,Germany,11
+GH,Ghana,9
+GI,Gibraltar,8
+GR,Greece,10
+GL,Greenland,6
+GD,Grenada,7
+GP,Guadeloupe,9
+GU,Guam,7
+GT,Guatemala,8
+GG,Guernsey,6
+GN,Guinea,9
+GW,Guinea-Bissau,7
+GY,Guyana,7
+HT,Haiti,8
+HM,Heard Island and McDonald Islands,9
+VA,Holy See (Vatican City State),9
+HN,Honduras,8
+HK,Hong Kong,8
+HU,Hungary,9
+IS,Iceland,7
+IN,India,10
+ID,Indonesia,12
+IR,Iran Islamic Republic of,10
+IQ,Iraq,10
+IE,Ireland,9
+IM,Isle of Man,6
+IL,Israel,9
+IT,Italy,10
+JM,Jamaica,7
+JP,Japan,10
+JE,Jersey,6
+JO,Jordan,9
+KZ,Kazakhstan,10
+KE,Kenya,9
+KI,Kiribati,5
+KP,Korea Democratic People's Republic of,10
+KR,Korea Republic of,10
+KW,Kuwait,8
+KG,Kyrgyzstan,9
+LA,Lao People's Democratic Republic,10
+LV,Latvia,8
+LB,Lebanon,8
+LS,Lesotho,8
+LR,Liberia,8
+LY,Libya,9
+LI,Liechtenstein,7
+LT,Lithuania,8
+LU,Luxembourg,11
+MO,Macao,8
+MK,Macedonia the Former Yugoslav Republic of,8
+MG,Madagascar,9
+MW,Malawi,9
+MY,Malaysia,10
+MV,Maldives,7
+ML,Mali,8
+MT,Malta,8
+MH,Marshall Islands,7
+MQ,Martinique,9
+MR,Mauritania,8
+MU,Mauritius,8
+YT,Mayotte,9
+MX,Mexico,10
+FM,Micronesia Federated States of,7
+MD,MoldovaRepublic of,8
+MC,Monaco,8
+MN,Mongolia,8
+ME,Montenegro,8
+MS,Montserrat,7
+MA,Morocco,9
+MZ,Mozambique,9
+MM,Myanmar,10
+NA,Namibia,9
+NR,Nauru,7
+NP,Nepal,10
+NL,Netherlands,9
+NC,New Caledonia,6
+NZ,New Zealand,10
+NI,Nicaragua,8
+NE,Niger,8
+NG,Nigeria,10
+NU,Niue,4
+NF,Norfolk Island,6
+MP,Northern Mariana Islands,7
+NO,Norway,8
+OM,Oman,8
+PK,Pakistan,10
+PW,Palau,7
+PS,Palestine State of,9
+PA,Panama,8
+PG,Papua New Guinea,8
+PY,Paraguay,9
+PE,Peru,9
+PH,Philippines,10
+PN,Pitcairn,6
+PL,Poland,9
+PT,Portugal,9
+PR,Puerto Rico,10
+QA,Qatar,8
+RO,Romania,9
+RU,Russian Federation,10
+RW,Rwanda,9
+RE,Réunion,9
+BL,Saint Barthélemy,9
+SH,Saint Helena Ascension and Tristan da Cunha,4
+KN,Saint Kitts and Nevis,7
+LC,Saint Lucia,7
+MF,Saint Martin (French part),9
+PM,Saint Pierre and Miquelon,6
+VC,Saint Vincent and the Grenadines,7
+WS,Samoa,6
+SM,San Marino,6
+ST,Sao Tome and Principe,7
+SA,Saudi Arabia,9
+SN,Senegal,9
+RS,Serbia,9
+SC,Seychelles,7
+SL,Sierra Leone,8
+SG,Singapore,8
+SX,Sint Maarten (Dutch part),7
+SK,Slovakia,9
+SI,Slovenia,8
+SB,Solomon Islands,5
+SO,Somalia,9
+ZA,South Africa,9
+GS,South Georgia and the South Sandwich Islands,10
+SS,South Sudan,9
+ES,Spain,9
+LK,Sri Lanka,9
+SD,Sudan,9
+SR,Suriname,7
+SJ,Svalbard and Jan Mayen,8
+SE,Sweden,10
+CH,Switzerland,9
+SY,Syrian Arab Republic,9
+TW,Taiwan Province of China,9
+TJ,Tajikistan,9
+TZ,Tanzania United Republic of,9
+TH,Thailand,10
+TL,Timor-Leste,7
+TG,Togo,8
+TK,Tokelau,4
+TO,Tonga,5
+TT,Trinidad and Tobago,7
+TN,Tunisia,8
+TR,Turkey,10
+TM,Turkmenistan,8
+TC,Turks and Caicos Islands,7
+TV,Tuvalu,5
+UG,Uganda,9
+UA,Ukraine,9
+AE,United Arab Emirates,9
+GB,United Kingdom,10
+US,United States,10
+UM,United States Minor Outlying Islands,10
+UY,Uruguay,9
+UZ,Uzbekistan,9
+VU,Vanuatu,6
+VE,Venezuela Bolivarian Republic of,10
+VN,Viet Nam,10
+VG,Virgin Islands British,7
+VI,Virgin Islands U.S.,7
+WF,Wallis and Futuna,6
+EH,Western Sahara,9
+YE,Yemen,9
+ZM,Zambia,9
+ZW,Zimbabwe,9
+AX,Åland Islands,7
