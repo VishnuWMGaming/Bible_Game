@@ -131,7 +131,9 @@ public class SignPanel : MonoBehaviour
         //    return;
         //}
 
-        string phoneNumber = $"+{phoneCode}{mobileNumber_InputField.text}";
+        string phoneNumber = "";
+        if (!string.IsNullOrWhiteSpace(phoneCode) && !string.IsNullOrWhiteSpace(mobileNumber_InputField.text))
+            phoneNumber = $"+{phoneCode}{mobileNumber_InputField.text}";
 
         PopUp.Instance.EnableLoad(true);
         var registerData  = new RegisterData(name_InputField.text,email_InputField.text,password_InputFieldConfirm.Text, churchName_InputField.text, phoneNumber);
