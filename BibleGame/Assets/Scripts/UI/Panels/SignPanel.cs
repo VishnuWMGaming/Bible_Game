@@ -44,6 +44,8 @@ public class SignPanel : MonoBehaviour
     {
         email_InputField.text = "";
         name_InputField.text = "";
+        mobileNumber_InputField.text = "";
+        churchName_InputField.text = "";
 
         loginButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.login); });
         signUpButton.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); SignUpAction(); });
@@ -130,6 +132,13 @@ public class SignPanel : MonoBehaviour
         //    PopUp.Instance.ShowMessage("Please enter the church name");
         //    return;
         //}
+
+        if(!string.IsNullOrWhiteSpace(phoneCode))
+        if(string.IsNullOrWhiteSpace(mobileNumber_InputField.text) || mobileNumber_InputField.text.Length != mobileNumber_InputField.characterLimit)
+        {
+            PopUp.Instance.ShowMessage("Please enter proper mobile number");
+            return;
+        }
 
         string phoneNumber = "";
         if (!string.IsNullOrWhiteSpace(phoneCode) && !string.IsNullOrWhiteSpace(mobileNumber_InputField.text))
