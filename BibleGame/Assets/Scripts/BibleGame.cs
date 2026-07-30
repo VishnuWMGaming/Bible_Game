@@ -5,7 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.SymbolStore;
 using System.Net;
+using System.Reflection;
 using System.Text.RegularExpressions;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using static BibleGame.API.GetBiblesAPI;
 
@@ -223,7 +225,103 @@ namespace BibleGame
                 }
                 return null;
             }
+        }
 
+        public static class Dialogue
+        {
+            private static string _text;
+            private static int _pointer;
+
+            private static List<IOptData> optiondatas = new List<IOptData>();
+
+
+            public static void Initialize(TextAsset textAsset)
+            {
+                _text = textAsset.text;
+                _pointer = 0;
+            }
+
+            public static BotChatData ReadNextBot()
+            {
+                if (string.IsNullOrEmpty(_text))
+                    return null;
+
+                int start = _text.IndexOf("{bot}", _pointer);
+                if (start == -1)
+                    return null;
+
+                start += "{bot}".Length;
+
+                int end = _text.IndexOf("{/bot}", start);
+                if (end == -1)
+                    return null;
+
+                BotChatData data = new()
+                {
+                    data = _text.Substring(start, end - start).Trim()
+                };
+
+                // Move pointer after {/bot}
+                _pointer = end + "{/bot}".Length;
+
+                // Read options until the next bot
+                while (true)
+                {
+                    int optionStart = _text.IndexOf("{option}", _pointer);
+                    int nextBot = _text.IndexOf("{bot}", _pointer);
+
+                    if (optionStart == -1 || (nextBot != -1 && optionStart > nextBot))
+                    {
+                        if (nextBot != -1)
+                            _pointer = nextBot;
+
+                        break;
+                    }
+
+                    optionStart += "{option}".Length;
+
+                    int optionEnd = _text.IndexOf("{/option}", optionStart);
+                    if (optionEnd == -1)
+                        break;
+
+                    string option = _text.Substring(optionStart, optionEnd - optionStart);
+
+                    int closeBracket = option.IndexOf(']');
+
+                    data.mOptions.Add(new IOptData
+                    {
+                        index = int.Parse(option.Substring(1, closeBracket - 1)),
+                        value = option.Substring(closeBracket + 1).Trim()
+                    });
+
+                    _pointer = optionEnd + "{/option}".Length;
+                }
+
+                return data;
+            }
+
+            public static List<IOptData> GetOptions()
+            {
+                return optiondatas;
+            }
+
+            public static void Reset()
+            {
+                _pointer = 0;
+            }
+
+            public static bool HasNextBot()
+            {
+                return !string.IsNullOrEmpty(_text) &&
+                       _text.IndexOf("{bot}", _pointer) != -1;
+            }
+
+            public static int Pointer => _pointer;
+
+            public static string NewLineAlignment(string text)
+            {
+                return string.IsNullOrEmpty(text) ? text : text.Replace("[/n]", "\n");
+            }
         }
     }
 }

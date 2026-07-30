@@ -1,0 +1,537 @@
+{bot}<sprite=166> Hi Explorer! I'm so happy you're here today![/n]
+We're about to go on an adventure with Chester, Robbie, and Zeke.[/n]
+But before we leave...[/n]
+Can I ask you something?{/bot}
+
+{option}[1]😊 Yes!{/option}
+{option}[2]🤔 Maybe...{/option}
+{option}[3]🚀 Let's go!{/option}
+
+{bot}[opt]1[/opt]
+Awesome! I knew you'd be ready.[/n]
+One more question...[/n]
+Have you ever gone to a summer camp?{/bot}
+
+{option}[1]Yes!{/option}
+{option}[2]Not yet{/option}
+
+{bot}[opt]1[/opt]
+That's amazing![/n]
+What was your favorite part?{/bot}
+
+{option}[1]🏕 Sleeping in cabins{/option}
+{option}[2]🔥 Campfire{/option}
+{option}[3]🎮 Playing games{/option}
+{option}[4]🌳 Nature walks{/option}
+
+{bot}That sounds like so much fun![/n]
+Let's see if Chester enjoys camp as much as you did.{/bot}
+
+{bot}[opt]2[/opt]
+That's okay![/n]
+Today you'll experience one through Chester's adventure.[/n]
+Maybe one day you'll visit one too![/n]
+Ready?{/bot}
+
+{bot}Uh oh...[/n]
+Grandpa Eugene just told Chester he's going away for THREE whole weeks![/n]
+😲[/n]
+How do you think Chester feels?{/bot}
+
+{option}[1]😨 Scared{/option}
+{option}[2]😄 Excited{/option}
+{option}[3]😡 Angry{/option}
+{option}[4]🤔 Nervous{/option}
+
+{bot}You're right![/n]
+Chester loves staying inside his garage building inventions.[/n]
+Going into a forest sounds scary to him.[/n]
+Have you ever felt nervous about trying something new?{/bot}
+
+{option}[1]Yes{/option}
+{option}[2]No{/option}
+{option}[3]Sometimes{/option}
+
+{bot}[opt]1[/opt]
+Me too![/n]
+Sometimes new places seem scary...[/n]
+But they can turn into amazing adventures.[/n]
+Let's see what happens.{/bot}
+
+{bot}😂 Chester thinks wild turkeys are the scariest animals ever![/n]
+Look at this...[/n]
+He even wanted to build a...[/n]
+Wild Turkey Defender 3000![/n]
+🤣🤣🤣[/n]
+Would YOU build something like that?{/bot}
+
+{option}[1]😂 Definitely!{/option}
+{option}[2]😅 Maybe{/option}
+{option}[3]🙈 No way!{/option}
+
+{bot}Haha![/n]
+You're making me laugh.[/n]
+Sometimes our imagination makes things seem much scarier than they really are.[/n]
+Can you think of something you used to be scared of?{/bot}
+
+{option}[1]🐶 Dogs{/option}
+{option}[2]🌙 Dark{/option}
+{option}[3]🐜 Bugs{/option}
+{option}[4]😅 Nothing{/option}
+
+{bot}Meet Robbie![/n]
+🤖[/n]
+He's not just any robot...[/n]
+He's Chester's BEST friend.[/n]
+If you had your own robot...[/n]
+What would you ask it to do?{/bot}
+
+{option}[1]🤖 Clean my room{/option}
+{option}[2]🍕 Make food{/option}
+{option}[3]📚 Help with homework{/option}
+{option}[4]🎮 Play games{/option}
+
+{bot}Those are awesome ideas![/n]
+Robbie is super smart.[/n]
+Let's see who he meets next...{/bot}
+
+{bot}This is Zeke![/n]
+🌳[/n]
+He LOVES nature.[/n]
+Let's compare![/n]
+Who is more like you?{/bot}
+
+{option}[1]🌳 I love nature{/option}
+{option}[2]🏠 I like staying indoors{/option}
+{option}[3]🤔 Both{/option}
+
+{bot}Everyone is different![/n]
+Some people love forests.[/n]
+Some people love staying home.[/n]
+And that's okay![/n]
+Maybe today you'll discover something new.{/bot}
+
+{bot}WAIT...[/n]
+😲😲😲[/n]
+Guess who the camp counselor is?[/n]
+Take your best guess!{/bot}
+
+{option}[1]🐻 Bear{/option}
+{option}[2]🦌 Deer{/option}
+{option}[3][answer]🦶 Bigfoot{/option}
+{option}[4]🦅 Eagle{/option}
+
+{bot}YES!![/n]
+It's BIGFOOT![/n]
+Would you be surprised if your teacher was Bigfoot?{/bot}
+
+{option}[1]😂 I'd laugh{/option}
+{option}[2]😲 I'd be shocked{/option}
+{option}[3]😍 That would be awesome{/option}
+
+{bot}I think I'd ask him for a selfie first! 📸😂{/bot}
+
+{bot}Mr. Foot starts talking about forests.[/n]
+Before he explains...[/n]
+Do you know what a biome is?{/bot}
+
+{option}[1]Yes!{/option}
+{option}[2]Not really{/option}
+{option}[3]Never heard that word{/option}
+
+{bot}That's perfectly okay.[/n]
+We're learning together today![/n]
+A biome is a place where plants, animals, and weather are similar.[/n]
+Can you think of a place that's always hot?{/bot}
+
+{option}[1]🌵 Desert{/option}
+{option}[2]🌲 Forest{/option}
+{option}[3]❄ Snow{/option}
+
+{bot}Exactly![/n]
+Different places have different climates.[/n]
+God made every one of them unique.{/bot}
+
+{bot}Have you ever jumped into a pile of autumn leaves?[/n]
+🍂🍂🍂{/bot}
+
+{option}[1]YES!!{/option}
+{option}[2]Not yet{/option}
+{option}[3]I'd love to!{/option}
+
+{bot}It's so much fun![/n]
+Those colorful leaves come from deciduous trees.[/n]
+Can you guess why they change color?{/bot}
+
+{option}[1]🍂 They lose chlorophyll{/option}
+{option}[2]🌞 They get painted{/option}
+{option}[3]😂 Magic{/option}
+
+{bot}Great job![/n]
+Nature is amazing, isn't it?{/bot}
+
+{bot}Now Chester shares something very important.[/n]
+He reminds everyone...[/n]
+Nature didn't just happen.[/n]
+God created it.[/n]
+Have you ever heard about the six days of creation?{/bot}
+
+{option}[1]Yes{/option}
+{option}[2]A little{/option}
+{option}[3]No{/option}
+
+{bot}Perfect![/n]
+Let's learn them together.[/n]
+I'll ask you after each day.[/n]
+Ready?{/bot}
+
+{bot}God created light and darkness.[/n]
+Can you point to something around you that gives light?[/n]
+🌞{/bot}
+
+{bot}Wonderful![/n]
+Light helps us see God's beautiful creation.{/bot}
+
+{bot}God created plants and trees.[/n]
+🌳[/n]
+Look around you.[/n]
+Can you name one tree you've seen?{/bot}
+
+{option}[1]🌳 Mango{/option}
+{option}[2]🌴 Coconut{/option}
+{option}[3]🍎 Apple{/option}
+{option}[4]🌲 Pine{/option}
+
+{bot}Awesome![/n]
+Trees give us shade, oxygen, fruits, and so much beauty.{/bot}
+
+{bot}God created birds.[/n]
+🐦[/n]
+What's your favorite bird?{/bot}
+
+{option}[1]🦜 Parrot{/option}
+{option}[2]🦅 Eagle{/option}
+{option}[3]🐧 Penguin{/option}
+{option}[4]🦉 Owl{/option}
+
+{bot}Birds fill the sky with beautiful songs.{/bot}
+
+{bot}God created animals...[/n]
+and people![/n]
+🐘🦁🐶👦[/n]
+What's your favorite animal?{/bot}
+
+{bot}Let's stop for just a second.[/n]
+Close your eyes...[/n]
+Imagine standing in a beautiful forest.[/n]
+🌳🌳🌳[/n]
+You hear birds singing...[/n]
+Leaves moving...[/n]
+A cool breeze...[/n]
+How does that make you feel?{/bot}
+
+{option}[1]😊 Happy{/option}
+{option}[2]😌 Peaceful{/option}
+{option}[3]😍 Excited{/option}
+
+{bot}That's one reason nature is such a wonderful gift.{/bot}
+
+{bot}Wow![/n]
+You've done an amazing job![/n]
+High Five![/n]
+🙌[/n]
+Before we finish...[/n]
+How confident do you feel?[/n]
+⭐⭐⭐⭐⭐{/bot}
+
+{option}[1]⭐⭐⭐⭐⭐{/option}
+{option}[2]⭐⭐⭐{/option}
+{option}[3]⭐{/option}
+
+{bot}[opt]1[/opt]
+You're ready![/n]
+Let's see if you can earn a Nature Explorer badge!{/bot}
+
+{bot}[opt]2[/opt]
+No worries![/n]
+I'll help you if you get stuck.{/bot}
+
+{bot}[opt]3[/opt]
+That's okay![/n]
+Remember...[/n]
+Learning is an adventure, not a race.[/n]
+Let's do it together!{/bot}
+
+{bot}Let's see how carefully you were listening![/n]
+Ready for your first challenge?[/n]
+🏕️ Camp Challenge #1{/bot}
+
+{bot}Why didn't Chester want to go to camp?{/bot}
+
+{option}[1]He had homework{/option}
+{option}[2][answer]He was afraid of wild animals{/option}
+{option}[3]He wanted to play video games{/option}
+{option}[4]He was sick{/option}
+
+{bot}🎉 That's right![/n]
+Chester was especially afraid of wild turkeys!{/bot}
+
+{bot}Who sent Chester to camp?{/bot}
+
+{option}[1]Robbie{/option}
+{option}[2]Zeke{/option}
+{option}[3][answer]Grandpa Eugene{/option}
+{option}[4]Bigfoot{/option}
+
+{bot}How long was camp?{/bot}
+
+{option}[1]1 week{/option}
+{option}[2]2 weeks{/option}
+{option}[3][answer]3 weeks{/option}
+{option}[4]1 month{/option}
+
+{bot}Grandpa Eugene wanted Chester to enjoy God's ________.{/bot}
+
+{option}[1][answer]Creation{/option}
+
+{bot}Chester loved camping at the beginning.{/bot}
+
+{option}[1]True{/option}
+{option}[2][answer]False{/option}
+
+{bot}Let's meet everyone![/n]
+Can you remember their names?{/bot}
+
+{bot}Who is...[/n]
+🤖 A robot?{/bot}
+
+{option}[1][answer]Robbie{/option}
+
+{bot}🌲 Loves nature?{/bot}
+
+{option}[1][answer]Zeke{/option}
+
+{bot}👦 Invents gadgets?{/bot}
+
+{option}[1][answer]Chester{/option}
+
+{bot}Who wanted to teach Chester about nature?{/bot}
+
+{option}[1]Grandpa Eugene{/option}
+{option}[2]Robbie{/option}
+{option}[3][answer]Zeke{/option}
+{option}[4]Bigfoot{/option}
+
+{bot}The robot's name is ______.{/bot}
+
+{option}[1][answer]Robbie{/option}
+
+{bot}Zeke hated being outdoors.{/bot}
+
+{option}[1]True{/option}
+{option}[2][answer]False{/option}
+
+{bot}Bigfoot had an important safety warning.[/n]
+Do you remember?{/bot}
+
+{bot}What should campers do if a tree starts falling?{/bot}
+
+{option}[1]Stand under it{/option}
+{option}[2]Ignore it{/option}
+{option}[3][answer]Tell everyone immediately{/option}
+{option}[4]Climb it{/option}
+
+{bot}Who was the camp counselor?{/bot}
+
+{option}[1]Bear{/option}
+{option}[2][answer]Bigfoot{/option}
+{option}[3]Hunter{/option}
+{option}[4]Eagle{/option}
+
+{bot}Everyone was surprised forever that Bigfoot was the counselor.{/bot}
+
+{option}[1]True{/option}
+{option}[2][answer]False{/option}
+
+{bot}Nature Detective Time!{/bot}
+
+{bot}What is a biome?{/bot}
+
+{option}[1]A mountain{/option}
+{option}[2][answer]An area with similar weather, plants, and animals{/option}
+{option}[3]A river{/option}
+{option}[4]A cave{/option}
+
+{bot}Which biome is found in Georgia?{/bot}
+
+{option}[1]Desert{/option}
+{option}[2]Rainforest{/option}
+{option}[3][answer]Deciduous Forest{/option}
+{option}[4]Arctic{/option}
+
+{bot}How many seasons does a deciduous forest have?{/bot}
+
+{option}[1]2{/option}
+{option}[2]3{/option}
+{option}[3][answer]4{/option}
+{option}[4]5{/option}
+
+{bot}Leaves lose their green color because they lose ________.{/bot}
+
+{option}[1][answer]Chlorophyll{/option}
+
+{bot}Deserts receive more rain than deciduous forests.{/bot}
+
+{option}[1]True{/option}
+{option}[2][answer]False{/option}
+
+{bot}Let's remember the six days of creation.{/bot}
+
+{bot}Day 1[/n]
+What did God create?{/bot}
+
+{option}[1]Animals{/option}
+{option}[2][answer]Light and Darkness{/option}
+{option}[3]Trees{/option}
+{option}[4]Fish{/option}
+
+{bot}Day 2[/n]
+God created...{/bot}
+
+{option}[1][answer]The Sky and Sea{/option}
+{option}[2]Animals{/option}
+{option}[3]Plants{/option}
+{option}[4]Sun{/option}
+
+{bot}Day 3[/n]
+God created...{/bot}
+
+{option}[1]Stars{/option}
+{option}[2][answer]Dry Land and Plants{/option}
+{option}[3]Birds{/option}
+{option}[4]Moon{/option}
+
+{bot}Day 4[/n]
+God created...{/bot}
+
+{option}[1]Fish{/option}
+{option}[2][answer]Sun, Moon and Stars{/option}
+{option}[3]Trees{/option}
+{option}[4]Animals{/option}
+
+{bot}Day 5[/n]
+God created...{/bot}
+
+{option}[1][answer]Birds and Sea Creatures{/option}
+{option}[2]Humans{/option}
+{option}[3]Mountains{/option}
+{option}[4]Insects{/option}
+
+{bot}Day 6[/n]
+God created...{/bot}
+
+{option}[1]Clouds{/option}
+{option}[2]Birds{/option}
+{option}[3][answer]Animals and Humans{/option}
+{option}[4]Oceans{/option}
+
+{bot}"In the beginning, God created the ________ and the earth."{/bot}
+
+{option}[1][answer]Heavens{/option}
+
+{bot}God said His creation was good.{/bot}
+
+{option}[1][answer]True{/option}
+{option}[2]False{/option}
+
+{bot}🎉 You've almost completed Camp Falling Pines![/n]
+Can you earn your Nature Explorer Badge?{/bot}
+
+{bot}Who loved nature the most?{/bot}
+
+{option}[1]Chester{/option}
+{option}[2]Robbie{/option}
+{option}[3][answer]Zeke{/option}
+{option}[4]Grandpa Eugene{/option}
+
+{bot}What invention did Chester want to build?{/bot}
+
+{option}[1]Tree Cutter 5000{/option}
+{option}[2]Turkey Catcher{/option}
+{option}[3][answer]Wild Turkey Defender 3000{/option}
+{option}[4]Bird Blaster{/option}
+
+{bot}What type of forest did Mr. Foot teach about?{/bot}
+
+{option}[1]Rainforest{/option}
+{option}[2]Desert{/option}
+{option}[3][answer]Deciduous Forest{/option}
+{option}[4]Tundra{/option}
+
+{bot}Who reminded everyone that God created nature?{/bot}
+
+{option}[1]Robbie{/option}
+{option}[2]Zeke{/option}
+{option}[3]Bigfoot{/option}
+{option}[4][answer]Chester{/option}
+
+{bot}How many days did God take to create everything?{/bot}
+
+{option}[1]5{/option}
+{option}[2]7{/option}
+{option}[3][answer]6{/option}
+{option}[4]10{/option}
+
+{bot}Which day were humans created?{/bot}
+
+{option}[1]Day 4{/option}
+{option}[2]Day 5{/option}
+{option}[3][answer]Day 6{/option}
+{option}[4]Day 7{/option}
+
+{bot}What season do deciduous trees change color?{/bot}
+
+{option}[1]Summer{/option}
+{option}[2]Spring{/option}
+{option}[3][answer]Fall{/option}
+{option}[4]Winter{/option}
+
+{bot}Who was the camp counselor?{/bot}
+
+{option}[1]Bear{/option}
+{option}[2]Eagle{/option}
+{option}[3][answer]Bigfoot{/option}
+{option}[4]Hunter{/option}
+
+{bot}Why did Grandpa Eugene send Chester to camp?{/bot}
+
+{option}[1]To punish him{/option}
+{option}[2][answer]To teach him about nature and God's creation{/option}
+{option}[3]To make him work{/option}
+{option}[4]To learn cooking{/option}
+
+{bot}What is the most important lesson Chester shared?{/bot}
+
+{option}[1]Nature is dangerous.{/option}
+{option}[2]Robots are smarter than people.{/option}
+{option}[3][answer]God created everything, and we should appreciate His creation.{/option}
+{option}[4]Wild turkeys are scary.{/option}
+
+{bot}🎊 Amazing job, Explorer![/n]
+You completed Camp Falling Pines![/n]
+Today you learned:[/n]
+🌳 What a biome is[/n]
+🍂 About deciduous forests[/n]
+👦 How Chester overcame his fears[/n]
+🌎 That God created the world[/n]
+❤️ Why we should care for and appreciate God's creation[/n]
+One last question before you go...[/n]
+What was your favorite part of today's adventure?{/bot}
+
+{option}[1]🏕️ The camp story{/option}
+{option}[2]🤖 Robbie the Robot{/option}
+{option}[3]🌳 Learning about nature{/option}
+{option}[4]✨ The Creation story{/option}
+{option}[5]📝 The quizzes{/option}
+
+{bot}Thank you for learning with me today! 🌟 I can't wait to explore another adventure with you soon. Goodbye, Nature Explorer! 👋{/bot}

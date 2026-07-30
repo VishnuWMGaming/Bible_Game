@@ -1,5 +1,7 @@
+using BibleGame.Data;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.UI;
 
 public class IChat : MonoBehaviour
@@ -8,7 +10,7 @@ public class IChat : MonoBehaviour
     public IChattype Chattype => chattype;
 
     [SerializeField] TMP_Text mText;
-    [SerializeField] Image mProfile;
+    [SerializeField] PostImage mProfile;
 
 
     public void Set(string msg , IChattype chattype)
@@ -18,7 +20,8 @@ public class IChat : MonoBehaviour
         if (chattype == IChattype.bot)
             return;
 
-    
+        if (AppData.loginData.Pic != null)
+            mProfile.SetRightSize(AppData.loginData.Pic, true);
     }
     
 }
