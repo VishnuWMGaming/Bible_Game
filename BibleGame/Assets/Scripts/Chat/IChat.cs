@@ -11,11 +11,12 @@ public class IChat : MonoBehaviour
 
     [SerializeField] TMP_Text mText;
     [SerializeField] PostImage mProfile;
-
+    [SerializeField] EmojiText emojiText;
 
     public void Set(string msg , IChattype chattype)
     {
         mText.text = msg;
+        emojiText.ProcessCurrentText();
 
         if (chattype == IChattype.bot)
             return;

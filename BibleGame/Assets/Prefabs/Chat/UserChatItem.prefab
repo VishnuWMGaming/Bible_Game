@@ -310,7 +310,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 220.30627, y: -40}
+  m_AnchoredPosition: {x: 220.30627, y: -86.66667}
   m_SizeDelta: {x: 416.11, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2790934556189359876
@@ -515,6 +515,7 @@ MonoBehaviour:
   chattype: 1
   mText: {fileID: 1287198550560742964}
   mProfile: {fileID: 1493963834812824113}
+  emojiText: {fileID: 8863867969974208911}
 --- !u!1 &6805482973634420992
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,6 +528,7 @@ GameObject:
   - component: {fileID: 3601280932637035571}
   - component: {fileID: 1287198550560742964}
   - component: {fileID: 2147932656653000221}
+  - component: {fileID: 8863867969974208911}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -667,3 +669,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IFont
   m_Text: {fileID: 1287198550560742964}
   fontAsset: {fileID: 11400000, guid: 20f35864c2dcaf848b2681923abde835, type: 2}
+--- !u!114 &8863867969974208911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805482973634420992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b52a9b05d92ab848aa9bf141a8fa38b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EmojiText
+  _text: {fileID: 1287198550560742964}

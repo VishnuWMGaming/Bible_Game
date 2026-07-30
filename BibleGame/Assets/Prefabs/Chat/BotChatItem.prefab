@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 6070769958535587}
   - component: {fileID: 7897048332386524429}
   - component: {fileID: 3105875880821685491}
+  - component: {fileID: 50324805953966228}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -210,7 +211,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &3105875880821685491
@@ -227,6 +228,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IFont
   m_Text: {fileID: 7897048332386524429}
   fontAsset: {fileID: 11400000, guid: 20f35864c2dcaf848b2681923abde835, type: 2}
+--- !u!114 &50324805953966228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3031476553181298579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b52a9b05d92ab848aa9bf141a8fa38b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EmojiText
+  _text: {fileID: 7897048332386524429}
 --- !u!1 &3111140648545559808
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,6 +345,7 @@ MonoBehaviour:
   chattype: 0
   mText: {fileID: 7897048332386524429}
   mProfile: {fileID: 0}
+  emojiText: {fileID: 50324805953966228}
 --- !u!1 &6541174552000606985
 GameObject:
   m_ObjectHideFlags: 0

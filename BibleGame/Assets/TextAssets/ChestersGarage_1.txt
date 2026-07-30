@@ -1,4 +1,4 @@
-{bot}<sprite=166> Hi Explorer! I'm so happy you're here today![/n]
+{bot}👋 Hi Explorer! I'm so happy you're here today![/n]
 We're about to go on an adventure with Chester, Robbie, and Zeke.[/n]
 But before we leave...[/n]
 Can I ask you something?{/bot}

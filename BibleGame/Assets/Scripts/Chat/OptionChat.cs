@@ -14,6 +14,8 @@ public class OptionChat : MonoBehaviour
     [SerializeField] TMP_Text mtext;
     [SerializeField] Button button;
 
+    [SerializeField] EmojiText emoji;
+
     IOptionChat callback;
 
     private void OnEnable()
@@ -31,6 +33,7 @@ public class OptionChat : MonoBehaviour
         callback = callbackIN;
 
         mtext.text = optiontxt;
+        emoji.ProcessCurrentText();
 
         if (button == null)
             return;                                        

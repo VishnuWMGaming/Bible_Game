@@ -14,15 +14,20 @@ using UnityEngine;
 [RequireComponent(typeof(TMP_Text))]
 public class EmojiText : MonoBehaviour
 {
-    private TMP_Text _text;
+   [SerializeField] private TMP_Text _text;
 
     private void Awake()
     {
-        _text = GetComponent<TMP_Text>();
+        //_text = GetComponent<TMP_Text>();
 
         // Converts whatever text is already sitting in the Inspector field
         // (e.g. if you typed "Yes!" directly, like in your screenshot).
-        ProcessCurrentText();
+       // ProcessCurrentText();
+    }
+
+    private void OnEnable()
+    {
+         ProcessCurrentText();
     }
 
     /// <summary>

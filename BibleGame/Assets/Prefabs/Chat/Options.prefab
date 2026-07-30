@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b52a9b05d92ab848aa9bf141a8fa38b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmojiText
+  _text: {fileID: 6788557453778465771}
 --- !u!1 &8307934721374518211
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,3 +329,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OptionChat
   mtext: {fileID: 6788557453778465771}
   button: {fileID: 3069491134769572356}
+  emoji: {fileID: 2859828405339995571}
