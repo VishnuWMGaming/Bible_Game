@@ -118,10 +118,22 @@ Take your best guess!{/bot}
 
 {option}[1]🐻 Bear{/option}
 {option}[2]🦌 Deer{/option}
-{option}[3][answer]🦶 Bigfoot{/option}
+{option}[3]🦶 Bigfoot{/option}
 {option}[4]🦅 Eagle{/option}
 
-{bot}YES!![/n]
+{bot}[opt]1[/opt]Not quite![/n]
+That's a Bear. Bigfoot is a legendary creature that many people believe lives in the forest.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]Oops![/n]
+That's a Deer, not Bigfoot.[/n]
+Give it another try!{/bot}
+
+{bot}[opt]4[/opt]Nice guess![/n]
+That's an Eagle.[/n]
+Look carefully and try again!{/bot}
+
+{bot}[opt]3[/opt]YES!![/n]
 It's BIGFOOT![/n]
 Would you be surprised if your teacher was Bigfoot?{/bot}
 
@@ -269,67 +281,160 @@ Ready for your first challenge?[/n]
 {bot}Why didn't Chester want to go to camp?{/bot}
 
 {option}[1]He had homework{/option}
-{option}[2][answer]He was afraid of wild animals{/option}
+{option}[2]He was afraid of wild animals{/option}
 {option}[3]He wanted to play video games{/option}
 {option}[4]He was sick{/option}
 
-{bot}🎉 That's right![/n]
+[opt]1[/opt]
+{bot}[opt]1[/opt]Not quite![/n]
+Chester wasn't worried about homework.[/n]
+Think about what he was scared of at camp!{/bot}
+
+{bot}[opt]3[/opt]Good guess![/n]
+Chester wasn't staying home to play video games.[/n]
+What was he afraid of in the woods?{/bot}
+
+{bot}[opt]4[/opt]Almost![/n]
+Chester wasn't sick.[/n]
+Remember what made him nervous about going to camp?{/bot}
+
+{bot}[opt]2[/opt]🎉 That's right![/n]
 Chester was especially afraid of wild turkeys!{/bot}
 
 {bot}Who sent Chester to camp?{/bot}
 
 {option}[1]Robbie{/option}
 {option}[2]Zeke{/option}
-{option}[3][answer]Grandpa Eugene{/option}
+{option}[3]Grandpa Eugene{/option}
 {option}[4]Bigfoot{/option}
+
+{bot}[opt]1[/opt]Not quite![/n]
+Robbie is one of the campers, but he didn't send Chester to camp.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]Good guess![/n]
+Zeke didn't send Chester to camp.[/n]
+Think about which family member wanted Chester to have this adventure!{/bot}
+
+{bot}[opt]4[/opt]Haha, that would be funny! 😄[/n]
+Bigfoot didn't send Chester to camp.[/n]
+Who in Chester's family thought camp would be good for him?{/bot}
+
+{bot}[opt]3[/opt]🎉 Correct![/n]
+Grandpa Eugene sent Chester to camp so he could become braver and try new adventures!{/bot}
 
 {bot}How long was camp?{/bot}
 
 {option}[1]1 week{/option}
 {option}[2]2 weeks{/option}
-{option}[3][answer]3 weeks{/option}
+{option}[3]3 weeks{/option}
 {option}[4]1 month{/option}
 
-{bot}Grandpa Eugene wanted Chester to enjoy God's ________.{/bot}
+{bot}[opt]1[/opt]Not quite![/n]
+Camp lasted longer than one week.[/n]
+Try again!{/bot}
 
-{option}[1][answer]Creation{/option}
+{bot}[opt]2[/opt]Close![/n]
+It was longer than two weeks.[/n]
+Give it another try!{/bot}
 
-{bot}Chester loved camping at the beginning.{/bot}
+{bot}[opt]4[/opt]Good guess![/n]
+Camp didn't last a whole month.[/n]
+Think about the number of weeks Chester stayed!{/bot}
+
+{bot}[opt]3[/opt]🎉 That's correct![/n]
+Chester spent **3 weeks** at camp, where he faced new adventures and learned to be brave!{/bot}
+
+{bot}Did Chester love camping at the beginning of the story?{/bot}
 
 {option}[1]True{/option}
-{option}[2][answer]False{/option}
+{option}[2]False{/option}
+
+{bot}[opt]1[/opt]Not quite![/n]
+At the beginning, Chester was nervous about going to camp and didn't love it right away.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]🎉 Correct![/n]
+Chester was scared and unsure about camp at first, but he became much braver as the story went on!{/bot}
 
 {bot}Let's meet everyone![/n]
 Can you remember their names?{/bot}
 
-{bot}Who is...[/n]
-🤖 A robot?{/bot}
+{bot}True or False:[/n]
+🤖 Robbie is a robot.{/bot}
 
-{option}[1][answer]Robbie{/option}
+{option}[1]True{/option}
+{option}[2]False{/option}
 
-{bot}🌲 Loves nature?{/bot}
+[opt]2[/opt]
+{bot}Not quite![/n]
+Robbie is a robot and one of Chester's camp friends.[/n]
+Try again!{/bot}
 
-{option}[1][answer]Zeke{/option}
+[opt]1[/opt]
+{bot}🎉 Correct![/n]
+Robbie is a friendly robot who joins the camp adventure!{/bot}
 
-{bot}👦 Invents gadgets?{/bot}
 
-{option}[1][answer]Chester{/option}
+{bot}True or False:[/n]
+🌲 Zeke loves nature.{/bot}
+
+{option}[1]True{/option}
+{option}[2]False{/option}
+
+{bot}[opt]2[/opt]Oops![/n]
+Zeke really does love nature and enjoys spending time outdoors.[/n]
+Try again!{/bot}
+
+{bot}[opt]1[/opt]🎉 That's right![/n]
+Zeke loves nature and is always excited to explore the forest!{/bot}
+
+{bot}True or False:[/n]
+👦 Chester invents gadgets.{/bot}
+
+{option}[1]True{/option}
+{option}[2]False{/option}
+
+{bot}[opt]2[/opt]Not quite![/n]
+Chester enjoys inventing gadgets and using his creativity to solve problems.[/n]
+Give it another try!{/bot}
+
+{bot}[opt]1[/opt]🎉 Correct![/n]
+Chester is a clever inventor who loves creating new gadgets!{/bot}
 
 {bot}Who wanted to teach Chester about nature?{/bot}
 
 {option}[1]Grandpa Eugene{/option}
 {option}[2]Robbie{/option}
-{option}[3][answer]Zeke{/option}
+{option}[3]Zeke{/option}
 {option}[4]Bigfoot{/option}
 
-{bot}The robot's name is ______.{/bot}
+{bot}[opt]1[/opt]Good guess![/n]
+Grandpa Eugene sent Chester to camp, but he wasn't the one who wanted to teach him about nature.[/n]
+Try again!{/bot}
 
-{option}[1][answer]Robbie{/option}
+{bot}[opt]2[/opt]Not quite![/n]
+Robbie is Chester's friend, but someone else was excited to teach him about nature.[/n]
+Give it another try!{/bot}
 
-{bot}Zeke hated being outdoors.{/bot}
+{bot}[opt]4[/opt]Haha, nice guess! 😄[/n]
+Bigfoot didn't teach Chester about nature.[/n]
+Think about Chester's camp friends!{/bot}
+
+{bot}[opt]3[/opt]🎉 That's correct![/n]
+Zeke loved nature and wanted to teach Chester all about the outdoors!{/bot}
+
+{bot}Zeke hated being outdoors.right?{/bot}
 
 {option}[1]True{/option}
-{option}[2][answer]False{/option}
+{option}[2]False{/option}
+
+{bot}[opt]1[/opt]Not quite![/n]
+Zeke actually loves spending time outdoors and exploring nature.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]🎉 Correct![/n]
+Zeke loves nature and enjoys teaching Chester about the outdoors!{/bot}
 
 {bot}Bigfoot had an important safety warning.[/n]
 Do you remember?{/bot}
@@ -338,184 +443,525 @@ Do you remember?{/bot}
 
 {option}[1]Stand under it{/option}
 {option}[2]Ignore it{/option}
-{option}[3][answer]Tell everyone immediately{/option}
+{option}[3]Tell everyone immediately{/option}
 {option}[4]Climb it{/option}
+
+{bot}[opt]1[/opt]Not quite![/n]
+Standing under a falling tree is very dangerous.[/n]
+Think about the safest thing to do!{/bot}
+
+{bot}[opt]2[/opt]Oops![/n]
+Ignoring a falling tree could put people in danger.[/n]
+What should you do to help keep everyone safe?{/bot}
+
+{bot}[opt]4[/opt]Good guess, but no![/n]
+You should never climb a tree that's falling or could fall.[/n]
+Try again!{/bot}
+
+{bot}[opt]3[/opt]🎉 That's right![/n]
+If a tree starts falling, warn everyone immediately so they can move to safety!{/bot}
 
 {bot}Who was the camp counselor?{/bot}
 
-{option}[1]Bear{/option}
-{option}[2][answer]Bigfoot{/option}
-{option}[3]Hunter{/option}
-{option}[4]Eagle{/option}
+{option}[1]🐻 Bear{/option}
+{option}[2]👣 Bigfoot{/option}
+{option}[3]🏹 Hunter{/option}
+{option}[4]🦅 Eagle{/option}
 
-{bot}Everyone was surprised forever that Bigfoot was the counselor.{/bot}
+{bot}[opt]1[/opt]🐻 Not quite![/n]
+The bear wasn't the camp counselor.[/n]
+Try again!{/bot}
+
+{bot}[opt]3[/opt]🏹 Good guess![/n]
+The hunter wasn't the camp counselor.[/n]
+Who helped the campers throughout their adventure?{/bot}
+
+{bot}[opt]4[/opt]🦅 Almost![/n]
+The eagle wasn't the camp counselor.[/n]
+Think about the friendly forest guide!{/bot}
+
+{bot}[opt]2[/opt]🎉 Correct![/n]
+👣 Bigfoot was the camp counselor and helped everyone stay safe while having fun at camp!{/bot}
+
+{bot}True or False:[/n]
+😲 Everyone was surprised forever that Bigfoot was the counselor.{/bot}
 
 {option}[1]True{/option}
-{option}[2][answer]False{/option}
+{option}[2]False{/option}
+
+{bot}[opt]1[/opt]❌ Not quite![/n]
+The campers were surprised at first, but they soon realized Bigfoot was kind and helpful.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]🎉 Correct![/n]
+😊 The campers quickly got to know Bigfoot and weren't surprised forever. He became a trusted camp counselor!{/bot}
 
 {bot}Nature Detective Time!{/bot}
 
 {bot}What is a biome?{/bot}
 
 {option}[1]A mountain{/option}
-{option}[2][answer]An area with similar weather, plants, and animals{/option}
+{option}[2]An area with similar weather, plants, and animals{/option}
 {option}[3]A river{/option}
 {option}[4]A cave{/option}
 
 {bot}Which biome is found in Georgia?{/bot}
 
-{option}[1]Desert{/option}
-{option}[2]Rainforest{/option}
-{option}[3][answer]Deciduous Forest{/option}
-{option}[4]Arctic{/option}
+{option}[1]🏜️ Desert{/option}
+{option}[2]🌴 Rainforest{/option}
+{option}[3]🌳 Deciduous Forest{/option}
+{option}[4]🧊 Arctic{/option}
+
+{bot}[opt]1[/opt]🏜️ Not quite![/n]
+Georgia isn't a desert biome.[/n]
+Think about the forests with trees that change colors in the fall!{/bot}
+
+{bot}[opt]2[/opt]🌴 Good guess![/n]
+Georgia isn't a tropical rainforest.[/n]
+Try again!{/bot}
+
+{bot}[opt]4[/opt]🧊 Almost![/n]
+Georgia is much warmer than the Arctic.[/n]
+Which forest biome is common there?{/bot}
+
+{bot}[opt]3[/opt]🎉 Correct![/n]
+🌳 Georgia is home to the **Deciduous Forest** biome, where many trees lose their leaves each autumn!{/bot}
 
 {bot}How many seasons does a deciduous forest have?{/bot}
 
 {option}[1]2{/option}
 {option}[2]3{/option}
-{option}[3][answer]4{/option}
+{option}[3]4{/option}
 {option}[4]5{/option}
 
-{bot}Leaves lose their green color because they lose ________.{/bot}
+{bot}[opt]1[/opt]🍂 Not quite![/n]
+A deciduous forest has more than two seasons.[/n]
+Try again!{/bot}
 
-{option}[1][answer]Chlorophyll{/option}
+{bot}[opt]2[/opt]🌿 Close![/n]
+There are more than three seasons in a deciduous forest.[/n]
+Think about the four seasons of the year!{/bot}
 
-{bot}Deserts receive more rain than deciduous forests.{/bot}
+{bot}[opt]4[/opt]❌ Good guess![/n]
+A deciduous forest doesn't have five seasons.[/n]
+Try one more time!{/bot}
+
+{bot}[opt]3[/opt]🎉 That's correct![/n]
+🍁 A deciduous forest has **4 seasons**: spring, summer, fall, and winter!{/bot}
+
+{bot}True or False:[/n]
+🍁 Leaves lose their green color because they lose chlorophyll.{/bot}
 
 {option}[1]True{/option}
-{option}[2][answer]False{/option}
+{option}[2]False{/option}
+
+{bot}[opt]2[/opt]❌ Not quite![/n]
+Leaves turn different colors because they lose chlorophyll, the green pigment in their leaves.[/n]
+Try again!{/bot}
+
+{bot}[opt]1[/opt]🎉 Correct![/n]
+🍃 That's right! As chlorophyll breaks down, the beautiful yellow, orange, and red colors become visible!{/bot}
+
+{bot}True or False:[/n]
+🏜️ Deserts receive more rain than deciduous forests.{/bot}
+
+{option}[1]True{/option}
+{option}[2]False{/option}
+
+{bot}[opt]1[/opt]❌ Not quite![/n]
+Deserts receive very little rainfall compared to deciduous forests.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]🎉 Correct![/n]
+🌳 Deciduous forests receive much more rain than deserts, which helps many plants and trees grow!{/bot}
 
 {bot}Let's remember the six days of creation.{/bot}
 
-{bot}Day 1[/n]
-What did God create?{/bot}
+{bot}<b>Day 1</b>[/n]
+What did God create first?{/bot}
 
-{option}[1]Animals{/option}
-{option}[2][answer]Light and Darkness{/option}
-{option}[3]Trees{/option}
-{option}[4]Fish{/option}
+{option}[1]🐘 Animals{/option}
+{option}[2]💡 Light and Darkness{/option}
+{option}[3]🌳 Trees{/option}
+{option}[4]🐟 Fish{/option}
 
-{bot}Day 2[/n]
-God created...{/bot}
+{bot}[opt]1[/opt]🐘 Not quite![/n]
+God created animals later in creation.[/n]
+Think about what He created on the very first day!{/bot}
 
-{option}[1][answer]The Sky and Sea{/option}
-{option}[2]Animals{/option}
-{option}[3]Plants{/option}
-{option}[4]Sun{/option}
+{bot}[opt]3[/opt]🌳 Good guess![/n]
+Trees were created later.[/n]
+What did God say, "Let there be..."?{/bot}
 
-{bot}Day 3[/n]
-God created...{/bot}
+{bot}[opt]4[/opt]🐟 Almost![/n]
+Fish were created after the first day of creation.[/n]
+Try again!{/bot}
 
-{option}[1]Stars{/option}
-{option}[2][answer]Dry Land and Plants{/option}
-{option}[3]Birds{/option}
-{option}[4]Moon{/option}
+{bot}[opt]2[/opt]🎉 That's right![/n]
+💡 God created light and separated the light from the darkness on the first day!{/bot}
 
-{bot}Day 4[/n]
-God created...{/bot}
+{bot}<b>Day 2</b>[/n]
+What did God create on the second day?{/bot}
 
-{option}[1]Fish{/option}
-{option}[2][answer]Sun, Moon and Stars{/option}
-{option}[3]Trees{/option}
-{option}[4]Animals{/option}
+{option}[1]☁️ The Sky and Sea{/option}
+{option}[2]🐘 Animals{/option}
+{option}[3]🌱 Plants{/option}
+{option}[4]☀️ Sun{/option}
 
-{bot}Day 5[/n]
-God created...{/bot}
+{bot}[opt]2[/opt]🐘 Not quite![/n]
+God created animals later in creation.[/n]
+Try again!{/bot}
 
-{option}[1][answer]Birds and Sea Creatures{/option}
-{option}[2]Humans{/option}
-{option}[3]Mountains{/option}
-{option}[4]Insects{/option}
+{bot}[opt]3[/opt]🌱 Good guess![/n]
+Plants were created on a different day.[/n]
+Think about what God separated above and below!{/bot}
 
-{bot}Day 6[/n]
-God created...{/bot}
+{bot}[opt]4[/opt]☀️ Almost![/n]
+The sun was created later, not on the second day.[/n]
+Give it another try!{/bot}
 
-{option}[1]Clouds{/option}
-{option}[2]Birds{/option}
-{option}[3][answer]Animals and Humans{/option}
-{option}[4]Oceans{/option}
+{bot}[opt]1[/opt]🎉 Correct![/n]
+☁️ God created the sky and separated the waters above from the waters below on the second day!{/bot}
 
-{bot}"In the beginning, God created the ________ and the earth."{/bot}
+{bot}<b>Day 3</b>[/n]
+What did God create on the third day?{/bot}
 
-{option}[1][answer]Heavens{/option}
+{option}[1]⭐ Stars{/option}
+{option}[2]🌿 Dry Land and Plants{/option}
+{option}[3]🐦 Birds{/option}
+{option}[4]🌙 Moon{/option}
 
-{bot}God said His creation was good.{/bot}
+{bot}[opt]1[/opt]⭐ Not quite![/n]
+The stars were created later in the creation story.[/n]
+Try again!{/bot}
 
-{option}[1][answer]True{/option}
+{bot}[opt]3[/opt]🐦 Good guess![/n]
+Birds were created on a later day.[/n]
+Think about what appeared when the waters gathered together!{/bot}
+
+{bot}[opt]4[/opt]🌙 Almost![/n]
+The moon was not created on Day 3.[/n]
+Give it another try!{/bot}
+
+{bot}[opt]2[/opt]🎉 Correct![/n]
+🌿 On the third day, God created dry land, seas, and all kinds of plants and trees!{/bot}
+
+{bot}<b>Day 4</b>[/n]
+What did God create on the fourth day?{/bot}
+
+{option}[1]🐟 Fish{/option}
+{option}[2]☀️ Sun, 🌙 Moon, and ⭐ Stars{/option}
+{option}[3]🌳 Trees{/option}
+{option}[4]🐘 Animals{/option}
+
+{bot}[opt]1[/opt]🐟 Not quite![/n]
+Fish were created on a later day.[/n]
+Try again!{/bot}
+
+{bot}[opt]3[/opt]🌳 Good guess![/n]
+Trees were created earlier, on Day 3.[/n]
+Think about what gives us light during the day and night!{/bot}
+
+{bot}[opt]4[/opt]🐘 Almost![/n]
+Animals were created later in the week of creation.[/n]
+Give it another try!{/bot}
+
+{bot}[opt]2[/opt]🎉 Correct![/n]
+☀️🌙⭐ On the fourth day, God created the sun, moon, and stars to give light and mark day, night, and seasons!{/bot}
+
+{bot}<b>Day 5</b>[/n]
+What did God create on the fifth day?{/bot}
+
+{option}[1]🐦 Birds and 🐠 Sea Creatures{/option}
+{option}[2]👨 Humans{/option}
+{option}[3]⛰️ Mountains{/option}
+{option}[4]🐜 Insects{/option}
+
+{bot}[opt]2[/opt]👨 Not quite![/n]
+People were created on Day 6, not Day 5.[/n]
+Try again!{/bot}
+
+{bot}[opt]3[/opt]⛰️ Good guess![/n]
+Mountains were part of the dry land God made earlier.[/n]
+Think about what flies in the sky and swims in the sea!{/bot}
+
+{bot}[opt]4[/opt]🐜 Almost![/n]
+Insects aren't the best answer here.[/n]
+What living creatures did God create to fill the sky and the waters?{/bot}
+
+{bot}[opt]1[/opt]🎉 That's right![/n]
+🐦🐠 On Day 5, God created the birds to fill the sky and the sea creatures to fill the oceans!{/bot}
+
+{bot}<b>Day 6</b>[/n]
+What did God create on the sixth day?{/bot}
+
+{option}[1]☁️ Clouds{/option}
+{option}[2]🐦 Birds{/option}
+{option}[3]🦁 Animals and 👨 Humans{/option}
+{option}[4]🌊 Oceans{/option}
+
+{bot}[opt]1[/opt]☁️ Not quite![/n]
+Clouds are not the main thing God created on Day 6.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]🐦 Good guess![/n]
+Birds were created on Day 5.[/n]
+Think about what God created to live on the land!{/bot}
+
+{bot}[opt]4[/opt]🌊 Almost![/n]
+The oceans were already part of creation before Day 6.[/n]
+Give it another try!{/bot}
+
+{bot}[opt]3[/opt]🎉 Correct![/n]
+🦁👨 On Day 6, God created the land animals and humans, making people in His image!{/bot}
+
+{bot}True or False:[/n]
+📖 "In the beginning, God created the heavens and the earth."{/bot}
+
+{option}[1]True{/option}
 {option}[2]False{/option}
+
+{bot}[opt]2[/opt]❌ Not quite![/n]
+That's exactly how Genesis 1:1 begins: "In the beginning, God created the heavens and the earth."[/n]
+Try again!{/bot}
+
+{bot}[opt]1[/opt]🎉 Correct![/n]
+📖 Great job! Genesis 1:1 tells us, "In the beginning, God created the heavens and the earth."{/bot}
+
+{bot}True or False:[/n]
+🌍 God said His creation was good.{/bot}
+
+{option}[1]True{/option}
+{option}[2]False{/option}
+
+{bot}[opt]2[/opt]❌ Not quite![/n]
+God looked at what He had made and said it was good.[/n]
+Try again!{/bot}
+
+{bot}[opt]1[/opt]🎉 Correct![/n]
+🌟 That's right! God saw that His creation was good, and after creating everything, He said it was **very good**!{/bot}
 
 {bot}🎉 You've almost completed Camp Falling Pines![/n]
 Can you earn your Nature Explorer Badge?{/bot}
 
 {bot}Who loved nature the most?{/bot}
 
-{option}[1]Chester{/option}
-{option}[2]Robbie{/option}
-{option}[3][answer]Zeke{/option}
-{option}[4]Grandpa Eugene{/option}
+{option}[1]👦 Chester{/option}
+{option}[2]🤖 Robbie{/option}
+{option}[3]🌲 Zeke{/option}
+{option}[4]👴 Grandpa Eugene{/option}
+
+{bot}[opt]1[/opt]👦 Not quite![/n]
+Chester learned to enjoy nature, but someone else loved it from the very beginning.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]🤖 Good guess![/n]
+Robbie enjoyed camp, but he wasn't the biggest nature lover.[/n]
+Who was always excited to explore the outdoors?{/bot}
+
+{bot}[opt]4[/opt]👴 Almost![/n]
+Grandpa Eugene sent Chester to camp, but he wasn't the character who loved nature the most.[/n]
+Give it another try!{/bot}
+
+{bot}[opt]3[/opt]🎉 Correct![/n]
+🌲 Zeke loved nature and was always eager to explore the forest and teach others about the outdoors!{/bot}
 
 {bot}What invention did Chester want to build?{/bot}
 
-{option}[1]Tree Cutter 5000{/option}
-{option}[2]Turkey Catcher{/option}
-{option}[3][answer]Wild Turkey Defender 3000{/option}
-{option}[4]Bird Blaster{/option}
+{option}[1]🪓 Tree Cutter 5000{/option}
+{option}[2]🦃 Turkey Catcher{/option}
+{option}[3]🛡️ Wild Turkey Defender 3000{/option}
+{option}[4]🐦 Bird Blaster{/option}
+
+{bot}[opt]1[/opt]🪓 Not quite![/n]
+That wasn't Chester's invention.[/n]
+Think about what he wanted to protect himself from!{/bot}
+
+{bot}[opt]2[/opt]🦃 Good guess![/n]
+It had something to do with wild turkeys, but that wasn't its name.[/n]
+Try again!{/bot}
+
+{bot}[opt]4[/opt]🐦 Almost![/n]
+That wasn't the gadget Chester dreamed of building.[/n]
+What was the name of his turkey-defense invention?{/bot}
+
+{bot}[opt]3[/opt]🎉 Correct![/n]
+🛡️ Chester wanted to build the **Wild Turkey Defender 3000** to protect himself from wild turkeys!{/bot}
 
 {bot}What type of forest did Mr. Foot teach about?{/bot}
 
-{option}[1]Rainforest{/option}
-{option}[2]Desert{/option}
-{option}[3][answer]Deciduous Forest{/option}
-{option}[4]Tundra{/option}
+{option}[1]🌴 Rainforest{/option}
+{option}[2]🏜️ Desert{/option}
+{option}[3]🌳 Deciduous Forest{/option}
+{option}[4]❄️ Tundra{/option}
+
+{bot}[opt]1[/opt]🌴 Not quite![/n]
+Mr. Foot wasn't teaching about rainforests.[/n]
+Think about the forest where trees change color and lose their leaves each fall!{/bot}
+
+{bot}[opt]2[/opt]🏜️ Good guess![/n]
+A desert isn't a type of forest.[/n]
+Try again!{/bot}
+
+{bot}[opt]4[/opt]❄️ Almost![/n]
+The tundra is a cold biome, but it wasn't Mr. Foot's lesson.[/n]
+Give it another try!{/bot}
+
+{bot}[opt]3[/opt]🎉 Correct![/n]
+🌳 Mr. Foot taught the campers about the **Deciduous Forest**, where trees shed their leaves every autumn!{/bot}
 
 {bot}Who reminded everyone that God created nature?{/bot}
 
-{option}[1]Robbie{/option}
-{option}[2]Zeke{/option}
-{option}[3]Bigfoot{/option}
-{option}[4][answer]Chester{/option}
+{option}[1]🤖 Robbie{/option}
+{option}[2]🌲 Zeke{/option}
+{option}[3]👣 Bigfoot{/option}
+{option}[4]👦 Chester{/option}
 
+{bot}[opt]1[/opt]🤖 Not quite![/n]
+Robbie enjoyed learning about nature, but he wasn't the one who reminded everyone who created it.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]🌲 Good guess![/n]
+Zeke loved nature, but someone else reminded the group that God created it.[/n]
+Give it another try!{/bot}
+
+{bot}[opt]3[/opt]👣 Almost![/n]
+Bigfoot taught the campers many things, but he wasn't the one who made this reminder.[/n]
+Think about who shared that important truth!{/bot}
+
+{bot}[opt]4[/opt]🎉 Correct![/n]
+👦 Chester reminded everyone that God is the Creator of nature and everything around us!{/bot}
 {bot}How many days did God take to create everything?{/bot}
 
-{option}[1]5{/option}
-{option}[2]7{/option}
-{option}[3][answer]6{/option}
-{option}[4]10{/option}
+{option}[1] 5 days{/option}
+{option}[2]7 days{/option}
+{option}[3]6 days{/option}
+{option}[4]10 days{/option}
+
+{bot}[opt]1[/opt]❌ Not quite![/n]
+God created everything over more than five days.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]🌟 Close![/n]
+God rested on the seventh day, but creation itself was completed before then.[/n]
+Give it another try!{/bot}
+
+{bot}[opt]4[/opt]❌ Almost![/n]
+It didn't take ten days for God to create everything.[/n]
+Think about the six days of creation!{/bot}
+
+{bot}[opt]3[/opt]🎉 Correct![/n]
+📖 God created everything in **6 days** and rested on the **7th day**!{/bot}
 
 {bot}Which day were humans created?{/bot}
 
 {option}[1]Day 4{/option}
 {option}[2]Day 5{/option}
-{option}[3][answer]Day 6{/option}
+{option}[3] Day 6{/option}
 {option}[4]Day 7{/option}
+
+{bot}[opt]1[/opt]❌ Not quite![/n]
+Humans were not created on Day 4.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]🌟 Close![/n]
+Day 5 was when God created the birds and sea creatures.[/n]
+Think about the next day!{/bot}
+
+{bot}[opt]4[/opt]😊 Almost![/n]
+God rested on Day 7, so humans were created before then.[/n]
+Give it another try!{/bot}
+
+{bot}[opt]3[/opt]🎉 Correct![/n]
+👨👩 God created humans on **Day 6**, after creating the land animals!{/bot}
 
 {bot}What season do deciduous trees change color?{/bot}
 
-{option}[1]Summer{/option}
-{option}[2]Spring{/option}
-{option}[3][answer]Fall{/option}
-{option}[4]Winter{/option}
+{option}[1]☀️ Summer{/option}
+{option}[2]🌸 Spring{/option}
+{option}[3]🍂 Fall{/option}
+{option}[4]❄️ Winter{/option}
+
+{bot}[opt]1[/opt]☀️ Not quite![/n]
+During summer, deciduous trees are usually bright green.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]🌸 Good guess![/n]
+In spring, trees grow fresh green leaves.[/n]
+Think about the season when leaves turn red, orange, and yellow!{/bot}
+
+{bot}[opt]4[/opt]❄️ Almost![/n]
+By winter, many deciduous trees have already lost their leaves.[/n]
+Which season comes just before winter?{/bot}
+
+{bot}[opt]3[/opt]🎉 Correct![/n]
+🍂 Deciduous trees change to beautiful red, orange, and yellow colors during **Fall** before their leaves drop!{/bot}
 
 {bot}Who was the camp counselor?{/bot}
 
-{option}[1]Bear{/option}
-{option}[2]Eagle{/option}
-{option}[3][answer]Bigfoot{/option}
-{option}[4]Hunter{/option}
+{option}[1]🐻 Bear{/option}
+{option}[2]🦅 Eagle{/option}
+{option}[3]👣 Bigfoot{/option}
+{option}[4]🏹 Hunter{/option}
+
+{bot}[opt]1[/opt]🐻 Not quite![/n]
+The bear wasn't the camp counselor.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]🦅 Good guess![/n]
+The eagle wasn't the camp counselor.[/n]
+Think about the friendly forest guide!{/bot}
+
+{bot}[opt]4[/opt]🏹 Almost![/n]
+The hunter wasn't the camp counselor.[/n]
+Who welcomed the campers and led their adventures?{/bot}
+
+{bot}[opt]3[/opt]🎉 Correct![/n]
+👣 Bigfoot was the camp counselor and helped the campers learn, explore, and stay safe!{/bot}
 
 {bot}Why did Grandpa Eugene send Chester to camp?{/bot}
 
-{option}[1]To punish him{/option}
-{option}[2][answer]To teach him about nature and God's creation{/option}
-{option}[3]To make him work{/option}
-{option}[4]To learn cooking{/option}
+{option}[1]😞 To punish him{/option}
+{option}[2]🌲 To teach him about nature and God's creation{/option}
+{option}[3]🛠️ To make him work{/option}
+{option}[4]🍳 To learn cooking{/option}
+
+{bot}[opt]1[/opt]😞 Not quite![/n]
+Grandpa Eugene didn't send Chester to camp as a punishment.[/n]
+Try again!{/bot}
+
+{bot}[opt]3[/opt]🛠️ Good guess![/n]
+Camp wasn't about making Chester work.[/n]
+Think about what Grandpa wanted Chester to discover!{/bot}
+
+{bot}[opt]4[/opt]s🍳 Almost![/n]
+Learning to cook wasn't the reason Chester went to camp.[/n]
+What did Grandpa hope Chester would learn about?{/bot}
+
+{bot}[opt]2[/opt]🎉 Correct![/n]
+🌲 Grandpa Eugene sent Chester to camp to help him learn about nature, God's amazing creation, and to become more confident!{/bot}
 
 {bot}What is the most important lesson Chester shared?{/bot}
 
-{option}[1]Nature is dangerous.{/option}
-{option}[2]Robots are smarter than people.{/option}
-{option}[3][answer]God created everything, and we should appreciate His creation.{/option}
-{option}[4]Wild turkeys are scary.{/option}
+{option}[1]⚠️ Nature is dangerous.{/option}
+{option}[2]🤖 Robots are smarter than people.{/option}
+{option}[3]🌍 God created everything, and we should appreciate His creation.{/option}
+{option}[4]🦃 Wild turkeys are scary.{/option}
+
+{bot}[opt]1[/opt]⚠️ Not quite![/n]
+Chester learned to enjoy and respect nature, not to fear it.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]🤖 Good guess![/n]
+Robbie was smart, but that wasn't Chester's biggest lesson.[/n]
+Think about what Chester learned about God and nature!{/bot}
+
+{bot}[opt]4[/opt]🦃 Almost![/n]
+Wild turkeys were part of Chester's adventure, but they weren't the story's main message.[/n]
+What important truth did Chester share about creation?{/bot}
+
+{bot}[opt]3[/opt]🎉 Correct![/n]
+🌍 Chester learned that **God created everything**, and we should love, appreciate, and take care of His wonderful creation!{/bot}
 
 {bot}🎊 Amazing job, Explorer![/n]
 You completed Camp Falling Pines![/n]
@@ -532,6 +978,5 @@ What was your favorite part of today's adventure?{/bot}
 {option}[2]🤖 Robbie the Robot{/option}
 {option}[3]🌳 Learning about nature{/option}
 {option}[4]✨ The Creation story{/option}
-{option}[5]📝 The quizzes{/option}
 
 {bot}Thank you for learning with me today! 🌟 I can't wait to explore another adventure with you soon. Goodbye, Nature Explorer! 👋{/bot}

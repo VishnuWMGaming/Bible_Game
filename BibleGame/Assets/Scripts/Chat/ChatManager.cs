@@ -53,7 +53,7 @@ public class ChatManager : MonoBehaviour,IOptionChat
         mCurrentBot = Dialogue.ReadBotByOption(Dialogue.answerKey);
         string botChat = Dialogue.NewLineAlignment(mCurrentBot.data);
 
-        DevDebug.Log($"Bot conversation:{Dialogue.Pointer}",DebugColor.Gold);
+        //DevDebug.Log($"Bot conversation:{Dialogue.Pointer}",DebugColor.Gold);
 
         BotAction(botChat);   
 
