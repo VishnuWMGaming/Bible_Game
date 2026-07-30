@@ -50,13 +50,13 @@ public class ChatManager : MonoBehaviour,IOptionChat
 
     void BotChat()
     {
-        mCurrentBot = Dialogue.ReadNextBot();
+        mCurrentBot = Dialogue.ReadBotByOption(Dialogue.answerKey);
         string botChat = Dialogue.NewLineAlignment(mCurrentBot.data);
 
         DevDebug.Log($"Bot conversation:{Dialogue.Pointer}",DebugColor.Gold);
 
-        BotAction(botChat);
-       
+        BotAction(botChat);   
+
     }
 
     public async UniTask BotAction(string text)
@@ -72,7 +72,11 @@ public class ChatManager : MonoBehaviour,IOptionChat
 
        RefreshLayout(chatTransform.GetComponent<RectTransform>());
 
-       mGiveAnswerBtn.interactable = true;  
+       mGiveAnswerBtn.interactable = mCurrentBot.mOptions.Count >0;
+       if(mCurrentBot.mOptions.Count <= 0)
+       {
+            BotChat();
+       }
     }
 
     public void UserAction(string text)
@@ -93,6 +97,8 @@ public class ChatManager : MonoBehaviour,IOptionChat
     {
         if (key <= 0)
             return;
+
+        Dialogue.answerKey = key;
 
         optionPanel.gameObject.SetActive(false);
 

@@ -232,6 +232,8 @@ namespace BibleGame
             private static string _text;
             private static int _pointer;
 
+            public static int answerKey;
+
             private static List<IOptData> optiondatas = new List<IOptData>();
 
 
@@ -239,6 +241,7 @@ namespace BibleGame
             {
                 _text = textAsset.text;
                 _pointer = 0;
+                answerKey = -1;
             }
 
             public static BotChatData ReadNextBot()
@@ -298,6 +301,179 @@ namespace BibleGame
                 }
 
                 return data;
+            }
+
+            public static BotChatData ReadBotByOption(int optionKey)
+            {
+                if (optionKey == -1)
+                {
+                    return ReadNextBot();
+                }
+
+                if (string.IsNullOrEmpty(_text))
+                    return null;
+
+                string tag = $"[opt]{optionKey}[/opt]";
+
+                while (true)
+                {
+                    int botStart = _text.IndexOf("{bot}", _pointer);
+                    if (botStart == -1)
+                        return null;
+
+                    int contentStart = botStart + "{bot}".Length;
+                    int botEnd = _text.IndexOf("{/bot}", contentStart);
+                    if (botEnd == -1)
+                        return null;
+
+                    string botText = _text.Substring(contentStart, botEnd - contentStart).Trim();
+
+                    // -----------------------------
+                    // Matching branch
+                    // -----------------------------
+                    if (botText.StartsWith(tag))
+                    {
+                        botText = botText.Substring(tag.Length).Trim();
+
+                        BotChatData data = new()
+                        {
+                            data = botText
+                        };
+
+                        _pointer = botEnd + "{/bot}".Length;
+
+                        ReadOptions(data);
+
+                        // If this branch has no options, move directly
+                        // to the first non-[opt] bot.
+                        //if (data.mOptions.Count == 0)
+                        //{
+                        //    while (true)
+                        //    {
+                        //        int nextBotStart = _text.IndexOf("{bot}", _pointer);
+                        //        if (nextBotStart == -1)
+                        //            break;
+
+                        //        int nextContentStart = nextBotStart + "{bot}".Length;
+                        //        int nextBotEnd = _text.IndexOf("{/bot}", nextContentStart);
+                        //        if (nextBotEnd == -1)
+                        //            break;
+
+                        //        string nextBotText = _text.Substring(nextContentStart, nextBotEnd - nextContentStart).Trim();
+
+                        //        // Skip remaining branch bots
+                        //        if (nextBotText.StartsWith("[opt]"))
+                        //        {
+                        //            _pointer = nextBotEnd + "{/bot}".Length;
+                        //            continue;
+                        //        }
+
+                        //        // Jump to the common conversation
+                        //        data.data = nextBotText;
+
+                        //        _pointer = nextBotEnd + "{/bot}".Length;
+
+                        //        ReadOptions(data);
+
+                        //        break;
+                        //    }
+                        //}
+
+                        return data;
+                    }
+                    else
+                    {
+                        if (!botText.StartsWith("[opt]"))
+                        {
+                            BotChatData data = new()
+                            {
+                                data = botText
+                            };
+
+                            _pointer = botEnd + "{/bot}".Length;
+
+                            ReadOptions(data);
+
+                            //if (data.mOptions.Count == 0)
+                            //{
+                            //    while (true)
+                            //    {
+                            //        int nextBotStart = _text.IndexOf("{bot}", _pointer);
+                            //        if (nextBotStart == -1)
+                            //            break;
+
+                            //        int nextContentStart = nextBotStart + "{bot}".Length;
+                            //        int nextBotEnd = _text.IndexOf("{/bot}", nextContentStart);
+                            //        if (nextBotEnd == -1)
+                            //            break;
+
+                            //        string nextBotText = _text.Substring(nextContentStart, nextBotEnd - nextContentStart).Trim();
+
+                            //        // Skip remaining branch bots
+                            //        if (nextBotText.StartsWith("[opt]"))
+                            //        {
+                            //            _pointer = nextBotEnd + "{/bot}".Length;
+                            //            continue;
+                            //        }
+
+                            //        // Jump to the common conversation
+                            //        data.data = nextBotText;
+
+                            //        _pointer = nextBotEnd + "{/bot}".Length;
+
+                            //        ReadOptions(data);
+
+                            //        break;
+                            //    }
+                            //}
+
+                            return data;
+                        }
+
+                        // This is another option branch (e.g. [opt]2 when looking for [opt]1)
+                        // Skip it and continue searching.
+                        _pointer = botEnd + "{/bot}".Length;
+                        continue;
+                    }
+
+                    // Skip everything until matching branch
+                    _pointer = botEnd + "{/bot}".Length;
+                }
+            }
+
+            private static void ReadOptions(BotChatData data)
+            {
+                while (true)
+                {
+                    int optionStart = _text.IndexOf("{option}", _pointer);
+                    int nextBot = _text.IndexOf("{bot}", _pointer);
+
+                    if (optionStart == -1 || (nextBot != -1 && optionStart > nextBot))
+                    {
+                        if (nextBot != -1)
+                            _pointer = nextBot;
+
+                        break;
+                    }
+
+                    optionStart += "{option}".Length;
+
+                    int optionEnd = _text.IndexOf("{/option}", optionStart);
+                    if (optionEnd == -1)
+                        break;
+
+                    string option = _text.Substring(optionStart, optionEnd - optionStart);
+
+                    int closeBracket = option.IndexOf(']');
+
+                    data.mOptions.Add(new IOptData
+                    {
+                        index = int.Parse(option.Substring(1, closeBracket - 1)),
+                        value = option.Substring(closeBracket + 1).Trim()
+                    });
+
+                    _pointer = optionEnd + "{/option}".Length;
+                }
             }
 
             public static List<IOptData> GetOptions()
