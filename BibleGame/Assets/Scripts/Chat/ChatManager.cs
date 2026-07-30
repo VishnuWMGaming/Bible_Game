@@ -16,6 +16,7 @@ public class ChatManager : MonoBehaviour,IOptionChat
     [SerializeField] Button mGiveAnswerBtn;
 
     [SerializeField] Transform chatTransform;
+    [SerializeField] ScrollRect scrollRect;
 
 
     [Header("OptionPanel:")]
@@ -111,10 +112,7 @@ public class ChatManager : MonoBehaviour,IOptionChat
 
         float targetHeight = LayoutUtility.GetPreferredHeight(layoutRoot);
 
-        layoutRoot.DOSizeDelta(
-            new Vector2(layoutRoot.sizeDelta.x, targetHeight),
-            1.0f)
-            .SetEase(Ease.OutCubic);
+        scrollRect.DOVerticalNormalizedPos(0, 0.5f);
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(layoutRoot);
     }
