@@ -30,6 +30,7 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     public Button playPauseButton;
     public Button replayButton;
+    public Button chatBtn;
 
     [SerializeField] private Sprite pauseSprite;
     [SerializeField] private Sprite playSprite;
@@ -55,6 +56,7 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         mLoadingPanel.SetActive(true);
 
         videoPlayer.loopPointReached += OnVideoFinished;
+
     }
 
     private void OnDisable()
@@ -63,6 +65,7 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         progressSlider.onValueChanged.RemoveAllListeners();
 
         videoPlayer.loopPointReached -= OnVideoFinished;
+        chatBtn.onClick.RemoveListener(ChatFunction);
     }
 
     private void OnVideoFinished(VideoPlayer source)
@@ -91,7 +94,13 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         });
     }
 
-    public void SetTitle(string title) { mtitle.text = title; }
+    public void SetTitle(string title) 
+    { 
+        mtitle.text = title;
+        chatBtn.interactable = title == "Chester's Garage - Summer Camp Pt. 1 (S4E1)";
+
+        chatBtn.onClick.AddListener(ChatFunction);
+    }
 
     // START VIDEO
     public async void StartVideo(string vidurl)
@@ -237,11 +246,15 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
     }
 
+    void ChatFunction()
+    {
+        videoPlayer.Pause();
+        UpdatePlayPauseText();
+    }
+
     // PLAY / PAUSE
     public void TogglePlayPause()
     {
-       
-
         if (videoPlayer.isPlaying)
             videoPlayer.Pause();
         else

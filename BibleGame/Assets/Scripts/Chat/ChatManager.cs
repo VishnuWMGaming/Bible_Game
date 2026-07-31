@@ -95,6 +95,8 @@ public class ChatManager : MonoBehaviour,IOptionChat
 
     public void GiveAnswer(int key, string value)
     {
+        AudioManager.Instance.PlayButton();
+
         if (key <= 0)
             return;
 
@@ -110,6 +112,8 @@ public class ChatManager : MonoBehaviour,IOptionChat
         optionPanel.gameObject.SetActive(true);
 
         optionPanel.Set(mCurrentBot.mOptions, this);
+
+        AudioManager.Instance.PlayButton();
     }
 
     public void RefreshLayout(RectTransform layoutRoot)

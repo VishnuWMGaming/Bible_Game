@@ -979,4 +979,4 @@ What was your favorite part of today's adventure?{/bot}
 {option}[3]🌳 Learning about nature{/option}
 {option}[4]✨ The Creation story{/option}
 
-{bot}Thank you for learning with me today! 🌟 I can't wait to explore another adventure with you soon. Goodbye, Nature Explorer! 👋{/bot}
+{bot}Thank you for learning with me today! 🌟 I can't wait to explore another adventure with you soon. Goodbye, Nature Explorer!👋 (END) {/bot} 
