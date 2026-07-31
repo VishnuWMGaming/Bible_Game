@@ -43,10 +43,32 @@ How do you think Chester feels?{/bot}
 {option}[3]😡 Angry{/option}
 {option}[4]🤔 Nervous{/option}
 
-{bot}You're right![/n]
-Chester loves staying inside his garage building inventions.[/n]
-Going into a forest sounds scary to him.[/n]
-Have you ever felt nervous about trying something new?{/bot}
+{bot}[opt]1[/opt]
+That's a thoughtful guess! 😊[/n]
+Chester was feeling worried, but he wasn't exactly scared.[/n]
+He was mostly nervous because he didn't know what camp would be like.[/n]
+Have you ever felt nervous about trying something new?
+{/bot}
+
+{bot}[opt]2[/opt]
+Good guess! 😊[/n]
+But Chester wasn't excited.[/n]
+He loved staying in his garage building inventions, so the idea of going to forest camp made him feel nervous instead.[/n]
+Have you ever felt nervous about trying something new?
+{/bot}
+
+{bot}[opt]3[/opt]
+Nice try! 😊[/n]
+Chester wasn't angry about going to camp.[/n]
+He was mostly nervous because everything there would be new and unfamiliar.[/n]
+Have you ever felt nervous about trying something new?
+{/bot}
+
+{bot}[opt]4[/opt]
+🎉 That's right![/n]
+Chester felt nervous because he loved staying in his garage building inventions, and going to a forest camp was something completely new for him.[/n]
+Have you ever felt nervous about trying something new?
+{/bot}
 
 {option}[1]Yes{/option}
 {option}[2]No{/option}

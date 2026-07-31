@@ -40,11 +40,13 @@ public class ChatManager : MonoBehaviour,IOptionChat
 
         BotChat();
 
+        AudioManager.Instance.MuteBG(false);
         mGiveAnswerBtn.onClick.AddListener(SetOptions);
     }
 
     private void OnDisable()
     {
+        AudioManager.Instance.MuteBG(true);
         mGiveAnswerBtn.onClick.RemoveAllListeners();
     }
 
@@ -122,9 +124,10 @@ public class ChatManager : MonoBehaviour,IOptionChat
 
         float targetHeight = LayoutUtility.GetPreferredHeight(layoutRoot);
 
-        scrollRect.DOVerticalNormalizedPos(0, 0.5f);
-
-        LayoutRebuilder.ForceRebuildLayoutImmediate(layoutRoot);
+        scrollRect.DOVerticalNormalizedPos(0, 0.5f).OnComplete(() =>
+        {
+           // LayoutRebuilder.ForceRebuildLayoutImmediate(layoutRoot);
+        });   
     }
 }
 
