@@ -48,6 +48,11 @@ public class ChatManager : MonoBehaviour,IOptionChat
     {
         AudioManager.Instance.MuteBG(true);
         mGiveAnswerBtn.onClick.RemoveAllListeners();
+
+        for(int i = 0; i<chatTransform.childCount;++i)
+        {
+            Destroy(chatTransform.GetChild(i).gameObject);
+        }
     }
 
     void BotChat()
