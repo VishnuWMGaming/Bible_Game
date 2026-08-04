@@ -182,9 +182,25 @@ Can you think of a place that's always hot?{/bot}
 {option}[2]🌲 Forest{/option}
 {option}[3]❄ Snow{/option}
 
-{bot}Exactly![/n]
-Different places have different climates.[/n]
-God made every one of them unique.{/bot}
+{bot}[opt]1[/opt]
+🎉 That's right![/n]
+A desert is a place that's usually very hot and dry.[/n]
+Different places have different climates, and God made every one of them unique.
+{/bot}
+
+{bot}[opt]2[/opt]
+Good guess! 😊[/n]
+Forests can be warm or cool, depending on where they are.[/n]
+The place that's almost always hot is the desert! 🌵[/n]
+Different places have different climates, and God made every one of them unique.
+{/bot}
+
+{bot}[opt]3[/opt]
+Nice try! 😊[/n]
+Snow is found in very cold places, not hot ones. ❄[/n]
+The correct answer is the desert, which is usually hot and dry. 🌵[/n]
+Different places have different climates, and God made every one of them unique.
+{/bot}
 
 {bot}Have you ever jumped into a pile of autumn leaves?[/n]
 🍂🍂🍂{/bot}
@@ -252,8 +268,7 @@ What's your favorite bird?{/bot}
 
 {bot}God created animals...[/n]
 and people![/n]
-🐘🦁🐶👦[/n]
-What's your favorite animal?{/bot}
+🐘🦁🐶👦{/bot}
 
 {bot}Let's stop for just a second.[/n]
 Close your eyes...[/n]
@@ -339,8 +354,7 @@ Zeke didn't send Chester to camp.[/n]
 Think about which family member wanted Chester to have this adventure!{/bot}
 
 {bot}[opt]4[/opt]Haha, that would be funny! 😄[/n]
-Bigfoot didn't send Chester to camp.[/n]
-Who in Chester's family thought camp would be good for him?{/bot}
+Bigfoot didn't send Chester to camp.{/bot}
 
 {bot}[opt]3[/opt]🎉 Correct![/n]
 Grandpa Eugene sent Chester to camp so he could become braver and try new adventures!{/bot}
@@ -388,13 +402,13 @@ Can you remember their names?{/bot}
 {option}[1]True{/option}
 {option}[2]False{/option}
 
-[opt]2[/opt]
-{bot}Not quite![/n]
+{bot}
+[opt]2[/opt]Not quite![/n]
 Robbie is a robot and one of Chester's camp friends.[/n]
 Try again!{/bot}
 
-[opt]1[/opt]
-{bot}🎉 Correct![/n]
+{bot}
+[opt]1[/opt]🎉 Correct![/n]
 Robbie is a friendly robot who joins the camp adventure!{/bot}
 
 
@@ -460,6 +474,36 @@ Zeke loves nature and enjoys teaching Chester about the outdoors!{/bot}
 
 {bot}Bigfoot had an important safety warning.[/n]
 Do you remember?{/bot}
+
+{option}[1]🚶 Stay on the trail{/option}
+{option}[2]🍓 Eat any berries you find{/option}
+{option}[3]🏃 Run away if you hear a noise{/option}
+{option}[4]🌲 Wander into the forest alone{/option}
+
+{bot}[opt]1[/opt]
+🎉 That's right![/n]
+Bigfoot reminded everyone to stay on the trail and never wander off alone.[/n]
+Following safety rules helps everyone have a fun adventure!
+{/bot}
+
+{bot}[opt]2[/opt]
+Good try! 😊[/n]
+Bigfoot didn't say to eat berries you find.[/n]
+Some berries can be unsafe to eat.[/n]
+His important safety warning was to stay on the trail and never wander off alone.
+{/bot}
+
+{bot}[opt]3[/opt]
+Nice guess! 😊[/n]
+Running away could make it harder for others to find you.[/n]
+Bigfoot's safety warning was to stay on the trail and never wander off alone.
+{/bot}
+
+{bot}[opt]4[/opt]
+Almost! 😊[/n]
+Bigfoot actually warned everyone not to wander into the forest alone.[/n]
+The safest choice is to stay on the trail with your group.
+{/bot}
 
 {bot}What should campers do if a tree starts falling?{/bot}
 
@@ -543,8 +587,7 @@ Georgia isn't a tropical rainforest.[/n]
 Try again!{/bot}
 
 {bot}[opt]4[/opt]🧊 Almost![/n]
-Georgia is much warmer than the Arctic.[/n]
-Which forest biome is common there?{/bot}
+Georgia is much warmer than the Arctic.{/bot}
 
 {bot}[opt]3[/opt]🎉 Correct![/n]
 🌳 Georgia is home to the **Deciduous Forest** biome, where many trees lose their leaves each autumn!{/bot}
@@ -1001,4 +1044,4 @@ What was your favorite part of today's adventure?{/bot}
 {option}[3]🌳 Learning about nature{/option}
 {option}[4]✨ The Creation story{/option}
 
-{bot}Thank you for learning with me today! 🌟 I can't wait to explore another adventure with you soon. Goodbye, Nature Explorer!👋 (END) {/bot} 
+{bot}Thank you for learning with me today! 🌟 I can't wait to explore another adventure with you soon. Goodbye, Nature Explorer!👋 {/bot} 
