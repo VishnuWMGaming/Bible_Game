@@ -78,6 +78,8 @@ namespace BibleGame
         public static Action ApplyStyleAction;
 
         public static Action<MScreenOriatation,bool,bool> ChangeLandscape;
+
+        public static Action<VidLang> SetVidLang;
     }
 
    namespace Data

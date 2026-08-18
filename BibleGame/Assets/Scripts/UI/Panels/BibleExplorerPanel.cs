@@ -1,4 +1,5 @@
 using BibleGame;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -19,6 +20,11 @@ public class BibleExplorerPanel : MonoBehaviour,IVidPic
     [Header("VideoStore")]
     [SerializeField] VideoUrlData videoUrlData;
 
+    [Header("Vidlang")]
+    [SerializeField] GameObject mVideoLangPanel;
+
+    VideoPIc mVideoPic;
+
     private void OnEnable()
     {
         backButton.onClick.AddListener(() =>
@@ -30,12 +36,15 @@ public class BibleExplorerPanel : MonoBehaviour,IVidPic
         });
 
         Init();
+        Actions.SetVidLang += VideoInit;
     }
 
     private void OnDisable()
     {
         ClearAll();
         backButton.onClick.RemoveAllListeners();
+
+        Actions.SetVidLang -= VideoInit;
     }
 
     void Init()
@@ -45,23 +54,47 @@ public class BibleExplorerPanel : MonoBehaviour,IVidPic
         for (int i = 0; i < list.Count; i++)
         {
             string vidyoutubeUrl = list[i].youtubeLink;
-            string vidStorUrl = list[i].vidStoreLink;
+            //string vidStorUrl = list[i].vidStoreLink;
 
             GameObject go = Instantiate(videoPIc.gameObject,videoPicTransform);
             go.transform.localScale = Vector3.one;
 
             VideoPIc video = go.GetComponent<VideoPIc>();
 
-            video.Init(vidyoutubeUrl,vidStorUrl, this);
+            video.Init(vidyoutubeUrl, list[i].objs,this);
         }
     }
 
-    public void InitVid(string vidUrl,string title)
+    public void InitVid(VideoPIc videoPIc)
     {
+        mVideoLangPanel.SetActive(true); 
+        mVideoPic = videoPIc;
+
+        //mVideoPlayer.gameObject.SetActive(true);
+        //mVideoPlayer.StartVideo(vidUrl);
+
+        //mVideoPlayer.SetTitle(title);
+    }
+
+    private void VideoInit(VidLang lang)
+    {
+        if (mVideoPic == null)
+            return;
+
+        string vidUrl = mVideoPic.GetVidUrl(lang);
+
+        if(string.IsNullOrWhiteSpace(vidUrl))
+        {
+            PopUp.Instance.ShowMessage("No video available !!");
+            return;
+        }
+
+        mVideoLangPanel.SetActive(false);
+
         mVideoPlayer.gameObject.SetActive(true);
         mVideoPlayer.StartVideo(vidUrl);
 
-        mVideoPlayer.SetTitle(title);
+        mVideoPlayer.SetTitle(mVideoPic.Title);
     }
 
     void ClearAll()

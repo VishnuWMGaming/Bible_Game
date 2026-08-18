@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 
 public interface IVidPic
 {
-    public void InitVid(string vidUr,string title);
+    public void InitVid(VideoPIc videoPIc);
 }
 
 [RequireComponent(typeof(Button))]
@@ -26,6 +27,13 @@ public class VideoPIc : MonoBehaviour
 
     public IVidPic callback;
 
+    [Header("Video Objects:")]
+    [SerializeField] List<VidObj> vidObjs = new List<VidObj>();
+
+    [SerializeField] string mTitle;
+    public string Title => mTitle;
+
+
     private void Awake()
     {
         button = GetComponent<Button>();
@@ -36,9 +44,9 @@ public class VideoPIc : MonoBehaviour
         button = GetComponent<Button>();
     }
 
-    public void Init (string url,string vidUrl,IVidPic callbackIN)
+    public void Init (string url, List<VidObj> objs,IVidPic callbackIN)
     {
-        mUrl = vidUrl;
+        //mUrl = vidUrl;
 
         string videoId = ExtractVideoId(url);
 
@@ -48,9 +56,18 @@ public class VideoPIc : MonoBehaviour
             return;
         }
 
+        vidObjs = objs;
+
         callback = callbackIN;
 
         StartCoroutine(FetchAll(videoId, url));
+    }
+
+    public string GetVidUrl(VidLang lang)
+    {
+        VidObj obj = vidObjs.Find(x => x.lang == lang);
+
+        return obj == null ? null :  vidObjs.Find(x => x.lang == lang).vidStoreLink;
     }
 
     public static string ExtractVideoId(string url)
@@ -96,7 +113,7 @@ public class VideoPIc : MonoBehaviour
         {
             if (callback == null) return;
 
-            callback?.InitVid(mUrl,title);
+            callback?.InitVid(this);
         });
 
         ApplySprite(thumbnailImage, sprite);
@@ -106,6 +123,8 @@ public class VideoPIc : MonoBehaviour
 
         if (titleText != null)
             titleText.text = title;
+
+        mTitle = title;
 
         OnMetaFetched?.Invoke(sprite, title);
 

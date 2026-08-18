@@ -11,7 +11,7 @@ public class VideoUrlData : ScriptableObject
 
     public List<VidData> GetAll()
     {
-        return videoUrls;   
+        return videoUrls;
     }
 }
 
@@ -20,6 +20,18 @@ public class VidData
 {
     [TextArea(2, 4)]
     public string youtubeLink;
+
+    [Header("VidObjs:")]
+    public List<VidObj> objs;
+}
+
+[Serializable]
+public class VidObj
+{
+    public VidLang lang;
+
     [TextArea(2, 4)]
     public string vidStoreLink;
 }
+
+public enum VidLang { english,swahili,spanish,creole,french}
