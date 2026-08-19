@@ -31,12 +31,30 @@ MonoBehaviour:
       vidStoreLink: https://drive.google.com/file/d/1oOPDmuss0S3TzVI90hJMUdQeUh_FMe3j/view?usp=sharing
     - lang: 4
       vidStoreLink: https://drive.google.com/file/d/1_LT2ZB7aGST-8m7om65Zzf0NR7KIcOTX/view?usp=sharing
-    - lang: 4
-      vidStoreLink: https://drive.google.com/file/d/1oOPDmuss0S3TzVI90hJMUdQeUh_FMe3j/view?usp=sharing
+    - lang: 1
+      vidStoreLink: https://drive.google.com/file/d/1iV50hUCi7BnWmabywbtNUtMGnwVCzeYV/view?usp=sharing
+    - lang: 2
+      vidStoreLink: https://drive.google.com/file/d/1Kuhm-ThiUojFKphH_PHZU3rSsowoy4bU/view?usp=sharing
+    - lang: 3
+      vidStoreLink: https://drive.google.com/file/d/1SLsHgohg7NxxiuN7dMeLfNkkbQfOqmMk/view?usp=sharing
   - youtubeLink: https://www.youtube.com/watch?v=Pjrl8h-qrio&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=4
-    objs: []
+    objs:
+    - lang: 0
+      vidStoreLink: https://drive.google.com/file/d/1PulUHOeIyTKK7c3aiSdteUOANDywR98U/view?usp=sharing
+    - lang: 1
+      vidStoreLink: https://drive.google.com/file/d/1WALkuBSLBQixi9LA5h5mk3uj_WLyEoea/view?usp=sharing
+    - lang: 2
+      vidStoreLink: https://drive.google.com/file/d/1Uiki1C0W1dBvTs3EK_Bhlty8EMJ54CUi/view?usp=sharing
+    - lang: 3
+      vidStoreLink: https://drive.google.com/file/d/1JSuqPsfGBHtSim2IBE4bluPqcvVnLFOp/view?usp=sharing
+    - lang: 4
+      vidStoreLink: https://drive.google.com/file/d/1bp5TsLC9QThJAkHg8DtoelfRIdxFBlPA/view?usp=sharing
   - youtubeLink: https://www.youtube.com/watch?v=7RI3M3ohlGc&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=5
-    objs: []
+    objs:
+    - lang: 0
+      vidStoreLink: https://drive.google.com/file/d/1PjmCZrOdJY3Eb6qqSNA9RpwW9XShvd8G/view?usp=sharing
+    - lang: 1
+      vidStoreLink: https://drive.google.com/file/d/1xxEAVJCIAsLwI37UuVzaOTc0ArOu4Goo/view?usp=sharing
   - youtubeLink: https://www.youtube.com/watch?v=J3_vyCAsvxo&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=6
     objs: []
   - youtubeLink: https://www.youtube.com/watch?v=WLxvjkCp-mY&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=7
