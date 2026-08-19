@@ -76,12 +76,24 @@ MonoBehaviour:
   - youtubeLink: https://www.youtube.com/watch?v=WLxvjkCp-mY&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=7
     objs:
     - lang: 0
-      vidStoreLink: 
+      vidStoreLink: https://drive.google.com/file/d/1PA_K3yON1QHZfs1ntgpkGwnG6O5-bNv-/view?usp=sharing
+    - lang: 1
+      vidStoreLink: https://drive.google.com/file/d/1126MQCVSqPrUnLcByaoiVj-XzkRearSn/view?usp=sharing
+    - lang: 2
+      vidStoreLink: https://drive.google.com/file/d/1gPxeURJpgHBSVEVcGkcV-VwX7rW_dCE_/view?usp=sharing
+    - lang: 3
+      vidStoreLink: https://drive.google.com/file/d/1ensF0E5ro8dqowAE90O7NCMMuJwVB5d_/view?usp=sharing
+    - lang: 4
+      vidStoreLink: https://drive.google.com/file/d/1p-bmCm3onkBk_uhg0nckwcTVMBqV_7D7/view?usp=sharing
   - youtubeLink: https://www.youtube.com/watch?v=uzGDaaY_2Mw&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=8
-    objs: []
+    objs:
+    - lang: 0
+      vidStoreLink: https://drive.google.com/file/d/1EQiXWTexDnEuVL-jGhtvE09YqXKouPPE/view?usp=sharing
   - youtubeLink: https://www.youtube.com/watch?v=D90gsJgae14&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=9
-    objs: []
-  - youtubeLink: https://www.youtube.com/watch?v=dcpTGKG5iB0&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=10
-    objs: []
+    objs:
+    - lang: 0
+      vidStoreLink: https://drive.google.com/file/d/1_p0wMApUGVtTJpR0qVT7dgvujCzzrzT4/view?usp=sharing
   - youtubeLink: https://www.youtube.com/watch?v=NQCW1itFyes&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=11
-    objs: []
+    objs:
+    - lang: 0
+      vidStoreLink: https://drive.google.com/file/d/1wYREfcrzAKOYUh6bccsXJoG-BcwdfkIm/view?usp=sharing
