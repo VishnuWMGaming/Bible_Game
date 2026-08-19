@@ -16,9 +16,15 @@ MonoBehaviour:
   - youtubeLink: https://www.youtube.com/watch?v=Lszj0N7S-nc&t=155s
     objs:
     - lang: 0
-      vidStoreLink: https://archive.org/details/vidssave.com-chesters-garage-summer-camp-pt.-1-s-4-e-1-480-p/vidssave.com+Chester's+Garage+-+Summer+Camp+Pt.+1+(S4E1)+480P.mp4
+      vidStoreLink: https://drive.google.com/file/d/1uX2jo7Axv0UywGJlq-I4ueVzSp2QEiK8/view?usp=sharing
     - lang: 2
-      vidStoreLink: https://ia601508.us.archive.org/16/items/dubbed_video_spa/dubbed_video_spa.mp4
+      vidStoreLink: https://drive.google.com/file/d/1aKgri1Nl7c4s3GlkpE-CzFsDwgY4A2n3/view?usp=sharing
+    - lang: 4
+      vidStoreLink: https://drive.google.com/file/d/1KhKUukzPhIruLl85dBRTZenp5LLLHz_o/view?usp=sharing
+    - lang: 1
+      vidStoreLink: https://drive.google.com/file/d/1lbb7VxOf5YJx5jMKcc-ozsv2iTpscCZW/view?usp=sharing
+    - lang: 3
+      vidStoreLink: https://drive.google.com/file/d/14-NTN2IwWkk4B5mq93DFtUb90_ALOrNN/view?usp=sharing
   - youtubeLink: https://www.youtube.com/watch?v=ub5r3LokSpw
     objs: []
   - youtubeLink: https://www.youtube.com/watch?v=Pjrl8h-qrio&list=PLt_NPkDAySjwv4KRQsYm8Fs231lLTkbk2&index=4

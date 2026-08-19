@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
-using System.Drawing;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -56,7 +57,6 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         mLoadingPanel.SetActive(true);
 
         videoPlayer.loopPointReached += OnVideoFinished;
-
     }
 
     private void OnDisable()
@@ -76,7 +76,6 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         replayButton.onClick.AddListener(() =>
         {
             replayButton.gameObject.SetActive(false);
-            //CloseAction();
 
             progressSlider.value = 0;
 
@@ -94,8 +93,8 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         });
     }
 
-    public void SetTitle(string title) 
-    { 
+    public void SetTitle(string title)
+    {
         mtitle.text = title;
         chatBtn.interactable = title == "Chester's Garage - Summer Camp Pt. 1 (S4E1)";
 
@@ -106,9 +105,6 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     public async void StartVideo(string vidurl)
     {
         url = vidurl;
-
-        //cancellationTokenSource?.Cancel();
-        //cancellationTokenSource?.Dispose();
 
         cancellationTokenSource = new CancellationTokenSource();
 
@@ -126,19 +122,44 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
     }
 
-    // MAIN LOADER (ARCHIVE + DIRECT MP4)
+    // MAIN LOADER (ARCHIVE + GOOGLE DRIVE + DIRECT MP4)
     private async Task LoadVideo(string url, CancellationToken token)
     {
         videoPlayer.Stop();
 
         string streamUrl = null;
+        bool isGoogleDrive = url.Contains("drive.google.com") || url.Contains("drive.usercontent.google.com");
+        bool isArchive = url.Contains("archive.org");
 
         // ----------------------------
         // ✅ INTERNET ARCHIVE HANDLING
         // ----------------------------
-        if (url.Contains("archive.org"))
+        if (isArchive)
         {
             streamUrl = ConvertArchiveUrl(url);
+        }
+        // ----------------------------
+        // ✅ GOOGLE DRIVE HANDLING (large-file bypass)
+        // ----------------------------
+        else if (isGoogleDrive)
+        {
+            string fileId = ExtractGoogleDriveFileId(url);
+
+            if (string.IsNullOrEmpty(fileId))
+            {
+                Debug.LogError("Could not extract Google Drive file ID from: " + url);
+                return;
+            }
+
+            try
+            {
+                streamUrl = await ResolveGoogleDriveDownloadUrlAsync(fileId, token);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Google Drive resolve failed: " + ex.Message);
+                return;
+            }
         }
         else
         {
@@ -159,25 +180,19 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         // ----------------------------
         // VIDEO PLAYER SETUP
         // ----------------------------
-        StartCoroutine(ResolveFinalUrl(streamUrl, (finalUrl) =>
+        if (isArchive)
         {
-            
+            // Archive URLs still benefit from redirect resolution + cleanup.
+            string finalUrl = await ResolveFinalUrlAsync(streamUrl, token);
             finalUrl = CleanArchiveUrl(finalUrl);
-
-            AudioManager.Instance.MuteBG(true);
-
-            Debug.Log("Final resolved URL: " + finalUrl);
-
-            videoPlayer.source = VideoSource.Url;
-            videoPlayer.url = finalUrl;
-
-            videoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;
-            videoPlayer.EnableAudioTrack(0, true);
-            videoPlayer.SetDirectAudioMute(0, false);
-            videoPlayer.SetDirectAudioVolume(0, 1f);
-
-            videoPlayer.Prepare();
-        }));
+            ApplyVideoSource(finalUrl);
+        }
+        else
+        {
+            // Google Drive stream URL is already the resolved, direct-download
+            // URL with a confirm token — no further redirect resolution needed.
+            ApplyVideoSource(streamUrl);
+        }
 
         while (!videoPlayer.isPrepared)
         {
@@ -199,6 +214,23 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         UpdatePlayPauseText();
     }
 
+    private void ApplyVideoSource(string finalUrl)
+    {
+        AudioManager.Instance.MuteBG(true);
+
+        Debug.Log("Final resolved URL: " + finalUrl);
+
+        videoPlayer.source = VideoSource.Url;
+        videoPlayer.url = finalUrl;
+
+        videoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;
+        videoPlayer.EnableAudioTrack(0, true);
+        videoPlayer.SetDirectAudioMute(0, false);
+        videoPlayer.SetDirectAudioVolume(0, 1f);
+
+        videoPlayer.Prepare();
+    }
+
     // ----------------------------
     // ARCHIVE URL CONVERTER
     // ----------------------------
@@ -206,36 +238,25 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     {
         try
         {
-            // Example input:
-            // https://archive.org/details/.../file.mp4
-
             Uri uri = new Uri(url);
-
             string fullPath = uri.AbsolutePath;
 
-            // Extract after /details/
             string[] parts = fullPath.Split("/details/");
-
             if (parts.Length < 2)
                 return url;
 
             string itemAndFile = parts[1];
-
-            // split item name + file name
             string[] split = itemAndFile.Split('/', 2);
-
             if (split.Length < 2)
                 return url;
 
             string itemId = split[0];
             string fileName = split[1];
 
-            // Decode + re-encode properly
             fileName = Uri.UnescapeDataString(fileName);
             fileName = Uri.EscapeDataString(fileName);
 
-            string downloadUrl =
-                $"https://archive.org/download/{itemId}/{fileName}";
+            string downloadUrl = $"https://archive.org/download/{itemId}/{fileName}";
 
             return downloadUrl;
         }
@@ -243,6 +264,141 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         {
             Debug.LogError("Archive URL conversion failed: " + ex.Message);
             return url;
+        }
+    }
+
+    // ----------------------------
+    // GOOGLE DRIVE - LARGE FILE BYPASS
+    // ----------------------------
+    // Drive serves an HTML "can't scan for viruses" interstitial for big
+    // files instead of raw bytes. This fetches that page, extracts the
+    // confirm token (and uuid, if present), and rebuilds the URL so it
+    // returns the actual video stream instead of the warning page.
+    //
+    // ⚠️ Still fragile: Drive can change this markup, and files with
+    // restricted sharing or extra verification steps won't resolve this way.
+    // For production reliability, prefer the Drive REST API
+    // (files.get?alt=media) with an API key/OAuth token, or host the file
+    // on your own CDN/storage instead.
+    private async Task<string> ResolveGoogleDriveDownloadUrlAsync(string fileId, CancellationToken token)
+    {
+        string initialUrl = $"https://drive.usercontent.google.com/download?id={fileId}&export=download";
+
+        using (UnityWebRequest request = UnityWebRequest.Get(initialUrl))
+        {
+            request.redirectLimit = 10;
+
+            await SendRequestAsync(request, token);
+
+            if (request.result != UnityWebRequest.Result.Success)
+                throw new Exception("Initial Drive request failed: " + request.error);
+
+            string contentType = request.GetResponseHeader("Content-Type");
+
+            // If Drive already returned the actual file (small file, no
+            // warning page), Content-Type won't be text/html — we're done.
+            if (contentType != null && !contentType.Contains("text/html"))
+            {
+                return request.url;
+            }
+
+            string html = request.downloadHandler.text;
+
+            string confirmToken = null;
+
+            Match confirmMatch = Regex.Match(html, @"confirm=([0-9A-Za-z_-]+)");
+            if (confirmMatch.Success)
+                confirmToken = confirmMatch.Groups[1].Value;
+
+            if (string.IsNullOrEmpty(confirmToken))
+            {
+                Match formConfirm = Regex.Match(html, @"name=""confirm""\s+value=""([^""]+)""");
+                if (formConfirm.Success)
+                    confirmToken = formConfirm.Groups[1].Value;
+            }
+
+            string uuid = null;
+            Match uuidMatch = Regex.Match(html, @"(?:name=""uuid""\s+value=""|uuid=)([0-9A-Za-z_-]+)");
+            if (uuidMatch.Success)
+                uuid = uuidMatch.Groups[1].Value;
+
+            if (string.IsNullOrEmpty(confirmToken))
+            {
+                throw new Exception("Could not find confirm token — Drive page format may have changed, or file requires manual permission/sign-in.");
+            }
+
+            string finalUrl = $"https://drive.usercontent.google.com/download?id={fileId}&export=download&confirm={confirmToken}";
+
+            if (!string.IsNullOrEmpty(uuid))
+                finalUrl += $"&uuid={uuid}";
+
+            return finalUrl;
+        }
+    }
+
+    private string ExtractGoogleDriveFileId(string url)
+    {
+        // /file/d/{id}/...
+        Match match = Regex.Match(url, @"/file/d/([a-zA-Z0-9_-]+)");
+        if (match.Success)
+            return match.Groups[1].Value;
+
+        // ?id={id}  (covers /open?id= and /uc?id=)
+        match = Regex.Match(url, @"[?&]id=([a-zA-Z0-9_-]+)");
+        if (match.Success)
+            return match.Groups[1].Value;
+
+        return null;
+    }
+
+    // ----------------------------
+    // GENERIC UnityWebRequest -> Task BRIDGE
+    // ----------------------------
+    private Task SendRequestAsync(UnityWebRequest request, CancellationToken token)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        StartCoroutine(SendRequestCoroutine(request, tcs, token));
+        return tcs.Task;
+    }
+
+    private IEnumerator SendRequestCoroutine(UnityWebRequest request, TaskCompletionSource<bool> tcs, CancellationToken token)
+    {
+        var op = request.SendWebRequest();
+
+        while (!op.isDone)
+        {
+            if (token.IsCancellationRequested)
+            {
+                request.Abort();
+                tcs.TrySetCanceled(token);
+                yield break;
+            }
+            yield return null;
+        }
+
+        tcs.TrySetResult(true);
+    }
+
+    // ----------------------------
+    // ARCHIVE REDIRECT RESOLUTION
+    // ----------------------------
+    private async Task<string> ResolveFinalUrlAsync(string url, CancellationToken token)
+    {
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            request.redirectLimit = 10;
+
+            await SendRequestAsync(request, token);
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                return request.url; // resolved redirected URL
+            }
+            else
+            {
+                Debug.LogWarning("URL resolve failed, using original: " + request.error);
+                return url;
+            }
         }
     }
 
@@ -270,12 +426,12 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     }
 
     // SEEK
-    public void Forward10Seconds() 
+    public void Forward10Seconds()
     {
         if (!videoPlayer.isPrepared)
-            return; 
+            return;
 
-        videoPlayer.time += 10; 
+        videoPlayer.time += 10;
     }
 
     public void Backward10Seconds()
@@ -289,8 +445,7 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     // SLIDER
     public void OnSliderChanged(float value)
     {
-       // if (isDragging)
-            videoPlayer.time = value;
+        videoPlayer.time = value;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -331,30 +486,6 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             .Replace(")", "%29");
     }
 
-    private IEnumerator ResolveFinalUrl(string url, Action<string> onDone)
-    {
-        using (UnityEngine.Networking.UnityWebRequest request =
-               UnityEngine.Networking.UnityWebRequest.Get(url))
-        {
-            request.redirectLimit = 10;
-
-            yield return request.SendWebRequest();
-
-            string finalUrl = url;
-
-            if (request.result == UnityEngine.Networking.UnityWebRequest.Result.Success)
-            {
-                finalUrl = request.url; // resolved redirected URL
-            }
-            else
-            {
-                Debug.LogWarning("URL resolve failed, using original: " + request.error);
-            }
-
-            onDone?.Invoke(finalUrl);
-        }
-    }
-
     public void CloseAction()
     {
         videoPlayer.Stop();
@@ -372,9 +503,7 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
         cancellationTokenSource?.Cancel();
         cancellationTokenSource?.Dispose();
-
     }
-
 
     private void OnDestroy()
     {
@@ -382,7 +511,6 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         gameObject.SetActive(false);
 
         progressSlider.value = 0;
-
 
         currentTimeText.text = "00";
         durationText.text = "00";
