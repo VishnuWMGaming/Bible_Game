@@ -1,3 +1,5 @@
+using BibleGame;
+using BibleGame.Data;
 using System;
 using System.Collections;
 using System.Text.RegularExpressions;
@@ -65,7 +67,7 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         progressSlider.onValueChanged.RemoveAllListeners();
 
         videoPlayer.loopPointReached -= OnVideoFinished;
-        chatBtn.onClick.RemoveListener(ChatFunction);
+        chatBtn.onClick.RemoveAllListeners();
     }
 
     private void OnVideoFinished(VideoPlayer source)
@@ -96,9 +98,11 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     public void SetTitle(string title)
     {
         mtitle.text = title;
-        chatBtn.interactable = title == "Chester's Garage - Summer Camp Pt. 1 (S4E1)";
+       // chatBtn.interactable = title == "Chester's Garage - Summer Camp Pt. 1 (S4E1)";
 
-        chatBtn.onClick.AddListener(ChatFunction);
+        chatBtn.onClick.AddListener(()=>ChatFunction(title));
+
+        AppData.mCurrentVidChapter = title;
     }
 
     // START VIDEO
@@ -402,7 +406,7 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
     }
 
-    void ChatFunction()
+    void ChatFunction(string title)
     {
         videoPlayer.Pause();
         UpdatePlayPauseText();

@@ -1,0 +1,785 @@
+{bot}👋 Hey Explorer! Welcome back to Camp Falling Pines![/n]
+Today is a BIG day.[/n]
+It's the beginning of the LAST WEEK of camp! 🏕️[/n]
+But before we join Chester and the others...[/n]
+I have a very important question.[/n]
+Are you ready for one more wild adventure?{/bot}
+
+{option}[1]🚀 Absolutely!{/option}
+{option}[2]😎 Bring it on!{/option}
+{option}[3]🤔 What could go wrong?{/option}
+
+{bot}[opt]1[/opt]
+That's the spirit! 🚀[/n]
+Let's see what Chester and his friends are up to!{/bot}
+
+{bot}[opt]2[/opt]
+I like that confidence! 😎[/n]
+Just remember...[/n]
+This IS Camp Falling Pines.[/n]
+Something weird is probably about to happen. 😂{/bot}
+
+{bot}[opt]3[/opt]
+😂 That's exactly what I'm worried about too.[/n]
+And trust me...[/n]
+You haven't even heard about breakfast yet. 🍩{/bot}
+
+{bot}Chester gets woken up early.[/n]
+Why?[/n]
+Because apparently the mess hall is serving...[/n]
+🍩 **CREAM-FILLED DONUTS!**[/n]
+Sounds amazing, right?{/bot}
+
+{option}[1]🍩 YES! Give me one!{/option}
+{option}[2]😋 Give me TWO!{/option}
+{option}[3]🤨 Something feels suspicious...{/option}
+
+{bot}[opt]1[/opt]
+😂 Good choice![/n]
+But maybe wait one second before eating it...{/bot}
+
+{bot}[opt]2[/opt]
+Whoa! TWO donuts?![/n]
+You have more courage than Chester. 😂{/bot}
+
+{bot}[opt]3[/opt]
+👀 You have excellent instincts.[/n]
+Because there is something VERY suspicious about these donuts...{/bot}
+
+{bot}The campers finally discover the truth.[/n]
+Those aren't normal donuts.[/n]
+They're...[/n]
+🐞 **DUNG BEETLE DONUTS!**[/n]
+😳{/bot}
+
+{option}[1]🤢 NOPE!{/option}
+{option}[2]😂 That's disgusting!{/option}
+{option}[3]😋 I'll still try it!{/option}
+{option}[4]🤔 What's in the filling?{/option}
+
+{bot}[opt]1[/opt]
+😂 Chester would completely understand you.[/n]
+He was ready to get out of there too!{/bot}
+
+{bot}[opt]2[/opt]
+🤣 I think the entire mess hall owes us an explanation.[/n]
+But there's an even stranger question...{/bot}
+
+{bot}[opt]3[/opt]
+😳 WHAT?![/n]
+You might actually be the bravest camper here.[/n]
+Or the hungriest. 😂{/bot}
+
+{bot}[opt]4[/opt]
+👀 EXACTLY![/n]
+Chester wondered the same thing.[/n]
+What would YOU guess the cream filling is made of?{/bot}
+
+{option}[1]🍫 Chocolate{/option}
+{option}[2]🍦 Something sweet{/option}
+{option}[3]🐞 Don't even tell me!{/option}
+{option}[4]🤢 I don't want to know{/option}
+
+{bot}😂 Honestly, some mysteries are better left unsolved.[/n]
+The video never tells us exactly what the filling is.[/n]
+So we'll let that mystery remain at Camp Falling Pines forever!{/bot}
+
+{bot}Chester and his friends are heading to their Nature 101 class.[/n]
+But Chester suddenly realizes something.[/n]
+Even though he can't wait to eat normal food again...[/n]
+he's going to MISS camp! 🥺[/n]
+Why do you think he's going to miss it?{/bot}
+
+{option}[1]👫 He made good friends{/option}
+{option}[2]🌲 He enjoyed camp life{/option}
+{option}[3]🍩 He'll miss the weird food{/option}
+{option}[4]🤔 All of these{/option}
+
+{bot}[opt]1[/opt]
+Exactly! 😊[/n]
+Chester says everyone at camp is nice and they all get along well.[/n]
+That's something special!{/bot}
+
+{bot}[opt]2[/opt]
+🎉 That's right![/n]
+Camp wasn't nearly as bad as Chester expected.[/n]
+He actually had a blast!{/bot}
+
+{bot}[opt]3[/opt]
+😂 I'm not sure anyone is going to miss those dung beetle donuts.[/n]
+But hey... maybe Chester has developed a taste for them!{/bot}
+
+{bot}[opt]4[/opt]
+🎉 Great thinking![/n]
+Chester enjoyed the friendships and the camp experience, even if the food was... questionable. 😂{/bot}
+
+{bot}Chester then says something important.[/n]
+He talks about how some people in his town don't treat everyone the same.[/n]
+That makes him sad.[/n]
+Then he decides not to focus on the negativity.[/n]
+Instead, he thinks about how much he'll miss camp.[/n]
+What do you think makes people feel welcome in a group?{/bot}
+
+{option}[1]😊 Being kind{/option}
+{option}[2]🤝 Including others{/option}
+{option}[3]❤️ Respecting people{/option}
+{option}[4]✨ All of these{/option}
+
+{bot}[opt]1[/opt]
+Absolutely! 😊[/n]
+Kindness can make someone feel like they belong.[/bot]
+
+{bot}[opt]2[/opt]
+Yes! 🤝[/n]
+Including people instead of leaving them out can make a huge difference.[/bot]
+
+{bot}[opt]3[/opt]
+Exactly! ❤️[/n]
+Respect is one of the biggest ideas we'll hear in today's lesson.[/bot]
+
+{bot}[opt]4[/opt]
+🎉 Exactly![/n]
+Kindness, inclusion, and respect can help make a group feel welcoming.[/bot]
+
+{bot}Good morning, campers! ☀️[/n]
+Mr. Foot announces something exciting.[/n]
+It's the last week of camp...[/n]
+and they're going to learn about the wildlife living around them! 🌲🐻🦊🐍{/bot}
+
+{bot}After the indoor lesson, they're going to a...[/n]
+🐾 **FOREST WILDLIFE PETTING ZOO!**[/n]
+You get to see some of the animals up close![/n]
+Which animal would YOU want to see first?{/bot}
+
+{option}[1]🐻 Black bear{/option}
+{option}[2]🦊 Red fox{/option}
+{option}[3]🐍 Copperhead{/option}
+{option}[4]🦌 White-tailed deer{/option}
+
+{bot}Great choice! 😄[/n]
+But let's see if you can recognize these animals from their clues.[/bot]
+
+{bot}🐻 **ANIMAL CHALLENGE #1**[/n]
+This animal has shaggy fur.[/n]
+It's usually black.[/n]
+It can be 4–7 feet long.[/n]
+And it can weigh hundreds of pounds.[/n]
+Who am I?{/bot}
+
+{option}[1]🦊 Red fox{/option}
+{option}[2]🐻 Black bear{/option}
+{option}[3]🐍 Copperhead{/option}
+{option}[4]🦃 Wild turkey{/option}
+
+{bot}[opt]1[/opt]
+🦊 Good guess![/n]
+But the red fox is much smaller.[/n]
+Think about the animal with shaggy black fur!{/bot}
+
+{bot}[opt]3[/opt]
+🐍 Nope![/n]
+The copperhead is a snake, so it definitely doesn't have shaggy fur. 😂[/n]
+Try again!{/bot}
+
+{bot}[opt]4[/opt]
+🦃 Nice try![/n]
+But the mystery animal is much bigger than a turkey.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]
+🎉 Correct![/n]
+🐻 It's the **black bear!**[/n]
+And here's something crazy...[/n]
+It can run up to about **30 miles per hour!**[/n]
+Would you want to race one? 😂{/bot}
+
+{option}[1]🏃 Absolutely not!{/option}
+{option}[2]😂 Maybe if I had a head start{/option}
+{option}[3]😎 I could beat it{/option}
+
+{bot}😂 I respect your confidence...[/n]
+but I'm definitely betting on the bear! 🐻{/bot}
+
+{bot}🦊 **ANIMAL CHALLENGE #2**[/n]
+This animal is around two feet tall.[/n]
+It has reddish fur.[/n]
+And its ears are so good at hearing that it can even hear rodents digging underground![/n]
+Who is it?{/bot}
+
+{option}[1]🐻 Black bear{/option}
+{option}[2]🦊 Red fox{/option}
+{option}[3]🐍 Copperhead{/option}
+{option}[4]🦉 Snowy owl{/option}
+
+{bot}[opt]1[/opt]
+🐻 Good guess![/n]
+But this animal is much smaller than a black bear.[/n]
+Think about the animal with those amazing ears!{/bot}
+
+{bot}[opt]3[/opt]
+🐍 Not this time![/n]
+Copperheads have heat-sensing pits, but they're not the animal with the famous underground hearing.[/n]
+Try again!{/bot}
+
+{bot}[opt]4[/opt]
+🦉 Nice guess![/n]
+But the animal described in the video is the red fox.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]
+🎉 That's right![/n]
+🦊 It's the **red fox!**[/n]
+Imagine having hearing that good.[/n]
+You'd never be able to hide your snack stash from your friends! 😂{/bot}
+
+{bot}🐍 **ANIMAL CHALLENGE #3**[/n]
+Okay... this one is a little more dangerous.[/n]
+This animal has a copper-colored head.[/n]
+It's a pit viper.[/n]
+And it has special heat-sensing pits on both sides of its head.[/n]
+What is it?{/bot}
+
+{option}[1]🐍 Copperhead{/option}
+{option}[2]🦊 Red fox{/option}
+{option}[3]🐻 Black bear{/option}
+{option}[4]🦝 Raccoon{/option}
+
+{bot}[opt]2[/opt]
+🦊 Nope![/n]
+The fox has amazing hearing, but it doesn't have heat-sensing pits.[/n]
+Try again!{/bot}
+
+{bot}[opt]3[/opt]
+🐻 Not quite![/n]
+The black bear is big and fast, but this animal is much smaller... and venomous.[/n]
+Try again!{/bot}
+
+{bot}[opt]4[/opt]
+🦝 Good guess![/n]
+But raccoons don't have those heat-sensing pits.[/n]
+Think about the snake!{/bot}
+
+{bot}[opt]1[/opt]
+🎉 Correct![/n]
+🐍 It's the **copperhead!**[/n]
+And according to the video, we should be careful around these venomous creatures.[/n]
+Definitely NOT a petting-zoo cuddle candidate! 😂{/bot}
+
+{bot}Quick! ⚡[/n]
+Which animal is an omnivore?{/bot}
+
+{option}[1]🐻 Black bear{/option}
+{option}[2]🌱 A plant{/option}
+{option}[3]🪨 A rock{/option}
+
+{bot}[opt]1[/opt]
+🎉 Correct![/n]
+Black bears are omnivores, meaning they eat both plant and animal foods.[/n]
+The video mentions fruits, herbs, grasses, fish, and small mammals!{/bot}
+
+{bot}[opt]2[/opt]
+😂 A plant would have a very difficult time being an omnivore.[/n]
+Try again!{/bot}
+
+{bot}[opt]3[/opt]
+🤣 If rocks start eating fish, we have MUCH bigger problems.[/n]
+Try again!{/bot}
+
+{bot}🌲 Mr. Foot explains something very important.[/n]
+All the animals work together with their environment and with one another to sustain life in the forest.[/n]
+This is called...{/bot}
+
+{option}[1]🌎 Ecology{/option}
+{option}[2]🏃 Exercise{/option}
+{option}[3]🍳 Cooking{/option}
+{option}[4]🎵 Music{/option}
+
+{bot}[opt]2[/opt]
+😂 Nice try![/n]
+Although running through a forest IS exercise...[/n]
+that's not what this lesson is about!{/bot}
+
+{bot}[opt]3[/opt]
+🍳 Definitely not![/n]
+Unless the forest animals are secretly opening a restaurant. 😂{/bot}
+
+{bot}[opt]4[/opt]
+🎵 Not this time![/n]
+The word we're looking for describes how living things interact with their environment.[/n]
+Try again!{/bot}
+
+{bot}[opt]1[/opt]
+🎉 Correct![/n]
+🌎 **Ecology!**[/n]
+It's about how living things interact with their environment and with each other.[/n]
+And removing even one small creature can change the whole system!{/bot}
+
+{bot}Let's test your ecology skills! 🧠[/n]
+Imagine a forest has lots of animals.[/n]
+Then suddenly, one species disappears.[/n]
+What could happen?{/bot}
+
+{option}[1]🌎 Nothing would change{/option}
+{option}[2]🔄 Other parts of the ecosystem could be affected{/option}
+{option}[3]🎉 The forest would become better automatically{/option}
+
+{bot}[opt]1[/opt]
+🤔 Not quite.[/n]
+The video specifically explains that removing even one small creature can change everything.[/n]
+Try again!{/bot}
+
+{bot}[opt]3[/opt]
+😂 Nature doesn't have an automatic "upgrade" button.[/n]
+One change can affect other parts of the ecosystem.[/bot]
+
+{bot}[opt]2[/opt]
+🎉 Exactly![/n]
+Everything is connected.[/n]
+Changing one part of an ecosystem can affect others! 🌲🦊🐭{/bot}
+
+{bot}Mr. Foot lists even more forest animals.[/n]
+🐻 Bears[/n]
+🦊 Foxes[/n]
+🦌 White-tailed deer[/n]
+🦅 Hawks[/n]
+🦝 Raccoons[/n]
+🦉 Snowy owls[/n]
+and many more![/n]
+Which one would YOU most want to see?{/bot}
+
+{option}[1]🐻 Bear{/option}
+{option}[2]🦊 Fox{/option}
+{option}[3]🦉 Owl{/option}
+{option}[4]🦝 Raccoon{/option}
+
+{bot}Excellent choice! 😊[/n]
+And the video reminds us that every one of these animals is important to the forest.[/n]
+That means we should treat them with respect.[/bot]
+
+{bot}But then Chester says something unexpected.[/n]
+He agrees that animals deserve respect...[/n]
+but he thinks they should talk about something else too.[/n]
+❤️ **Respecting each other.**[/n]
+Why do you think Chester brought this up?{/bot}
+
+{option}[1]❤️ People deserve respect too{/option}
+{option}[2]🐻 He doesn't like animals{/option}
+{option}[3]🍩 He wanted another donut{/option}
+
+{bot}[opt]2[/opt]
+😂 Definitely not![/n]
+Chester actually respects the animals.[/n]
+He just thinks people need respect too.[/bot]
+
+{bot}[opt]3[/opt]
+🤣 Chester has already had enough donut trouble for one day![/n]
+His point was much more important.[/bot]
+
+{bot}[opt]1[/opt]
+🎉 Exactly![/n]
+Chester reminds everyone that respecting nature is important, but respecting people matters too.[/bot]
+
+{bot}The lesson now talks about Genesis 1:26–27.[/n]
+It explains the idea that humans are made in the **image of God**.[/n]
+But what does that mean according to the lesson?{/bot}
+
+{option}[1]👨 Humans physically look exactly like God{/option}
+{option}[2]❤️ Humans represent, reflect, and resemble God{/option}
+{option}[3]🐻 Humans are animals{/option}
+{option}[4]🌎 Humans created nature{/option}
+
+{bot}[opt]1[/opt]
+Not quite. 😊[/n]
+The lesson specifically explains that being made in God's image doesn't simply mean our physical bodies look like God.[/n]
+Try again!{/bot}
+
+{bot}[opt]3[/opt]
+🤔 That's not the idea being explained here.[/n]
+The lesson makes a distinction between mankind and animals.[/n]
+Try again!{/bot}
+
+{bot}[opt]4[/opt]
+Nice try! 😊[/n]
+The lesson says God created nature.[/n]
+It doesn't say humans created it.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]
+🎉 Exactly![/n]
+The lesson compares it to a photograph.[/n]
+A photo represents and reflects the person it shows.[/n]
+In the same way, the lesson says humans represent, reflect, and resemble God.[/n]
+❤️{/bot}
+
+{bot}Here's another important part.[/n]
+The video says people of different colors and cultures are all made in God's image.[/n]
+What does the lesson say we should do because of that?{/bot}
+
+{option}[1]❤️ Treat everyone with equal respect{/option}
+{option}[2]🤷 Ignore differences completely{/option}
+{option}[3]😡 Treat people differently{/option}
+
+{bot}[opt]2[/opt]
+Good thought, but the lesson goes a little further.[/n]
+It says we should recognize differences while still treating everyone with equal respect.[/bot]
+
+{bot}[opt]3[/opt]
+❌ Not according to the lesson.[/n]
+The message is that people should be treated with equal respect regardless of differences.[/bot]
+
+{bot}[opt]1[/opt]
+🎉 Correct![/n]
+❤️ The lesson says everyone should be treated with equal respect because all people are made in God's image.[/bot]
+
+{bot}Let's make this personal.[/n]
+Imagine a new camper arrives.[/n]
+They're different from everyone else, and some campers start leaving them out.[/n]
+What would YOU do?{/bot}
+
+{option}[1]🤝 Include them{/option}
+{option}[2]❤️ Stand up for them{/option}
+{option}[3]😶 Ignore it{/option}
+{option}[4]😂 Invite them to join my group{/option}
+
+{bot}[opt]1[/opt]
+❤️ That's a great choice.[/n]
+Including someone can help them feel welcome.[/bot]
+
+{bot}[opt]2[/opt]
+👏 Great answer![/n]
+Standing up for someone who is being treated unfairly can make a real difference.[/bot]
+
+{bot}[opt]3[/opt]
+🤔 The lesson encourages us to treat people with respect.[/n]
+Sometimes choosing to include someone can make a big difference.[/bot]
+
+{bot}[opt]4[/opt]
+🎉 That's the spirit![/n]
+A simple invitation can turn an uncomfortable moment into a friendship.[/bot]
+
+{bot}Mr. Foot agrees with Chester.[/n]
+He says they both made excellent points.[/n]
+And then he thanks Chester and Robbie for something they've been doing throughout camp.[/n]
+Do you remember what it was?{/bot}
+
+{option}[1]🍳 Cooking breakfast{/option}
+{option}[2]🙏 Leading mealtime prayers{/option}
+{option}[3]🏕️ Building cabins{/option}
+{option}[4]🐻 Feeding bears{/option}
+
+{bot}[opt]1[/opt]
+😂 Hopefully they're not feeding everyone dung beetle donuts too![/n]
+Try again!{/bot}
+
+{bot}[opt]3[/opt]
+🏕️ Nope![/n]
+Their special job was something else.[/n]
+Think about what happens before meals.[/bot]
+
+{bot}[opt]4[/opt]
+🤣 Absolutely not![/n]
+Feeding bears would be a terrible camp assignment.[/n]
+Try again![/bot]
+
+{bot}[opt]2[/opt]
+🎉 Correct![/n]
+🙏 Chester and Robbie had been helping lead the mealtime prayers during the previous three weeks.[/n]
+Mr. Foot thanked them for doing such a great job!{/bot}
+
+{bot}Wait a second...[/n]
+Mr. Foot also thanks Robbie for being their...[/n]
+🤖 **MOBILE SOUND SYSTEM!** 😂{/bot}
+
+{option}[1]😂 That's hilarious{/option}
+{option}[2]🤖 Robbie has many talents!{/option}
+{option}[3]🎵 Makes sense!{/option}
+
+{bot}Exactly! 😂[/n]
+Robbie has officially become Camp Falling Pines' most useful sound system.[/bot]
+
+{bot}Now it's time for the wildlife petting zoo! 🐾[/n]
+Mr. Foot says they even have a special animal guest.[/n]
+One they don't usually have.[/n]
+What do you think it is?{/bot}
+
+{option}[1]🐻 Black bear{/option}
+{option}[2]🦊 Red fox{/option}
+{option}[3]🐍 Copperhead{/option}
+{option}[4]🦃 Wild turkey{/option}
+
+{bot}[opt]1[/opt]
+🐻 A black bear?![/n]
+Imagine putting THAT in a petting zoo! 😂[/n]
+Mr. Foot says that would be crazy.[/n]
+Try again!{/bot}
+
+{bot}[opt]2[/opt]
+🦊 A red fox would be pretty cool![/n]
+But that's not today's surprise.[/n]
+Try again!{/bot}
+
+{bot}[opt]3[/opt]
+🐍 A copperhead?![/n]
+I don't think anyone should be petting that! 😂[/n]
+Try again!{/bot}
+
+{bot}[opt]4[/opt]
+🎉 YES![/n]
+🦃 The special guest is a **WILD TURKEY!**[/n]
+And Chester LOVES wild turkeys...[/n]
+Wait.[/n]
+No.[/n]
+That's the opposite of what he wants. 😂{/bot}
+
+{bot}Mr. Foot tells Chester:[/n]
+“You can be the first one to pet him.”[/n]
+😳[/n]
+What do you think Chester does?{/bot}
+
+{option}[1]🦃 Runs away{/option}
+{option}[2]😂 Pretends he's excited{/option}
+{option}[3]😨 Panics{/option}
+{option}[4]😎 Calmly pets it{/option}
+
+{bot}[opt]1[/opt]
+😂 Honestly, completely understandable.[/n]
+Chester has been worried about wild turkeys this whole time!{/bot]
+
+{bot}[opt]2[/opt]
+🤣 “OH WOW! I LOVE TURKEYS!”[/n]
+Meanwhile, Chester internally: “PLEASE SAVE ME.”{/bot]
+
+{bot}[opt]3[/opt]
+😳 That's pretty close![/n]
+Chester definitely wasn't thrilled about his special encounter.[/bot]
+
+{bot}[opt]4[/opt]
+😎 Brave choice![/n]
+But Chester wasn't exactly ready to become best friends with the turkey.[/bot]
+
+{bot}Chester looks at the turkey...[/n]
+The turkey looks at Chester...[/n]
+🦃👀👦[/n]
+And Chester basically decides he's had enough.[/n]
+😂{/bot}
+
+{bot}Before we leave Camp Falling Pines...[/n]
+Let's see what you remember![/n]
+🏕️ **FINAL CAMP CHALLENGE!**{/bot}
+
+{bot}What was the main topic of Mr. Foot's lesson?{/bot}
+
+{option}[1]🌳 Forest wildlife and ecology{/option}
+{option}[2]🍳 Cooking{/option}
+{option}[3]🏊 Swimming{/option}
+{option}[4]🚀 Space travel{/option}
+
+{bot}[opt]1[/opt]
+🎉 Correct![/n]
+The campers learned about forest wildlife, ecology, and the importance of respecting creation.[/bot]
+
+{bot}[opt]2[/opt]
+😂 After those donuts, I'm not sure anyone wants another cooking lesson.[/n]
+Try again!{/bot]
+
+{bot}[opt]3[/opt]
+🏊 No swimming lesson today![/n]
+Try again!{/bot]
+
+{bot}[opt]4[/opt]
+🚀 Unless the black bear suddenly learned to fly... nope! 😂[/n]
+Try again!{/bot}
+
+{bot}Which animal can run up to about 30 miles per hour?{/bot}
+
+{option}[1]🦊 Red fox{/option}
+{option}[2]🐻 Black bear{/option}
+{option}[3]🐍 Copperhead{/option}
+{option}[4]🦃 Wild turkey{/option}
+
+{bot}[opt]1[/opt]
+🦊 Good guess![/n]
+But the video gives that speed to the black bear.[/n]
+Try again!{/bot]
+
+{bot}[opt]3[/opt]
+🐍 Nope![/n]
+The copperhead's special ability in the lesson is its heat-sensing pits.[/n]
+Try again!{/bot]
+
+{bot}[opt]4[/opt]
+🦃 Nice try![/n]
+The turkey is famous here for terrifying Chester, not for running 30 mph. 😂{/bot]
+
+{bot}[opt]2[/opt]
+🎉 Correct![/n]
+🐻 The black bear can reach speeds of up to about **30 miles per hour** according to the lesson.[/bot]
+
+{bot}Which animal can hear rodents digging underground?{/bot}
+
+{option}[1]🐻 Black bear{/option}
+{option}[2]🦊 Red fox{/option}
+{option}[3]🐍 Copperhead{/option}
+{option}[4]🦝 Raccoon{/option}
+
+{bot}[opt]1[/opt]
+🐻 Not this one![/n]
+Think about the animal with the giant pointy ears.[/bot]
+
+{bot}[opt]3[/opt]
+🐍 Good guess![/n]
+The copperhead uses heat-sensing pits instead.[/bot]
+
+{bot}[opt]4[/opt]
+🦝 Not according to the lesson.[/n]
+Try again!{/bot]
+
+{bot}[opt]2[/opt]
+🎉 Correct![/n]
+🦊 The red fox can hear rodents digging underground!{/bot}
+
+{bot}What helps copperheads detect temperature changes?{/bot}
+
+{option}[1]👃 Their noses{/option}
+{option}[2]👀 Their eyes{/option}
+{option}[3]🌡️ Heat-sensing pits{/option}
+{option}[4]👂 Their ears{/option}
+
+{bot}[opt]1[/opt]
+Not quite! 😊[/n]
+The video specifically mentions special pits on the sides of the head.[/bot]
+
+{bot}[opt]2[/opt]
+👀 Good guess![/n]
+But the lesson says copperheads have heat-sensing pits.[/bot]
+
+{bot}[opt]4[/opt]
+👂 Nice try![/n]
+The red fox is the one known for amazing hearing.[/bot]
+
+{bot}[opt]3[/opt]
+🎉 Correct![/n]
+🌡️ Copperheads have heat-sensing pits on both sides of their heads that help them sense temperature changes.[/bot]
+
+{bot}What does ecology mean in the video?{/bot}
+
+{option}[1]🌎 How living things interact with their environment and each other{/option}
+{option}[2]🍂 Why leaves change color{/option}
+{option}[3]🐻 How bears sleep{/option}
+{option}[4]🍩 How to make donuts{/option}
+
+{bot}[opt]2[/opt]
+🍂 That's related to nature, but it's not the definition of ecology given in the lesson.[/bot]
+
+{bot}[opt]3[/opt]
+🐻 Interesting question, but ecology is much bigger than bear sleeping habits! 😂[/bot]
+
+{bot}[opt]4[/opt]
+🤣 Unfortunately, ecology cannot explain the mystery of the dung beetle donut filling.[/bot]
+
+{bot}[opt]1[/opt]
+🎉 Correct![/n]
+Ecology is about how living things interact with their environment and with each other.[/bot]
+
+{bot}According to the lesson, why should people treat one another with respect?{/bot}
+
+{option}[1]❤️ Because all people are made in God's image{/option}
+{option}[2]🏕️ Because they're at camp{/option}
+{option}[3]🐻 Because bears are watching{/option}
+{option}[4]🍩 Because of the donuts{/option}
+
+{bot}[opt]2[/opt]
+Good thought, but the lesson gives a deeper reason.[/n]
+Think about what Chester and Mr. Foot discussed.[/bot]
+
+{bot}[opt]3[/opt]
+😂 Somehow I don't think the bears are enforcing the camp rules.[/n]
+Try again!{/bot]
+
+{bot}[opt]4[/opt]
+🤣 The donuts have caused enough trouble already.[/n]
+Try again!{/bot]
+
+{bot}[opt]1[/opt]
+🎉 Correct![/n]
+The lesson explains that people are made in God's image, so everyone should be treated with equal respect.[/bot]
+
+{bot}One final question, Explorer. 🌟[/n]
+We've had:[/n]
+🍩 Dung beetle donuts[/n]
+🐻 Black bears[/n]
+🦊 Red foxes[/n]
+🐍 Copperheads[/n]
+🌲 Ecology[/n]
+❤️ Respect[/n]
+🦃 And one extremely unfortunate wild turkey encounter.[/n]
+What was your FAVORITE part?{/bot}
+
+{option}[1]🍩 The crazy donut scene{/option}
+{option}[2]🐻 Learning about animals{/option}
+{option}[3]🌲 Learning about ecology{/option}
+{option}[4]❤️ The lesson about respecting people{/option}
+{option}[5]🦃 Chester vs. the turkey{/option}
+
+{bot}[opt]1[/opt]
+😂 Excellent choice![/n]
+Although I still have questions about that cream filling...{/bot]
+
+{bot}[opt]2[/opt]
+🐻 Great choice![/n]
+You definitely have some serious wildlife curiosity!{/bot]
+
+{bot}[opt]3[/opt]
+🌲 Awesome![/n]
+You now know why every creature can matter in an ecosystem.[/bot]
+
+{bot}[opt]4[/opt]
+❤️ That's one of the most meaningful ideas in the video.[/n]
+Respecting people regardless of differences is a major part of the lesson.[/bot]
+
+{bot}[opt]5[/opt]
+🦃🤣 Of course![/n]
+Somehow Chester survived another wild-turkey encounter.[/bot]
+
+{bot}🎉 AMAZING JOB, EXPLORER![/n]
+You made it through the final week of Camp Falling Pines![/n]
+Today you discovered:[/n]
+🌎 What ecology means[/n]
+🐻 Amazing facts about forest animals[/n]
+🦊 How incredible a fox's hearing can be[/n]
+🐍 How copperheads sense temperature[/n]
+❤️ Why people should treat one another with equal respect[/n]
+🦃 And why Chester REALLY doesn't want to meet another wild turkey.[/n]
+You've officially earned your Camp Falling Pines badge! 🏕️🏅{/bot}
+
+{option}[1]🏅 Nature Explorer{/option}
+{option}[2]🌲 Ecology Expert{/option}
+{option}[3]❤️ Respect Champion{/option}
+{option}[4]👑 Camp Falling Pines Legend{/option}
+
+{bot}[opt]1[/opt]
+🏅 **Nature Explorer!**[/n]
+You explored the forest and survived the wildlife lesson!{/bot}
+
+{bot}[opt]2[/opt]
+🌲 **Ecology Expert!**[/n]
+You understand how the creatures and their environment are connected!{/bot}
+
+{bot}[opt]3[/opt]
+❤️ **Respect Champion!**[/n]
+You understood the deeper message about treating everyone with respect.[/bot]
+
+{bot}[opt]4[/opt]
+👑 **CAMP FALLING PINES LEGEND!**[/n]
+You survived the dung beetle donuts, the copperhead lesson, the ecology challenge...[/n]
+AND CHESTER'S WILD TURKEY! 🦃😂[/n]
+That's an achievement worthy of a trophy!{/bot}
+
+{bot}🏕️ Thanks for joining me on this adventure, Explorer![/n]
+Remember:[/n]
+🌲 Respect nature.[/n]
+🐻 Appreciate the animals.[/n]
+❤️ Treat people with equal respect.[/n]
+And most importantly...[/n]
+🍩 **Always ask what's inside the donut before taking a bite.** 😂[/n]
+See you on the next adventure! 👋{/bot}

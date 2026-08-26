@@ -72753,10 +72753,11 @@ MonoBehaviour:
   botChat: {fileID: 3191814342220518205, guid: a3fd86a16c3ae764fa1241bb02b445ad, type: 3}
   userChat: {fileID: 3047468489847283201, guid: f2fbe89d5daed2a4e96ae38efe869823, type: 3}
   mGiveAnswerBtn: {fileID: 581878311}
+  mTitle: {fileID: 244262763}
   chatTransform: {fileID: 482052312}
   scrollRect: {fileID: 1284436780}
   optionPanel: {fileID: 27096338}
-  textAsset: {fileID: 4900000, guid: e3b4045260f2ccf4093e9d4d0df5313e, type: 3}
+  chatAssetData: {fileID: 11400000, guid: e185dd4dcb7c73249b31caca144fd664, type: 2}
 --- !u!1 &1985422331
 GameObject:
   m_ObjectHideFlags: 0

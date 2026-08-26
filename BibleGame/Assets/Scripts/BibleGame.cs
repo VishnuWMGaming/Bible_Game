@@ -80,6 +80,8 @@ namespace BibleGame
         public static Action<MScreenOriatation,bool,bool> ChangeLandscape;
 
         public static Action<VidLang> SetVidLang;
+
+        public static Action<string> SetAsset;
     }
 
    namespace Data
@@ -100,7 +102,9 @@ namespace BibleGame
             public static List<BookData> bookDatas;
             public static Language mLanguage;
 
-            public static MScreenOriatation orientation; 
+            public static MScreenOriatation orientation;
+
+            public static string mCurrentVidChapter;
         }
 
         public  class LoginData

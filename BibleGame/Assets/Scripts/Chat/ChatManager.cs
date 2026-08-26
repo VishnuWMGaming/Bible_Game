@@ -9,11 +9,17 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
+using BibleGame;
+using TMPro;
+using BibleGame.Data;
+
 public class ChatManager : MonoBehaviour,IOptionChat
 {
     [SerializeField] IChat botChat;
     [SerializeField] IChat userChat;
     [SerializeField] Button mGiveAnswerBtn;
+    [SerializeField] TMP_Text mTitle;
+
 
     [SerializeField] Transform chatTransform;
     [SerializeField] ScrollRect scrollRect;
@@ -22,13 +28,20 @@ public class ChatManager : MonoBehaviour,IOptionChat
     [Header("OptionPanel:")]
     [SerializeField] OptionChatPanel optionPanel;
 
-    [Header("TextAsset:")]
-    [SerializeField] TextAsset textAsset;
+    TextAsset textAsset;
+
+    [Header("Store:")]
+    [SerializeField] ChatAssetData chatAssetData;
 
     BotChatData mCurrentBot;
 
     private void OnEnable()
     {
+        textAsset = null;
+        textAsset = chatAssetData.Get(AppData.mCurrentVidChapter);
+
+        mTitle.text = AppData.mCurrentVidChapter;
+
         if (textAsset == null)
         {
             Debug.LogError("Text asset is null empty ");
@@ -48,6 +61,7 @@ public class ChatManager : MonoBehaviour,IOptionChat
     {
         AudioManager.Instance.MuteBG(true);
         mGiveAnswerBtn.onClick.RemoveAllListeners();
+
 
         for(int i = 0; i<chatTransform.childCount;++i)
         {

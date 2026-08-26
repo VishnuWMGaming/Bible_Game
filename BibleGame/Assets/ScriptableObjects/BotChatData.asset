@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da8c5e5efa0860b439658884e9e3423d, type: 3}
+  m_Name: BotChatData
+  m_EditorClassIdentifier: Assembly-CSharp::ChatAssetData
+  datas:
+  - mName: Chester's Garage - Summer Camp Pt. 1 (S4E1)
+    data: {fileID: 4900000, guid: e3b4045260f2ccf4093e9d4d0df5313e, type: 3}
+  - mName: Chester's Garage - Summer Camp Pt. 2 (S4E2)
+    data: {fileID: 4900000, guid: 5e587e6bf3fbded41890cde0d22fea1d, type: 3}
+  - mName: Chester's Garage - Summer Camp Pt. 3 (S4E3)
+    data: {fileID: 4900000, guid: 259cda0375cc9cc438f81dd80a08e5d8, type: 3}
+  - mName: Chester's Garage - Fruits and Veggies (S4E4)
+    data: {fileID: 4900000, guid: 977db83632a63044f95df468dd66e70e, type: 3}
+  - mName: Chester's Garage - The Magic of Music (S4E5)
+    data: {fileID: 4900000, guid: b02e06a841ee0bb4a8166c8e25f0eebf, type: 3}
+  - mName: Chester's Garage - Dark and Stormy (S4E6)
+    data: {fileID: 4900000, guid: 2ff4f570341521242b56195b6979c348, type: 3}
+  - mName: Chester's Garage - Exercise, Exercise! (S4E7)
+    data: {fileID: 4900000, guid: 3c5a11b4b02bf3445930371876966fad, type: 3}
+  - mName: Chester's Garage - Dinosaurs and Kings (S4E8)
+    data: {fileID: 4900000, guid: 620734dc9f958804ab9713ddd35e52f5, type: 3}
+  - mName: Chester's Garage - Worried or Thankful? (S4E9)
+    data: {fileID: 4900000, guid: 211d47b853c5d5f4da82be9b6535303f, type: 3}
+  - mName: Chester's Garage - Christmas Special (S4E10)
+    data: {fileID: 4900000, guid: 0b570768dfeda3c439098abdc9dce5cc, type: 3}
