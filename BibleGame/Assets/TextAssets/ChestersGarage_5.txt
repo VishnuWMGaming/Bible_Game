@@ -341,7 +341,7 @@ What would be a better response?{/bot}
 
 {bot}[opt]1[/opt]
 😅 That's actually what Chester was doing earlier![/n]
-He realized later that getting angry wasn't producing good fruit.[/bot]
+He realized later that getting angry wasn't producing good fruit.{/bot}
 
 {bot}[opt]2[/opt]
 Not a great choice![/n]

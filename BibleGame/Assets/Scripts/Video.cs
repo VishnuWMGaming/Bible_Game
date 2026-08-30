@@ -126,29 +126,26 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
     }
 
+    private DriveStreamProxy _proxy;
+
     // MAIN LOADER (ARCHIVE + GOOGLE DRIVE + DIRECT MP4)
     private async Task LoadVideo(string url, CancellationToken token)
     {
         videoPlayer.Stop();
+        _proxy?.Stop();
+        _proxy = null;
 
         string streamUrl = null;
         bool isGoogleDrive = url.Contains("drive.google.com") || url.Contains("drive.usercontent.google.com");
         bool isArchive = url.Contains("archive.org");
 
-        // ----------------------------
-        // ✅ INTERNET ARCHIVE HANDLING
-        // ----------------------------
         if (isArchive)
         {
             streamUrl = ConvertArchiveUrl(url);
         }
-        // ----------------------------
-        // ✅ GOOGLE DRIVE HANDLING (large-file bypass)
-        // ----------------------------
         else if (isGoogleDrive)
         {
             string fileId = ExtractGoogleDriveFileId(url);
-
             if (string.IsNullOrEmpty(fileId))
             {
                 Debug.LogError("Could not extract Google Drive file ID from: " + url);
@@ -157,17 +154,17 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
             try
             {
-                streamUrl = await ResolveGoogleDriveDownloadUrlAsync(fileId, token);
+                _proxy = new DriveStreamProxy();
+                streamUrl = await _proxy.StartAsync(fileId, token); // pass fileId directly now
             }
             catch (Exception ex)
             {
-                Debug.LogError("Google Drive resolve failed: " + ex.Message);
+                Debug.LogError("Google Drive resolve/proxy start failed: " + ex);
                 return;
             }
         }
         else
         {
-            // fallback: direct video URL
             streamUrl = url;
         }
 
@@ -181,21 +178,15 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
         Color32 color = renderImg.color;
 
-        // ----------------------------
-        // VIDEO PLAYER SETUP
-        // ----------------------------
         if (isArchive)
         {
-            // Archive URLs still benefit from redirect resolution + cleanup.
             string finalUrl = await ResolveFinalUrlAsync(streamUrl, token);
             finalUrl = CleanArchiveUrl(finalUrl);
             ApplyVideoSource(finalUrl);
         }
         else
         {
-            // Google Drive stream URL is already the resolved, direct-download
-            // URL with a confirm token — no further redirect resolution needed.
-            ApplyVideoSource(streamUrl);
+            ApplyVideoSource(streamUrl); // local proxy URL for Drive
         }
 
         while (!videoPlayer.isPrepared)
@@ -204,17 +195,13 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             await Task.Delay(100, token);
         }
 
-        // UI SETUP
         progressSlider.minValue = 0;
         progressSlider.maxValue = (float)videoPlayer.length;
-
         durationText.text = FormatTime(videoPlayer.length);
 
         videoPlayer.Play();
         mLoadingPanel.SetActive(false);
-
         renderImg.color = new Color32(color.r, color.g, color.b, 255);
-
         UpdatePlayPauseText();
     }
 
@@ -505,6 +492,9 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         Color32 color = renderImg.color;
         renderImg.color = new Color32(color.r, color.g, color.b, 0);
 
+        _proxy?.Stop();
+        _proxy = null;
+
         cancellationTokenSource?.Cancel();
         cancellationTokenSource?.Dispose();
     }
@@ -521,6 +511,9 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
         Color32 color = renderImg.color;
         renderImg.color = new Color32(color.r, color.g, color.b, 0);
+
+        _proxy?.Stop();
+        _proxy = null;
 
         cancellationTokenSource?.Cancel();
         cancellationTokenSource?.Dispose();

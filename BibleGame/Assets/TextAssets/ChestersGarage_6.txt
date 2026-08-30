@@ -1,10 +1,10 @@
-{bot}👋 Hey there, Explorer!{/n}
-🎃 Tonight we're joining Chester and Alex for a Halloween adventure!{/n}
-There are costumes...{/n}
-🍬 Candy...{/n}
-🦖 A VERY questionable dinosaur costume...{/n}
-And apparently...{/n}
-⛈️ A giant storm is about to arrive!{/n}
+{bot}👋 Hey there, Explorer![/n]
+🎃 Tonight we're joining Chester and Alex for a Halloween adventure![/n]
+There are costumes...[/n]
+🍬 Candy...[/n]
+🦖 A VERY questionable dinosaur costume...[/n]
+And apparently...[/n]
+⛈️ A giant storm is about to arrive![/n]
 Ready to find out what happens?{/bot}
 
 {option}[1]🎃 Let's go!{/option}
@@ -13,24 +13,24 @@ Ready to find out what happens?{/bot}
 {option}[4]🍬 I just want candy!{/option}
 
 {bot}[opt]1[/opt]
-🎃 That's the spirit!{/n}
+🎃 That's the spirit![/n]
 Grab your imaginary candy bucket and let's go!{/bot}
 
 {bot}[opt]2[/opt]
-😂 Oh, you'll definitely get your dinosaur!{/n}
+😂 Oh, you'll definitely get your dinosaur![/n]
 Although... Chester's costume might not be quite as impressive as he thinks. 🦖{/bot}
 
 {bot}[opt]3[/opt]
-⛈️ Brave choice!{/n}
+⛈️ Brave choice![/n]
 But let's see how brave Chester is when the lights suddenly go out! 😳{/bot}
 
 {bot}[opt]4[/opt]
-🍬 Honestly... SAME. 😂{/n}
+🍬 Honestly... SAME. 😂[/n]
 But before we collect all the candy, we've got a dinosaur problem to deal with! 🦖{/bot}
 
-{bot}🎃 Meet Chester!{/n}
-He's convinced everyone in town is going to think they saw a REAL dinosaur roaming the streets on Halloween night! 🦖{/n}
-Why?{/n}
+{bot}🎃 Meet Chester![/n]
+He's convinced everyone in town is going to think they saw a REAL dinosaur roaming the streets on Halloween night! 🦖[/n]
+Why?[/n]
 Because he's wearing a dinosaur costume! 😂{/bot}
 
 {option}[1]🦖 Obviously everyone will believe him!{/option}
@@ -39,27 +39,27 @@ Because he's wearing a dinosaur costume! 😂{/bot}
 {option}[4]📸 I'd take a picture first!{/option}
 
 {bot}[opt]1[/opt]
-😂 Chester would LOVE your confidence!{/n}
-Unfortunately, Alex points out one tiny problem...{/n}
+😂 Chester would LOVE your confidence![/n]
+Unfortunately, Alex points out one tiny problem...[/n]
 Everyone can literally see Chester's face inside the dinosaur's mouth!{/bot}
 
 {bot}[opt]2[/opt]
-🤣 Exactly!{/n}
-Alex isn't buying it either.{/n}
+🤣 Exactly![/n]
+Alex isn't buying it either.[/n]
 Apparently Chester's grocery-store costume isn't exactly "real dinosaur" quality. 🦖😂{/bot}
 
 {bot}[opt]3[/opt]
-🤔 That's fair!{/n}
-A really convincing costume might fool someone for a second...{/n}
+🤔 That's fair![/n]
+A really convincing costume might fool someone for a second...[/n]
 But Chester's costume isn't exactly Hollywood quality! 😂{/bot}
 
 {bot}[opt]4[/opt]
-📸 Smart move!{/n}
+📸 Smart move![/n]
 At least you'd have proof of the world's strangest Halloween dinosaur. 😂{/bot}
 
-{bot}Chester has ONE major complaint...{/n}
-He wanted an expensive dinosaur costume that cost...{/n}
-💰 $700! 😱{/n}
+{bot}Chester has ONE major complaint...[/n]
+He wanted an expensive dinosaur costume that cost...[/n]
+💰 $700! 😱[/n]
 Grandpa Eugene said NOPE. 😂{/bot}
 
 {option}[1]💸 $700?! That's insane!{/option}
@@ -67,14 +67,14 @@ Grandpa Eugene said NOPE. 😂{/bot}
 {option}[3]😂 Grocery-store costume wins!{/option}
 {option}[4]🤔 I'd save the money{/option}
 
-{bot}😂 Exactly!{/n}
-Alex seems to agree that $700 is a LOT for a Halloween costume.{/n}
-But Chester thinks it's all about "making memories."{/n}
+{bot}😂 Exactly![/n]
+Alex seems to agree that $700 is a LOT for a Halloween costume.[/n]
+But Chester thinks it's all about "making memories."[/n]
 Priorities, right? 🦖💸{/bot}
 
-{bot}🎃 Now it's time to go trick-or-treating!{/n}
-Chester and Alex have a mission:{/n}
-🍫 Find the regular-sized candy bars BEFORE they're gone!{/n}
+{bot}🎃 Now it's time to go trick-or-treating![/n]
+Chester and Alex have a mission:[/n]
+🍫 Find the regular-sized candy bars BEFORE they're gone![/n]
 And they absolutely cannot miss Mr. Schneiderman's house!{/bot}
 
 {option}[1]🍫 Regular candy bars!{/option}
@@ -82,15 +82,15 @@ And they absolutely cannot miss Mr. Schneiderman's house!{/bot}
 {option}[3]🏃 Run to every house!{/option}
 {option}[4]🦖 Stay home and scare people!{/option}
 
-{bot}Wait...{/n}
-There's something VERY strange about Mr. Schneiderman. 🧪{/n}
-He's the science teacher...{/n}
+{bot}Wait...[/n]
+There's something VERY strange about Mr. Schneiderman. 🧪[/n]
+He's the science teacher...[/n]
 And he doesn't give out candy!{/bot}
 
-{bot}Instead, he gives out...{/n}
-🥽 LAB SAFETY GOGGLES! 😂{/n}
-Chester's response?{/n}
-"One can never ever have too many lab safety goggles."{/n}
+{bot}Instead, he gives out...[/n]
+🥽 LAB SAFETY GOGGLES! 😂[/n]
+Chester's response?[/n]
+"One can never ever have too many lab safety goggles."[/n]
 Would you rather get candy or safety goggles?{/bot}
 
 {option}[1]🍫 CANDY! Obviously!{/option}
@@ -99,27 +99,27 @@ Would you rather get candy or safety goggles?{/bot}
 {option}[4]🧪 Give me a science experiment instead!{/option}
 
 {bot}[opt]1[/opt]
-😂 Correct Halloween priorities!{/n}
+😂 Correct Halloween priorities![/n]
 Chocolate first. Science goggles later. 🍫🥽{/bot}
 
 {bot}[opt]2[/opt]
-🥽 Wow!{/n}
-Mr. Schneiderman would be extremely proud of you. 😂{/n}
+🥽 Wow![/n]
+Mr. Schneiderman would be extremely proud of you. 😂[/n]
 Safety first!{/bot}
 
 {bot}[opt]3[/opt]
-🎯 Now THAT'S the perfect answer!{/n}
-Candy AND science equipment?{/n}
+🎯 Now THAT'S the perfect answer![/n]
+Candy AND science equipment?[/n]
 Best Halloween ever! 🍫🥽{/bot}
 
 {bot}[opt]4[/opt]
-🧪 Now you're thinking like a scientist!{/n}
+🧪 Now you're thinking like a scientist![/n]
 Although something tells me Mr. Schneiderman still has something better than candy up his sleeve. 😂{/bot}
 
-{bot}🚨 WAIT!{/n}
-Something just happened...{/n}
-💡 The lights went OUT!{/n}
-And it isn't just their house...{/n}
+{bot}🚨 WAIT![/n]
+Something just happened...[/n]
+💡 The lights went OUT![/n]
+And it isn't just their house...[/n]
 The ENTIRE neighborhood has lost power! 😳{/bot}
 
 {option}[1]😱 I'd panic!{/option}
@@ -128,31 +128,31 @@ The ENTIRE neighborhood has lost power! 😳{/bot}
 {option}[4]🍫 Eat all the candy while it's dark!{/option}
 
 {bot}[opt]1[/opt]
-😱 Chester agrees with you!{/n}
-He's already imagining lightning destroying the house...{/n}
-The house exploding...{/n}
+😱 Chester agrees with you![/n]
+He's already imagining lightning destroying the house...[/n]
+The house exploding...[/n]
 And the entire house flying away! 😳{/bot}
 
 {bot}[opt]2[/opt]
-🔦 Excellent idea!{/n}
-A flashlight would definitely be useful during a power outage.{/n}
+🔦 Excellent idea![/n]
+A flashlight would definitely be useful during a power outage.[/n]
 But Chester is already worrying about something MUCH bigger...{/bot}
 
 {bot}[opt]3[/opt]
-😎 Good choice!{/n}
-Alex is staying calm too.{/n}
+😎 Good choice![/n]
+Alex is staying calm too.[/n]
 But staying calm becomes difficult when Chester starts imagining the house flying away! 😂{/bot}
 
 {bot}[opt]4[/opt]
-😂 Priorities!{/n}
-Honestly, emergency candy storage isn't the worst idea.{/n}
+😂 Priorities![/n]
+Honestly, emergency candy storage isn't the worst idea.[/n]
 But first... we need to figure out what's happening!{/bot}
 
-{bot}⛈️ Chester is REALLY scared.{/n}
-The storm is loud...{/n}
-The power is out...{/n}
-And his imagination is going WILD! 😰{/n}
-He starts wondering if lightning will strike the house or if strong winds will blow it away.{/n}
+{bot}⛈️ Chester is REALLY scared.[/n]
+The storm is loud...[/n]
+The power is out...[/n]
+And his imagination is going WILD! 😰[/n]
+He starts wondering if lightning will strike the house or if strong winds will blow it away.[/n]
 What should Alex tell him?{/bot}
 
 {option}[1]😱 "RUN!"{/option}
@@ -161,29 +161,29 @@ What should Alex tell him?{/bot}
 {option}[4]🧠 "Let's think logically."{/option}
 
 {bot}[opt]1[/opt]
-😂 Probably NOT the most helpful advice!{/n}
-Running around during a storm might make things even worse.{/n}
+😂 Probably NOT the most helpful advice![/n]
+Running around during a storm might make things even worse.[/n]
 Alex has a calmer plan...{/bot}
 
 {bot}[opt]2[/opt]
-🧘 Exactly!{/n}
-Alex tells Chester to take a deep breath because he's spiraling into worst-case scenarios.{/n}
+🧘 Exactly![/n]
+Alex tells Chester to take a deep breath because he's spiraling into worst-case scenarios.[/n]
 Sometimes calming down is the first step to thinking clearly. ❤️{/bot}
 
 {bot}[opt]3[/opt]
-🦖 Honestly... that's hilarious. 😂{/n}
-But hiding under a cheap dinosaur costume probably isn't the official storm-safety strategy!{/n}
+🦖 Honestly... that's hilarious. 😂[/n]
+But hiding under a cheap dinosaur costume probably isn't the official storm-safety strategy![/n]
 Alex has a better idea. 😄{/bot}
 
 {bot}[opt]4[/opt]
-🧠 That's Chester's idea too!{/n}
-He thinks understanding how storms work scientifically will make him less afraid.{/n}
+🧠 That's Chester's idea too![/n]
+He thinks understanding how storms work scientifically will make him less afraid.[/n]
 Let's see if he's right!{/bot}
 
-{bot}🔬 SCIENCE TIME!{/n}
-Alex explains that thunderstorms form when warm, wet air rises and meets colder air.{/n}
-The warm air cools and forms tiny water droplets through...{/n}
-💧 CONDENSATION!{/n}
+{bot}🔬 SCIENCE TIME![/n]
+Alex explains that thunderstorms form when warm, wet air rises and meets colder air.[/n]
+The warm air cools and forms tiny water droplets through...[/n]
+💧 CONDENSATION![/n]
 Do you remember what condensation is?{/bot}
 
 {option}[1]💧 Water vapor cooling and forming droplets{/option}
@@ -192,31 +192,31 @@ Do you remember what condensation is?{/bot}
 {option}[4]❄️ Ice melting instantly{/option}
 
 {bot}[opt]1[/opt]
-🎉 Correct!{/n}
-Condensation happens when water vapor cools and forms tiny droplets of water.{/n}
+🎉 Correct![/n]
+Condensation happens when water vapor cools and forms tiny droplets of water.[/n]
 Those droplets are an important part of cloud formation! ☁️{/bot}
 
 {bot}[opt]2[/opt]
-🔥 Not quite!{/n}
-The important part is that the warm air cools down and water droplets form.{/n}
+🔥 Not quite![/n]
+The important part is that the warm air cools down and water droplets form.[/n]
 That's condensation! 💧{/bot}
 
 {bot}[opt]3[/opt]
-🌪️ Good storm-related guess!{/n}
-But condensation is specifically about water vapor cooling into droplets.{/n}
+🌪️ Good storm-related guess![/n]
+But condensation is specifically about water vapor cooling into droplets.[/n]
 Try again! 💧{/bot}
 
 {bot}[opt]4[/opt]
-❄️ Interesting guess!{/n}
-But condensation is about water vapor turning into liquid droplets.{/n}
+❄️ Interesting guess![/n]
+But condensation is about water vapor turning into liquid droplets.[/n]
 Think clouds! ☁️{/bot}
 
-{bot}🌡️ Here's where things get interesting!{/n}
-The warm air rises...{/n}
-Cools down...{/n}
-Forms water droplets...{/n}
-Then the cooler air falls...{/n}
-And the cycle starts again!{/n}
+{bot}🌡️ Here's where things get interesting![/n]
+The warm air rises...[/n]
+Cools down...[/n]
+Forms water droplets...[/n]
+Then the cooler air falls...[/n]
+And the cycle starts again![/n]
 This rising-and-falling cycle is called a...{/bot}
 
 {option}[1]🌪️ Convection cell{/option}
@@ -225,26 +225,26 @@ This rising-and-falling cycle is called a...{/bot}
 {option}[4]☁️ Cloud loop{/option}
 
 {bot}[opt]1[/opt]
-🎉 YES!{/n}
-That cycle is called a CONVECTION CELL!{/n}
+🎉 YES![/n]
+That cycle is called a CONVECTION CELL![/n]
 You're officially becoming a storm scientist. 🔬⛈️{/bot}
 
 {bot}[opt]2[/opt]
-Not quite! 😄{/n}
-A wind tunnel sounds cool, but that's not what the video calls this cycle.{/n}
+Not quite! 😄[/n]
+A wind tunnel sounds cool, but that's not what the video calls this cycle.[/n]
 The answer is a convection cell!{/bot}
 
 {bot}[opt]3[/opt]
-💧 Nice connection!{/n}
-Water is definitely involved, but the rising-and-falling air cycle is specifically called a convection cell.{/n}
+💧 Nice connection![/n]
+Water is definitely involved, but the rising-and-falling air cycle is specifically called a convection cell.[/n]
 Try again!{/bot}
 
 {bot}[opt]4[/opt]
-😂 Cloud loop sounds like something from a cartoon!{/n}
+😂 Cloud loop sounds like something from a cartoon![/n]
 But the scientific term is convection cell. 🔬{/bot}
 
-{bot}⛈️ Now let's level up!{/n}
-The video explains that thunderstorms can come in different sizes.{/n}
+{bot}⛈️ Now let's level up![/n]
+The video explains that thunderstorms can come in different sizes.[/n]
 A storm formed from ONE convection cell is called a...{/bot}
 
 {option}[1]🌪️ Supercell{/option}
@@ -253,31 +253,31 @@ A storm formed from ONE convection cell is called a...{/bot}
 {option}[4]🌧️ Rain cell{/option}
 
 {bot}[opt]1[/opt]
-Almost! 😊{/n}
-A supercell is much larger and can last for several hours.{/n}
-A storm formed from one convection cell is called a SINGLE-CELL THUNDERSTORM.{/n}
+Almost! 😊[/n]
+A supercell is much larger and can last for several hours.[/n]
+A storm formed from one convection cell is called a SINGLE-CELL THUNDERSTORM.[/n]
 Try again!{/bot}
 
 {bot}[opt]2[/opt]
-🎉 Correct!{/n}
-A single-cell thunderstorm forms from one convection cell and usually doesn't last very long.{/n}
+🎉 Correct![/n]
+A single-cell thunderstorm forms from one convection cell and usually doesn't last very long.[/n]
 Nice work! ⛈️{/bot}
 
 {bot}[opt]3[/opt]
-😂 Mega storm definitely sounds terrifying!{/n}
-But that's not the scientific name.{/n}
-Think about how many convection cells are involved!{/n}
+😂 Mega storm definitely sounds terrifying![/n]
+But that's not the scientific name.[/n]
+Think about how many convection cells are involved![/n]
 Try again!{/bot}
 
 {bot}[opt]4[/opt]
-Good guess! 🌧️{/n}
-But the video calls it a single-cell thunderstorm.{/n}
+Good guess! 🌧️[/n]
+But the video calls it a single-cell thunderstorm.[/n]
 You've got this!{/bot}
 
-{bot}🚨 STORM LEVEL UP!{/n}
-The video introduces an even bigger type of thunderstorm...{/n}
-🌩️ A SUPERCELL!{/n}
-Supercells can last for several hours and produce heavy rain and large hail. 🧊{/n}
+{bot}🚨 STORM LEVEL UP![/n]
+The video introduces an even bigger type of thunderstorm...[/n]
+🌩️ A SUPERCELL![/n]
+Supercells can last for several hours and produce heavy rain and large hail. 🧊[/n]
 And there's one more thing they can potentially produce...{/bot}
 
 {option}[1]🌈 Rainbows{/option}
@@ -286,28 +286,28 @@ And there's one more thing they can potentially produce...{/bot}
 {option}[4]☀️ Sunshine{/option}
 
 {bot}[opt]1[/opt]
-🌈 A rainbow would certainly make things prettier! 😂{/n}
-But supercells have the potential to produce something much more dangerous...{/n}
+🌈 A rainbow would certainly make things prettier! 😂[/n]
+But supercells have the potential to produce something much more dangerous...[/n]
 Try again!{/bot}
 
 {bot}[opt]2[/opt]
-🎉 Correct!{/n}
-Supercell thunderstorms can potentially produce TORNADOES. 🌪️{/n}
+🎉 Correct![/n]
+Supercell thunderstorms can potentially produce TORNADOES. 🌪️[/n]
 And that is exactly the word Chester did NOT want to hear! 😂{/bot}
 
 {bot}[opt]3[/opt]
-❄️ Not quite!{/n}
-The video specifically mentions large hail and the potential for tornadoes.{/n}
+❄️ Not quite![/n]
+The video specifically mentions large hail and the potential for tornadoes.[/n]
 Try again!{/bot}
 
 {bot}[opt]4[/opt]
-☀️ Chester would definitely vote for sunshine right now! 😂{/n}
-But supercells can potentially produce tornadoes.{/n}
+☀️ Chester would definitely vote for sunshine right now! 😂[/n]
+But supercells can potentially produce tornadoes.[/n]
 🌪️ Try again!{/bot}
 
-{bot}😱 CHESTER HAS HEARD THE WORD "TORNADO"!{/n}
-And now his imagination has gone completely off the rails!{/n}
-He's imagining the tornado ripping the house off its foundation and sending everyone flying away! 😳{/n}
+{bot}😱 CHESTER HAS HEARD THE WORD "TORNADO"![/n]
+And now his imagination has gone completely off the rails![/n]
+He's imagining the tornado ripping the house off its foundation and sending everyone flying away! 😳[/n]
 What should he do?{/bot}
 
 {option}[1]😱 Panic even more!{/option}
@@ -316,29 +316,29 @@ What should he do?{/bot}
 {option}[4]🏃 Run outside into the storm{/option}
 
 {bot}[opt]1[/opt]
-😂 That would probably make Chester's fear even worse!{/n}
+😂 That would probably make Chester's fear even worse![/n]
 Alex reminds him that fear can make situations seem much scarier than they actually are.{/bot}
 
 {bot}[opt]2[/opt]
-🎉 Exactly!{/n}
-Alex encourages Chester to calm down instead of letting fear take over.{/n}
+🎉 Exactly![/n]
+Alex encourages Chester to calm down instead of letting fear take over.[/n]
 But Alex has another way to help him...{/bot}
 
 {bot}[opt]3[/opt]
-🦖 THE DINOSAUR HAS ARRIVED! 😂{/n}
-Unfortunately, Chester's $700 dream costume isn't available.{/n}
+🦖 THE DINOSAUR HAS ARRIVED! 😂[/n]
+Unfortunately, Chester's $700 dream costume isn't available.[/n]
 So we'll have to use something much more powerful...{/bot}
 
 {bot}[opt]4[/opt]
-🚨 Definitely not!{/n}
-Running outside during a storm is not the solution to being afraid of a storm.{/n}
+🚨 Definitely not![/n]
+Running outside during a storm is not the solution to being afraid of a storm.[/n]
 Alex has a much better idea. ❤️{/bot}
 
-{bot}📖 Alex remembers a story from the Bible.{/n}
-In Matthew 8:23–27, Jesus and His disciples were crossing the Sea of Galilee when a huge storm appeared. ⛈️{/n}
-The waves were overwhelming the boat...{/n}
-And the disciples were terrified!{/n}
-But Jesus was asleep. 😴{/n}
+{bot}📖 Alex remembers a story from the Bible.[/n]
+In Matthew 8:23–27, Jesus and His disciples were crossing the Sea of Galilee when a huge storm appeared. ⛈️[/n]
+The waves were overwhelming the boat...[/n]
+And the disciples were terrified![/n]
+But Jesus was asleep. 😴[/n]
 Why do you think that detail is important?{/bot}
 
 {option}[1]😴 Jesus wasn't afraid of the storm{/option}
@@ -347,30 +347,30 @@ Why do you think that detail is important?{/bot}
 {option}[4]🌊 Jesus wanted the boat to sink{/option}
 
 {bot}[opt]1[/opt]
-🎉 Exactly!{/n}
-The story emphasizes that Jesus wasn't afraid even though the storm was frightening the disciples.{/n}
+🎉 Exactly![/n]
+The story emphasizes that Jesus wasn't afraid even though the storm was frightening the disciples.[/n]
 He remained calm because He is in control. ❤️{/bot}
 
 {bot}[opt]2[/opt]
-😂 He probably WAS tired...{/n}
-But the important point of the story is that Jesus wasn't afraid of the storm.{/n}
+😂 He probably WAS tired...[/n]
+But the important point of the story is that Jesus wasn't afraid of the storm.[/n]
 He trusted completely in God's power and control. ❤️{/bot}
 
 {bot}[opt]3[/opt]
-Not quite!{/n}
-Jesus knew what was happening.{/n}
-The important part is that He wasn't afraid of the storm. ⛈️{/n}
+Not quite![/n]
+Jesus knew what was happening.[/n]
+The important part is that He wasn't afraid of the storm. ⛈️[/n]
 Try again!{/bot}
 
 {bot}[opt]4[/opt]
-😳 Definitely not!{/n}
-Jesus eventually commanded the storm to stop.{/n}
+😳 Definitely not![/n]
+Jesus eventually commanded the storm to stop.[/n]
 And the storm became calm. 🌊✨{/bot}
 
-{bot}🌊 Here's the incredible part!{/n}
-The disciples woke Jesus and cried out for help because they were afraid they were going to die.{/n}
-Jesus then rebuked the winds and the sea...{/n}
-And suddenly...{/n}
+{bot}🌊 Here's the incredible part![/n]
+The disciples woke Jesus and cried out for help because they were afraid they were going to die.[/n]
+Jesus then rebuked the winds and the sea...[/n]
+And suddenly...[/n]
 ✨ THERE WAS A GREAT CALM! ✨{/bot}
 
 {option}[1]🤯 That's incredible!{/option}
@@ -378,16 +378,16 @@ And suddenly...{/n}
 {option}[3]❤️ That's comforting{/option}
 {option}[4]🌊 Jesus really controls storms!{/option}
 
-{bot}Exactly! ❤️{/n}
-The story reminds Chester that Jesus has authority over the storm and that he doesn't need to let fear control him.{/n}
+{bot}Exactly! ❤️[/n]
+The story reminds Chester that Jesus has authority over the storm and that he doesn't need to let fear control him.[/n]
 And now the lesson gets even deeper...{/bot}
 
-{bot}The video compares physical storms with the "storms" we experience in life. ⛈️❤️{/n}
-Sometimes life can feel like a storm too...{/n}
-Problems...{/n}
-Fear...{/n}
-Difficult situations...{/n}
-But the message is that God is still in control and loves us. ❤️{/n}
+{bot}The video compares physical storms with the "storms" we experience in life. ⛈️❤️[/n]
+Sometimes life can feel like a storm too...[/n]
+Problems...[/n]
+Fear...[/n]
+Difficult situations...[/n]
+But the message is that God is still in control and loves us. ❤️[/n]
 What do you think is the biggest lesson?{/bot}
 
 {option}[1]⛈️ Storms are always dangerous{/option}
@@ -396,27 +396,27 @@ What do you think is the biggest lesson?{/bot}
 {option}[4]🏃 We should run away from problems{/option}
 
 {bot}[opt]1[/opt]
-Not quite! 😊{/n}
-The video isn't teaching us to fear storms.{/n}
+Not quite! 😊[/n]
+The video isn't teaching us to fear storms.[/n]
 Instead, it uses the storm to remind us about God's control and care. ❤️{/bot}
 
 {bot}[opt]2[/opt]
-🎉 Exactly!{/n}
-The message is that even when life's storms shake us, we can remember that God is in control and loves us. ❤️{/n}
+🎉 Exactly![/n]
+The message is that even when life's storms shake us, we can remember that God is in control and loves us. ❤️[/n]
 That's a powerful lesson!{/bot}
 
 {bot}[opt]3[/opt]
-😅 Chester might agree with you...{/n}
-But that's exactly what Alex is trying to help him overcome!{/n}
+😅 Chester might agree with you...[/n]
+But that's exactly what Alex is trying to help him overcome![/n]
 Fear doesn't have to control us. ❤️{/bot}
 
 {bot}[opt]4[/opt]
-🏃 Running away isn't the lesson!{/n}
-The video encourages us to remember God's presence and control even when life becomes difficult.{/n}
+🏃 Running away isn't the lesson![/n]
+The video encourages us to remember God's presence and control even when life becomes difficult.[/n]
 Try again!{/bot}
 
-{bot}❤️ Alex reminds Chester of something HUGE:{/n}
-God's love is so great that He sent His Son Jesus to die on the cross to save people from their sins.{/n}
+{bot}❤️ Alex reminds Chester of something HUGE:[/n]
+God's love is so great that He sent His Son Jesus to die on the cross to save people from their sins.[/n]
 How does Chester react?{/bot}
 
 {option}[1]😮 He's amazed{/option}
@@ -425,25 +425,25 @@ How does Chester react?{/bot}
 {option}[4]✨ All of these{/option}
 
 {bot}[opt]1[/opt]
-😮 Absolutely!{/n}
+😮 Absolutely![/n]
 Chester realizes how powerful and comforting that message is.{/bot}
 
 {bot}[opt]2[/opt]
-❤️ Exactly!{/n}
+❤️ Exactly![/n]
 The conversation gives Chester a sense of comfort even while the storm continues outside.{/bot}
 
 {bot}[opt]3[/opt]
-🙏 Yes!{/n}
+🙏 Yes![/n]
 The story becomes a reminder that Jesus is in control and that God's love is enormous.{/bot}
 
 {bot}[opt]4[/opt]
-🎉 YES!{/n}
+🎉 YES![/n]
 Chester feels encouraged, comforted, and amazed by the reminder of God's love. ❤️{/bot}
 
-{bot}💡 But Chester has another idea!{/n}
-If the power is going to stay off...{/n}
-Why not turn Robbie into a...{/n}
-🤖✨ GLOW-IN-THE-DARK ROBOT?!{/n}
+{bot}💡 But Chester has another idea![/n]
+If the power is going to stay off...[/n]
+Why not turn Robbie into a...[/n]
+🤖✨ GLOW-IN-THE-DARK ROBOT?![/n]
 Would you trust Chester to modify a robot during a blackout? 😂{/bot}
 
 {option}[1]🤖 Absolutely!{/option}
@@ -452,28 +452,28 @@ Would you trust Chester to modify a robot during a blackout? 😂{/bot}
 {option}[4]🔦 Just use a flashlight!{/option}
 
 {bot}[opt]1[/opt]
-😂 Brave choice!{/n}
-Chester gets to work on Robbie's internal mainframe.{/n}
+😂 Brave choice![/n]
+Chester gets to work on Robbie's internal mainframe.[/n]
 Let's just hope he remembers what every button does!{/bot}
 
 {bot}[opt]2[/opt]
-😂 Honestly... probably the safest answer!{/n}
-But Chester is already modifying Robbie's system. 🤖{/n}
+😂 Honestly... probably the safest answer![/n]
+But Chester is already modifying Robbie's system. 🤖[/n]
 There's no going back now!{/bot}
 
 {bot}[opt]3[/opt]
-🤣 Famous last words!{/n}
-"What's the worst that could happen?"{/n}
+🤣 Famous last words![/n]
+"What's the worst that could happen?"[/n]
 Those words are NEVER safe around a robot modification. 🤖{/bot}
 
 {bot}[opt]4[/opt]
-🔦 Practical!{/n}
+🔦 Practical![/n]
 But where's the fun in using a flashlight when you can turn your robot into a giant glowing lamp? 😂{/bot}
 
-{bot}🤖✨ SUCCESS!{/n}
-Robbie now has a glow-in-the-dark function!{/n}
-And Chester even gives him an automatic brightness setting...{/n}
-Just like a smartphone! 📱{/n}
+{bot}🤖✨ SUCCESS![/n]
+Robbie now has a glow-in-the-dark function![/n]
+And Chester even gives him an automatic brightness setting...[/n]
+Just like a smartphone! 📱[/n]
 Sounds perfect, right?{/bot}
 
 {option}[1]😎 Perfect!{/option}
@@ -481,14 +481,14 @@ Sounds perfect, right?{/bot}
 {option}[3]😂 I don't trust this{/option}
 {option}[4]💡 Turn it all the way up!{/option}
 
-{bot}😎 At first, everything seems great!{/n}
-Robbie is glowing...{/n}
-The room is illuminated...{/n}
-Everyone can see!{/n}
+{bot}😎 At first, everything seems great![/n]
+Robbie is glowing...[/n]
+The room is illuminated...[/n]
+Everyone can see![/n]
 BUT THEN...{/bot}
 
-{bot}💥 TOO BRIGHT!{/n}
-Robbie is suddenly glowing so intensely that everyone has to close their eyes! 😂🤖{/n}
+{bot}💥 TOO BRIGHT![/n]
+Robbie is suddenly glowing so intensely that everyone has to close their eyes! 😂🤖[/n]
 Chester may have accidentally created a ROBOT SUN! ☀️🤖{/bot}
 
 {option}[1]😂 This is hilarious!{/option}
@@ -497,27 +497,27 @@ Chester may have accidentally created a ROBOT SUN! ☀️🤖{/bot}
 {option}[4]🤖 I vote for robot sunglasses{/option}
 
 {bot}[opt]1[/opt]
-🤣 It really is!{/n}
+🤣 It really is![/n]
 The solution to the blackout has somehow become a brand-new problem!{/bot}
 
 {bot}[opt]2[/opt]
-😂 Exactly!{/n}
-Forget flashlights.{/n}
+😂 Exactly![/n]
+Forget flashlights.[/n]
 Robbie has apparently decided to become the neighborhood sun. ☀️🤖{/bot}
 
 {bot}[opt]3[/opt]
-😳 Probably a good idea!{/n}
+😳 Probably a good idea![/n]
 Everyone is struggling to see because Robbie is WAY too bright!{/bot}
 
 {bot}[opt]4[/opt]
-😎 ROBOT SUNGLASSES!{/n}
+😎 ROBOT SUNGLASSES![/n]
 Honestly, that might be the perfect upgrade. 😂{/bot}
 
-{bot}💡 AND THEN...{/n}
-The power suddenly comes back on! 🎉{/n}
-Everyone expects the room to return to normal...{/n}
-But there's one tiny problem...{/n}
-🤖 ROBBIE IS STILL GLOWING!{/n}
+{bot}💡 AND THEN...[/n]
+The power suddenly comes back on! 🎉[/n]
+Everyone expects the room to return to normal...[/n]
+But there's one tiny problem...[/n]
+🤖 ROBBIE IS STILL GLOWING![/n]
 And now the lights are ALSO on! 😂{/bot}
 
 {option}[1]😂 Double brightness!{/option}
@@ -525,14 +525,14 @@ And now the lights are ALSO on! 😂{/bot}
 {option}[3]🙈 Close your eyes!{/option}
 {option}[4]🤖 Time for an emergency shutdown!{/option}
 
-{bot}😂 Poor Chester!{/n}
-He solved one problem and accidentally created another.{/n}
+{bot}😂 Poor Chester![/n]
+He solved one problem and accidentally created another.[/n]
 But at least the storm is no longer the only thing everyone is worried about! 🤖💡⛈️{/bot}
 
-{bot}🎯 TIME FOR A STORM CHALLENGE!{/n}
+{bot}🎯 TIME FOR A STORM CHALLENGE![/n]
 Let's see what you remember from Chester's adventure!{/bot}
 
-{bot}⛈️ CHALLENGE #1{/n}
+{bot}⛈️ CHALLENGE #1[/n]
 What causes sound-like air movement in a thunderstorm's formation?{/bot}
 
 {option}[1]🌡️ Warm wet air rising and meeting cold air{/option}
@@ -541,25 +541,25 @@ What causes sound-like air movement in a thunderstorm's formation?{/bot}
 {option}[4]💡 Electricity alone{/option}
 
 {bot}[opt]1[/opt]
-🎉 Correct!{/n}
-Thunderstorms form when warm, wet air rises and meets colder air.{/n}
+🎉 Correct![/n]
+Thunderstorms form when warm, wet air rises and meets colder air.[/n]
 Science saves the day! 🔬⛈️{/bot}
 
 {bot}[opt]2[/opt]
-🔥 Not quite!{/n}
-The video explains that warm, wet air rises and meets cold air.{/n}
+🔥 Not quite![/n]
+The video explains that warm, wet air rises and meets cold air.[/n]
 Try again!{/bot}
 
 {bot}[opt]3[/opt]
-🌊 Interesting guess!{/n}
-But the key process involves warm, wet air rising and meeting cold air.{/n}
+🌊 Interesting guess![/n]
+But the key process involves warm, wet air rising and meeting cold air.[/n]
 Try again!{/bot}
 
 {bot}[opt]4[/opt]
-⚡ Electricity is associated with storms, but that's not the formation process explained here.{/n}
+⚡ Electricity is associated with storms, but that's not the formation process explained here.[/n]
 Think warm air + cold air! 🌡️{/bot}
 
-{bot}⛈️ CHALLENGE #2{/n}
+{bot}⛈️ CHALLENGE #2[/n]
 What is the rising-and-falling cycle of air called?{/bot}
 
 {option}[1]🌪️ Convection cell{/option}
@@ -568,25 +568,25 @@ What is the rising-and-falling cycle of air called?{/bot}
 {option}[4]☁️ Cloud engine{/option}
 
 {bot}[opt]1[/opt]
-🎉 Correct!{/n}
-The cycle of rising and falling air is called a convection cell.{/n}
+🎉 Correct![/n]
+The cycle of rising and falling air is called a convection cell.[/n]
 🔬 You're becoming a weather expert!{/bot}
 
 {bot}[opt]2[/opt]
-Not quite! 😊{/n}
-Water is involved, but the air cycle is called a convection cell.{/n}
+Not quite! 😊[/n]
+Water is involved, but the air cycle is called a convection cell.[/n]
 Try again!{/bot}
 
 {bot}[opt]3[/opt]
-💨 Sounds scientific!{/n}
-But the video calls it a convection cell.{/n}
+💨 Sounds scientific![/n]
+But the video calls it a convection cell.[/n]
 Try again!{/bot}
 
 {bot}[opt]4[/opt]
-😂 Cloud engine would be an amazing name though!{/n}
+😂 Cloud engine would be an amazing name though![/n]
 Unfortunately, the scientific answer is convection cell.{/bot}
 
-{bot}🌩️ CHALLENGE #3{/n}
+{bot}🌩️ CHALLENGE #3[/n]
 What is a supercell thunderstorm capable of producing?{/bot}
 
 {option}[1]🌪️ Tornadoes{/option}
@@ -595,26 +595,26 @@ What is a supercell thunderstorm capable of producing?{/bot}
 {option}[4]❄️ Only snow{/option}
 
 {bot}[opt]1[/opt]
-🎉 Correct!{/n}
-Supercell thunderstorms can potentially create tornadoes and can also produce heavy rain and large hail.{/n}
+🎉 Correct![/n]
+Supercell thunderstorms can potentially create tornadoes and can also produce heavy rain and large hail.[/n]
 Great job! 🌪️{/bot}
 
 {bot}[opt]2[/opt]
-🌈 Rainbows are pretty, but that's not the key danger mentioned in the video.{/n}
-Supercells can potentially create tornadoes.{/n}
+🌈 Rainbows are pretty, but that's not the key danger mentioned in the video.[/n]
+Supercells can potentially create tornadoes.[/n]
 Try again!{/bot}
 
 {bot}[opt]3[/opt]
-😂 Chester would LOVE that answer!{/n}
-But supercells can potentially create tornadoes.{/n}
+😂 Chester would LOVE that answer![/n]
+But supercells can potentially create tornadoes.[/n]
 Try again!{/bot}
 
 {bot}[opt]4[/opt]
-❄️ Not quite!{/n}
-The video specifically mentions large hail and the potential for tornadoes.{/n}
+❄️ Not quite![/n]
+The video specifically mentions large hail and the potential for tornadoes.[/n]
 Try again!{/bot}
 
-{bot}📖 CHALLENGE #4{/n}
+{bot}📖 CHALLENGE #4[/n]
 Which Bible passage does Alex mention when talking about Jesus calming a storm?{/bot}
 
 {option}[1]📖 Matthew 8:23–27{/option}
@@ -623,25 +623,25 @@ Which Bible passage does Alex mention when talking about Jesus calming a storm?{
 {option}[4]📖 Psalm 23{/option}
 
 {bot}[opt]1[/opt]
-🎉 Correct!{/n}
-Matthew 8:23–27 tells the story of Jesus and His disciples encountering a great storm on the Sea of Galilee.{/n}
+🎉 Correct![/n]
+Matthew 8:23–27 tells the story of Jesus and His disciples encountering a great storm on the Sea of Galilee.[/n]
 Excellent memory! 📖⛈️{/bot}
 
 {bot}[opt]2[/opt]
-Close, but that's not the passage mentioned in the video.{/n}
-Alex specifically refers to Matthew 8:23–27.{/n}
+Close, but that's not the passage mentioned in the video.[/n]
+Alex specifically refers to Matthew 8:23–27.[/n]
 Try again!{/bot}
 
 {bot}[opt]3[/opt]
-Good Bible connection!{/n}
-But the storm story Alex mentions is in Matthew 8:23–27.{/n}
+Good Bible connection![/n]
+But the storm story Alex mentions is in Matthew 8:23–27.[/n]
 Try again!{/bot}
 
 {bot}[opt]4[/opt]
-🙏 Great passage, but not the one discussed here.{/n}
+🙏 Great passage, but not the one discussed here.[/n]
 The answer is Matthew 8:23–27.{/bot}
 
-{bot}❤️ CHALLENGE #5{/n}
+{bot}❤️ CHALLENGE #5[/n]
 According to the lesson, what can we remember when life's "storms" become difficult?{/bot}
 
 {option}[1]😱 We should always panic{/option}
@@ -650,25 +650,25 @@ According to the lesson, what can we remember when life's "storms" become diffic
 {option}[4]🦖 We need a dinosaur costume{/option}
 
 {bot}[opt]1[/opt]
-😂 Chester might need to hear that lesson again!{/n}
-The message encourages trust rather than panic.{/n}
+😂 Chester might need to hear that lesson again![/n]
+The message encourages trust rather than panic.[/n]
 Try again!{/bot}
 
 {bot}[opt]2[/opt]
-🎉 PERFECT!{/n}
+🎉 PERFECT![/n]
 The video reminds us that God is in control and loves us, even during difficult "storms" in life. ❤️{/bot}
 
 {bot}[opt]3[/opt]
-🏃 Running away isn't the lesson!{/n}
-The focus is on trusting God through difficult situations.{/n}
+🏃 Running away isn't the lesson![/n]
+The focus is on trusting God through difficult situations.[/n]
 Try again!{/bot}
 
 {bot}[opt]4[/opt]
-🦖😂 A dinosaur costume might make things more entertaining...{/n}
-But it isn't the answer!{/n}
+🦖😂 A dinosaur costume might make things more entertaining...[/n]
+But it isn't the answer![/n]
 Try again!{/bot}
 
-{bot}🤖 FINAL CHALLENGE!{/n}
+{bot}🤖 FINAL CHALLENGE![/n]
 What happened when Chester programmed Robbie's glow-in-the-dark function?{/bot}
 
 {option}[1]🤖 Robbie became invisible{/option}
@@ -677,41 +677,41 @@ What happened when Chester programmed Robbie's glow-in-the-dark function?{/bot}
 {option}[4]😴 Robbie shut himself down{/option}
 
 {bot}[opt]1[/opt]
-😂 Imagine an invisible glowing robot!{/n}
-But nope!{/n}
+😂 Imagine an invisible glowing robot![/n]
+But nope![/n]
 Robbie became WAY too bright. 💡🤖{/bot}
 
 {bot}[opt]2[/opt]
-🎉 CORRECT!{/n}
+🎉 CORRECT![/n]
 Robbie's brightness ended up being so intense that everyone had to close their eyes! 😂{/bot}
 
 {bot}[opt]3[/opt]
-🦖 Robbie the dinosaur?!{/n}
-That would definitely make this Halloween even stranger! 😂{/n}
+🦖 Robbie the dinosaur?![/n]
+That would definitely make this Halloween even stranger! 😂[/n]
 But Robbie simply became extremely bright.{/bot}
 
 {bot}[opt]4[/opt]
-Not quite! 😊{/n}
-Robbie kept glowing...{/n}
+Not quite! 😊[/n]
+Robbie kept glowing...[/n]
 Just MUCH brighter than everyone expected! 🤖💡{/bot}
 
-{bot}🎊 AMAZING JOB, Explorer!{/n}
-You survived Chester's terrifying...{/n}
-⛈️ STORM ADVENTURE!{/n}
-And somehow survived Robbie's accidental transformation into a human-sized light bulb. 😂🤖{/n}
-Today you discovered:{/n}
-🌡️ How thunderstorms form{/n}
-💧 What condensation is{/n}
-🔄 What a convection cell is{/n}
-⛈️ What single-cell thunderstorms are{/n}
-🌩️ What supercells can produce{/n}
-🌪️ Why tornadoes can form{/n}
-📖 The story of Jesus calming a storm{/n}
-❤️ How the lesson connects storms to difficult moments in life{/n}
+{bot}🎊 AMAZING JOB, Explorer![/n]
+You survived Chester's terrifying...[/n]
+⛈️ STORM ADVENTURE![/n]
+And somehow survived Robbie's accidental transformation into a human-sized light bulb. 😂🤖[/n]
+Today you discovered:[/n]
+🌡️ How thunderstorms form[/n]
+💧 What condensation is[/n]
+🔄 What a convection cell is[/n]
+⛈️ What single-cell thunderstorms are[/n]
+🌩️ What supercells can produce[/n]
+🌪️ Why tornadoes can form[/n]
+📖 The story of Jesus calming a storm[/n]
+❤️ How the lesson connects storms to difficult moments in life[/n]
 🤖 And why you should maybe NOT let Chester upgrade your robot during a blackout! 😂{/bot}
 
-{bot}😏 ONE FINAL QUESTION!{/n}
-If you were stuck in a house during a blackout with Chester, Alex, and Robbie...{/n}
+{bot}😏 ONE FINAL QUESTION![/n]
+If you were stuck in a house during a blackout with Chester, Alex, and Robbie...[/n]
 What would YOU do first?{/bot}
 
 {option}[1]🔦 Find a flashlight{/option}
@@ -721,32 +721,32 @@ What would YOU do first?{/bot}
 {option}[5]😂 Do all of the above!{/option}
 
 {bot}[opt]1[/opt]
-🔦 Smart choice!{/n}
+🔦 Smart choice![/n]
 At least someone in this group is prepared! 😂{/bot}
 
 {bot}[opt]2[/opt]
-🍫 Honestly... valid. 😂{/n}
+🍫 Honestly... valid. 😂[/n]
 Emergency Halloween candy is officially a thing now.{/bot}
 
 {bot}[opt]3[/opt]
-❤️ Good choice!{/n}
+❤️ Good choice![/n]
 Chester definitely needed someone to remind him not to let fear take over.{/bot}
 
 {bot}[opt]4[/opt]
-🤖 THANK YOU! 😂{/n}
+🤖 THANK YOU! 😂[/n]
 Someone had to stop Chester before Robbie became a nuclear-powered flashlight!{/bot}
 
 {bot}[opt]5[/opt]
-🎉 THE ULTIMATE SURVIVAL PLAN!{/n}
-🔦 Flashlight.{/n}
-🍫 Candy.{/n}
-🧘 Calm Chester.{/n}
-🤖 Protect Robbie.{/n}
+🎉 THE ULTIMATE SURVIVAL PLAN![/n]
+🔦 Flashlight.[/n]
+🍫 Candy.[/n]
+🧘 Calm Chester.[/n]
+🤖 Protect Robbie.[/n]
 You've officially mastered the adventure!{/bot}
 
-{bot}🌟 Thanks for exploring Chester's Halloween Storm Adventure with me!{/n}
-Remember...{/n}
-⛈️ Understanding something can help us face fear with a calmer mind.{/n}
-❤️ Even during life's storms, we can remember God's love and control.{/n}
-🤖 And NEVER underestimate what Chester might do to Robbie! 😂{/n}
+{bot}🌟 Thanks for exploring Chester's Halloween Storm Adventure with me![/n]
+Remember...[/n]
+⛈️ Understanding something can help us face fear with a calmer mind.[/n]
+❤️ Even during life's storms, we can remember God's love and control.[/n]
+🤖 And NEVER underestimate what Chester might do to Robbie! 😂[/n]
 Until our next adventure, Explorer! 👋🎃⛈️{/bot}

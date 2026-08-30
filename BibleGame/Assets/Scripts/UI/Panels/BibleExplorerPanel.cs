@@ -67,6 +67,8 @@ public class BibleExplorerPanel : MonoBehaviour,IVidPic
 
     public void InitVid(VideoPIc videoPIc)
     {
+        AudioManager.Instance.PlayButton();
+
         mVideoLangPanel.SetActive(true); 
         mVideoPic = videoPIc;
 

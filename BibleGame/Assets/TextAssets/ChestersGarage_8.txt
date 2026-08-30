@@ -1,9 +1,9 @@
-{bot}👋 Hey there, Explorer!{/n}
-Today we're jumping into something WILD! 🦖🥽{/n}
-Dinosaurs...{/n}
-Virtual reality...{/n}
-And apparently...{/n}
-A mysterious button called **"Robbie Special"!** 😳{/n}
+{bot}👋 Hey there, Explorer![/n]
+Today we're jumping into something WILD! 🦖🥽[/n]
+Dinosaurs...[/n]
+Virtual reality...[/n]
+And apparently...[/n]
+A mysterious button called **"Robbie Special"!** 😳[/n]
 Ready to see what happens?{/bot}
 
 {option}[1]🦖 LET'S DO IT!{/option}
@@ -12,30 +12,30 @@ Ready to see what happens?{/bot}
 {option}[4]😂 I already know this is going to explode{/option}
 
 {bot}[opt]1[/opt]
-YES! 🦖🔥{/n}
-That's exactly the kind of enthusiasm we need for this adventure!{/n}
+YES! 🦖🔥[/n]
+That's exactly the kind of enthusiasm we need for this adventure![/n]
 Just don't stand too close to Chester's inventions... 😅{/bot}
 
 {bot}[opt]2[/opt]
-🥽 Excellent choice!{/n}
-The virtual reality adventure is about to begin!{/n}
-But Chester has already decided what we're going to see...{/n}
+🥽 Excellent choice![/n]
+The virtual reality adventure is about to begin![/n]
+But Chester has already decided what we're going to see...[/n]
 And somehow... I think dinosaurs are involved. 🦖{/bot}
 
 {bot}[opt]3[/opt]
-😂 Honestly...{/n}
+😂 Honestly...[/n]
 That's a VERY reasonable concern.[/n]
-Chester and mysterious buttons don't exactly have a great history!{/n}
+Chester and mysterious buttons don't exactly have a great history![/n]
 But let's see what happens first...{/bot}
 
 {bot}[opt]4[/opt]
-🤣 You know Chester WAY too well!{/n}
+🤣 You know Chester WAY too well![/n]
 Every invention seems to have about a 50% chance of exploding.[/n]
 Let's hope this one survives the adventure!{/bot}
 
 {bot}🎮 Chester, Robbie, Alex, and Zeke are hanging out together.[/n]
 They've been playing video games and having a great time.[/n]
-Apparently, Alex and Zeke are REALLY good at games because of their reflexes! 🎮⚡{/n}
+Apparently, Alex and Zeke are REALLY good at games because of their reflexes! 🎮⚡[/n]
 Do you think reflexes are important when playing video games?{/bot}
 
 {option}[1]⚡ Absolutely!{/option}
@@ -43,11 +43,11 @@ Do you think reflexes are important when playing video games?{/bot}
 {option}[3]🤔 Not really{/option}
 {option}[4]😂 I just press buttons and hope{/option}
 
-{bot}😂 "Press buttons and hope" is definitely a strategy!{/n}
+{bot}😂 "Press buttons and hope" is definitely a strategy![/n]
 But Chester and his friends are about to discover that reflexes aren't the only thing they have in common...{/bot}
 
 {bot}Zeke is staying over while his family is in town.[/n]
-That means he gets to meet the others and spend time with his two best friends! 👋{/n}
+That means he gets to meet the others and spend time with his two best friends! 👋[/n]
 Imagine your best friend came to stay at your house for a few days.[/n]
 What would YOU want to do first?{/bot}
 
@@ -56,16 +56,16 @@ What would YOU want to do first?{/bot}
 {option}[3]🎬 Watch movies{/option}
 {option}[4]🚀 Go on an adventure{/option}
 
-{bot}🎉 Excellent choices!{/n}
+{bot}🎉 Excellent choices![/n]
 But Chester has something MUCH bigger planned.[/n]
-And considering his history...{/n]
-That's either extremely exciting...{/n]
+And considering his history...[/n]
+That's either extremely exciting...[/n]
 or extremely dangerous. 😂{/bot}
 
-{bot}The others start reminding Chester about some of his previous inventions! 😳{/n}
-He once tried to build a rocket to the sun... ☀️🚀{/n}
-Created a machine that accidentally made it rain cats and dogs... 🐱🐶{/n}
-And even teleported to Nepal and brought back a REAL YETI! 🏔️🦍{/n}
+{bot}The others start reminding Chester about some of his previous inventions! 😳[/n]
+He once tried to build a rocket to the sun... ☀️🚀[/n]
+Created a machine that accidentally made it rain cats and dogs... 🐱🐶[/n]
+And even teleported to Nepal and brought back a REAL YETI! 🏔️🦍[/n]
 Which one sounds the craziest to you?{/bot}
 
 {option}[1]☀️ Rocket to the sun{/option}
@@ -73,16 +73,16 @@ Which one sounds the craziest to you?{/bot}
 {option}[3]🦍 Bringing back a Yeti{/option}
 {option}[4]😵 Shrinking to the size of an atom{/option}
 
-{bot}😂 Honestly...{/n}
-There is no safe answer here!{/n}
+{bot}😂 Honestly...[/n]
+There is no safe answer here![/n]
 But Chester insists he's changed.[/n]
 He says he has something that definitely WON'T explode.[/n]
 Uh-oh...{/bot}
 
-{bot}🥁 DRUMROLL PLEASE!{/n}
-Chester and Robbie have created...{/n}
-🥽 **THE CHESTER AND ROBBIE VIRTUAL REALITY ZONE!**{/n}
-You can create almost any scenario and experience it as though you're actually there!{/n}
+{bot}🥁 DRUMROLL PLEASE![/n]
+Chester and Robbie have created...[/n]
+🥽 **THE CHESTER AND ROBBIE VIRTUAL REALITY ZONE!**[/n]
+You can create almost any scenario and experience it as though you're actually there![/n]
 Where would YOU go first?{/bot}
 
 {option}[1]🦖 Jurassic world{/option}
@@ -91,31 +91,31 @@ Where would YOU go first?{/bot}
 {option}[4]🏰 A magical castle{/option}
 
 {bot}[opt]1[/opt]
-🦖 I KNEW IT!{/n}
+🦖 I KNEW IT![/n]
 Chester would be proud.[/n]
-And apparently...{/n]
+And apparently...[/n]
 DINOSAURS are exactly what he has in mind!{/bot}
 
 {bot}[opt]2[/opt]
-🚀 Space would be incredible!{/n}
+🚀 Space would be incredible![/n]
 Imagine floating around and seeing planets up close.[/n]
 But Chester has a different destination in mind...{/bot}
 
 {bot}[opt]3[/opt]
-🏝️ Relaxing on a tropical island sounds amazing!{/n}
+🏝️ Relaxing on a tropical island sounds amazing![/n]
 Unfortunately, Chester isn't interested in relaxing.[/n]
 He's interested in dinosaurs. 🦖😂{/bot}
 
 {bot}[opt]4[/opt]
-🏰 A magical castle? Great choice!{/n}
+🏰 A magical castle? Great choice![/n]
 But today's adventure is heading somewhere much more prehistoric.[/n]
 Get ready for some giant reptiles! 🦖{/bot}
 
-{bot}🥽 The VR headset is ready!{/n}
-Chester welcomes everyone to the "Virtual Reality Zone."{/n}
-Zeke immediately points out that the name is terrible. 😂{/n}
+{bot}🥽 The VR headset is ready![/n]
+Chester welcomes everyone to the "Virtual Reality Zone."[/n]
+Zeke immediately points out that the name is terrible. 😂[/n]
 But Chester doesn't care.[/n]
-He has ONE thing he wants to generate...{/n}
+He has ONE thing he wants to generate...[/n]
 A T-REX! 🦖{/bot}
 
 {option}[1]🦖 Obviously!{/option}
@@ -124,28 +124,28 @@ A T-REX! 🦖{/bot}
 {option}[4]😨 Maybe start with something smaller...{/option}
 
 {bot}[opt]1[/opt]
-🦖 Exactly what Chester wanted to hear!{/n}
+🦖 Exactly what Chester wanted to hear![/n]
 The mighty Tyrannosaurus Rex is coming up!{/bot}
 
 {bot}[opt]2[/opt]
-Good question! 🤔{/n}
+Good question! 🤔[/n]
 Chester believes the T-Rex is the ultimate dinosaur.[/n]
-He even calls it the "king of dinosaurs."{/n]
+He even calls it the "king of dinosaurs."[/n]
 But Zeke isn't convinced! 😏{/bot}
 
 {bot}[opt]3[/opt]
-😏 Ahhh, Team Spinosaurus!{/n}
+😏 Ahhh, Team Spinosaurus![/n]
 You've just entered the dinosaur debate.[/n]
-And trust me...{/n}
+And trust me...[/n]
 This argument is about to get serious! 🦖🔥{/bot}
 
 {bot}[opt]4[/opt]
 😂 A tiny dinosaur would've been much safer.[/n]
-But Chester doesn't exactly specialize in "safe."{/n]
+But Chester doesn't exactly specialize in "safe."[/n]\
 He wants the biggest, coolest dinosaur possible!{/bot}
 
-{bot}🦖 TIME FOR A DINOSAUR SHOWDOWN!{/n}
-Chester says the T-Rex is the "king of dinosaurs."{/n}
+{bot}🦖 TIME FOR A DINOSAUR SHOWDOWN![/n]
+Chester says the T-Rex is the "king of dinosaurs."[/n]
 But Zeke points out that the name alone doesn't prove anything.[/n]
 The T-Rex was discovered in 1902, while the Spinosaurus was discovered in 1912.[/n]
 If Spinosaurus had been discovered first, Zeke jokes, maybe it would've been called the king! 😂{/bot}
@@ -156,28 +156,28 @@ If Spinosaurus had been discovered first, Zeke jokes, maybe it would've been cal
 {option}[4]😂 Can dinosaurs even have crowns?{/option}
 
 {bot}[opt]1[/opt]
-🦖 Chester would LOVE your answer!{/n}
+🦖 Chester would LOVE your answer![/n]
 But now we need some actual dinosaur facts.[/n]
 Let's settle this properly! 🔬{/bot}
 
 {bot}[opt]2[/opt]
-🐊 Team Spinosaurus has entered the chat!{/n}
+🐊 Team Spinosaurus has entered the chat![/n]
 And you've got some serious evidence to work with.[/n]
 Let's compare these prehistoric giants!{/bot}
 
 {bot}[opt]3[/opt]
-🔬 Excellent!{/n}
+🔬 Excellent![/n]
 Forget opinions.[/n]
 Let's bring out the dinosaur facts!{/bot}
 
 {bot}[opt]4[/opt]
-😂 Fair point!{/n}
+😂 Fair point![/n]
 Somehow I don't think either dinosaur would cooperate with the crown ceremony.[/n]
 Let's stick to the science! 🦖🔬{/bot}
 
-{bot}🦷 FIRST FACT!{/n}
+{bot}🦷 FIRST FACT![/n]
 The T-Rex had an enormous bite force.[/n]
-According to the video, its bite force was about three times that of a great white shark! 😳{/n}
+According to the video, its bite force was about three times that of a great white shark! 😳[/n]
 That made it the strongest-biting land animal known to have lived.[/n]
 Would you want to stand anywhere near that mouth?{/bot}
 
@@ -186,14 +186,14 @@ Would you want to stand anywhere near that mouth?{/bot}
 {option}[3]🦖 Maybe from VERY far away{/option}
 {option}[4]🤪 I'd give it a high five{/option}
 
-{bot}😂 A high five?!{/n}
-I admire your bravery...{/n}
+{bot}😂 A high five?![/n]
+I admire your bravery...[/n]
 but I'd recommend keeping your hand FAR away from those teeth! 🦷🦖{/bot}
 
-{bot}Speaking of teeth... 😳{/n}
+{bot}Speaking of teeth... 😳[/n]
 The T-Rex had teeth around eight inches long.[/n]
-And the largest T-Rex tooth discovered was about...{/n}
-🦷 **12 INCHES!**{/n}
+And the largest T-Rex tooth discovered was about...[/n]
+🦷 **12 INCHES!**[/n]
 That's about the size of a ruler!{/bot}
 
 {option}[1]😱 That's terrifying!{/option}
@@ -201,13 +201,13 @@ That's about the size of a ruler!{/bot}
 {option}[3]😂 Imagine that as a baby tooth{/option}
 {option}[4]🤯 No thank you!{/option}
 
-{bot}😂 Imagine losing THAT tooth under your pillow!{/n}
+{bot}😂 Imagine losing THAT tooth under your pillow![/n]
 The tooth fairy would probably need a forklift. 🧚‍♀️🦷{/bot}
 
-{bot}But wait! 🐊{/n}
+{bot}But wait! 🐊[/n]
 Spinosaurus has some impressive facts too.[/n]
-It may have been the largest carnivorous dinosaur, reaching almost 60 feet long!{/n}
-That's roughly the size of a semi-truck! 🚛{/n}
+It may have been the largest carnivorous dinosaur, reaching almost 60 feet long![/n]
+That's roughly the size of a semi-truck! 🚛[/n]
 Would you rather see a T-Rex or a Spinosaurus in VR?{/bot}
 
 {option}[1]🦖 T-Rex!{/option}
@@ -216,29 +216,29 @@ Would you rather see a T-Rex or a Spinosaurus in VR?{/bot}
 {option}[4]🎮 Give me BOTH!{/option}
 
 {bot}[opt]1[/opt]
-🦖 T-Rex fan detected!{/n}
+🦖 T-Rex fan detected![/n]
 Chester approves.[/n]
-But don't celebrate too soon...{/n}
+But don't celebrate too soon...[/n]
 Spinosaurus has another incredible ability!{/bot}
 
 {bot}[opt]2[/opt]
-🐊 Excellent choice!{/n}
+🐊 Excellent choice![/n]
 Spinosaurus was likely the only truly aquatic swimming dinosaur mentioned in the video.[/n]
 So it could dominate both land AND water! 🌊🦖{/bot}
 
 {bot}[opt]3[/opt]
-😂 Probably the safest option!{/n}
-The VR headset may be realistic...{/n}
+😂 Probably the safest option![/n]
+The VR headset may be realistic...[/n]
 but let's keep the dinosaurs on the other side of the screen!{/bot}
 
 {bot}[opt]4[/opt]
-🤯 BOTH?!{/n}
-Now THAT would be one unforgettable VR experience!{/n}
-T-Rex on land...{/n}
-Spinosaurus in the water...{/n}
+🤯 BOTH?![/n]
+Now THAT would be one unforgettable VR experience![/n]
+T-Rex on land...[/n]
+Spinosaurus in the water...[/n]
 Good luck surviving! 😂{/bot}
 
-{bot}🌊 Here's another Spinosaurus fact!{/n}
+{bot}🌊 Here's another Spinosaurus fact![/n]
 The video explains that Spinosaurus was likely the only true aquatic swimming dinosaur.[/n]
 That means it could move through water as well as dominate on land.[/n]
 What environment would YOU choose for a dinosaur adventure?{/bot}
@@ -248,15 +248,15 @@ What environment would YOU choose for a dinosaur adventure?{/bot}
 {option}[3]🏜️ Desert{/option}
 {option}[4]❄️ Frozen world{/option}
 
-{bot}🌊 A dinosaur swimming through deep water would be AMAZING...{/n}
+{bot}🌊 A dinosaur swimming through deep water would be AMAZING...[/n]
 and also absolutely terrifying. 😂{/bot}
 
-{bot}Meanwhile, the T-Rex could probably sprint at more than 20 miles per hour! 🦖💨{/n}
+{bot}Meanwhile, the T-Rex could probably sprint at more than 20 miles per hour! 🦖💨[/n]
 That's pretty fast for something that huge.[/n]
-Imagine hearing footsteps behind you in the jungle...{/n}
-THUMP...{/n}
-THUMP...{/n}
-THUMP...{/n}
+Imagine hearing footsteps behind you in the jungle...[/n]
+THUMP...[/n]
+THUMP...[/n]
+THUMP...[/n]
 What would you do?{/bot}
 
 {option}[1]🏃 RUN!{/option}
@@ -264,13 +264,13 @@ What would you do?{/bot}
 {option}[3]🥽 Take off the VR headset{/option}
 {option}[4]😂 Pretend I didn't see it{/option}
 
-{bot}😂 Taking off the VR headset might be the smartest option!{/n}
+{bot}😂 Taking off the VR headset might be the smartest option![/n]
 Especially if the T-Rex starts running toward you! 🦖💨{/bot}
 
-{bot}But then something changes the conversation completely...{/n}
-Zeke says he knows about a different kind of KING. 👑{/n}
-Not a dinosaur king...{/n}
-The **King of Kings.**{/n}
+{bot}But then something changes the conversation completely...[/n]
+Zeke says he knows about a different kind of KING. 👑[/n]
+Not a dinosaur king...[/n]
+The **King of Kings.**[/n]
 Who do you think he's talking about?{/bot}
 
 {option}[1]🦖 T-Rex{/option}
@@ -279,29 +279,29 @@ Who do you think he's talking about?{/bot}
 {option}[4]🤔 Another dinosaur{/option}
 
 {bot}[opt]1[/opt]
-😂 Chester would probably vote for T-Rex!{/n}
+😂 Chester would probably vote for T-Rex![/n]
 But that's not the King Zeke is talking about.[/n]
 He's talking about someone far greater than any dinosaur.[/bot}
 
 {bot}[opt]2[/opt]
-🐊 Powerful choice!{/n}
+🐊 Powerful choice![/n]
 But even the biggest dinosaur isn't the King Zeke means.[/n]
 He's talking about **King Jesus.** ❤️👑{/bot}
 
 {bot}[opt]3[/opt]
-🎉 CORRECT! 👑❤️{/n}
-Zeke is talking about **Jesus Christ — the King of Kings.**{/n}
+🎉 CORRECT! 👑❤️[/n]
+Zeke is talking about **Jesus Christ — the King of Kings.**[/n]
 And now the conversation gets much more serious.[/n]
 Let's discover what that title means!{/bot}
 
 {bot}[opt]4[/opt]
-😂 At this point we have discussed almost every dinosaur imaginable!{/n}
+😂 At this point we have discussed almost every dinosaur imaginable![/n]
 But Zeke is talking about someone completely different.[/n]
 He's talking about Jesus — the King of Kings. 👑{/bot}
 
-{bot}👑 So what does "King of Kings" mean?{/n}
+{bot}👑 So what does "King of Kings" mean?[/n]
 The video explains that Jesus has absolute rule over all creation.[/n]
-Earthly kings may eventually be conquered or die...{/n}
+Earthly kings may eventually be conquered or die...[/n]
 but Jesus rules forever.[/n]
 Pretty powerful idea, right?{/bot}
 
@@ -311,23 +311,23 @@ Pretty powerful idea, right?{/bot}
 {option}[4]🤔 I'm not sure{/option}
 
 {bot}[opt]1[/opt]
-🎉 Exactly!{/n}
+🎉 Exactly![/n]
 "King of Kings" means there is no higher authority over Jesus.[/n]
 The video connects this idea to Ephesians 1:21, describing Jesus as being far above every rule, authority, power, and dominion. 👑{/bot}
 
 {bot}[opt]2[/opt]
-😂 Okay, that would make for a VERY different Bible story!{/n]
+😂 Okay, that would make for a VERY different Bible story![/n]
 But Jesus isn't a dinosaur king.[/n]
 He's described as the **King of Kings** because He has authority over all creation. 👑{/bot}
 
 {bot}[opt]3[/opt]
-Not quite! 😊{/n}
+Not quite! 😊[/n]
 The lesson emphasizes that Jesus has authority over all creation.[/n]
 There is no higher authority over Him.[/n]
 👑 King of Kings means exactly that!{/bot}
 
 {bot}[opt]4[/opt]
-That's okay! 😊{/n}
+That's okay! 😊[/n]
 The important idea is this:[/n]
 Jesus has absolute authority over creation.[/n]
 Earthly rulers come and go, but Jesus' rule lasts forever. 👑❤️{/bot}
@@ -342,11 +342,11 @@ What does this make you think about?{/bot}
 {option}[3]❤️ Jesus is greater than earthly rulers{/option}
 {option}[4]🎉 All of these{/option}
 
-{bot}🎉 Exactly!{/n}
+{bot}🎉 Exactly![/n]
 The main point is that Jesus is greater than every earthly authority.[/n]
 That's why the title **King of Kings** matters so much. 👑{/bot}
 
-{bot}Now let's bring the dinosaur debate back! 😂{/n}
+{bot}Now let's bring the dinosaur debate back! 😂[/n]
 It's fun to argue about whether T-Rex or Spinosaurus was more impressive.[/n]
 But Zeke reminds everyone that dinosaurs aren't the most important thing in the grand scheme of things.[/n]
 What should we take MOST seriously?{/bot}
@@ -357,27 +357,27 @@ What should we take MOST seriously?{/bot}
 {option}[4]🥽 Which VR headset is coolest{/option}
 
 {bot}[opt]1[/opt]
-🦖 Dinosaur debates are definitely fun! 😂{/n}
+🦖 Dinosaur debates are definitely fun! 😂[/n]
 But the lesson reminds us that there are more important things to focus on.[/n]
 Like understanding who Jesus is. 👑{/bot}
 
 {bot}[opt]2[/opt]
-🎮 Games are fun!{/n}
+🎮 Games are fun![/n]
 But the lesson is encouraging us to focus on something more important than entertainment.[/n]
 The focus should be on God and who Jesus is. ❤️{/bot}
 
 {bot}[opt]3[/opt]
-🎉 YES!{/n}
+🎉 YES![/n]
 The video makes the point that if we're going to take something seriously, it should be something truly important — like who Jesus is. 👑❤️{/bot}
 
 {bot}[opt]4[/opt]
-🥽 The VR headset is pretty cool...{/n}
+🥽 The VR headset is pretty cool...[/n]
 But even the coolest technology isn't more important than God.[/n]
 That's the lesson Zeke wants everyone to remember. ❤️{/bot}
 
 {bot}Zeke says something really meaningful:[/n]
 It's fun to talk about dinosaurs and figure out which one is the best.[/n]
-But if we're going to get serious about something...{/n}
+But if we're going to get serious about something...[/n]
 we should make sure it's actually important.[/n]
 Do you agree?{/bot}
 
@@ -387,37 +387,37 @@ Do you agree?{/bot}
 {option}[4]😂 Why not both?{/option}
 
 {bot}[opt]1[/opt]
-❤️ Exactly!{/n}
+❤️ Exactly![/n]
 We can enjoy fun things while still remembering what matters most.[/n]
 That's the balance the video is pointing toward.[/n]
 Have fun... but don't lose sight of what's important!{/bot}
 
 {bot}[opt]2[/opt]
-🤔 That's the interesting part of the lesson!{/n}
+🤔 That's the interesting part of the lesson![/n]
 There's nothing wrong with enjoying dinosaurs, games, or technology.[/n]
 But the video encourages us to keep our priorities in the right place. ❤️{/bot}
 
 {bot}[opt]3[/opt]
-😂 YES!{/n}
-Nobody said dinosaurs aren't awesome! 🦖🔥{/n}
+😂 YES![/n]
+Nobody said dinosaurs aren't awesome! 🦖🔥[/n]
 The point is simply that dinosaurs aren't the most important thing in life.[/n]
 You can love dinosaurs AND remember what matters most. ❤️{/bot}
 
 {bot}[opt]4[/opt]
-🎉 Exactly!{/n}
-Dinosaur facts? Awesome. 🦖{/n}
-Virtual reality? Awesome. 🥽{/n}
-Jesus? The video says He's the **King of Kings.** 👑{/n}
+🎉 Exactly![/n]
+Dinosaur facts? Awesome. 🦖[/n]
+Virtual reality? Awesome. 🥽[/n]
+Jesus? The video says He's the **King of Kings.** 👑[/n]
 Now THAT'S a combination!{/bot}
 
-{bot}🥽 Just when everything seems calm...{/n}
+{bot}🥽 Just when everything seems calm...[/n]
 Zeke tells Chester he's glad he got to stay over.[/n]
-He also says Chester is actually a pretty cool guy! 😄{/n}
+He also says Chester is actually a pretty cool guy! 😄[/n]
 But then Chester notices something strange...{/bot}
 
-{bot}👀 "What's that button labeled... ROBBIE SPECIAL?"{/n}
+{bot}👀 "What's that button labeled... ROBBIE SPECIAL?"[/n]
 Chester doesn't remember programming it into the headset.[/n]
-And naturally...{/n}
+And naturally...[/n]
 someone suggests pressing it. 😳{/bot}
 
 {option}[1]😳 DON'T PRESS IT!{/option}
@@ -426,41 +426,41 @@ someone suggests pressing it. 😳{/bot}
 {option}[4]🏃 Run away!{/option}
 
 {bot}[opt]1[/opt]
-😂 The safest answer by FAR!{/n}
-But unfortunately...{/n}
+😂 The safest answer by FAR![/n]
+But unfortunately...[/n]
 the others aren't listening to you!{/bot}
 
 {bot}[opt]2[/opt]
-😈 OH NO!{/n}
-You actually pressed it!{/n}
-The screen starts changing...{/n}
-Something is happening...{/n}
+😈 OH NO![/n]
+You actually pressed it![/n]
+The screen starts changing...[/n]
+Something is happening...[/n]
 And then...{/bot}
 
 {bot}[opt]3[/opt]
-👀 You think you know?{/n}
-Well, Chester doesn't even know what the button does!{/n}
+👀 You think you know?[/n]
+Well, Chester doesn't even know what the button does![/n]
 Let's find out together...{/bot}
 
 {bot}[opt]4[/opt]
-🏃 Excellent survival instincts!{/n}
+🏃 Excellent survival instincts![/n]
 Unfortunately, the button has already been pressed.[/n]
 There is officially no escaping now! 😂{/bot}
 
-{bot}😳 OH BOYS...{/n}
-Something has happened inside the VR system!{/n}
-The screen changes...{/n}
-Everyone reacts...{/n}
+{bot}😳 OH BOYS...[/n]
+Something has happened inside the VR system![/n]
+The screen changes...[/n]
+Everyone reacts...[/n]
 And we're left wondering exactly what Robbie's mysterious button has activated! 🥽🤖{/bot}
 
-{bot}🎮 FINAL MEMORY CHALLENGE!{/n}
+{bot}🎮 FINAL MEMORY CHALLENGE![/n]
 Let's see what you remember from today's adventure!{/bot}
 
 {option}[1]🎯 I'M READY!{/option}
 {option}[2]😎 Bring it on!{/option}
 {option}[3]🦖 Let's test my dinosaur knowledge!{/option}
 
-{bot}🦖 CHALLENGE #1{/n}
+{bot}🦖 CHALLENGE #1[/n]
 Which dinosaur had the enormous bite force discussed in the video?{/bot}
 
 {option}[1]🦖 T-Rex{/option}
@@ -469,26 +469,26 @@ Which dinosaur had the enormous bite force discussed in the video?{/bot}
 {option}[4]🦴 Triceratops{/option}
 
 {bot}[opt]2[/opt]
-Almost! 😊{/n}
+Almost! 😊[/n]
 Spinosaurus was enormous and likely aquatic, but the T-Rex is the one famous in this lesson for its incredible bite force.[/n]
 Try again!{/bot}
 
 {bot}[opt]3[/opt]
-🦕 Nice guess!{/n}
+🦕 Nice guess![/n]
 But the lesson specifically highlights the T-Rex's powerful bite.[/n]
 Think about those giant teeth! 🦷{/bot}
 
 {bot}[opt]4[/opt]
-Good guess! 😄{/n}
+Good guess! 😄[/n]
 But the T-Rex wins this particular bite-force battle.[/n]
 Try again!{/bot}
 
 {bot}[opt]1[/opt]
-🎉 CORRECT!{/n}
+🎉 CORRECT![/n]
 The T-Rex had an enormous bite force — about three times that of a great white shark according to the video.[/n]
 🦖🦷 Excellent!{/bot}
 
-{bot}🌊 CHALLENGE #2{/n}
+{bot}🌊 CHALLENGE #2[/n]
 Which dinosaur was described as likely being a true aquatic swimming dinosaur?{/bot}
 
 {option}[1]🦖 T-Rex{/option}
@@ -497,26 +497,26 @@ Which dinosaur was described as likely being a true aquatic swimming dinosaur?{/
 {option}[4]🦴 Stegosaurus{/option}
 
 {bot}[opt]1[/opt]
-Not quite! 😄{/n}
+Not quite! 😄[/n]
 The T-Rex was an impressive land predator.[/n]
 Think about the dinosaur connected with water! 🌊{/bot}
 
 {bot}[opt]3[/opt]
-🦕 Nice try!{/n}
+🦕 Nice try![/n]
 But the lesson points to Spinosaurus as the likely true aquatic swimmer.[/n]
 Try again!{/bot}
 
 {bot}[opt]4[/opt]
-Good guess!{/n}
+Good guess![/n]
 But Stegosaurus isn't the dinosaur described as aquatic.[/n]
 Think giant predator + water! 🌊🐊{/bot}
 
 {bot}[opt]2[/opt]
-🎉 Correct!{/n}
+🎉 Correct![/n]
 Spinosaurus was likely the only true aquatic swimming dinosaur mentioned in the video.[/n]
 🌊🐊 Great job!{/bot}
 
-{bot}👑 CHALLENGE #3{/n}
+{bot}👑 CHALLENGE #3[/n]
 What does the title **"King of Kings"** refer to?{/bot}
 
 {option}[1]🦖 The strongest dinosaur{/option}
@@ -525,28 +525,28 @@ What does the title **"King of Kings"** refer to?{/bot}
 {option}[4]🎮 The best video game player{/option}
 
 {bot}[opt]1[/opt]
-😂 That's the dinosaur version!{/n}
+😂 That's the dinosaur version![/n]
 But Zeke is talking about someone much greater than any dinosaur.[/n]
 Think about Jesus. 👑{/bot}
 
 {bot}[opt]3[/opt]
-Almost!{/n}
+Almost![/n]
 Earthly kings can rise and fall.[/n]
 The lesson explains that Jesus' authority is above every earthly ruler.[/n]
 Try again!{/bot}
 
 {bot}[opt]4[/opt]
-🤣 That would be quite the gaming title!{/n}
+🤣 That would be quite the gaming title![/n]
 But we're talking about a much more important kind of king.[/n]
 👑 Think Jesus!{/bot}
 
 {bot}[opt]2[/opt]
-🎉 PERFECT!{/n}
+🎉 PERFECT![/n]
 "King of Kings" means Jesus has absolute authority over all creation.[/n]
 There is no higher authority over Him.[/n]
 👑❤️{/bot}
 
-{bot}📖 CHALLENGE #4{/n}
+{bot}📖 CHALLENGE #4[/n]
 According to the video, what happens to earthly kings compared with Jesus?{/bot}
 
 {option}[1]👑 They rule forever{/option}
@@ -555,30 +555,30 @@ According to the video, what happens to earthly kings compared with Jesus?{/bot}
 {option}[4]🥽 They enter virtual reality{/option}
 
 {bot}[opt]1[/opt]
-Not quite! 😊{/n}
+Not quite! 😊[/n]
 The lesson contrasts earthly rulers with Jesus, whose rule is described as lasting forever.[/n]
 Try again!{/bot}
 
 {bot}[opt]3[/opt]
-😂 Imagine THAT history lesson!{/n}
+😂 Imagine THAT history lesson![/n]
 But nope.[/n]
 Earthly kings don't turn into dinosaurs.[/n]
 Try again!{/bot}
 
 {bot}[opt]4[/opt]
-🤣 Wrong adventure!{/n}
+🤣 Wrong adventure![/n]
 The VR headset belongs to Chester and Robbie.[/n]
 We're talking about earthly rulers versus Jesus.[/n]
 Try again!{/bot}
 
 {bot}[opt]2[/opt]
-🎉 Correct!{/n}
+🎉 Correct![/n]
 The video explains that earthly kings can be conquered or die, while Jesus rules forever.[/n]
 👑 That's why He's called the King of Kings!{/bot}
 
-{bot}🎯 FINAL CHALLENGE!{/n}
+{bot}🎯 FINAL CHALLENGE![/n]
 The video isn't saying dinosaurs are boring.[/n]
-In fact, they're pretty awesome! 🦖{/n}
+In fact, they're pretty awesome! 🦖[/n]
 So what's the BIG lesson behind the dinosaur debate?{/bot}
 
 {option}[1]🦖 T-Rex must always win{/option}
@@ -587,31 +587,31 @@ So what's the BIG lesson behind the dinosaur debate?{/bot}
 {option}[4]🥽 VR is more important than dinosaurs{/option}
 
 {bot}[opt]1[/opt]
-😂 Chester would probably argue that all day!{/n}
+😂 Chester would probably argue that all day![/n]
 But the lesson goes deeper than choosing the best dinosaur.[/n]
 It's about remembering what truly matters.[/n]
 Try again!{/bot}
 
 {bot}[opt]2[/opt]
-🐊 Team Spinosaurus is still fighting! 😂{/n}
+🐊 Team Spinosaurus is still fighting! 😂[/n]
 But the video wants us to look beyond the dinosaur competition.[/n]
 The bigger focus is on Jesus, the King of Kings. 👑{/bot}
 
 {bot}[opt]4[/opt]
-🥽 VR is definitely cool!{/n}
+🥽 VR is definitely cool![/n]
 But even the coolest technology isn't the main lesson.[/n]
 The video points us toward something much more important.[/n]
 ❤️ Who Jesus is.[/bot}
 
 {bot}[opt]3[/opt]
-🎉 PERFECT!{/n}
+🎉 PERFECT![/n]
 We can enjoy dinosaurs, games, inventions, and virtual reality.[/n]
 But the lesson reminds us not to lose sight of what matters most.[/n]
 👑 Jesus is the King of Kings. ❤️{/bot}
 
-{bot}🎊 AMAZING JOB, Explorer!{/n}
-You survived the dinosaur debate! 🦖🔥{/n}
-You explored the Chester and Robbie Virtual Reality Zone! 🥽🤖{/n}
+{bot}🎊 AMAZING JOB, Explorer![/n]
+You survived the dinosaur debate! 🦖🔥[/n]
+You explored the Chester and Robbie Virtual Reality Zone! 🥽🤖[/n]
 You learned about:[/n]
 🦖 The T-Rex and its incredible bite force[/n]
 🐊 The massive Spinosaurus[/n]
@@ -622,9 +622,9 @@ You learned about:[/n]
 📖 Why Jesus is described as having authority over all creation[/n]
 ❤️ And why we should focus on what truly matters!{/bot}
 
-{bot}But wait... 😏{/n}
-We STILL haven't discovered exactly what the mysterious...{/n}
-**"ROBBIE SPECIAL"** button does! 🤖🥽{/n}
+{bot}But wait... 😏[/n]
+We STILL haven't discovered exactly what the mysterious...[/n]
+**"ROBBIE SPECIAL"** button does! 🤖🥽[/n]
 Would YOU press it?{/bot}
 
 {option}[1]👉 PRESS IT!{/option}
@@ -633,31 +633,31 @@ Would YOU press it?{/bot}
 {option}[4]🏃 RUN BEFORE IT EXPLODES!{/option}
 
 {bot}[opt]1[/opt]
-😳 BRAVE CHOICE!{/n}
+😳 BRAVE CHOICE![/n]
 You have officially activated the mysterious button.[/n]
-Whatever happens next...{/n}
+Whatever happens next...[/n]
 DON'T BLAME ME! 😂{/bot}
 
 {bot}[opt]2[/opt]
-😂 Honestly, after hearing Chester's history...{/n}
+😂 Honestly, after hearing Chester's history...[/n]
 that's probably the smartest decision you've made all day!{/bot}
 
 {bot}[opt]3[/opt]
-🤣 That's the spirit!{/n}
+🤣 That's the spirit![/n]
 If we're already in a VR adventure with dinosaurs, we might as well find out what the button does!{/bot}
 
 {bot}[opt]4[/opt]
-🏃💨 RUN! RUN! RUN!{/n}
-Unfortunately...{/n}
+🏃💨 RUN! RUN! RUN![/n]
+Unfortunately...[/n]
 the button has already been pressed.[/n]
 🥽🤖 GOOD LUCK! 😂{/bot}
 
-{bot}🌟 Thanks for joining the adventure, Explorer!{/n}
+{bot}🌟 Thanks for joining the adventure, Explorer![/n]
 Remember:[/n]
 🦖 Dinosaurs can be fascinating.[/n]
 🥽 Technology can take us amazing places.[/n]
 🎮 Games can be fun.[/n]
 😂 Friends can make every adventure better.[/n]
-👑 But above everything else...{/n}
-❤️ **Jesus is the King of Kings.**{/n}
+👑 But above everything else...[/n]
+❤️ **Jesus is the King of Kings.**[/n]
 Until our next adventure! 👋🦖🥽{/bot}

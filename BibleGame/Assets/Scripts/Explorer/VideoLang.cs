@@ -14,6 +14,7 @@ public class VideoLang : MonoBehaviour
         button?.onClick.RemoveAllListeners();
         button?.onClick.AddListener(() =>
         {
+            AudioManager.Instance.PlayButton();
             Actions.SetVidLang?.Invoke(lang);
         });
     }

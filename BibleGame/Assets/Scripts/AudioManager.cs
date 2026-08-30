@@ -42,7 +42,7 @@ public class AudioManager : MonoBehaviour
         if (PlayerPrefs.HasKey("BGVol"))
         {
             bgVol = PlayerPrefs.GetFloat("BGVol");
-            audioSource.volume = bgVol >=  1.0f ? maxVolBg : bgVol;
+            audioSource.volume = bgVol;
             EnableVol(true);
         }
         else
@@ -62,7 +62,7 @@ public class AudioManager : MonoBehaviour
         if (sfxVol >= 0.0f)
             audioSource.volume = sfxVol;
 
-        audioSource.PlayOneShot(audioData.GetAudioClip(AudioType.button), 1.0f);
+        audioSource.PlayOneShot(audioData.GetAudioClip(AudioType.button), sfxVol);
     }
 
     public void PlaySFX(AudioType type)
@@ -70,10 +70,7 @@ public class AudioManager : MonoBehaviour
         if (audioSource == null || audioData == null)
             return;
 
-        if (sfxVol >= 0.0f)
-            audioSource.volume = sfxVol;
-
-        audioSource.PlayOneShot(audioData.GetAudioClip(type), 1.0f);
+        audioSource.PlayOneShot(audioData.GetAudioClip(type), sfxVol);
     }
 
     public void PlayBG(AudioType type)
@@ -89,9 +86,9 @@ public class AudioManager : MonoBehaviour
         if (audioSource.clip == clip)
             return;
 
-        float vol = type == AudioType.reading ? 
-                                                bgVol <= maxVolReadBg ? bgVol : maxVolReadBg
-                                                : bgVol >= 1.0f ? maxVolBg : bgVol; 
+        bgVol = PlayerPrefs.GetFloat("BGVol");
+
+        float vol = bgVol;
 
         audioSource.volume = vol;
                                                 
@@ -155,7 +152,7 @@ public class AudioManager : MonoBehaviour
         else
             audioSource.Pause();
 
-        audioSource.volume = bgVol >= 1.0f ? maxVolBg : bgVol;
+        audioSource.volume = bgVol;
     }
 
 

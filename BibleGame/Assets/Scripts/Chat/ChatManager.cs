@@ -54,7 +54,7 @@ public class ChatManager : MonoBehaviour,IOptionChat
         BotChat();
 
         AudioManager.Instance.MuteBG(false);
-        mGiveAnswerBtn.onClick.AddListener(SetOptions);
+        mGiveAnswerBtn.onClick.AddListener(()=> { SetOptions(); AudioManager.Instance.PlayButton(); });
     }
 
     private void OnDisable()
@@ -133,8 +133,6 @@ public class ChatManager : MonoBehaviour,IOptionChat
         optionPanel.gameObject.SetActive(true);
 
         optionPanel.Set(mCurrentBot.mOptions, this);
-
-        AudioManager.Instance.PlayButton();
     }
 
     public void RefreshLayout(RectTransform layoutRoot)

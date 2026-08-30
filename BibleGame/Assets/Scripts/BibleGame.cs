@@ -242,6 +242,13 @@ namespace BibleGame
 
             private static List<IOptData> optiondatas = new List<IOptData>();
 
+            public static string FormatBoldText(string text)
+            {
+                if (string.IsNullOrEmpty(text))
+                    return text;
+
+                return Regex.Replace(text, @"\*\*(.*?)\*\*", "<b>$1</b>");
+            }
 
             public static void Initialize(TextAsset textAsset)
             {
@@ -270,6 +277,8 @@ namespace BibleGame
                     data = _text.Substring(start, end - start).Trim()
                 };
 
+                data.data = FormatBoldText(data.data);
+
                 // Move pointer after {/bot}
                 _pointer = end + "{/bot}".Length;
 
@@ -294,6 +303,8 @@ namespace BibleGame
                         break;
 
                     string option = _text.Substring(optionStart, optionEnd - optionStart);
+
+                    option = FormatBoldText(option);
 
                     int closeBracket = option.IndexOf(']');
 
@@ -350,41 +361,6 @@ namespace BibleGame
 
                         ReadOptions(data);
 
-                        // If this branch has no options, move directly
-                        // to the first non-[opt] bot.
-                        //if (data.mOptions.Count == 0)
-                        //{
-                        //    while (true)
-                        //    {
-                        //        int nextBotStart = _text.IndexOf("{bot}", _pointer);
-                        //        if (nextBotStart == -1)
-                        //            break;
-
-                        //        int nextContentStart = nextBotStart + "{bot}".Length;
-                        //        int nextBotEnd = _text.IndexOf("{/bot}", nextContentStart);
-                        //        if (nextBotEnd == -1)
-                        //            break;
-
-                        //        string nextBotText = _text.Substring(nextContentStart, nextBotEnd - nextContentStart).Trim();
-
-                        //        // Skip remaining branch bots
-                        //        if (nextBotText.StartsWith("[opt]"))
-                        //        {
-                        //            _pointer = nextBotEnd + "{/bot}".Length;
-                        //            continue;
-                        //        }
-
-                        //        // Jump to the common conversation
-                        //        data.data = nextBotText;
-
-                        //        _pointer = nextBotEnd + "{/bot}".Length;
-
-                        //        ReadOptions(data);
-
-                        //        break;
-                        //    }
-                        //}
-
                         return data;
                     }
                     else
@@ -400,44 +376,9 @@ namespace BibleGame
 
                             ReadOptions(data);
 
-                            //if (data.mOptions.Count == 0)
-                            //{
-                            //    while (true)
-                            //    {
-                            //        int nextBotStart = _text.IndexOf("{bot}", _pointer);
-                            //        if (nextBotStart == -1)
-                            //            break;
-
-                            //        int nextContentStart = nextBotStart + "{bot}".Length;
-                            //        int nextBotEnd = _text.IndexOf("{/bot}", nextContentStart);
-                            //        if (nextBotEnd == -1)
-                            //            break;
-
-                            //        string nextBotText = _text.Substring(nextContentStart, nextBotEnd - nextContentStart).Trim();
-
-                            //        // Skip remaining branch bots
-                            //        if (nextBotText.StartsWith("[opt]"))
-                            //        {
-                            //            _pointer = nextBotEnd + "{/bot}".Length;
-                            //            continue;
-                            //        }
-
-                            //        // Jump to the common conversation
-                            //        data.data = nextBotText;
-
-                            //        _pointer = nextBotEnd + "{/bot}".Length;
-
-                            //        ReadOptions(data);
-
-                            //        break;
-                            //    }
-                            //}
-
                             return data;
                         }
 
-                        // This is another option branch (e.g. [opt]2 when looking for [opt]1)
-                        // Skip it and continue searching.
                         _pointer = botEnd + "{/bot}".Length;
                         continue;
                     }

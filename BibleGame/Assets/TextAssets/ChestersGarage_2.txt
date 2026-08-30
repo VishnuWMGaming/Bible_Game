@@ -37,7 +37,7 @@ Would you try it?{/bot}
 {option}[1]🦗 Absolutely! Give me a bowl!{/option}
 {option}[2]😳 Umm... I'll pass{/option}
 {option}[3]😂 Only if nobody tells me what's inside{/option}
-{option}[4]🍕 I brought my own food{/option]}
+{option}[4]🍕 I brought my own food{/option}
 
 {bot}[opt]1[/opt]
 🦗 Brave choice![/n]
@@ -130,7 +130,7 @@ Grandpa Eugene wouldn't let him bring a taser to camp!{/bot}
 
 {option}[1]😂 Grandpa Eugene made the right call{/option}
 {option}[2]🦃 Chester needs even MORE turkey equipment{/option}
-{option}[3]😳 I would be terrified too{/option]
+{option}[3]😳 I would be terrified too{/option}
 {option}[4]🤣 I want to see this turkey battle{/option}
 
 {bot}[opt]1[/opt]
