@@ -95,11 +95,18 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         });
     }
 
-    public void SetTitle(string title)
+    public async Task SetTitle(string title)
     {
-        mtitle.text = title;
+        Language language = AppData.mVidLang switch
+        {
+            VidLang.english => Language.English,
+            VidLang.swahili => Language.Swahili,
+            VidLang.spanish => Language.Spanish,
+            VidLang.creole => Language.Kreyol,
+            VidLang.french => Language.French
+        };
 
-
+        mtitle.text = await LanguageController.Instance.TranslateAsync(title, language);
        // chatBtn.interactable = title == "Chester's Garage - Summer Camp Pt. 1 (S4E1)";
 
         chatBtn.onClick.AddListener(()=>ChatFunction(title));

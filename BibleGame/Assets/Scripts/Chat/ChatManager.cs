@@ -35,12 +35,21 @@ public class ChatManager : MonoBehaviour,IOptionChat
 
     BotChatData mCurrentBot;
 
-    private void OnEnable()
+    private async Task OnEnable()
     {
         textAsset = null;
         textAsset = chatAssetData.Get(AppData.mCurrentVidChapter);
 
-        mTitle.text = AppData.mCurrentVidChapter;
+        Language language = AppData.mVidLang switch
+        {
+            VidLang.english => Language.English,
+            VidLang.swahili => Language.Swahili,
+            VidLang.spanish => Language.Spanish,
+            VidLang.creole => Language.Kreyol,
+            VidLang.french => Language.French
+        };
+
+        mTitle.text = await LanguageController.Instance.TranslateAsync(AppData.mCurrentVidChapter,language);
 
         if (textAsset == null)
         {
