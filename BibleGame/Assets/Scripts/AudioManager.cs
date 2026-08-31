@@ -59,8 +59,8 @@ public class AudioManager : MonoBehaviour
         if (audioSource == null || audioData == null)
             return;
 
-        if (sfxVol >= 0.0f)
-            audioSource.volume = sfxVol;
+        //if (sfxVol >= 0.0f)
+        //    audioSource.volume = sfxVol;
 
         audioSource.PlayOneShot(audioData.GetAudioClip(AudioType.button), sfxVol);
     }
