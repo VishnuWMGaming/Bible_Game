@@ -105,6 +105,8 @@ namespace BibleGame
             public static MScreenOriatation orientation;
 
             public static string mCurrentVidChapter;
+
+            public static VidLang mVidLang;
         }
 
         public  class LoginData

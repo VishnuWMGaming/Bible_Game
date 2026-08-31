@@ -1,4 +1,5 @@
 using BibleGame;
+using BibleGame.Data;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -90,6 +91,8 @@ public class BibleExplorerPanel : MonoBehaviour,IVidPic
             PopUp.Instance.ShowMessage("No video available !!");
             return;
         }
+
+        AppData.mVidLang = lang;
 
         mVideoLangPanel.SetActive(false);
 

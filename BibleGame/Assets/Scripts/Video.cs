@@ -98,6 +98,8 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     public void SetTitle(string title)
     {
         mtitle.text = title;
+
+
        // chatBtn.interactable = title == "Chester's Garage - Summer Camp Pt. 1 (S4E1)";
 
         chatBtn.onClick.AddListener(()=>ChatFunction(title));

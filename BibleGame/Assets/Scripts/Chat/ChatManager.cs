@@ -85,13 +85,28 @@ public class ChatManager : MonoBehaviour,IOptionChat
        GameObject botObj =  Instantiate(botChat.gameObject, chatTransform);
        IChat chat = botObj.GetComponent<IChat>();
 
-       chat.Set("typing...", IChattype.bot);
+        Language language = AppData.mVidLang switch
+        {
+            VidLang.english => Language.English,
+            VidLang.swahili => Language.Swahili,
+            VidLang.spanish => Language.Spanish,
+            VidLang.creole => Language.Kreyol,
+            VidLang.french => Language.French
+        };
+
+       string mbot = await LanguageController.Instance.TranslateAsync("typing...",language);
+       chat.Set(mbot, IChattype.bot);
 
        await UniTask.Delay(2000);
-      
-       chat.Set(text, IChattype.bot);
 
-       RefreshLayout(chatTransform.GetComponent<RectTransform>());
+       text = await LanguageController.Instance.TranslateAsync(text,language);
+        chat.Set(text, IChattype.bot);
+
+        foreach (IOptData data in mCurrentBot.mOptions)
+            data.value = await LanguageController.Instance.TranslateAsync(data.value, language);
+
+
+        RefreshLayout(chatTransform.GetComponent<RectTransform>());
 
        mGiveAnswerBtn.interactable = mCurrentBot.mOptions.Count >0;
        if(mCurrentBot.mOptions.Count <= 0)
@@ -128,11 +143,14 @@ public class ChatManager : MonoBehaviour,IOptionChat
         UserAction(value);
     }
 
-    public void SetOptions()
+    public async Task SetOptions()
     {
         optionPanel.gameObject.SetActive(true);
 
+        mGiveAnswerBtn.interactable = false;
+
         optionPanel.Set(mCurrentBot.mOptions, this);
+        mGiveAnswerBtn.interactable = true;
     }
 
     public void RefreshLayout(RectTransform layoutRoot)

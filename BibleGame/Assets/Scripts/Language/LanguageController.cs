@@ -1,12 +1,14 @@
 using BibleGame;
 using BibleGame.API;
 using BibleGame.Data;
+using Cysharp.Threading.Tasks;
 using DebugUtils;
 using Lean.Localization;
 using RestAPI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -332,6 +334,89 @@ public class LanguageController : MonoBehaviour
         return chunks;
     }
 
+    public async UniTask<string> TranslateAsync(
+    string textValue,
+    Language language = Language.None)
+    {
+        if (string.IsNullOrEmpty(ApiBase.AuthKeyPair.Value))
+            return textValue;
+
+        Language lang = language == Language.None
+            ? AppData.mLanguage
+            : language;
+
+        if (lang == null)
+        {
+            AppData.mLanguage = Language.English;
+            return textValue;
+        }
+
+        if (lang == Language.English)
+            return textValue;
+
+        // Split long text into chunks
+        List<string> chunks = SplitIntoChunks(textValue, 500);
+
+        return await TranslateChunksAsync(chunks, lang);
+    }
+
+    private async UniTask<string> TranslateChunksAsync(
+    List<string> chunks,
+    Language language = Language.None)
+    {
+        StringBuilder translatedText = new StringBuilder();
+
+        Language lang = language == Language.None
+            ? AppData.mLanguage
+            : language;
+
+        string selectedLanguage =
+            LanguageController.Instance.GetLangStringVal(lang);
+
+        foreach (var chunk in chunks)
+        {
+            TransInput input = new TransInput
+            {
+                text = chunk,
+                language = selectedLanguage
+            };
+
+            // Wait for this chunk to finish
+            string translated = await TranslateChunkAsync(input);
+
+            if (!string.IsNullOrEmpty(translated))
+            {
+                if (translatedText.Length > 0)
+                    translatedText.Append("\n");
+
+                translatedText.Append(translated);
+            }
+        }
+
+        return translatedText.ToString();
+    }
+
+    private UniTask<string> TranslateChunkAsync(TransInput input)
+    {
+        var completionSource = new UniTaskCompletionSource<string>();
+
+        TranslateAPI.Translate((success, res) =>
+        {
+            if (!success)
+            {
+                Debug.LogError("Translation error");
+
+                completionSource.TrySetResult(string.Empty);
+                return;
+            }
+
+            completionSource.TrySetResult(res.ResponseData);
+
+        }, input);
+
+        return completionSource.Task;
+    }
+
 }
 
 
@@ -345,5 +430,6 @@ public enum Language
     Chinese,
     Hindi,
     Swahili,
-    Kreyol
+    Kreyol,
+    None
 }
