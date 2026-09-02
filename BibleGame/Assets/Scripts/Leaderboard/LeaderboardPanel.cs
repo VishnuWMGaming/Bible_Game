@@ -203,6 +203,7 @@ public class LeaderboardPanel : MonoBehaviour, IRecyclableScrollRectDataSource,I
         return await tcs.Task;
     }
 }
+
 [Serializable]
 public class LeaderboardData
 {

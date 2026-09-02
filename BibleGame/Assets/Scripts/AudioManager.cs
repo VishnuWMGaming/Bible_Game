@@ -37,7 +37,7 @@ public class AudioManager : MonoBehaviour
             sfxVol = PlayerPrefs.GetFloat("SfxVol");
         }
         else
-            sfxVol = -1.0f;
+            sfxVol = 1.0f;
 
         if (PlayerPrefs.HasKey("BGVol"))
         {

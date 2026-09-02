@@ -63,6 +63,11 @@ public class ChatManager : MonoBehaviour,IOptionChat
         BotChat();
 
         AudioManager.Instance.MuteBG(false);
+
+        string mGiTxt = await LanguageController.Instance.TranslateAsync("Give Answer", language);
+
+        mGiveAnswerBtn.GetComponentInChildren<TMP_Text>().text = mGiTxt;
+
         mGiveAnswerBtn.onClick.AddListener(()=> { SetOptions(); AudioManager.Instance.PlayButton(); });
     }
 
