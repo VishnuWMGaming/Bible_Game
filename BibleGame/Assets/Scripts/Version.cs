@@ -44,7 +44,7 @@ public class Version : MonoBehaviour
             {
                 PopUp.Instance.ShowMessage("Your Application is outdated.Please do update the application");
             }
-#else
+#elif UNITY_IOS
             if(Application.version != res.ResponseData.ios_latest_version)
             {
                 PopUp.Instance.ShowMessage("Your Application is outdated.Please do update the application");

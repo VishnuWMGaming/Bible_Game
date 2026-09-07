@@ -1,8 +1,7 @@
 fileFormatVersion: 2
-guid: d15693a03d0d33b4892c6365a2a97e19
-timeCreated: 1472036503
-licenseType: Store
+guid: 35ae2148577b3c44fb50437f63ff9c72
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
   executionOrder: 0
@@ -15,5 +14,5 @@ AssetOrigin:
   productId: 68068
   packageName: In-game Debug Console
   packageVersion: 1.8.9
-  assetPath: Assets/Plugins/IngameDebugConsole/Scripts/DebugLogConsole.cs
+  assetPath: Assets/Plugins/IngameDebugConsole/Scripts/CommandInputField.cs
   uploadId: 970394
