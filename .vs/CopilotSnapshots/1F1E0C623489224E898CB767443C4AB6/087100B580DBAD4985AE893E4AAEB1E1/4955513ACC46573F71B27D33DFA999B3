@@ -1,7 +1,8 @@
-using BibleGame;
+﻿using BibleGame;
 using BibleGame.Data;
 using System;
 using System.Collections;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using System.Runtime.InteropServices;
 
 [RequireComponent(typeof(VideoPlayer))]
 public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
@@ -23,6 +25,11 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     private string url;
 
     public string URL => url;
+
+    [Header("Proxy")]
+    [Tooltip("Base URL of server-side video proxy. If set, Drive links will be requested via {proxyBaseUrl}/api/video-proxy/{fileId}. Proxy must support Range requests and CORS.")]
+    [SerializeField]
+    private string driveProxyBaseUrl;
 
     [Header("UI")]
     public Slider progressSlider;
@@ -43,6 +50,7 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     private CancellationTokenSource cancellationTokenSource;
     private bool isDragging = false;
+    private string _tempDownloadPath;
 
     private void OnEnable()
     {
@@ -68,6 +76,9 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
         videoPlayer.loopPointReached -= OnVideoFinished;
         chatBtn.onClick.RemoveAllListeners();
+        // ensure WebGL video destroyed when disabling
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+            WebGL_DestroyVideo(gameObject.name);
     }
 
     private void OnVideoFinished(VideoPlayer source)
@@ -93,6 +104,15 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             mLoadingPanel?.SetActive(true);
             StartVideo(url);
         });
+    }
+
+    // Called from WebGL JS when the HTML <video> ends
+    public void OnWebVideoEnded(string arg)
+    {
+        // mirror native completion behavior
+        replayButton.gameObject.SetActive(true);
+        // pause Unity VideoPlayer just in case
+        if (videoPlayer != null && videoPlayer.isPlaying) videoPlayer.Pause();
     }
 
     public async Task SetTitle(string title)
@@ -140,15 +160,14 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     // MAIN LOADER (ARCHIVE + GOOGLE DRIVE + DIRECT MP4)
     private async Task LoadVideo(string url, CancellationToken token)
     {
-        videoPlayer.Stop();
-        _proxy?.Stop();
-        _proxy = null;
+        // Basic null checks for required UI references
+        if (renderImg == null || progressSlider == null || currentTimeText == null || durationText == null || playPauseButton == null)
+        {
+            Debug.LogError("Video.LoadVideo: Missing required UI references. Assign RawImage, Slider and Texts in the inspector.");
+            return;
+        }
 
-        // Always start clean so stale handlers don't stack up across loads
-        videoPlayer.errorReceived -= OnVideoError;
-        videoPlayer.prepareCompleted -= OnVideoPrepared;
-        videoPlayer.errorReceived += OnVideoError;
-        videoPlayer.prepareCompleted += OnVideoPrepared;
+        videoPlayer.Stop();
 
         string streamUrl = null;
         bool isGoogleDrive = url.Contains("drive.google.com") || url.Contains("drive.usercontent.google.com");
@@ -160,37 +179,50 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
         else if (isGoogleDrive)
         {
-#if UNITY_ANDROID
-        string fileId = ExtractGoogleDriveFileId(url);
-        if (string.IsNullOrEmpty(fileId))
-        {
-            Debug.LogError("Could not extract Google Drive file ID from: " + url);
-            return;
-        }
- 
-        try
-        {
-            _proxy = new DriveStreamProxy();
-            streamUrl = await _proxy.StartAsync(fileId, token);
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError("Google Drive resolve/proxy start failed: " + ex);
-            return;
-        }
-#elif UNITY_WEBGL
-            // Build the direct alt=media URL from the SAME file id that was passed in,
-            // not a hardcoded test id. Replace with your real extraction call.
+            // Prefer using a server-side proxy for Google Drive in browser builds
+            // because Drive responses typically lack CORS headers and may
+            // present an HTML interstitial for large files. Configure
+            // driveProxyBaseUrl in the inspector (e.g. "https://yourdomain.com/api/video-proxy").
             string fileId = ExtractGoogleDriveFileId(url);
-            if (string.IsNullOrEmpty(fileId))
+
+            bool useProxy = !string.IsNullOrEmpty(driveProxyBaseUrl) || Application.platform == RuntimePlatform.WebGLPlayer;
+
+            if (useProxy && !string.IsNullOrEmpty(fileId))
             {
-                Debug.LogError("Could not extract Google Drive file ID from: " + url);
-                return;
+                // Ensure no trailing slash
+                string baseUrl = driveProxyBaseUrl?.TrimEnd('/') ?? string.Empty;
+                if (string.IsNullOrEmpty(baseUrl))
+                {
+                    Debug.LogWarning("driveProxyBaseUrl is empty but proxy use was requested — falling back to direct resolve.");
+                }
+                else
+                {
+                    // Expecting proxy endpoint like: {baseUrl}/api/video-proxy/{fileId}
+                    streamUrl = baseUrl + "/api/video-proxy/" + fileId;
+                }
             }
-            streamUrl = $"https://www.googleapis.com/drive/v3/files/{fileId}?alt=media&key=AIzaSyBRmMNkgrySfA7TFmbchKX3xbtvqxrT3Zs";
-#else
-        streamUrl = url;
-#endif
+
+            if (string.IsNullOrEmpty(streamUrl))
+            {
+                // Fallback: try to resolve Drive download URL client-side for native builds
+                if (!string.IsNullOrEmpty(fileId))
+                {
+                    try
+                    {
+                        streamUrl = await ResolveGoogleDriveDownloadUrlAsync(fileId, token);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogWarning("ResolveGoogleDriveDownloadUrlAsync failed, falling back to original URL: " + ex.Message);
+                        streamUrl = url; // final fallback
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Could not extract Google Drive file id, using original URL");
+                    streamUrl = url;
+                }
+            }
         }
         else
         {
@@ -203,98 +235,114 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             return;
         }
 
-        Debug.Log("[VideoLoad] Streaming URL: " + streamUrl);
+        Debug.Log("Streaming URL: " + streamUrl);
 
         Color32 color = renderImg.color;
 
+        string streamToUse = streamUrl;
         if (isArchive)
         {
             string finalUrl = await ResolveFinalUrlAsync(streamUrl, token);
             finalUrl = CleanArchiveUrl(finalUrl);
-            Debug.Log("[VideoLoad] Final resolved archive URL: " + finalUrl);
-            ApplyVideoSource(finalUrl);
-        }
-        else
-        {
-            ApplyVideoSource(streamUrl);
+            streamToUse = finalUrl;
         }
 
-        Debug.Log("[VideoLoad] ApplyVideoSource called. videoPlayer.isPrepared=" + videoPlayer.isPrepared
-            + " isPlaying=" + videoPlayer.isPlaying);
+        // For WebGL we must use URL playback (CORS applies). For native builds,
+        // attempt a progressive download to a local temp file and start playback
+        // as soon as a small buffer is available to reduce startup time for large files.
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            // Use browser-native HTML <video> overlay for WebGL to avoid CORS issues
+            // Note: this will render above the Unity canvas. It does not provide
+            // pixel access to Unity textures (CORS prevents that for cross-origin).
+            WebGL_CreateVideo(gameObject.name, streamToUse, 0, 0, Screen.width, Screen.height, true);
 
-        // NOTE: We do NOT poll with Task.Delay here. On WebGL, Task.Delay's continuation
-        // can fail to resume reliably (no real threadpool/timer), which hangs this method
-        // forever even after the video has actually prepared. Instead we gate on the
-        // prepareCompleted event via a TaskCompletionSource, with a real-time timeout
-        // driven by a MonoBehaviour coroutine (which DOES run on WebGL's main loop).
-        if (videoPlayer.isPrepared)
-        {
-            Debug.Log("[VideoLoad] Already prepared by the time we checked.");
-        }
-        else
-        {
-            var tcs = new TaskCompletionSource<bool>();
-            void Handler(VideoPlayer vp)
+            mLoadingPanel.SetActive(false);
+            // hide Unity RawImage while the HTML video element is visible
+            if (renderImg != null)
             {
-                videoPlayer.prepareCompleted -= Handler;
-                tcs.TrySetResult(true);
+                Color32 c = renderImg.color;
+                renderImg.color = new Color32(c.r, c.g, c.b, 0);
             }
-            videoPlayer.prepareCompleted += Handler;
-
-            // Coroutine-based timeout: StartCoroutine runs on Unity's main PlayerLoop,
-            // which WebGL definitely pumps every frame (unlike Task.Delay).
-            StartCoroutine(TimeoutCoroutine(15f, tcs));
-
-            token.Register(() => tcs.TrySetCanceled());
-
-            bool prepared = await tcs.Task;
-            if (!prepared)
+            UpdatePlayPauseText();
+        }
+        else
+        {
+            try
             {
-                Debug.LogError("[VideoLoad] Prepare did not complete (timeout or cancel). url=" + streamUrl);
-                mLoadingPanel.SetActive(false);
+                await ProgressiveDownloadAndPlay(streamToUse, token);
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.Log("Progressive download cancelled");
                 return;
             }
+            catch (Exception ex)
+            {
+                Debug.LogWarning("Progressive download failed, falling back to direct URL: " + ex.Message);
+                ApplyVideoSource(streamToUse);
+            }
         }
 
-        Debug.Log("[VideoLoad] Prepared successfully. length=" + videoPlayer.length);
+        // Wait for Prepare with a timeout and cancellation support
+        const float prepareTimeoutSeconds = 30f;
+        float prepareStart = Time.realtimeSinceStartup;
+
+        while (!videoPlayer.isPrepared)
+        {
+            token.ThrowIfCancellationRequested();
+
+            if (Time.realtimeSinceStartup - prepareStart > prepareTimeoutSeconds)
+            {
+                Debug.LogError($"Video prepare timed out after {prepareTimeoutSeconds} seconds for URL: {streamUrl}");
+                return;
+            }
+
+            await Task.Delay(100, token);
+        }
 
         progressSlider.minValue = 0;
-        progressSlider.maxValue = (float)videoPlayer.length;
-        durationText.text = FormatTime(videoPlayer.length);
+        // Protect against streams that don't report length on some platforms
+        float length = (float)videoPlayer.length;
+        if (length <= 0f)
+        {
+            // disable seeking until we have a valid length
+            progressSlider.interactable = false;
+        }
+        else
+        {
+            progressSlider.interactable = true;
+            progressSlider.maxValue = length;
+            durationText.text = FormatTime(length);
+        }
 
         videoPlayer.Play();
-        Debug.Log("[VideoLoad] Play() called. isPlaying=" + videoPlayer.isPlaying);
-
         mLoadingPanel.SetActive(false);
         renderImg.color = new Color32(color.r, color.g, color.b, 255);
         UpdatePlayPauseText();
     }
-
-    private IEnumerator TimeoutCoroutine(float seconds, TaskCompletionSource<bool> tcs)
-    {
-        yield return new WaitForSeconds(seconds);
-        // If the task hasn't already completed (via prepareCompleted or cancellation), time it out.
-        tcs.TrySetResult(false);
-    }
-
-
-    private void OnVideoPrepared(VideoPlayer vp)
-    {
-        Debug.Log("[VideoPlayer] prepareCompleted fired. length=" + vp.length
-            + " width=" + vp.width + " height=" + vp.height);
-    }
-
-    private void OnVideoError(VideoPlayer vp, string message)
-    {
-        Debug.LogError("[VideoPlayer] errorReceived: " + message + " | url=" + vp.url);
-    }
-
 
     private void ApplyVideoSource(string finalUrl)
     {
         AudioManager.Instance.MuteBG(true);
 
         Debug.Log("Final resolved URL: " + finalUrl);
+
+        // Ensure a RenderTexture is available and assigned to the RawImage so
+        // the VideoPlayer can render into it on platforms that use texture-based playback.
+        if (renderImg != null && videoPlayer.targetTexture == null)
+        {
+            int texW = Mathf.Max(2, (int)renderImg.rectTransform.rect.width);
+            int texH = Mathf.Max(2, (int)renderImg.rectTransform.rect.height);
+            if (texW <= 0 || texH <= 0)
+            {
+                texW = Mathf.Max(2, Screen.width);
+                texH = Mathf.Max(2, Screen.height);
+            }
+            var rt = new RenderTexture(texW, texH, 0);
+            videoPlayer.targetTexture = rt;
+            renderImg.texture = rt;
+        }
 
         videoPlayer.source = VideoSource.Url;
         videoPlayer.url = finalUrl;
@@ -305,6 +353,120 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         videoPlayer.SetDirectAudioVolume(0, 1f);
 
         videoPlayer.Prepare();
+    }
+
+    private async Task ProgressiveDownloadAndPlay(string url, CancellationToken token)
+    {
+        AudioManager.Instance.MuteBG(true);
+
+        // create unique temp file
+        string ext = Path.GetExtension(url);
+        if (string.IsNullOrEmpty(ext)) ext = ".mp4";
+        _tempDownloadPath = Path.Combine(Application.temporaryCachePath, $"vg_{Guid.NewGuid()}{ext}");
+
+        // smaller initial buffer to start playback earlier for large files
+        const long startThresholdBytes = 256 * 1024; // 256 KB
+        var initialTcs = new TaskCompletionSource<bool>();
+
+        Action<long> onProgress = (downloaded) =>
+        {
+            if (!initialTcs.Task.IsCompleted && downloaded >= startThresholdBytes)
+            {
+                initialTcs.TrySetResult(true);
+            }
+        };
+
+        // Start the download coroutine (writes to disk incrementally)
+        var downloadTask = DownloadFileToPathAsync(url, _tempDownloadPath, token, onProgress);
+
+        // Wait for initial buffer or small timeout
+        Task completed = await Task.WhenAny(initialTcs.Task, Task.Delay(3000, token));
+        if (completed == initialTcs.Task)
+        {
+            // Ensure render texture
+            if (renderImg != null && videoPlayer.targetTexture == null)
+            {
+                int texW = Mathf.Max(2, (int)renderImg.rectTransform.rect.width);
+                int texH = Mathf.Max(2, (int)renderImg.rectTransform.rect.height);
+                if (texW <= 0 || texH <= 0)
+                {
+                    texW = Mathf.Max(2, Screen.width);
+                    texH = Mathf.Max(2, Screen.height);
+                }
+                var rt = new RenderTexture(texW, texH, 0);
+                videoPlayer.targetTexture = rt;
+                renderImg.texture = rt;
+            }
+
+            // Point VideoPlayer at local file and prepare
+            videoPlayer.source = VideoSource.Url;
+            videoPlayer.url = "file://" + _tempDownloadPath;
+            videoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;
+            videoPlayer.EnableAudioTrack(0, true);
+            videoPlayer.SetDirectAudioMute(0, false);
+            videoPlayer.SetDirectAudioVolume(0, 1f);
+
+            videoPlayer.Prepare();
+
+            const float prepareTimeoutSeconds = 15f;
+            float start = Time.realtimeSinceStartup;
+            while (!videoPlayer.isPrepared)
+            {
+                token.ThrowIfCancellationRequested();
+                if (Time.realtimeSinceStartup - start > prepareTimeoutSeconds)
+                    break;
+                await Task.Delay(100, token);
+            }
+
+            // Start playback even if not fully prepared on some platforms
+            videoPlayer.Play();
+            mLoadingPanel.SetActive(false);
+            Color32 color = renderImg.color;
+            renderImg.color = new Color32(color.r, color.g, color.b, 255);
+            UpdatePlayPauseText();
+        }
+        else
+        {
+            // didn't hit threshold in time; let the download continue and attempt direct URL
+            Debug.LogWarning("Initial buffer not filled in time; will wait for full download before playing.");
+            await downloadTask; // may throw
+            // play file after complete
+            videoPlayer.source = VideoSource.Url;
+            videoPlayer.url = "file://" + _tempDownloadPath;
+            videoPlayer.Prepare();
+            while (!videoPlayer.isPrepared)
+            {
+                token.ThrowIfCancellationRequested();
+                await Task.Delay(100, token);
+            }
+            videoPlayer.Play();
+            mLoadingPanel.SetActive(false);
+            Color32 color = renderImg.color;
+            renderImg.color = new Color32(color.r, color.g, color.b, 255);
+            UpdatePlayPauseText();
+        }
+
+        // When download completes, update duration/slider if available
+        try
+        {
+            await downloadTask;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning("Background download failed: " + ex.Message);
+        }
+
+        if (videoPlayer.isPrepared)
+        {
+            progressSlider.minValue = 0;
+            float length = (float)videoPlayer.length;
+            if (length > 0f)
+            {
+                progressSlider.interactable = true;
+                progressSlider.maxValue = length;
+                durationText.text = FormatTime(length);
+            }
+        }
     }
 
     // ----------------------------
@@ -456,6 +618,59 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     }
 
     // ----------------------------
+    // Progressive download to local file (native builds only)
+    // ----------------------------
+    private Task DownloadFileToPathAsync(string url, string path, CancellationToken token, Action<long> onProgress = null)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        StartCoroutine(DownloadFileCoroutine(url, path, tcs, token, onProgress));
+        return tcs.Task;
+    }
+
+    private IEnumerator DownloadFileCoroutine(string url, string path, TaskCompletionSource<bool> tcs, CancellationToken token, Action<long> onProgress = null)
+    {
+        using (var req = UnityWebRequest.Get(url))
+        {
+            // DownloadHandlerFile writes directly to disk as data arrives
+            var dh = new DownloadHandlerFile(path, false);
+            req.downloadHandler = dh;
+            req.disposeDownloadHandlerOnDispose = true;
+
+            var op = req.SendWebRequest();
+            ulong lastBytes = 0UL;
+
+            while (!op.isDone)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    req.Abort();
+                    tcs.TrySetCanceled(token);
+                    yield break;
+                }
+
+                ulong downloaded = req.downloadedBytes;
+                if (downloaded != lastBytes)
+                {
+                    lastBytes = downloaded;
+                    try { onProgress?.Invoke((long)downloaded); } catch { }
+                }
+
+                yield return null;
+            }
+
+            if (req.result == UnityWebRequest.Result.Success)
+            {
+                try { onProgress?.Invoke((long)req.downloadedBytes); } catch { }
+                tcs.TrySetResult(true);
+            }
+            else
+            {
+                tcs.TrySetException(new Exception(req.error));
+            }
+        }
+    }
+
+    // ----------------------------
     // ARCHIVE REDIRECT RESOLUTION
     // ----------------------------
     private async Task<string> ResolveFinalUrlAsync(string url, CancellationToken token)
@@ -582,6 +797,29 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
         cancellationTokenSource?.Cancel();
         cancellationTokenSource?.Dispose();
+        // cleanup temp download file if present
+        try
+        {
+            if (!string.IsNullOrEmpty(_tempDownloadPath) && File.Exists(_tempDownloadPath))
+            {
+                File.Delete(_tempDownloadPath);
+                _tempDownloadPath = null;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning("Failed to delete temp video file: " + ex.Message);
+        }
+
+        // release any created RenderTexture
+        if (videoPlayer.targetTexture != null)
+        {
+            var rt = videoPlayer.targetTexture;
+            videoPlayer.targetTexture = null;
+            if (renderImg != null) renderImg.texture = null;
+            try { rt.Release(); } catch { }
+            Destroy(rt);
+        }
     }
 
     private void OnDestroy()
@@ -602,5 +840,26 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
         cancellationTokenSource?.Cancel();
         cancellationTokenSource?.Dispose();
+        try
+        {
+            if (!string.IsNullOrEmpty(_tempDownloadPath) && File.Exists(_tempDownloadPath))
+            {
+                File.Delete(_tempDownloadPath);
+                _tempDownloadPath = null;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning("Failed to delete temp video file: " + ex.Message);
+        }
+
+        if (videoPlayer.targetTexture != null)
+        {
+            var rt = videoPlayer.targetTexture;
+            videoPlayer.targetTexture = null;
+            if (renderImg != null) renderImg.texture = null;
+            try { rt.Release(); } catch { }
+            Destroy(rt);
+        }
     }
 }
