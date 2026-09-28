@@ -25,6 +25,7 @@ public class HomePanel : MonoBehaviour
     [SerializeField] Button explorerBtn;
     [SerializeField] Button LoginBtn;
     [SerializeField] Button SignUpBtn;
+    [SerializeField] Button closeButton;
 
     [Space]
     [SerializeField] PostImage iPic;
@@ -37,6 +38,7 @@ public class HomePanel : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+       
         settingBtn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.setPanel); });
 
         //playBtn.interactable = false;
@@ -46,8 +48,7 @@ public class HomePanel : MonoBehaviour
         //  Leaderboard button listener
         leaderBoardBtn?.onClick.AddListener(() =>
         {
-            AudioManager.Instance.PlayButton();
-            Actions.ChangePanelActions(CanvasType.leaderboard); // match enum
+            IsUserLogedIn();
         });
 
         explorerBtn?.onClick.AddListener(() =>
@@ -67,6 +68,10 @@ public class HomePanel : MonoBehaviour
             PopUp.Instance.redirecting_Panel.SetActive(false);
             Actions.ChangePanelActions(CanvasType.signup);
         });
+        closeButton?.onClick.AddListener(() =>
+        {
+            PopUp.Instance.redirecting_Panel.SetActive(false);
+        });
 
         DevDebug.Log($"Token: {PlayerPrefs.GetString("AuthorizationToken")}",DebugColor.Indigo);
         playBtn.onClick.AddListener(OnPlayerButtonClicked); 
@@ -80,6 +85,22 @@ public class HomePanel : MonoBehaviour
        
     }
 
+    private void IsUserLogedIn() // for LeaderBoard
+    {
+        string token = PlayerPrefs.GetString("AuthorizationToken");
+        if (string.IsNullOrEmpty(token))
+        {
+            DevDebug.Log("You need to login First",DebugColor.Red);
+            PopUp.Instance.redirecting_Panel.SetActive(true);
+            return;
+        }
+        else
+        {
+            AudioManager.Instance.PlayButton();
+            Actions.ChangePanelActions(CanvasType.leaderboard);
+        }
+    }
+
     private void OnPlayerButtonClicked()
     {
         string token = PlayerPrefs.GetString("AuthorizationToken");
@@ -90,7 +111,6 @@ public class HomePanel : MonoBehaviour
             return;
         }
     }
-
     async void Initialise()
     {
         GetProfileAPI.GetProfile(async (success,res) =>
@@ -164,6 +184,7 @@ public class HomePanel : MonoBehaviour
         explorerBtn?.onClick.RemoveAllListeners();
         LoginBtn?.onClick.RemoveAllListeners();
         SignUpBtn?.onClick.RemoveAllListeners();
+        closeButton.onClick.RemoveAllListeners();
     }
 
     private void Start()

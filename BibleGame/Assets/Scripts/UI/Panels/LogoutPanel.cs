@@ -18,7 +18,7 @@ public class LogoutPanel : MonoBehaviour
     private void OnEnable()
     {
         yesBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); PlayerPrefs.DeleteAll(); });
-        yesBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.login); });
+        yesBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.splash); });
         yesBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); CloseAction?.Invoke(); });
         yesBtn.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); gameObject.SetActive(false); });  
 
