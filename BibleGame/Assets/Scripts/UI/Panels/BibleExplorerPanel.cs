@@ -11,7 +11,7 @@ public class BibleExplorerPanel : MonoBehaviour,IVidPic
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     [SerializeField] Button backButton;
-
+    [SerializeField] Button chatButton;
     [SerializeField] VideoPIc videoPIc;
     [SerializeField] Transform videoPicTransform;
 
@@ -28,6 +28,7 @@ public class BibleExplorerPanel : MonoBehaviour,IVidPic
 
     private void OnEnable()
     {
+        IsUserLoggedIn();
         backButton.onClick.AddListener(() =>
         {
             AudioManager.Instance.PlayButton();
@@ -38,6 +39,19 @@ public class BibleExplorerPanel : MonoBehaviour,IVidPic
 
         Init();
         Actions.SetVidLang += VideoInit;
+    }
+
+    private void IsUserLoggedIn()
+    {
+        string token = PlayerPrefs.GetString("AuthorizationToken");
+        if (string.IsNullOrEmpty(token))
+        {
+            chatButton.interactable = false;
+        }
+        else
+        {
+            chatButton.interactable = true;
+        }
     }
 
     private void OnDisable()

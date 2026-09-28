@@ -3,6 +3,7 @@ using BibleGame.API;
 using BibleGame.Data;
 using DebugUtils;
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,7 +18,9 @@ public class SettingsPanel : MonoBehaviour
     [SerializeField] Button logoutButton;
     [SerializeField] Button deleteButton;
     [SerializeField] Button homeButton;
+    [SerializeField] Button languageButton;
     [SerializeField] TMP_Text userName;
+    [SerializeField] GameObject disablerPanel;
 
     [SerializeField] SetPanel _setPanel;
 
@@ -30,6 +33,7 @@ public class SettingsPanel : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        IsUserLoggedIn();
         // Clear old options
         languageDropdown.ClearOptions();
 
@@ -83,6 +87,28 @@ public class SettingsPanel : MonoBehaviour
 
         userName.text = AppData.loginData.Name;
     }
+
+    private void IsUserLoggedIn()
+    {
+        string token = PlayerPrefs.GetString("AuthorizationToken");
+        if (string.IsNullOrEmpty(token))
+        {
+            myProfileButton.interactable = false;
+            logoutButton.interactable=false;
+            deleteButton.interactable=false;
+            languageButton.interactable = false;
+            disablerPanel.SetActive(true);
+        }
+        else
+        {
+            myProfileButton.interactable = true;
+            logoutButton.interactable = true;
+            deleteButton.interactable = true;
+            languageButton.interactable = true;
+            disablerPanel.SetActive(false);
+        }
+    }
+
     private void OnLanguageChanged(int languagecode)
     {
         // LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[languagecode];
