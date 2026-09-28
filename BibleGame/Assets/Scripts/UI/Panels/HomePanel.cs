@@ -23,6 +23,8 @@ public class HomePanel : MonoBehaviour
     [SerializeField] Button playBtn;
     [SerializeField] Button leaderBoardBtn;
     [SerializeField] Button explorerBtn;
+    [SerializeField] Button LoginBtn;
+    [SerializeField] Button SignUpBtn;
 
     [Space]
     [SerializeField] PostImage iPic;
@@ -53,11 +55,40 @@ public class HomePanel : MonoBehaviour
             AudioManager.Instance.PlayButton();
             Actions.ChangePanelActions(CanvasType.BibleExplorer);
         });
+        LoginBtn?.onClick.AddListener(()=>
+        {
+            AudioManager.Instance.PlayButton();
+            PopUp.Instance.redirecting_Panel.SetActive(false);
+            Actions.ChangePanelActions(CanvasType.login);
+        });
+        SignUpBtn?.onClick.AddListener(()=>
+        {
+            AudioManager.Instance.PlayButton();
+            PopUp.Instance.redirecting_Panel.SetActive(false);
+            Actions.ChangePanelActions(CanvasType.signup);
+        });
 
         DevDebug.Log($"Token: {PlayerPrefs.GetString("AuthorizationToken")}",DebugColor.Indigo);
+        playBtn.onClick.AddListener(OnPlayerButtonClicked); 
 
-        PopUp.Instance.EnableLoad(true);
-        Initialise();
+        
+        if (PlayerPrefs.HasKey("AuthorizationToken"))
+        {
+            PopUp.Instance.EnableLoad(true);
+            Initialise();
+        }
+       
+    }
+
+    private void OnPlayerButtonClicked()
+    {
+        string token = PlayerPrefs.GetString("AuthorizationToken");
+        if (string.IsNullOrEmpty(token))
+        {
+            DevDebug.Log("You need to Login first", DebugColor.Red);
+            PopUp.Instance.redirecting_Panel.SetActive(true);
+            return;
+        }
     }
 
     async void Initialise()
@@ -107,7 +138,7 @@ public class HomePanel : MonoBehaviour
                 playBtn?.onClick.AddListener(() =>
                 {
                     AudioManager.Instance.PlayButton();
-
+                    
                     if (res.ResponseData == null || res.ResponseData.Count <= 0)
                         Actions.ChangePanelActions(CanvasType.ageSelect);
                     else
@@ -131,6 +162,8 @@ public class HomePanel : MonoBehaviour
         leaderBoardBtn.onClick.RemoveAllListeners();
 
         explorerBtn?.onClick.RemoveAllListeners();
+        LoginBtn?.onClick.RemoveAllListeners();
+        SignUpBtn?.onClick.RemoveAllListeners();
     }
 
     private void Start()

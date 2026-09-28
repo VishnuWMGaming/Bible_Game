@@ -21,6 +21,7 @@ public class PopUp : MonoBehaviour
 
    [SerializeField] GameObject loadingPanel_Portrait;
    [SerializeField] GameObject loadingPanel_Landscape;
+   [SerializeField] public GameObject redirecting_Panel;
 
    [SerializeField] Button closeBtn;
 

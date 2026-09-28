@@ -36,7 +36,8 @@ public class SplashPanel : MonoBehaviour
             }
             else
             {
-                Actions.ChangePanelActions(CanvasType.login);
+                
+                Actions.ChangePanelActions(CanvasType.home); // changed this from login canvas to home canvas 
             }
 
             AudioManager.Instance.PlayButton();
