@@ -13,6 +13,9 @@ public class OptionChatPanel : MonoBehaviour
 
     public void Set(List<IOptData> optDatas, IOptionChat callback)
     {
+        foreach (var opt in options)
+            opt.gameObject.SetActive(false);
+
         optDatas
              .Select((data, index) => new { data, option = options[index] })
              .ToList()

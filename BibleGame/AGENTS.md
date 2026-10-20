@@ -2,7 +2,7 @@
 - Project name: BibleGame
 - Unity version: Unity 6000.3.11f1
 - Active game object:
-  - Name: [AudioManager]
+  - Name: Anagram
   - Tag: Untagged
-  - Layer: Default
+  - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

@@ -82,6 +82,8 @@ namespace BibleGame
         public static Action<VidLang> SetVidLang;
 
         public static Action<string> SetAsset;
+
+        public static Action<bool> SetVideoDisplay;
     }
 
    namespace Data

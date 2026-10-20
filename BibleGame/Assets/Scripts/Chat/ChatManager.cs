@@ -37,6 +37,8 @@ public class ChatManager : MonoBehaviour,IOptionChat
 
     private async Task OnEnable()
     {
+        Actions.SetVideoDisplay(false);
+
         textAsset = null;
         textAsset = chatAssetData.Get(AppData.mCurrentVidChapter);
 
@@ -73,6 +75,7 @@ public class ChatManager : MonoBehaviour,IOptionChat
 
     private void OnDisable()
     {
+
         AudioManager.Instance.MuteBG(true);
         mGiveAnswerBtn.onClick.RemoveAllListeners();
 
@@ -81,7 +84,11 @@ public class ChatManager : MonoBehaviour,IOptionChat
         {
             Destroy(chatTransform.GetChild(i).gameObject);
         }
+
+        Actions.SetVideoDisplay(true);
     }
+
+
 
     void BotChat()
     {

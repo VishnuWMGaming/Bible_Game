@@ -44,6 +44,9 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     private CancellationTokenSource cancellationTokenSource;
     private bool isDragging = false;
 
+    [Space]
+    [SerializeField] ScreenRotate mScreen;
+
     private void OnEnable()
     {
         videoPlayer = GetComponent<VideoPlayer>();
@@ -59,6 +62,10 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         mLoadingPanel.SetActive(true);
 
         videoPlayer.loopPointReached += OnVideoFinished;
+
+        Actions.SetVideoDisplay += VideoDisplay;
+
+        mScreen.SetLandscape();
     }
 
     private void OnDisable()
@@ -68,6 +75,27 @@ public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
         videoPlayer.loopPointReached -= OnVideoFinished;
         chatBtn.onClick.RemoveAllListeners();
+
+        mScreen.SetPortrait();
+
+        Actions.SetVideoDisplay -= VideoDisplay;
+    }
+
+    public void VideoDisplay(bool enable) 
+    { 
+        if(enable)
+        {
+            mScreen.SetLandscape();
+            AudioManager.Instance.MuteBG(true);
+
+            return;
+        }
+
+
+        mScreen.SetPortrait();
+        videoPlayer.Pause();
+
+        AudioManager.Instance.MuteBG(false);
     }
 
     private void OnVideoFinished(VideoPlayer source)
