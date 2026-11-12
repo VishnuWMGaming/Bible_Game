@@ -1,4 +1,5 @@
 using BibleGame;
+using BibleGame.Data;
 using DebugUtils;
 using DG.Tweening;
 using System;
@@ -213,6 +214,8 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
         );
 
         Vector2 localPosition = AnagramUtils.GetMousePositionInCanvasSpace(canvas, isLandscape);
+        localPosition = AppData.orientation == MScreenOriatation.landscape ? new Vector2(-localPosition.y, localPosition.x) : localPosition;
+
 
         bool isInsideMask = AnagramUtils.IsPositionInside(localPosition, maskArea);
 
@@ -224,6 +227,7 @@ public class GramBox : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragH
             return;
         }
 
+        
         boxTransform.anchoredPosition = localPosition;
 
         callback.UpdatedPos(index, boxTransform.anchoredPosition);

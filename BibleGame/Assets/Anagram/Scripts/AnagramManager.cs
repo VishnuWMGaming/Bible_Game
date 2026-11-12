@@ -35,6 +35,8 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel
     [SerializeField] List<GetQuestionsAnagramData> questions = new List<GetQuestionsAnagramData>();
     public List<GetQuestionsAnagramData> Questions => questions;
 
+    [Space]
+    [SerializeField] ScreenRotate mScreen;
 
 
     int hintIndex = 0;
@@ -74,6 +76,8 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel
         mScreenOrientButton?.onClick.RemoveAllListeners();
 
         Actions.ChangeLandscape -= Orientation;
+
+        mScreen.SetPortrait();
     }
 
     void SetData(Action onComplete)
@@ -147,8 +151,13 @@ public class AnagramManager : MonoBehaviour, ICorrectPanel
              MScreenOriatation.landscape => gameController_Landscape,
          };
 
-           // gameController.isReload = isReload;
-         gameController.gameObject.SetActive(true);
+        if(screenOriatation == MScreenOriatation.landscape)
+            mScreen.SetLandscape();
+        else
+            mScreen.SetPortrait();
+
+        // gameController.isReload = isReload;
+        gameController.gameObject.SetActive(true);
          gameController.SetData(questions);
 
         //gameController.callback = this;
