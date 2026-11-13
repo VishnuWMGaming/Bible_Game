@@ -38,12 +38,44 @@ public class HomePanel : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-       
         settingBtn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.setPanel); });
 
         //playBtn.interactable = false;
 
         AudioManager.Instance.PlayBG(AudioType.Bg);
+
+        string token = PlayerPrefs.GetString("AuthorizationToken");
+        if (string.IsNullOrEmpty(token))
+        {
+            PopUp.Instance.ShowChoice("Welcome to <b>iTreasure!</b> \n How would you like to continue?",
+                                      "Login",
+                                      "Continue as Guest",
+                                      () =>
+                                      {
+                                          AudioManager.Instance.PlayButton();
+                                          PopUp.Instance.redirecting_Panel.SetActive(false);
+                                          Actions.ChangePanelActions(CanvasType.login);
+                                      },
+                                      () =>
+                                      {
+                                          AudioManager.Instance.PlayButton();
+                                          LoginAPI.GuestLogin((success, res) =>
+                                          {
+                                              if (!success)
+                                              {
+                                                  DevDebug.Log("Guest login failed", DebugColor.Red);
+                                                  return;
+                                              }
+
+                                              DevDebug.Log("Guest login successful", DebugColor.Green);
+                                              PopUp.Instance.redirecting_Panel.SetActive(false);
+                                          });
+                                      }
+                                     );
+
+
+          
+        }
 
         //  Leaderboard button listener
         leaderBoardBtn?.onClick.AddListener(() =>
@@ -56,18 +88,21 @@ public class HomePanel : MonoBehaviour
             AudioManager.Instance.PlayButton();
             Actions.ChangePanelActions(CanvasType.BibleExplorer);
         });
-        LoginBtn?.onClick.AddListener(()=>
+
+        LoginBtn?.onClick.AddListener(() =>
         {
             AudioManager.Instance.PlayButton();
             PopUp.Instance.redirecting_Panel.SetActive(false);
             Actions.ChangePanelActions(CanvasType.login);
         });
-        SignUpBtn?.onClick.AddListener(()=>
+
+        SignUpBtn?.onClick.AddListener(() =>
         {
             AudioManager.Instance.PlayButton();
             PopUp.Instance.redirecting_Panel.SetActive(false);
             Actions.ChangePanelActions(CanvasType.signup);
         });
+
         closeButton?.onClick.AddListener(() =>
         {
             PopUp.Instance.redirecting_Panel.SetActive(false);
@@ -92,6 +127,9 @@ public class HomePanel : MonoBehaviour
         {
             DevDebug.Log("You need to login First",DebugColor.Red);
             PopUp.Instance.redirecting_Panel.SetActive(true);
+
+        
+
             return;
         }
         else

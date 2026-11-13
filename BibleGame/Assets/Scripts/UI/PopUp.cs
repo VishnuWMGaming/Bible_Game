@@ -8,6 +8,7 @@ using TMPro;
 using UnityEngine.Events;
 using BibleGame.Data;
 using DebugUtils;
+using Unity.VisualScripting;
 
 public class PopUp : MonoBehaviour
 {
@@ -25,7 +26,16 @@ public class PopUp : MonoBehaviour
 
    [SerializeField] Button closeBtn;
 
-   private void OnEnable()
+
+    [Header("Choice Panel:")]
+
+    [SerializeField] TMP_Text choiceMessageText;
+    [SerializeField] GameObject panel_Choice;
+    [SerializeField] Button choiceOne;
+    [SerializeField] Button choiceTwo;
+
+
+    private void OnEnable()
    {
        if (instance == null)
            instance = this;
@@ -77,4 +87,23 @@ public class PopUp : MonoBehaviour
 
         //messageText.text = message;   
     }
+
+      
+    public void ShowChoice(string message, string choiceOneText, string choiceTwoText, UnityAction choiceOneAction, UnityAction choiceTwoAction)
+    {
+        choiceMessageText.text = message;
+
+        panel_Choice.SetActive(true);
+        choiceOne.onClick.RemoveAllListeners();
+        choiceTwo.onClick.RemoveAllListeners();
+        choiceOne.GetComponentInChildren<TMP_Text>().text = choiceOneText;
+        choiceTwo.GetComponentInChildren<TMP_Text>().text = choiceTwoText;
+        choiceOne.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); panel_Choice.SetActive(false); });
+        choiceTwo.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); panel_Choice.SetActive(false); });
+        if (choiceOneAction != null)
+            choiceOne.onClick.AddListener(choiceOneAction);
+        if (choiceTwoAction != null)
+            choiceTwo.onClick.AddListener(choiceTwoAction);
+    }
+
 }
