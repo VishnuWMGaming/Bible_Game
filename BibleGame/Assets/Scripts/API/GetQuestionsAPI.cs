@@ -27,7 +27,7 @@ namespace BibleGame
 
                 WebRequest(url, jsonData, (url, success, adata) =>
                 {
-                    if(!success)
+                    if (!success)
                     {
                         Debug.LogError($"No success in getting objective questions {adata.ToString()}");
                         callback?.Invoke(false, null);
@@ -38,7 +38,7 @@ namespace BibleGame
 
                     var data = JsonConvert.DeserializeObject<GetQuestionsResponseObjective>(adata.ToString());
 
-                    if(data == null)
+                    if (data == null)
                     {
                         Debug.LogError("Unable to serialise the questions");
 
@@ -48,6 +48,56 @@ namespace BibleGame
 
                     callback?.Invoke(success, data);
                 });
+            }
+
+
+            public static void GetQuestionsObjectiveByGuest(
+            string guestToken,
+            GetQuestionsObjectiveCallback callback)
+            {
+                var url = ServiceURL.baseURL2 +
+                          "guest/get-questions";
+
+                // Generate random section between 1 and 10
+                int section = UnityEngine.Random.Range(1, 11);
+
+                string jsonData = JsonConvert.SerializeObject(new
+                {
+                    section = section
+                });
+
+                Debug.Log($"Random Section: {section}");
+                Debug.Log($"Getting Guest Questions: {url} => {jsonData} :: {guestToken}");
+
+                WebRequest(url, jsonData, (requestUrl, success, adata) =>
+                {
+                    if (!success)
+                    {
+                        Debug.LogError($"Failed to get guest questions: {adata.ToString()}");
+                        callback?.Invoke(false, null);
+                        return;
+                    }
+
+                    try
+                    {
+                        var data = JsonConvert.DeserializeObject<GetQuestionsResponseObjective>(
+                            adata.ToString());
+
+                        if (data == null)
+                        {
+                            callback?.Invoke(false, null);
+                            return;
+                        }
+
+                        callback?.Invoke(true, data);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError($"Guest Questions Error: {ex.Message}");
+                        callback?.Invoke(false, null);
+                    }
+
+                }, guestToken);
             }
 
             public static void GetQuestionsAnagram(GetQuestionsAnagramCallback callback, GetQuestionsRequestData requestData)

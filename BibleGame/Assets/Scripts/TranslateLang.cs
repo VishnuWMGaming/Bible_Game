@@ -58,6 +58,9 @@ public class TranslateLang : MonoBehaviour
 
         });
 
+        if(mSpeech != null)
+            mSpeech.gameObject.SetActive(!AppData.isGuestLogin);
+
         Actions.UpdateText += UpdateText;
 
         mSpeech?.onClick.AddListener(() =>

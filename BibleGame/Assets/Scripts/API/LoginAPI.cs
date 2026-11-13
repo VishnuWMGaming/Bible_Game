@@ -77,7 +77,7 @@ namespace BibleGame
                     }
 
 
-                    callback?.Invoke(true, null);
+                    callback?.Invoke(true, response);
 
                 });
             }

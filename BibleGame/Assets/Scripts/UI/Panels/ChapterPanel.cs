@@ -35,6 +35,12 @@ public class ChapterPanel : MonoBehaviour, ICover, IBookChapter, IBook, ISelectG
         //if (AppData.mCurrentPage != null)
         //    SelectPage(AppData.mCurrentPage);
 
+        if(AppData.isGuestLogin)
+        {
+            SelectPage(StartPage.game_MCQ);
+            return;
+        }
+
         Actions.StartPageAction += SelectPage;
 
         books.bookCallback = this;

@@ -38,6 +38,8 @@ public class HomePanel : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        AppData.isGuestLogin = false;
+
         settingBtn?.onClick.AddListener(() => { AudioManager.Instance.PlayButton(); Actions.ChangePanelActions(CanvasType.setPanel); });
 
         //playBtn.interactable = false;
@@ -59,16 +61,23 @@ public class HomePanel : MonoBehaviour
                                       () =>
                                       {
                                           AudioManager.Instance.PlayButton();
+                                          PopUp.Instance.EnableLoad(true);
+
                                           LoginAPI.GuestLogin((success, res) =>
                                           {
                                               if (!success)
                                               {
+                                                  PopUp.Instance.EnableLoad(false);
                                                   DevDebug.Log("Guest login failed", DebugColor.Red);
                                                   return;
                                               }
 
+                                              AppData.guestToken = res.ResponseData.token;
+                                              AppData.isGuestLogin = true;
+
+                                              PopUp.Instance.EnableLoad(false);
+
                                               DevDebug.Log("Guest login successful", DebugColor.Green);
-                                              PopUp.Instance.redirecting_Panel.SetActive(false);
                                           });
                                       }
                                      );
@@ -145,7 +154,11 @@ public class HomePanel : MonoBehaviour
         if (string.IsNullOrEmpty(token))
         {
             DevDebug.Log("You need to Login first", DebugColor.Red);
-            PopUp.Instance.redirecting_Panel.SetActive(true);
+            //PopUp.Instance.redirecting_Panel.SetActive(true);
+
+
+            Actions.ChangePanelActions(CanvasType.chapter);
+
             return;
         }
     }

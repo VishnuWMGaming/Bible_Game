@@ -1,3 +1,4 @@
+using BibleGame.Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -83,6 +84,7 @@ public class OptionPanel : MonoBehaviour, IOption
             callback.EnableSubmit(false);
             callback.WrongAnswer();
 
+         
             StartCoroutine(RestartAction(false));
         }
     }

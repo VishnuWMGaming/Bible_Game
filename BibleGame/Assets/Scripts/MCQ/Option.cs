@@ -7,6 +7,7 @@ using TMPro;
 
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using BibleGame.Data;
 
 
 public interface IOption
@@ -56,6 +57,8 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     /// </summary>
     private void OnEnable()
     {
+        animator.gameObject.SetActive(!AppData.isGuestLogin);
+
         button.onClick.AddListener(() => { SelectAction(); AudioManager.Instance.PlayButton(); });
 
         optionText = this.GetComponentInChildren<TMP_Text>();
@@ -126,13 +129,17 @@ public class Option : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
         SetDisplay(OptionType.selected);
         //speech.Speak();
 
-        animator.enabled = true;
-        AudioManager.Instance.PlayVoice(optionText.text, () =>
+
+        if(!AppData.isGuestLogin)
         {
-            animator.Rebind();
-            animator.Update(0f);
-            animator.enabled = false;
-        });
+            animator.enabled = true;
+            AudioManager.Instance.PlayVoice(optionText.text, () =>
+            {
+                animator.Rebind();
+                animator.Update(0f);
+                animator.enabled = false;
+            });
+        }
 
         callback.OptionSelected(_index);
     }

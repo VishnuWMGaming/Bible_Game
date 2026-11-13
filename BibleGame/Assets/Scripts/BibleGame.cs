@@ -16,7 +16,7 @@ namespace BibleGame
 {
     public class ServiceURL
     {
-        public const string baseURL = "http://52.22.241.165:10032/api/user/";
+        public const string baseURL = "https://indoredev.webmobrildemo.com:10032/api/user/";
 
         public const string baseURL2 = "https://indoredev.webmobrildemo.com:10032/api/user/";
 
@@ -96,6 +96,8 @@ namespace BibleGame
             public static OTPData mforgetotpData;
             public static OTPData mSignOtpData;
 
+            public static string guestToken;
+
             public static OTPType otpPage;
 
             public static StartPage mCurrentPage;
@@ -111,6 +113,8 @@ namespace BibleGame
             public static string mCurrentVidChapter;
 
             public static VidLang mVidLang;
+
+            public static bool isGuestLogin;
         }
 
         public  class LoginData

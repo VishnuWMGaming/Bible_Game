@@ -22,19 +22,37 @@ namespace RestAPI
             AuthKeyPair = new KeyValuePair<string, string>(AuthKey,bearer +token);
             mToken = token;
         }
-        
-        protected static void WebRequest(string serviceUrl, string jsonData, WebHelpers.CallbackGet callback)
-        {
 
+
+        protected static void WebRequest(
+            string serviceUrl,
+            string jsonData,
+            WebHelpers.CallbackGet callback,
+            string guestToken = null)
+        {
             if (string.IsNullOrEmpty(jsonData))
             {
                 jsonData = "{}";
             }
 
             var bytesContent = System.Text.Encoding.UTF8.GetBytes(jsonData);
-           // LogSystem.LogEvent("[][] requesting url {0}, requestParams {1}", url, jsonData);
-            WebHelpers.Instance.Post<string>(serviceUrl, bytesContent, "application/json",  callback,AuthKeyPair);
+
+            var authHeader = string.IsNullOrEmpty(guestToken)
+                ? AuthKeyPair
+                : new KeyValuePair<string, string>(
+                    "Authorization",
+                    "Bearer " + guestToken
+                );
+
+            WebHelpers.Instance.Post<string>(
+                serviceUrl,
+                bytesContent,
+                "application/json",
+                callback,
+                authHeader
+            );
         }
+
 
         protected static void WebRequest(string serviceUrl, WWWForm formData, WebHelpers.CallbackGet callback)
         {

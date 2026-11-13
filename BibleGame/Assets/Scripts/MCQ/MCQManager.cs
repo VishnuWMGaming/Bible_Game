@@ -52,6 +52,44 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
     /// </summary>
     private void OnEnable()
     {
+        if(AppData.isGuestLogin)
+        {
+            hintBtn.gameObject.SetActive(false);
+            rewardBtn.gameObject.SetActive(false);
+
+            //_submitBtn.gameObject.SetActive(false);
+
+            questionPanel.gameObject.SetActive(true);
+
+            optionPanel.callback = this;
+            correctPanel.callback = this;
+
+            _homeBtn.onClick.AddListener(() =>
+            {
+                if (AppData.isGuestLogin)
+                {
+               
+                    Actions.ChangePanelActions(CanvasType.home);
+                    return;
+                };
+
+                AudioManager.Instance.PlayButton();
+                Actions.StartPageAction(StartPage.game_menu);
+            });
+
+            _submitBtn.onClick.AddListener(() =>
+            {
+                AudioManager.Instance.PlayButton();
+                optionPanel.CheckAnswerAction();
+            });
+
+            wrongAnswer = 0;
+
+            Initialise();
+
+            return;
+        }
+
         UserData.coins = AppData.coins;
 
         questionPanel.gameObject.SetActive(true);
@@ -108,6 +146,63 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
     void Initialise()
     {
+        if(AppData.isGuestLogin)
+        {
+            questions.Clear();
+
+            PopUp.Instance.EnableLoad(true);
+
+            currentQuestionIndex = 0;
+
+            GetQuestionsAPI.GetQuestionsObjectiveByGuest(AppData.guestToken, (success, res) =>
+            {
+                PopUp.Instance.EnableLoad(false);
+
+                if (!success)
+                {
+                    Debug.LogError("Error in Get question objective");
+                    Actions.StartPageAction(StartPage.game_menu);
+                    return;
+                }
+
+                GameData.levelID = res.ResponseData.levelData._id;
+
+                foreach (var data in res.ResponseData.resArr)
+                {
+                    List<Answer> answers = new List<Answer>();
+
+                    answers.Add(new Answer(data.opt1, false));
+                    answers.Add(new Answer(data.opt2, false));
+                    answers.Add(new Answer(data.opt3, false));
+                    answers.Add(new Answer(data.opt4, false));
+
+                    string answer = data.hint.Replace("Correct answer: ", "");
+
+                    int ansindex = -1;
+
+                    if (int.TryParse(answer, out ansindex))
+                    {
+                        Debug.Log("Answer at: " + ansindex);
+
+                        answers[ansindex - 1].SetStatus(true);
+
+                        Question question = new Question(data._id, data.title, answers);
+                        questions.Add(question);
+                    }
+                    else
+                    {
+                        Debug.LogError("Unable to answer string!");
+                    }
+                }
+
+                SetData(currentQuestionIndex);
+
+            });
+
+            return;
+        }
+
+
         int ageVal = UserData.currentAge switch
         {
             AgeGroup.kindergarden => 1,
@@ -204,6 +299,9 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
         if (wrongAnswer > 1)
         {
+            if (AppData.isGuestLogin)
+                return;
+
             Debug.LogWarning($"Reloading....{currentQuestionIndex}");
             ReloadQuestions(questions[currentQuestionIndex]?.title);
         }
@@ -322,6 +420,16 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
 
             SubmitAction(() =>
             {
+                if(AppData.isGuestLogin)
+                {
+                    PopUp.Instance.ShowMessage($"You have completed the quiz!", null, MScreenOriatation.portrait);
+                    AudioManager.Instance.PlaySFX(AudioType.Win);
+
+                    Actions.ChangePanelActions(CanvasType.home);
+                    return;
+                }
+
+
                 PopUp.Instance.ShowMessage($"You have completed the chapter {UserData.chapterId}", null, MScreenOriatation.portrait);
                 AudioManager.Instance.PlaySFX(AudioType.Win);
 
@@ -338,6 +446,15 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
             Debug.LogError("level id is not initialised");
             return;
         }
+
+        if(AppData.isGuestLogin)
+        {
+            PopUp.Instance.ShowMessage($"You have completed the quiz!", null, MScreenOriatation.portrait);
+            AudioManager.Instance.PlaySFX(AudioType.Win);
+
+            StartCoroutine(GoHomeAction());
+            return;
+        };
 
         int coins = AppData.coins > 0 ? UserData.coins - AppData.coins : UserData.coins;
 
@@ -374,6 +491,12 @@ public class MCQManager : MonoBehaviour,IOptionPanel,ICorrectPanel
             //Actions.ChangePanelActions(CanvasType.home);
 
         }, requestData);
+    }
+
+    IEnumerator GoHomeAction()
+    {
+        yield return new WaitForSeconds(5);
+        Actions.ChangePanelActions(CanvasType.home);
     }
 
     private void ShowHint()
