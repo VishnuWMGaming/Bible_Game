@@ -16,10 +16,10 @@ namespace BibleGame
 {
     public class ServiceURL
     {
-        public const string baseURL = "https://indoredev.webmobrildemo.com:10002/api/user/" /*"https://52.22.241.165:10032/api/user/"*/;
-        public const string imageURL = /*"https://52.22.241.165:10032/"*/"https://indoredev.webmobrildemo.com:10002/";
+        public const string baseURL = "https://inddev.webmobrildemo.com:10037/api/user/" /*"https://52.22.241.165:10032/api/user/"*/;
+        public const string imageURL = /*"https://52.22.241.165:10032/"*/"https://inddev.webmobrildemo.com:10037/";
 
-        public const string voiceURL = "https://indoredev.webmobrildemo.com:10002/api/tts";
+        public const string voiceURL = "https://inddev.webmobrildemo.com:10037/api/tts";
 
         public const string signupURL = "register";
         public const string deleteProfile = "delete_profile";
