@@ -6,6 +6,7 @@ using DebugUtils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime;
@@ -49,6 +50,9 @@ public class HomePanel : MonoBehaviour
         string token = PlayerPrefs.GetString("AuthorizationToken");
         if (string.IsNullOrEmpty(token))
         {
+            userName.text = "Guest";
+            churchName.text = "";
+
             PopUp.Instance.ShowChoice("Welcome to <b>iTreasure!</b> \n How would you like to continue?",
                                       "Login",
                                       "Continue as Guest",

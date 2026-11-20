@@ -16,13 +16,13 @@ namespace BibleGame
 {
     public class ServiceURL
     {
-        public const string baseURL = "https://indoredev.webmobrildemo.com:10032/api/user/";
+        public const string baseURL = "https://inddev.webmobrildemo.com:10037/api/user/";
 
-        public const string baseURL2 = "https://indoredev.webmobrildemo.com:10032/api/user/";
+        public const string baseURL2 = "https://inddev.webmobrildemo.com:10037/api/user/";
 
-        public const string imageURL = "http://52.22.241.165:10032/";
+        public const string imageURL = "https://inddev.webmobrildemo.com:10037/";
 
-        public const string voiceURL = "http://52.22.241.165:10032/api/tts";
+        public const string voiceURL = "https://inddev.webmobrildemo.com:10037/api/tts";
 
         public const string guestLogin = "guest-login";
         public const string signupURL = "register";
