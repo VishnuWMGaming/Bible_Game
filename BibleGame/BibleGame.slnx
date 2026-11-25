@@ -52,7 +52,6 @@
   <Project Path="Unity.Burst.Editor.csproj" />
   <Project Path="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.csproj" />
   <Project Path="Unity.2D.Common.Editor.csproj" />
-  <Project Path="Unity.2D.Sprite.AIIntegration.Editor.csproj" />
   <Project Path="NativeGallery.Editor.csproj" />
   <Project Path="Assembly-CSharp-firstpass.csproj" />
   <Project Path="Unity.Settings.Editor.csproj" />

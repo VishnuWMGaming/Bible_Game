@@ -75,18 +75,44 @@ public class VideoPIc : MonoBehaviour
         if (string.IsNullOrEmpty(url)) return null;
         if (!Uri.TryCreate(url, UriKind.Absolute, out Uri uri)) return null;
 
-        if (uri.Host.Contains("youtu.be"))
-            return uri.AbsolutePath.Trim('/');
+        string host = uri.Host.ToLowerInvariant();
 
-        string path = uri.AbsolutePath;
-        if (path.StartsWith("/shorts/") || path.StartsWith("/embed/"))
-            return path.Split('/')[2];
-
-        foreach (string param in uri.Query.TrimStart('?').Split('&'))
+        // youtu.be/VIDEOID
+        if (host.Contains("youtu.be"))
         {
-            string[] kv = param.Split('=');
-            if (kv.Length == 2 && kv[0] == "v")
-                return kv[1];
+            string id = uri.AbsolutePath.Trim('/');
+            // Strip any trailing path segments (e.g. youtu.be/ID/extra)
+            int slashIndex = id.IndexOf('/');
+            return slashIndex >= 0 ? id.Substring(0, slashIndex) : id;
+        }
+
+        // youtube.com, m.youtube.com, music.youtube.com, www.youtube.com, etc.
+        if (host.Contains("youtube.com"))
+        {
+            string[] segments = uri.AbsolutePath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+            // /shorts/VIDEOID, /embed/VIDEOID, /live/VIDEOID
+            if (segments.Length >= 2 &&
+                (segments[0] == "shorts" || segments[0] == "embed" || segments[0] == "live"))
+            {
+                return segments[1];
+            }
+
+            // /watch?v=VIDEOID (also handles &list=, &t=, etc. after it)
+            if (!string.IsNullOrEmpty(uri.Query))
+            {
+                foreach (string param in uri.Query.TrimStart('?').Split('&'))
+                {
+                    int eqIndex = param.IndexOf('=');
+                    if (eqIndex < 0) continue;
+
+                    string key = param.Substring(0, eqIndex);
+                    string value = param.Substring(eqIndex + 1);
+
+                    if (key == "v" && !string.IsNullOrEmpty(value))
+                        return value;
+                }
+            }
         }
 
         return null;
@@ -163,27 +189,31 @@ public class VideoPIc : MonoBehaviour
         callback(null);
     }
 
+    [System.Serializable]
+    public class YouTubeOEmbedResponse
+    {
+        public string title;
+        public string author_name;
+        public string thumbnail_url;
+    }
+
     IEnumerator FetchTitle(string pageUrl, Action<string> callback)
     {
-        using UnityWebRequest req = UnityWebRequest.Get(pageUrl);
+        string oembedUrl = "https://www.youtube.com/oembed?url=" +
+                            UnityWebRequest.EscapeURL(pageUrl) + "&format=json";
 
-        // Spoof a browser User-Agent so YouTube returns full HTML
-        req.SetRequestHeader("User-Agent",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
-            "AppleWebKit/537.36 (KHTML, like Gecko) " +
-            "Chrome/120.0.0.0 Safari/537.36");
-
+        using UnityWebRequest req = UnityWebRequest.Get(oembedUrl);
         yield return req.SendWebRequest();
 
         if (req.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError("[YouTube] Page fetch failed: " + req.error);
+            Debug.LogError("[YouTube] oEmbed fetch failed: " + req.error);
             callback("Unknown");
             yield break;
         }
 
-        string html = req.downloadHandler.text;
-        string title = ParseTitleFromHtml(html);
+        YouTubeOEmbedResponse data = JsonUtility.FromJson<YouTubeOEmbedResponse>(req.downloadHandler.text);
+        string title = !string.IsNullOrEmpty(data?.title) ? data.title : "Unknown";
 
         callback(title);
     }

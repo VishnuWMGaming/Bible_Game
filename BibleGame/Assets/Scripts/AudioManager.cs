@@ -114,6 +114,8 @@ public class AudioManager : MonoBehaviour
                 return;
             }
 
+            audioSource.volume = 0.2f;
+
             voiceAudioSource.clip = clip;
             voiceAudioSource.Play();
 
@@ -132,6 +134,12 @@ public class AudioManager : MonoBehaviour
     private IEnumerator WaitForVoiceEnd(float duration, Action onComplete)
     {
         yield return new WaitForSeconds(duration);
+
+        bgVol = PlayerPrefs.GetFloat("BGVol");
+
+        float vol = bgVol;
+
+        audioSource.volume = vol;
 
         onComplete?.Invoke();
     }

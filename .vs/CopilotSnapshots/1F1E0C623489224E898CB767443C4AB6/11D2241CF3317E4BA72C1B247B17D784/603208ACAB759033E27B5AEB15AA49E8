@@ -1,0 +1,60 @@
+﻿mergeInto(LibraryManager.library, {
+  WebGL_CreateVideo: function(gameObjectNamePtr, urlPtr, x, y, w, h, controls) {
+	var gameObjectName = UTF8ToString(gameObjectNamePtr);
+	var url = UTF8ToString(urlPtr);
+	try {
+	  var id = 'unity_video_' + gameObjectName;
+	  var existing = document.getElementById(id);
+	  if (existing) { existing.pause(); existing.remove(); }
+	  var v = document.createElement('video');
+	  v.id = id;
+	  v.src = url;
+	  v.style.position = 'absolute';
+	  v.style.left = '0px';
+	  v.style.top = '0px';
+	  v.style.width = window.innerWidth + 'px';
+	  v.style.height = window.innerHeight + 'px';
+	  v.style.zIndex = 999999;
+	  v.style.backgroundColor = 'black';
+	  v.controls = controls ? true : false;
+	  v.autoplay = true;
+	  v.playsInline = true;
+	  v.muted = false;
+	  v.setAttribute('webkit-playsinline', '');
+	  v.addEventListener('ended', function() {
+		if (typeof unityInstance !== 'undefined' && unityInstance) {
+		  try { unityInstance.SendMessage(gameObjectName, 'OnWebVideoEnded', ''); } catch (e) { }
+		}
+	  });
+	  document.body.appendChild(v);
+	  v.play().catch(function(e) { /* autoplay may be blocked */ });
+	} catch (e) { console.log('WebGL_CreateVideo error:', e); }
+  },
+
+  WebGL_DestroyVideo: function(gameObjectNamePtr) {
+	var gameObjectName = UTF8ToString(gameObjectNamePtr);
+	try {
+	  var id = 'unity_video_' + gameObjectName;
+	  var v = document.getElementById(id);
+	  if (v) { v.pause(); v.remove(); }
+	} catch (e) { console.log('WebGL_DestroyVideo error:', e); }
+  },
+
+  WebGL_PlayVideo: function(gameObjectNamePtr) {
+	var gameObjectName = UTF8ToString(gameObjectNamePtr);
+	try {
+	  var id = 'unity_video_' + gameObjectName;
+	  var v = document.getElementById(id);
+	  if (v) v.play();
+	} catch (e) { }
+  },
+
+  WebGL_PauseVideo: function(gameObjectNamePtr) {
+	var gameObjectName = UTF8ToString(gameObjectNamePtr);
+	try {
+	  var id = 'unity_video_' + gameObjectName;
+	  var v = document.getElementById(id);
+	  if (v) v.pause();
+	} catch (e) { }
+  }
+});

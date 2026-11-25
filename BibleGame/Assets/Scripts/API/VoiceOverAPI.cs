@@ -108,10 +108,13 @@ namespace BibleGame
                             yield break;
                         }
 
-                        string path = Path.Combine(Application.persistentDataPath, "voice.mp3");
-                        File.WriteAllBytes(path, audioBytes);
+                        //string path = Path.Combine(Application.persistentDataPath, "voice.mp3");
+                        //File.WriteAllBytes(path, audioBytes);
 
-                        yield return LoadAudio(path, callback);
+                        //yield return LoadAudio(path, callback);
+
+                        AudioClip clip = AudioBytesUtility.ToAudioClip(audioBytes, "voice");
+                        callback?.Invoke(clip != null, clip);
                     }
                 }
             }

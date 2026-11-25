@@ -1,0 +1,939 @@
+﻿using BibleGame;
+using BibleGame.Data;
+using System;
+using System.Collections;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+
+using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Networking;
+using UnityEngine.UI;
+using UnityEngine.Video;
+using System.Runtime.InteropServices;
+
+[RequireComponent(typeof(VideoPlayer))]
+public class Video : MonoBehaviour, IBeginDragHandler, IEndDragHandler
+{
+    private VideoPlayer videoPlayer;
+    public RawImage renderImg;
+
+    [SerializeField]
+    private string url;
+
+    public string URL => url;
+
+    [Header("Proxy")]
+    [Tooltip("Base URL of server-side video proxy. If set, Drive links will be requested via {proxyBaseUrl}/api/video-proxy/{fileId}. Proxy must support Range requests and CORS.")]
+    [SerializeField]
+    private string driveProxyBaseUrl;
+
+    [Header("UI")]
+    public Slider progressSlider;
+
+    public TMP_Text currentTimeText;
+    public TMP_Text durationText;
+    [SerializeField] TMP_Text mtitle;
+
+    public Button playPauseButton;
+    public Button replayButton;
+    public Button chatBtn;
+
+    [SerializeField] private Sprite pauseSprite;
+    [SerializeField] private Sprite playSprite;
+
+    [Space]
+    [SerializeField] GameObject mLoadingPanel;
+
+    private CancellationTokenSource cancellationTokenSource;
+    private bool isDragging = false;
+    private string _tempDownloadPath;
+    private bool webIsPlaying = false;
+
+    private void OnEnable()
+    {
+        videoPlayer = GetComponent<VideoPlayer>();
+
+        videoPlayer.playOnAwake = false;
+        videoPlayer.waitForFirstFrame = true;
+
+        progressSlider.onValueChanged.RemoveListener(OnSliderChanged);
+        progressSlider.onValueChanged.AddListener(OnSliderChanged);
+
+        playPauseButton.onClick.AddListener(TogglePlayPause);
+
+        mLoadingPanel.SetActive(true);
+
+        videoPlayer.loopPointReached += OnVideoFinished;
+    }
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+    [DllImport("__Internal")]
+    private static extern void WebGL_CreateVideo(string gameObjectName, string url, int x, int y, int w, int h, bool controls);
+
+    [DllImport("__Internal")]
+    private static extern void WebGL_DestroyVideo(string gameObjectName);
+
+    [DllImport("__Internal")]
+    private static extern void WebGL_PlayVideo(string gameObjectName);
+
+    [DllImport("__Internal")]
+    private static extern void WebGL_PauseVideo(string gameObjectName);
+#else
+    private static void WebGL_CreateVideo(string gameObjectName, string url, int x, int y, int w, int h, bool controls) { }
+    private static void WebGL_DestroyVideo(string gameObjectName) { }
+    private static void WebGL_PlayVideo(string gameObjectName) { }
+    private static void WebGL_PauseVideo(string gameObjectName) { }
+#endif
+
+    private void OnDisable()
+    {
+        playPauseButton.onClick.RemoveAllListeners();
+        progressSlider.onValueChanged.RemoveAllListeners();
+
+        videoPlayer.loopPointReached -= OnVideoFinished;
+        chatBtn.onClick.RemoveAllListeners();
+        // ensure WebGL video destroyed when disabling
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+            WebGL_DestroyVideo(gameObject.name);
+    }
+
+    private void OnVideoFinished(VideoPlayer source)
+    {
+        replayButton.gameObject.SetActive(true);
+
+        replayButton.onClick.RemoveAllListeners();
+        replayButton.onClick.AddListener(() =>
+        {
+            replayButton.gameObject.SetActive(false);
+
+            progressSlider.value = 0;
+
+            currentTimeText.text = "00";
+            durationText.text = "00";
+
+            Color32 color = renderImg.color;
+            renderImg.color = new Color32(color.r, color.g, color.b, 0);
+
+            cancellationTokenSource?.Cancel();
+            cancellationTokenSource?.Dispose();
+
+            mLoadingPanel?.SetActive(true);
+            StartVideo(url);
+        });
+    }
+
+    // Called from WebGL JS when the HTML <video> ends
+    public void OnWebVideoEnded(string arg)
+    {
+        // mirror native completion behavior
+        replayButton.gameObject.SetActive(true);
+        // pause Unity VideoPlayer just in case
+        if (videoPlayer != null && videoPlayer.isPlaying) videoPlayer.Pause();
+    }
+
+    // Generic event receiver from WebGL JS plugin
+    public void OnWebVideoEvent(string evt)
+    {
+        Debug.Log("OnWebVideoEvent: " + evt + " for " + gameObject.name);
+        // hide loading when metadata is ready
+        if (evt == "loadedmetadata" || evt == "canplay")
+        {
+            mLoadingPanel?.SetActive(false);
+            if (renderImg != null)
+            {
+                Color32 c = renderImg.color;
+                renderImg.color = new Color32(c.r, c.g, c.b, 0);
+            }
+        }
+        if (evt == "error")
+        {
+            Debug.LogWarning("WebGL video element reported an error");
+        }
+    }
+
+    public async Task SetTitle(string title)
+    {
+        Language language = AppData.mVidLang switch
+        {
+            VidLang.english => Language.English,
+            VidLang.swahili => Language.Swahili,
+            VidLang.spanish => Language.Spanish,
+            VidLang.creole => Language.Kreyol,
+            VidLang.french => Language.French
+        };
+
+        mtitle.text = await LanguageController.Instance.TranslateAsync(title, language);
+       // chatBtn.interactable = title == "Chester's Garage - Summer Camp Pt. 1 (S4E1)";
+
+        chatBtn.onClick.AddListener(()=>ChatFunction(title));
+
+        AppData.mCurrentVidChapter = title;
+    }
+
+    // START VIDEO
+    public async void StartVideo(string vidurl)
+    {
+        url = vidurl;
+
+        cancellationTokenSource = new CancellationTokenSource();
+
+        try
+        {
+            await LoadVideo(url, cancellationTokenSource.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            Debug.Log("Video loading cancelled");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError(ex);
+        }
+    }
+
+    private DriveStreamProxy _proxy;
+
+    // MAIN LOADER (ARCHIVE + GOOGLE DRIVE + DIRECT MP4)
+    private async Task LoadVideo(string url, CancellationToken token)
+    {
+        Debug.Log($"Video.LoadVideo START url={url}");
+        // Basic null checks for required UI references
+        if (renderImg == null || progressSlider == null || currentTimeText == null || durationText == null || playPauseButton == null)
+        {
+            Debug.LogError("Video.LoadVideo: Missing required UI references. Assign RawImage, Slider and Texts in the inspector.");
+            return;
+        }
+
+        videoPlayer.Stop();
+
+        string streamUrl = null;
+        bool isGoogleDrive = url.Contains("drive.google.com") || url.Contains("drive.usercontent.google.com");
+        bool isArchive = url.Contains("archive.org");
+
+        if (isArchive)
+        {
+            streamUrl = ConvertArchiveUrl(url);
+        }
+        else if (isGoogleDrive)
+        {
+            // Prefer using a server-side proxy for Google Drive in browser builds
+            // because Drive responses typically lack CORS headers and may
+            // present an HTML interstitial for large files. Configure
+            // driveProxyBaseUrl in the inspector (e.g. "https://yourdomain.com/api/video-proxy").
+            string fileId = ExtractGoogleDriveFileId(url);
+
+            bool useProxy = !string.IsNullOrEmpty(driveProxyBaseUrl) || Application.platform == RuntimePlatform.WebGLPlayer;
+
+            if (useProxy && !string.IsNullOrEmpty(fileId))
+            {
+                // Ensure no trailing slash
+                string baseUrl = driveProxyBaseUrl?.TrimEnd('/') ?? string.Empty;
+                if (string.IsNullOrEmpty(baseUrl))
+                {
+                    Debug.LogWarning("driveProxyBaseUrl is empty but proxy use was requested — falling back to direct resolve.");
+                }
+                else
+                {
+                    // Expecting proxy endpoint like: {baseUrl}/api/video-proxy/{fileId}
+                    streamUrl = baseUrl + "/api/video-proxy/" + fileId;
+                }
+            }
+
+            if (string.IsNullOrEmpty(streamUrl))
+            {
+                // Fallback: try to resolve Drive download URL client-side for native builds
+                if (!string.IsNullOrEmpty(fileId))
+                {
+                    try
+                    {
+                        streamUrl = await ResolveGoogleDriveDownloadUrlAsync(fileId, token);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogWarning("ResolveGoogleDriveDownloadUrlAsync failed, falling back to original URL: " + ex.Message);
+                        streamUrl = url; // final fallback
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Could not extract Google Drive file id, using original URL");
+                    streamUrl = url;
+                }
+            }
+        }
+        else
+        {
+            streamUrl = url;
+        }
+
+        if (string.IsNullOrEmpty(streamUrl))
+        {
+            Debug.LogError("No playable stream found");
+            return;
+        }
+
+        Debug.Log("Streaming URL: " + streamUrl);
+
+        Color32 color = renderImg.color;
+
+        string streamToUse = streamUrl;
+        if (isArchive)
+        {
+            string finalUrl = await ResolveFinalUrlAsync(streamUrl, token);
+            finalUrl = CleanArchiveUrl(finalUrl);
+            streamToUse = finalUrl;
+        }
+
+        // For WebGL we must use URL playback (CORS applies). For native builds,
+        // attempt a progressive download to a local temp file and start playback
+        // as soon as a small buffer is available to reduce startup time for large files.
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            // Use browser-native HTML <video> overlay for WebGL to avoid CORS issues
+            // Note: this will render above the Unity canvas. It does not provide
+            // pixel access to Unity textures (CORS prevents that for cross-origin).
+            WebGL_CreateVideo(gameObject.name, streamToUse, 0, 0, Screen.width, Screen.height, true);
+            webIsPlaying = true;
+            mLoadingPanel.SetActive(false);
+            // hide Unity RawImage while the HTML video element is visible
+            if (renderImg != null)
+            {
+                Color32 c = renderImg.color;
+                renderImg.color = new Color32(c.r, c.g, c.b, 0);
+            }
+            UpdatePlayPauseText();
+        }
+        else
+        {
+            try
+            {
+                await ProgressiveDownloadAndPlay(streamToUse, token);
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.Log("Progressive download cancelled");
+                return;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning("Progressive download failed, falling back to direct URL: " + ex.Message);
+                ApplyVideoSource(streamToUse);
+            }
+        }
+
+        // Wait for Prepare with a timeout and cancellation support
+        const float prepareTimeoutSeconds = 30f;
+        float prepareStart = Time.realtimeSinceStartup;
+
+        while (!videoPlayer.isPrepared)
+        {
+            token.ThrowIfCancellationRequested();
+
+            if (Time.realtimeSinceStartup - prepareStart > prepareTimeoutSeconds)
+            {
+                Debug.LogError($"Video prepare timed out after {prepareTimeoutSeconds} seconds for URL: {streamUrl}");
+                return;
+            }
+
+            await Task.Delay(100, token);
+        }
+
+        Debug.Log($"Video.Prepare complete prepared={videoPlayer.isPrepared} length={videoPlayer.length}");
+
+        progressSlider.minValue = 0;
+        // Protect against streams that don't report length on some platforms
+        float length = (float)videoPlayer.length;
+        if (length <= 0f)
+        {
+            // disable seeking until we have a valid length
+            progressSlider.interactable = false;
+        }
+        else
+        {
+            progressSlider.interactable = true;
+            progressSlider.maxValue = length;
+            durationText.text = FormatTime(length);
+        }
+
+        videoPlayer.Play();
+        mLoadingPanel.SetActive(false);
+        renderImg.color = new Color32(color.r, color.g, color.b, 255);
+        UpdatePlayPauseText();
+    }
+
+    private void ApplyVideoSource(string finalUrl)
+    {
+        AudioManager.Instance.MuteBG(true);
+
+        Debug.Log("Final resolved URL: " + finalUrl);
+
+        // Ensure a RenderTexture is available and assigned to the RawImage so
+        // the VideoPlayer can render into it on platforms that use texture-based playback.
+        if (renderImg != null && videoPlayer.targetTexture == null)
+        {
+            int texW = Mathf.Max(2, (int)renderImg.rectTransform.rect.width);
+            int texH = Mathf.Max(2, (int)renderImg.rectTransform.rect.height);
+            if (texW <= 0 || texH <= 0)
+            {
+                texW = Mathf.Max(2, Screen.width);
+                texH = Mathf.Max(2, Screen.height);
+            }
+            var rt = new RenderTexture(texW, texH, 0);
+            videoPlayer.targetTexture = rt;
+            renderImg.texture = rt;
+        }
+
+        videoPlayer.source = VideoSource.Url;
+        videoPlayer.url = finalUrl;
+
+        videoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;
+        videoPlayer.EnableAudioTrack(0, true);
+        videoPlayer.SetDirectAudioMute(0, false);
+        videoPlayer.SetDirectAudioVolume(0, 1f);
+
+        videoPlayer.Prepare();
+    }
+
+    private async Task ProgressiveDownloadAndPlay(string url, CancellationToken token)
+    {
+        AudioManager.Instance.MuteBG(true);
+        Debug.Log($"ProgressiveDownloadAndPlay START url={url}");
+
+        // create unique temp file
+        string ext = Path.GetExtension(url);
+        if (string.IsNullOrEmpty(ext)) ext = ".mp4";
+        _tempDownloadPath = Path.Combine(Application.temporaryCachePath, $"vg_{Guid.NewGuid()}{ext}");
+
+        // smaller initial buffer to start playback earlier for large files
+        const long startThresholdBytes = 256 * 1024; // 256 KB
+        var initialTcs = new TaskCompletionSource<bool>();
+
+        Action<long> onProgress = (downloaded) =>
+        {
+            Debug.Log($"Download progress: {downloaded} bytes");
+            if (!initialTcs.Task.IsCompleted && downloaded >= startThresholdBytes)
+            {
+                Debug.Log($"Initial buffer reached: {downloaded} bytes");
+                initialTcs.TrySetResult(true);
+            }
+        };
+
+        // Start the download coroutine (writes to disk incrementally)
+        var downloadTask = DownloadFileToPathAsync(url, _tempDownloadPath, token, onProgress);
+
+        // Wait for initial buffer or small timeout
+        Task completed = await Task.WhenAny(initialTcs.Task, Task.Delay(3000, token));
+        if (completed == initialTcs.Task)
+        {
+            // Ensure render texture
+            if (renderImg != null && videoPlayer.targetTexture == null)
+            {
+                int texW = Mathf.Max(2, (int)renderImg.rectTransform.rect.width);
+                int texH = Mathf.Max(2, (int)renderImg.rectTransform.rect.height);
+                if (texW <= 0 || texH <= 0)
+                {
+                    texW = Mathf.Max(2, Screen.width);
+                    texH = Mathf.Max(2, Screen.height);
+                }
+                var rt = new RenderTexture(texW, texH, 0);
+                videoPlayer.targetTexture = rt;
+                renderImg.texture = rt;
+            }
+
+            Debug.Log("Pointing VideoPlayer at local temp file: " + _tempDownloadPath);
+            // Point VideoPlayer at local file and prepare
+            videoPlayer.source = VideoSource.Url;
+            videoPlayer.url = "file://" + _tempDownloadPath;
+            videoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;
+            videoPlayer.EnableAudioTrack(0, true);
+            videoPlayer.SetDirectAudioMute(0, false);
+            videoPlayer.SetDirectAudioVolume(0, 1f);
+
+            videoPlayer.Prepare();
+
+            const float prepareTimeoutSeconds = 15f;
+            float start = Time.realtimeSinceStartup;
+            while (!videoPlayer.isPrepared)
+            {
+                token.ThrowIfCancellationRequested();
+                if (Time.realtimeSinceStartup - start > prepareTimeoutSeconds)
+                    break;
+                await Task.Delay(100, token);
+            }
+
+            // Start playback even if not fully prepared on some platforms
+            videoPlayer.Play();
+            mLoadingPanel.SetActive(false);
+            Color32 color = renderImg.color;
+            renderImg.color = new Color32(color.r, color.g, color.b, 255);
+            UpdatePlayPauseText();
+        }
+        else
+        {
+            // didn't hit threshold in time; let the download continue and attempt direct URL
+            Debug.LogWarning("Initial buffer not filled in time; will wait for full download before playing.");
+            await downloadTask; // may throw
+            // play file after complete
+            videoPlayer.source = VideoSource.Url;
+            videoPlayer.url = "file://" + _tempDownloadPath;
+            videoPlayer.Prepare();
+            while (!videoPlayer.isPrepared)
+            {
+                token.ThrowIfCancellationRequested();
+                await Task.Delay(100, token);
+            }
+            videoPlayer.Play();
+            mLoadingPanel.SetActive(false);
+            Color32 color = renderImg.color;
+            renderImg.color = new Color32(color.r, color.g, color.b, 255);
+            UpdatePlayPauseText();
+        }
+
+        // When download completes, update duration/slider if available
+        try
+        {
+            await downloadTask;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning("Background download failed: " + ex.Message);
+        }
+
+        if (videoPlayer.isPrepared)
+        {
+            progressSlider.minValue = 0;
+            float length = (float)videoPlayer.length;
+            if (length > 0f)
+            {
+                progressSlider.interactable = true;
+                progressSlider.maxValue = length;
+                durationText.text = FormatTime(length);
+            }
+        }
+    }
+
+    // ----------------------------
+    // ARCHIVE URL CONVERTER
+    // ----------------------------
+    private string ConvertArchiveUrl(string url)
+    {
+        try
+        {
+            Uri uri = new Uri(url);
+            string fullPath = uri.AbsolutePath;
+
+            string[] parts = fullPath.Split("/details/");
+            if (parts.Length < 2)
+                return url;
+
+            string itemAndFile = parts[1];
+            string[] split = itemAndFile.Split('/', 2);
+            if (split.Length < 2)
+                return url;
+
+            string itemId = split[0];
+            string fileName = split[1];
+
+            fileName = Uri.UnescapeDataString(fileName);
+            fileName = Uri.EscapeDataString(fileName);
+
+            string downloadUrl = $"https://archive.org/download/{itemId}/{fileName}";
+
+            return downloadUrl;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Archive URL conversion failed: " + ex.Message);
+            return url;
+        }
+    }
+
+    // ----------------------------
+    // GOOGLE DRIVE - LARGE FILE BYPASS
+    // ----------------------------
+    // Drive serves an HTML "can't scan for viruses" interstitial for big
+    // files instead of raw bytes. This fetches that page, extracts the
+    // confirm token (and uuid, if present), and rebuilds the URL so it
+    // returns the actual video stream instead of the warning page.
+    //
+    // ⚠️ Still fragile: Drive can change this markup, and files with
+    // restricted sharing or extra verification steps won't resolve this way.
+    // For production reliability, prefer the Drive REST API
+    // (files.get?alt=media) with an API key/OAuth token, or host the file
+    // on your own CDN/storage instead.
+    private async Task<string> ResolveGoogleDriveDownloadUrlAsync(string fileId, CancellationToken token)
+    {
+        string initialUrl = $"https://drive.usercontent.google.com/download?id={fileId}&export=download";
+
+        using (UnityWebRequest request = UnityWebRequest.Get(initialUrl))
+        {
+            request.redirectLimit = 10;
+
+            await SendRequestAsync(request, token);
+
+            if (request.result != UnityWebRequest.Result.Success)
+                throw new Exception("Initial Drive request failed: " + request.error);
+
+            string contentType = request.GetResponseHeader("Content-Type");
+
+            // If Drive already returned the actual file (small file, no
+            // warning page), Content-Type won't be text/html — we're done.
+            if (contentType != null && !contentType.Contains("text/html"))
+            {
+                return request.url;
+            }
+
+            string html = request.downloadHandler.text;
+
+            string confirmToken = null;
+
+            Match confirmMatch = Regex.Match(html, @"confirm=([0-9A-Za-z_-]+)");
+            if (confirmMatch.Success)
+                confirmToken = confirmMatch.Groups[1].Value;
+
+            if (string.IsNullOrEmpty(confirmToken))
+            {
+                Match formConfirm = Regex.Match(html, @"name=""confirm""\s+value=""([^""]+)""");
+                if (formConfirm.Success)
+                    confirmToken = formConfirm.Groups[1].Value;
+            }
+
+            string uuid = null;
+            Match uuidMatch = Regex.Match(html, @"(?:name=""uuid""\s+value=""|uuid=)([0-9A-Za-z_-]+)");
+            if (uuidMatch.Success)
+                uuid = uuidMatch.Groups[1].Value;
+
+            if (string.IsNullOrEmpty(confirmToken))
+            {
+                throw new Exception("Could not find confirm token — Drive page format may have changed, or file requires manual permission/sign-in.");
+            }
+
+            string finalUrl = $"https://drive.usercontent.google.com/download?id={fileId}&export=download&confirm={confirmToken}";
+
+            if (!string.IsNullOrEmpty(uuid))
+                finalUrl += $"&uuid={uuid}";
+
+            return finalUrl;
+        }
+    }
+
+    private string ExtractGoogleDriveFileId(string url)
+    {
+        // /file/d/{id}/...
+        Match match = Regex.Match(url, @"/file/d/([a-zA-Z0-9_-]+)");
+        if (match.Success)
+            return match.Groups[1].Value;
+
+        // ?id={id}  (covers /open?id= and /uc?id=)
+        match = Regex.Match(url, @"[?&]id=([a-zA-Z0-9_-]+)");
+        if (match.Success)
+            return match.Groups[1].Value;
+
+        return null;
+    }
+
+    // ----------------------------
+    // GENERIC UnityWebRequest -> Task BRIDGE
+    // ----------------------------
+    private Task SendRequestAsync(UnityWebRequest request, CancellationToken token)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        StartCoroutine(SendRequestCoroutine(request, tcs, token));
+        return tcs.Task;
+    }
+
+    private IEnumerator SendRequestCoroutine(UnityWebRequest request, TaskCompletionSource<bool> tcs, CancellationToken token)
+    {
+        var op = request.SendWebRequest();
+
+        while (!op.isDone)
+        {
+            if (token.IsCancellationRequested)
+            {
+                request.Abort();
+                tcs.TrySetCanceled(token);
+                yield break;
+            }
+            yield return null;
+        }
+
+        tcs.TrySetResult(true);
+    }
+
+    // ----------------------------
+    // Progressive download to local file (native builds only)
+    // ----------------------------
+    private Task DownloadFileToPathAsync(string url, string path, CancellationToken token, Action<long> onProgress = null)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        StartCoroutine(DownloadFileCoroutine(url, path, tcs, token, onProgress));
+        return tcs.Task;
+    }
+
+    private IEnumerator DownloadFileCoroutine(string url, string path, TaskCompletionSource<bool> tcs, CancellationToken token, Action<long> onProgress = null)
+    {
+        using (var req = UnityWebRequest.Get(url))
+        {
+            // DownloadHandlerFile writes directly to disk as data arrives
+            var dh = new DownloadHandlerFile(path, false);
+            req.downloadHandler = dh;
+            req.disposeDownloadHandlerOnDispose = true;
+
+            var op = req.SendWebRequest();
+            ulong lastBytes = 0UL;
+
+            while (!op.isDone)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    req.Abort();
+                    tcs.TrySetCanceled(token);
+                    yield break;
+                }
+
+                ulong downloaded = req.downloadedBytes;
+                if (downloaded != lastBytes)
+                {
+                    lastBytes = downloaded;
+                    try { onProgress?.Invoke((long)downloaded); } catch { }
+                }
+
+                yield return null;
+            }
+
+            if (req.result == UnityWebRequest.Result.Success)
+            {
+                try { onProgress?.Invoke((long)req.downloadedBytes); } catch { }
+                tcs.TrySetResult(true);
+            }
+            else
+            {
+                tcs.TrySetException(new Exception(req.error));
+            }
+        }
+    }
+
+    // ----------------------------
+    // ARCHIVE REDIRECT RESOLUTION
+    // ----------------------------
+    private async Task<string> ResolveFinalUrlAsync(string url, CancellationToken token)
+    {
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            request.redirectLimit = 10;
+
+            await SendRequestAsync(request, token);
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                return request.url; // resolved redirected URL
+            }
+            else
+            {
+                Debug.LogWarning("URL resolve failed, using original: " + request.error);
+                return url;
+            }
+        }
+    }
+
+    void ChatFunction(string title)
+    {
+        videoPlayer.Pause();
+        UpdatePlayPauseText();
+    }
+
+    // PLAY / PAUSE
+    public void TogglePlayPause()
+    {
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            if (webIsPlaying)
+            {
+                WebGL_PauseVideo(gameObject.name);
+                webIsPlaying = false;
+            }
+            else
+            {
+                WebGL_PlayVideo(gameObject.name);
+                webIsPlaying = true;
+            }
+        }
+        else
+        {
+            if (videoPlayer.isPlaying)
+                videoPlayer.Pause();
+            else
+                videoPlayer.Play();
+        }
+
+        UpdatePlayPauseText();
+    }
+
+    private void UpdatePlayPauseText()
+    {
+        bool playing = (Application.platform == RuntimePlatform.WebGLPlayer) ? webIsPlaying : videoPlayer.isPlaying;
+        playPauseButton.image.sprite = playing ? pauseSprite : playSprite;
+    }
+
+    // SEEK
+    public void Forward10Seconds()
+    {
+        if (!videoPlayer.isPrepared)
+            return;
+
+        videoPlayer.time += 10;
+    }
+
+    public void Backward10Seconds()
+    {
+        if (!videoPlayer.isPrepared)
+            return;
+
+        videoPlayer.time = Math.Max(0, videoPlayer.time - 10);
+    }
+
+    // SLIDER
+    public void OnSliderChanged(float value)
+    {
+        videoPlayer.time = value;
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        isDragging = true;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        isDragging = false;
+        videoPlayer.time = progressSlider.value;
+    }
+
+    private void Update()
+    {
+        if (videoPlayer.isPrepared)
+        {
+            progressSlider.SetValueWithoutNotify((float)videoPlayer.time);
+            currentTimeText.text = FormatTime(videoPlayer.time);
+        }
+    }
+
+    // TIME FORMAT
+    private string FormatTime(double time)
+    {
+        int minutes = Mathf.FloorToInt((float)time / 60);
+        int seconds = Mathf.FloorToInt((float)time % 60);
+
+        return minutes.ToString("00") + ":" + seconds.ToString("00");
+    }
+
+    private string CleanArchiveUrl(string url)
+    {
+        return Uri.UnescapeDataString(url)
+            .Replace("+", "%20")
+            .Replace("%27", "")
+            .Replace("(", "%28")
+            .Replace(")", "%29");
+    }
+
+    public void CloseAction()
+    {
+        videoPlayer.Stop();
+        gameObject.SetActive(false);
+
+        progressSlider.value = 0;
+
+        currentTimeText.text = "00";
+        durationText.text = "00";
+
+        AudioManager.Instance.MuteBG(false);
+
+        Color32 color = renderImg.color;
+        renderImg.color = new Color32(color.r, color.g, color.b, 0);
+
+        _proxy?.Stop();
+        _proxy = null;
+
+        cancellationTokenSource?.Cancel();
+        cancellationTokenSource?.Dispose();
+        // cleanup temp download file if present
+        try
+        {
+            if (!string.IsNullOrEmpty(_tempDownloadPath) && File.Exists(_tempDownloadPath))
+            {
+                File.Delete(_tempDownloadPath);
+                _tempDownloadPath = null;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning("Failed to delete temp video file: " + ex.Message);
+        }
+
+        // release any created RenderTexture
+        if (videoPlayer.targetTexture != null)
+        {
+            var rt = videoPlayer.targetTexture;
+            videoPlayer.targetTexture = null;
+            if (renderImg != null) renderImg.texture = null;
+            try { rt.Release(); } catch { }
+            Destroy(rt);
+        }
+        // destroy WebGL HTML video if any
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            WebGL_DestroyVideo(gameObject.name);
+            webIsPlaying = false;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        videoPlayer.Stop();
+        gameObject.SetActive(false);
+
+        progressSlider.value = 0;
+
+        currentTimeText.text = "00";
+        durationText.text = "00";
+
+        Color32 color = renderImg.color;
+        renderImg.color = new Color32(color.r, color.g, color.b, 0);
+
+        _proxy?.Stop();
+        _proxy = null;
+
+        cancellationTokenSource?.Cancel();
+        cancellationTokenSource?.Dispose();
+        try
+        {
+            if (!string.IsNullOrEmpty(_tempDownloadPath) && File.Exists(_tempDownloadPath))
+            {
+                File.Delete(_tempDownloadPath);
+                _tempDownloadPath = null;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning("Failed to delete temp video file: " + ex.Message);
+        }
+
+        if (videoPlayer.targetTexture != null)
+        {
+            var rt = videoPlayer.targetTexture;
+            videoPlayer.targetTexture = null;
+            if (renderImg != null) renderImg.texture = null;
+            try { rt.Release(); } catch { }
+            Destroy(rt);
+        }
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            WebGL_DestroyVideo(gameObject.name);
+            webIsPlaying = false;
+        }
+    }
+}

@@ -20,6 +20,8 @@ namespace BibleGame
 
         public const string baseURL2 = "https://inddev.webmobrildemo.com:10037/api/user/";
 
+        public const string voiceURL = "https://inddev.webmobrildemo.com:10037/api/tts";
+
         public const string imageURL = "https://inddev.webmobrildemo.com:10037/";
 
         public const string voiceURL = "https://inddev.webmobrildemo.com:10037/api/tts";
@@ -86,6 +88,8 @@ namespace BibleGame
         public static Action<VidLang> SetVidLang;
 
         public static Action<string> SetAsset;
+
+        public static Action<bool> SetVideoDisplay;
     }
 
    namespace Data
@@ -209,7 +213,7 @@ namespace BibleGame
                 html = Regex.Replace(html, @"\n{2,}", "\n");        // remove multiple blank lines
                 html = html.Trim();
 
-                html = html.Replace("¶", "");
+                html = html.Replace("ï¿½", "");
 
                 return html;
             }
