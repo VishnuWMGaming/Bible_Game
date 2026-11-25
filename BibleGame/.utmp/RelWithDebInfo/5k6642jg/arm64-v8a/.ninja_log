@@ -1,5 +1,5 @@
 # ninja log v5
-4	493	8100385410798925	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	120d4674ed8bcf72
-493	875	8100385414397973	E:/Vishnu_Work/Bible_Game/BibleGame/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/5k6642jg/obj/arm64-v8a/libswappywrapper.so	74e3f15527a20fd8
-4	206	8100390450789227	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	120d4674ed8bcf72
-206	434	8100390452929910	E:/Vishnu_Work/Bible_Game/BibleGame/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/5k6642jg/obj/arm64-v8a/libswappywrapper.so	74e3f15527a20fd8
+13	715	8171205698182116	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	120d4674ed8bcf72
+716	1259	8171205703158025	E:/Vishnu_Work/Bible_Game/BibleGame/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/5k6642jg/obj/arm64-v8a/libswappywrapper.so	74e3f15527a20fd8
+4	212	8171228886383787	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	120d4674ed8bcf72
+212	461	8171228888736998	E:/Vishnu_Work/Bible_Game/BibleGame/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/5k6642jg/obj/arm64-v8a/libswappywrapper.so	74e3f15527a20fd8
