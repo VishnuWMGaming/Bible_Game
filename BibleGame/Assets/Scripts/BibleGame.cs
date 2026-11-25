@@ -24,7 +24,7 @@ namespace BibleGame
 
         public const string imageURL = "https://inddev.webmobrildemo.com:10037/";
 
-        public const string voiceURL = "https://inddev.webmobrildemo.com:10037/api/tts";
+        //public const string voiceURL = "https://inddev.webmobrildemo.com:10037/api/tts";
 
         public const string guestLogin = "guest-login";
         public const string signupURL = "register";
